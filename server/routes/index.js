@@ -7,3 +7,14 @@ router.get('/', function(req, res, next) {
 });
 
 module.exports = router;
+
+
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./serviceAccountKeys.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+const db = admin.firestore();
