@@ -11,10 +11,11 @@ module.exports = router;
 
 var admin = require("firebase-admin");
 
-var serviceAccount = require("./serviceAccountKeys.json");
+var serviceAccount = require("./newServiceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
+
 
 const db = admin.firestore();
