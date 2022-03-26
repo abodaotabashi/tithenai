@@ -1,21 +1,23 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
 
-module.exports = router;
+// =========================================================== 
 
+const admin = require("firebase-admin");
 
-var admin = require("firebase-admin");
-
-var serviceAccount = require("./newServiceAccountKey.json");
+const serviceAccount = require("./serviceAccountKey.json"); 
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
+module.exports = router;
 
-const db = admin.firestore();
+// ===========================================================
+
+/* GET home page. */
+router.get("/", function (req, res, next) {
+    console.log(req.user);
+	return res.send("hello world boy");
+});
