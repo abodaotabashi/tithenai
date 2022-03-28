@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  overflow: auto;
+  min-height: 100vh;
+  background: linear-gradient(225deg, #1BC54B, #03122D);
+  background-size: 300% 200%;
+  animation: gradientBackground 8s ease infinite;
+  -webkit-animation: gradientBackground 8s ease infinite;
+  -moz-animation: gradientBackground 8s ease infinite;
+  font-family: "Ubuntu", 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
+  'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ----- Animations ----- */
+
+@keyframes gradientBackground {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@-webkit-keyframes gradientBackground {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+@-moz-keyframes gradientBackground {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/* ----- Fonts ----- */
+
+@font-face {
+  font-family: 'Ubuntu-Light';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Ubuntu'), url('./assets/fonts/Ubuntu/Ubuntu-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Ubuntu'), url('./assets/fonts/Ubuntu/Ubuntu-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Ubuntu-Medium';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Ubuntu'), url('./assets/fonts/Ubuntu/Ubuntu-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Ubuntu-Bold';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Ubuntu'), url('./assets/fonts/Ubuntu/Ubuntu-Bold.ttf') format('truetype');
+}
