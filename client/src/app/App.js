@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 
@@ -64,6 +65,16 @@ class App extends Component {
         return (
             <ThemeProvider theme={theme}>
                 <div className="appMain">
+                    <Router>
+                        <Routes>
+                            <Route path='/login' exact element={<LoginPage/>} />
+                            {/*
+                            <Route path='/' exact component = {LandingPage}/>
+                            <Route path='/signup' exact component = {SignupPage}/>
+                            <Route path='/forgotPassword' exact component = {ForgotPasswordPage}/>
+                            */}
+                        </Routes>
+                    </Router>
                     <CssBaseline />
                 </div>
             </ThemeProvider>
