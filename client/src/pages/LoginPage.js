@@ -3,11 +3,11 @@ import { makeStyles } from '@mui/styles';
 import { CssBaseline, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../containers/LoginForm';
+import Navbar from '../components/Navbar';
 
 import '../assets/styles.css'
 import TithenaiLogo from '../assets/logos/Uncircled Navyblue.png';
 import LoginGif from '../assets/gifs/Login_300_35.gif';
-import Navbar from '../components/Navbar';
 
 
 const useStyles = makeStyles(theme => ({
@@ -68,7 +68,7 @@ const LoginPage = () => {
     }
 
     return(
-        <div className="loginRegisterPagesContainer">
+        <div className="loginPageContainer">
             <Navbar />
             <Grid container alignItems="center" justifyContent="center" style={{paddingTop: "2%", paddingBottom: "2%"}}>
                 <Grid item container xs={11} sm={11} md={11} lg={11} direction="row-reverse" alignItems="center" justifyContent="center" className="loginBanner">

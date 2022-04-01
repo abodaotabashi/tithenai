@@ -20,9 +20,20 @@
 
 /* ----- User Access Layouts ----- */
 
-.loginRegisterPagesContainer {
+.loginPageContainer {
     align-items: center;
     min-height: 100vh;
+}
+
+.registerPageContainer {
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(60deg, #2a3a53, #03122D);
+    background-size: 300% 200%;
+    animation: navyblueGradientBackground 6s ease infinite;
+    -webkit-animation: navyblueGradientBackground 6s ease infinite;
+    -moz-animation: navyblueGradientBackground 6s ease infinite;
+    width: 100%;
 }
 
 .loginBanner {
