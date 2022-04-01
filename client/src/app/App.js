@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 
 import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
 
 class App extends Component {
     constructor(props){
@@ -68,10 +69,10 @@ class App extends Component {
                     <Router>
                         <Routes>
                             <Route path='/login' exact element={<LoginPage/>} />
+                            <Route path='/register' exact element={<RegisterPage/>}/>
                             {/*
-                            <Route path='/' exact component = {LandingPage}/>
-                            <Route path='/signup' exact component = {SignupPage}/>
-                            <Route path='/forgotPassword' exact component = {ForgotPasswordPage}/>
+                            <Route path='/' exact element={<LandingPage/>}/>
+                            <Route path='/forgotPassword' exact element={<ForgotPasswordPage/>}/>
                             */}
                         </Routes>
                     </Router>
