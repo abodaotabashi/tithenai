@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBw1CCPiDZuLKnWRMHhPg1ZCe9e5fqyQJM",
   authDomain: "tithenai-23867.firebaseapp.com",
@@ -9,4 +10,5 @@ const firebaseConfig = {
   measurementId: "G-EBZ5KF9QLT"
 };
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
+
