@@ -76,16 +76,22 @@ const LoginPage = () => {
                         <p className={classes.illustrationLabel}>Welcome to Tithenai</p>
                         <img src={LoginGif} alt="Welcome" className={classes.loginIllustration}/>
                     </Grid>
-                    <Grid item container xs={12} sm={12} md={5} lg={4} className="glassmorphismEffect75" justifyContent="center" direction="column">
-                        <div style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}> 
-                            <img src={TithenaiLogo} alt="Tithenai" className='headerLabelLogo' onClick={redirectToLandingPage}/>
-                        </div>
-                        <p className={classes.header}>Sign In to Tithenai</p>
-                        <p className={classes.headerSpan}>
-                            New Here?
-                            <span className="forwardingSpan" onClick={redirectToRegisterPage}>&nbsp;Create an Account</span>
-                        </p>
-                        <LoginForm />
+                    <Grid item container xs={12} sm={12} md={5} lg={4} className="glassmorphismEffect75" justifyContent="center">
+                        <Grid item container xs={12} sm={12} md={12} lg={12} xl={12} direction="row">
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+                                <div style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                                    <img src={TithenaiLogo} alt="Tithenai" className='headerLabelLogo' onClick={redirectToLandingPage}/>
+                                </div>
+                                <p className={classes.header}>Sign In to Tithenai</p>
+                                <p className={classes.headerSpan}>
+                                    New Here?
+                                    <span className="forwardingSpan" onClick={redirectToRegisterPage}>&nbsp;Create an Account</span>
+                                </p>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                                <LoginForm />
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>

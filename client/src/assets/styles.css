@@ -82,6 +82,13 @@
     color: #03122D;
 }
 
+.dialogTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Raleway';
+}
+
 /* ----- Responsive Design ----- */
 
 @media only screen and (max-width: 1199px) {

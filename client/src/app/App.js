@@ -72,7 +72,7 @@ class App extends Component {
                             <Route path='/register' exact element={<RegisterPage/>}/>
                             {/*
                             <Route path='/' exact element={<LandingPage/>}/>
-                            <Route path='/forgotPassword' exact element={<ForgotPasswordPage/>}/>
+                            <Route path='/editProfile' exact element={<EditProfilePage/>}/>
                             */}
                         </Routes>
                     </Router>
