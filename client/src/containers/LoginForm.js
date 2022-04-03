@@ -8,6 +8,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import '../assets/styles.css';
 import GoogleGif from '../assets/gifs/GoogleLogoOptimized.gif';
 import ForgotPasswordDialog from "../components/ForgotPasswordDialog";
+import { signInWithEmail, forgetPassword, signInWithGoogle } from "../auth/auth";  
 
 class LoginForm extends Component {
     state = {
@@ -20,17 +21,27 @@ class LoginForm extends Component {
     }
 
     handleLogin = (values, props) => {
-        //console.log("email : ", values.email)
-        //console.log("password : ", values.password)
-        //TODO Authenticate the Information of the user
+        // values.email, values.password
+        signInWithEmail(values)
+        .then((result)=>{
+            console.log(result);
+        })
     }
 
     handleSignInWithGoogle = () => {
-        //TODO Authenticate the Information of the user with its google account
+        // Authenticate the Information of the user with its google account
+        signInWithGoogle()
+            .then((result)=>{
+                console.log(result);
+            }).catch(console.log)
     }
 
-    handleSendResetPasswordEmail = () => {
-        //TODO Send Email to reset the password to the entered email address if exists in the database
+    handleSendResetPasswordEmail = (email) => {
+        // Send Email to reset the password to the entered email address if exists in the database
+        forgetPassword(email)
+        .then((result)=>{
+            console.log(result); 
+        })
     }
 
     render() {

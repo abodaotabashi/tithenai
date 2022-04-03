@@ -24,7 +24,7 @@ function App() {
 
     const userData = {
         academicStatus: "student",
-        admin: false, // TODO: is false the default
+        admin: false,
         firstName: "Leo Messi",
         lastName: "Messi",
         gender: "Male"

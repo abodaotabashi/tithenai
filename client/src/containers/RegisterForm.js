@@ -24,6 +24,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import '../assets/styles.css';
 import { sortObjectsAscending } from '../utils/HelperFunctions';
+import { signUpWithEmail } from '../auth/auth';
 
 class RegisterForm extends Component {
     state = {
@@ -47,9 +48,12 @@ class RegisterForm extends Component {
     }
 
     handleRegister = (values, props) => { //firstname, lastname, email, password, university(.name), status
-        console.log("email : ", values.email)
-        //console.log("password : ", password)
-        //TODO Authenticate the Information of the user
+        // console.log("email : ", values.email)
+        // console.log("password : ", password)
+        signUpWithEmail(values)
+        .then((result)=>{
+            console.log(result);
+        }).catch(console.log)
     }
 
     render() {

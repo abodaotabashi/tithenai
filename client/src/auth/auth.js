@@ -1,3 +1,4 @@
+import { initializeApp } from "firebase/app";
 import axios from "axios";
 import {
     getAuth,
@@ -9,10 +10,23 @@ import {
     sendPasswordResetEmail
 } from "firebase/auth";
 
+// =========================================================== Setup 
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBw1CCPiDZuLKnWRMHhPg1ZCe9e5fqyQJM",
+    authDomain: "tithenai-23867.firebaseapp.com",
+    projectId: "tithenai-23867",
+    storageBucket: "tithenai-23867.appspot.com",
+    messagingSenderId: "765684955136",
+    appId: "1:765684955136:web:12b021a0972cd2426c40e5",
+    measurementId: "G-EBZ5KF9QLT"
+};
+initializeApp(firebaseConfig);
+
 const BASEURL = "http://localhost:9000";
 axios.defaults.baseURL = BASEURL
 
-// ===========================================================
+// =========================================================== Functions
 
 export const appSignOut = () => {
     const auth = getAuth();
@@ -25,12 +39,12 @@ export const appSignOut = () => {
 async function addNewUser(userCredential, userData) {
     const auth = getAuth();
     return auth.currentUser.getIdToken().then((idToken) => {
-        axios.post("/users/AddNewUser", {
+        return axios.post("/users/AddNewUser", {
             idToken: idToken,
             uid: userCredential.user.uid,
             userdata: userData
-        }).then((response) => {
-            return response.status === "OK"; 
+        }).then(() => {
+            return true; 
         }).catch((error) => {
             console.log(error);
             return false; 
@@ -38,27 +52,29 @@ async function addNewUser(userCredential, userData) {
     })
 }
 
-export const forgetPassword = (values) => {
+export const forgetPassword = (email) => {
     const auth = getAuth();
-    sendPasswordResetEmail(auth, values.email)
+    return sendPasswordResetEmail(auth, email)
         .then(() => {
             return true;
-        }).catch(console.log)
+        }).catch((error)=>{
+            console.log(error);
+            return false; 
+        });
 }
 
 // =========================================================== Email
 
-export const signUpWithEmail = (data) => {
+export const signUpWithEmail = (values) => {
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, data.email, data.password)
+    return createUserWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
             const userData = {
-                academicStatus: data.academicStatus,
-                admin: false, // TODO: is false the default
-                fullname: data.firstName + " " + data.lastname,
-                gender: data.gender
+                academicStatus: values.status,
+                fullname: values.firstname + " " + values.lastname,
+                gender: 'Female' // TODO change this to values.gender
             };
-            addNewUser(userCredential, userData)
+            return addNewUser(userCredential, userData)
             .then((result) => {
                 return result;
             }).catch((error) => {
@@ -74,32 +90,52 @@ export const signUpWithEmail = (data) => {
 
 export const signInWithEmail = (userCredential) => {
     const auth = getAuth();
-    signInWithEmailAndPassword(auth, userCredential.email, userCredential.password)
+    return signInWithEmailAndPassword(auth, userCredential.email, userCredential.password)
         .then((userCredential) => {
             return true;
         })
-        .catch(console.log);
+        .catch((error)=>{
+            console.log(error);
+            return false; 
+        });
 }
 
 // =========================================================== Google
 
-export const signUpWithGoogle = (userData) => {
+export const signUpWithGoogle = (values) => {
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
-    signInWithPopup(auth, provider)
+    return signInWithPopup(auth, provider)
         .then((result) => {
             const userCredential = result.user;
-            addNewUser(userCredential, userData)
+            const userData = {
+                academicStatus: values.status,
+                fullname: values.firstname + " " + values.lastname,
+                gender: 'Female' // TODO change this to values.gender
+            };
+            return addNewUser(userCredential, userData)
+            .then((result) => {
+                return result;
+            }).catch((error) => {
+                console.log(error)
+                return false;
+            })
         })
-        .catch(console.log);
+        .catch((error)=>{
+            console.log(error);
+            return false; 
+        });
 };
 
 export const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
-    signInWithPopup(auth, provider)
+    return signInWithPopup(auth, provider)
         .then((result) => {
             return true;
         })
-        .catch(console.log);
+        .catch((error)=>{
+            console.log(error);
+            return false; 
+        });
 };

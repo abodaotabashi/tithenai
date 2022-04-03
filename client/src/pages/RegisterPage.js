@@ -8,6 +8,7 @@ import RegisterForm from '../containers/RegisterForm';
 import RegisterGif from '../assets/gifs/Register_480.gif';
 import GoogleGif from '../assets/gifs/GoogleLogoOptimized.gif';
 import '../assets/styles.css'
+import { signUpWithGoogle } from '../auth/auth';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -91,6 +92,11 @@ const RegisterPage = (props) => {
 
     const handleSignUpWithGoogle = () => {
         //TODO Authenticate the Information of the user with its google account
+        // TODO: get values even for sign up with google
+        signUpWithGoogle()
+            .then((result)=>{
+                console.log(result)
+            }).catch(console.log)
     }
     return(
         <div className="registerPageContainer">

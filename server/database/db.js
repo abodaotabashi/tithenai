@@ -12,28 +12,29 @@ db = admin.firestore()
 
 // =========================================================== Mange Users 
 
-async function addNewUser(data){
+async function addNewUser(data) {
     console.log(data);
     uid = data.uid
     idToken = data.idToken
     dbUserData = {
         academicStatus: data.userdata.academicStatus,
-        admin: data.userdata.admin, 
-        fullname: data.userdata.fullname, 
+        admin: data.userdata.admin,
+        fullname: data.userdata.fullname,
         gender: data.userdata.gender,
-        userTheses: [] // first time adding a user, not theses yet.
+        userTheses: [], // first time adding a user, not theses yet.
+        admin: false // TODO: should this be false by default?
     }
 
     return db
-    .collection('users')
-    .doc(uid)
-    .set(dbUserData)
-    .then(() => {return true})
-    .catch((error) => {
-        console.log(error);
-        return false; 
-    })
-} 
+        .collection('users')
+        .doc(uid)
+        .set(dbUserData)
+        .then(() => { return true })
+        .catch((error) => {
+            console.log(error);
+            return false;
+        })
+}
 
 
 function deleteAllUsers(nextPageToken) {
@@ -53,7 +54,15 @@ function deleteAllUsers(nextPageToken) {
         }).finally(() => {
             admin.auth().deleteUsers(uids);
         });
+
+    db.collection('users')
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                doc.ref.delete(); 
+            });
+        });
 }
 
-module.exports.deleteAllUsers = deleteAllUsers; 
+module.exports.deleteAllUsers = deleteAllUsers;
 module.exports.addNewUser = addNewUser; 
