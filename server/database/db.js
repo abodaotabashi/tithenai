@@ -13,24 +13,41 @@ db = admin.firestore()
 // =========================================================== Mange Users 
 
 async function addNewUser(data) {
-    console.log(data);
+    // console.log(data);
     uid = data.uid
     idToken = data.idToken
     dbUserData = {
-        academicStatus: data.userdata.academicStatus,
-        admin: data.userdata.admin,
-        fullname: data.userdata.fullname,
-        gender: data.userdata.gender,
+        userAcademicStatus: data.userdata.academicStatus,
+        userAdmin: data.userdata.admin,
+        userFullname: data.userdata.fullname,
+        userGender: data.userdata.gender,
         userTheses: [], // first time adding a user, not theses yet.
-        admin: false // TODO: should this be false by default?
+        userAdmin: false // TODO: should this be false by default?
     }
+
+    // When user try to authenticate with google, they might exist in the database 
+    // Check if the user exist before adding any new data
 
     return db
         .collection('users')
         .doc(uid)
-        .set(dbUserData)
-        .then(() => { return true })
-        .catch((error) => {
+        .get()
+        .then((doc) => {
+            if (doc.exists) {
+                console.log("The user already exist in the database");
+                return true
+            } else {
+                return db
+                    .collection('users')
+                    .doc(uid)
+                    .set(dbUserData)
+                    .then(() => { return true })
+                    .catch((error) => {
+                        console.log(error);
+                        return false;
+                    })
+            }
+        }).catch((error) => {
             console.log(error);
             return false;
         })
@@ -51,7 +68,6 @@ function deleteAllUsers(nextPageToken) {
         })
         .catch((error) => {
             console.log('Error listing users:', error);
-        }).finally(() => {
             admin.auth().deleteUsers(uids);
         });
 
@@ -59,10 +75,51 @@ function deleteAllUsers(nextPageToken) {
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                doc.ref.delete(); 
+                doc.ref.delete();
             });
         });
 }
 
+// =========================================================== Universities 
+
+async function getAllUnis() {
+    return db
+        .collection("universities")
+        .orderBy("uniName", "asc")
+        .get()
+        .then((querySnapshot) => {
+            unis = []
+            querySnapshot.forEach((doc) => {
+                uni = {
+                    ...doc.data(), 
+                    uniId: doc.id
+                }
+                unis.push(uni)
+            });
+            return unis; 
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        })
+}
+
+function addUni(uni){
+    db
+    .collection('universities')
+    .doc()
+    .set({
+        uniCountry: "Turkey", 
+        uniName: uni.Name, 
+        uniState: uni.State,
+        uniTheses: [], 
+        uniType: uni.Type, 
+        uniUrl: uni.URL
+    })
+} 
+
+// =========================================================== Exports
+
 module.exports.deleteAllUsers = deleteAllUsers;
-module.exports.addNewUser = addNewUser; 
+module.exports.addNewUser = addNewUser;
+module.exports.getAllUnis = getAllUnis; 
+module.exports.addUni = addUni; 

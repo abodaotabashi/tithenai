@@ -91,8 +91,6 @@ const RegisterPage = (props) => {
     }
 
     const handleSignUpWithGoogle = () => {
-        //TODO Authenticate the Information of the user with its google account
-        // TODO: get values even for sign up with google
         signUpWithGoogle()
             .then((result)=>{
                 console.log(result)

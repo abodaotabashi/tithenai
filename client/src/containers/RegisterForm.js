@@ -25,6 +25,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import '../assets/styles.css';
 import { sortObjectsAscending } from '../utils/HelperFunctions';
 import { signUpWithEmail } from '../auth/auth';
+import { getAllUnis } from '../Service';
 
 class RegisterForm extends Component {
     state = {
@@ -33,6 +34,10 @@ class RegisterForm extends Component {
     }
 
     componentDidMount = async () => {
+        getAllUnis().then((unis)=>{
+            console.log(unis);
+        }).catch(console.log)
+
         fetch("http://universities.hipolabs.com/search?country=turkey")
             .then(response => response.json())
             .then(result => {
