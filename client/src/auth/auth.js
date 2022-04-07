@@ -36,6 +36,8 @@ export const appSignOut = () => {
         }).catch(console.log)
 };
 
+// returns true, if the user is added correctly to the database 
+// returns false, if an error occurred when adding the user to the database 
 async function addNewUser(userCredential, userData) {
     const auth = getAuth();
     return auth.currentUser.getIdToken().then((idToken) => {
@@ -70,9 +72,10 @@ export const signUpWithEmail = (values) => {
     return createUserWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
             const userData = {
+                // TODO: add the uni of the user, using the uni id 
                 academicStatus: values.status,
                 fullname: values.firstname + " " + values.lastname,
-                gender: 'Female' // TODO change this to values.gender
+                gender: values.gender
             };
             return addNewUser(userCredential, userData)
             .then((result) => {
@@ -102,16 +105,17 @@ export const signInWithEmail = (userCredential) => {
 
 // =========================================================== Google
 
-export const signUpWithGoogle = (values) => {
+export const signUpWithGoogle = () => {
     const provider = new GoogleAuthProvider();
-    const auth = getAuth();
+    const auth = getAuth(); 
     return signInWithPopup(auth, provider)
         .then((result) => {
-            const userCredential = result.user;
+            const userCredential = result;
             const userData = {
-                academicStatus: values.status,
-                fullname: values.firstname + " " + values.lastname,
-                gender: 'Female' // TODO change this to values.gender
+                // TODO: add the uni of the user, using the uni id 
+                academicStatus: "",
+                fullname: userCredential.user.displayName,
+                gender: ""
             };
             return addNewUser(userCredential, userData)
             .then((result) => {
