@@ -25,7 +25,7 @@ router.post("/AddNewUser", function (req, res, next) {
 
 router.get("/DeleteAllUsers", function (req, res, next) {
     db.deleteAllUsers(); 
-	res.sendStatus(200); 
+	res.sendStatus(200);
 });
 
 module.exports = router;

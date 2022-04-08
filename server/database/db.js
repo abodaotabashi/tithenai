@@ -91,35 +91,60 @@ async function getAllUnis() {
             unis = []
             querySnapshot.forEach((doc) => {
                 uni = {
-                    ...doc.data(), 
+                    ...doc.data(),
                     uniId: doc.id
                 }
                 unis.push(uni)
             });
-            return unis; 
+            return unis;
         }).catch((error) => {
             console.log(error);
             return false;
         })
 }
 
-function addUni(uni){
+function addUni(uni) {
     db
-    .collection('universities')
-    .doc()
-    .set({
-        uniCountry: "Turkey", 
-        uniName: uni.Name, 
-        uniState: uni.State,
-        uniTheses: [], 
-        uniType: uni.Type, 
-        uniUrl: uni.URL
-    })
-} 
+        .collection('universities')
+        .doc()
+        .set({
+            uniCountry: "Turkey",
+            uniName: uni.Name,
+            uniState: uni.State,
+            uniTheses: [],
+            uniType: uni.Type,
+            uniUrl: uni.URL
+        })
+}
+
+// function addAllTheses() {
+//     const theses = require('./theses.json')
+//     const newTheses = []
+//     theses.forEach(thesis => {
+//         thesis.thesisDate = new Date(thesis.thesisDate)
+//         newThesis = {
+//             ...thesis,
+//             thesisAutherID: "",
+//             thesisUniID: "",
+//             thesisUploadDate: new Date()
+//         }
+//         newTheses.push(newThesis)
+//     });
+//     // console.log(newTheses)
+
+//     newTheses.forEach(thesis => {
+//         db.collection('theses')
+//             .doc()
+//             .set(thesis)
+//     });
+// }
 
 // =========================================================== Exports
 
 module.exports.deleteAllUsers = deleteAllUsers;
 module.exports.addNewUser = addNewUser;
-module.exports.getAllUnis = getAllUnis; 
-module.exports.addUni = addUni; 
+module.exports.getAllUnis = getAllUnis;
+module.exports.addUni = addUni;
+// module.exports.addAllTheses = addAllTheses;
+
+
