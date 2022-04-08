@@ -1,4 +1,3 @@
-const { query } = require("express");
 var express = require("express");
 var router = express.Router();
 const db = require('../database/db.js');
@@ -16,11 +15,16 @@ router.get("/getAllUnis", function (req, res, next) {
 });
 
 router.get("/search", function (req, res, next) {
+
+    /*
+        Example body: 
+        {"qurey": "Turk", "dimensions": ["state", "country", "name"]}
+    */
+
     const query = turkishtoEnglish(req.body.query).toLowerCase()
     const dims = req.body.dimensions
-    console.log(dims)
 
-    return db.getAllUnis().then((unis) => {
+    db.getAllUnis().then((unis) => {
         const searchedUnis = unis.filter(uni => {
 
             let isSearched = false; 

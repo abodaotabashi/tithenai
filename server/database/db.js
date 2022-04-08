@@ -117,6 +117,9 @@ function addUni(uni) {
         })
 }
 
+
+// =========================================================== Theses
+
 // function addAllTheses() {
 //     const theses = require('./theses.json')
 //     const newTheses = []
@@ -139,12 +142,35 @@ function addUni(uni) {
 //     });
 // }
 
+
+async function getAllTheses() {
+    return db
+        .collection("theses")
+        .orderBy("thesisTitle", "asc")
+        .get()
+        .then((querySnapshot) => {
+            const theses = []
+            querySnapshot.forEach((doc) => {
+                thesis = {
+                    ...doc.data(),
+                    thesisId: doc.id
+                }
+                theses.push(thesis)
+            });
+            return theses;
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        })
+}
+
 // =========================================================== Exports
 
 module.exports.deleteAllUsers = deleteAllUsers;
 module.exports.addNewUser = addNewUser;
 module.exports.getAllUnis = getAllUnis;
 module.exports.addUni = addUni;
+module.exports.getAllTheses = getAllTheses;
 // module.exports.addAllTheses = addAllTheses;
 
 

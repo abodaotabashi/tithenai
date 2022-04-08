@@ -8,6 +8,7 @@ var cors        = require("cors");
 var indexRouter = require('./routes/index.js');
 var userRouter = require('./routes/users.js');
 var uniRouter = require('./routes/universities.js');
+var thesesRouter = require('./routes/theses.js');
 
 var app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/universities', uniRouter);
+app.use('/theses', thesesRouter);
 
 
 module.exports = app;
