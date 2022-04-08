@@ -25,3 +25,22 @@ export function getAllUnis() {
 //             return result.data;
 //         }).catch(console.log)
 // }
+export function getUser() {
+    return axios.get("/users/getUser")
+        .then((result) => {
+            return result.data;
+        }).catch(console.log)
+}
+
+export function updateUser(user) {
+    return axios.post("/users/updateUser", {
+        academicStatus: user.academicStatus,
+        admin: user.admin,
+        fullname: user.fullname,
+        gender: user.gender,
+        userTheses: user.userTheses,
+    }).then((result) => {
+        return result.data;
+    }).catch(console.log)
+}
+

@@ -6,11 +6,11 @@ const db = require('../database/db.js');
 
 
 router.get("/getAllUnis", function (req, res, next) {
-    db.getAllUnis().then((result)=>{
-        res.send(result); 
-    }).catch((error)=> {
+    db.getAllUnis().then((result) => {
+        res.send(result);
+    }).catch((error) => {
         console.log(error)
-        res.sendStatus(200); 
+        res.sendStatus(200);
     })
 });
 

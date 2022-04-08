@@ -80,6 +80,34 @@ function deleteAllUsers(nextPageToken) {
         });
 }
 
+
+function getUser() {
+    return db
+        .collection("users")
+        .doc("wu7kefnFETdjYt1OlWf4qzD38Tj1")
+        .get()
+        .then((doc) => {
+            console.log(doc)
+            return doc;
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        })
+}
+
+function updateUser(user) {
+    return db
+        .collection('users')
+        .doc("wu7kefnFETdjYt1OlWf4qzD38Tj1")
+        .set({
+            userAcademicStatus: user.academicStatus,
+            userAdmin: user.admin,
+            userFullname: user.fullname,
+            userGender: user.gender,
+            userTheses: user.userTheses,
+        })
+}
+
 // =========================================================== Universities 
 
 async function getAllUnis() {
@@ -91,35 +119,38 @@ async function getAllUnis() {
             unis = []
             querySnapshot.forEach((doc) => {
                 uni = {
-                    ...doc.data(), 
+                    ...doc.data(),
                     uniId: doc.id
                 }
                 unis.push(uni)
             });
-            return unis; 
+            return unis;
         }).catch((error) => {
             console.log(error);
             return false;
         })
 }
 
-function addUni(uni){
+function addUni(uni) {
     db
-    .collection('universities')
-    .doc()
-    .set({
-        uniCountry: "Turkey", 
-        uniName: uni.Name, 
-        uniState: uni.State,
-        uniTheses: [], 
-        uniType: uni.Type, 
-        uniUrl: uni.URL
-    })
-} 
+        .collection('universities')
+        .doc()
+        .set({
+            uniCountry: "Turkey",
+            uniName: uni.Name,
+            uniState: uni.State,
+            uniTheses: [],
+            uniType: uni.Type,
+            uniUrl: uni.URL
+        })
+}
 
 // =========================================================== Exports
 
 module.exports.deleteAllUsers = deleteAllUsers;
 module.exports.addNewUser = addNewUser;
-module.exports.getAllUnis = getAllUnis; 
-module.exports.addUni = addUni; 
+module.exports.getAllUnis = getAllUnis;
+module.exports.addUni = addUni;
+module.exports.getUser = getUser;
+module.exports.updateUser = updateUser;
+
