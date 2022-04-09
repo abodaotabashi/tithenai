@@ -19,6 +19,7 @@ import {
 import { createFilterOptions } from '@mui/material/Autocomplete';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import LoadingDialog from "../components/LoadingDialog";
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -29,7 +30,8 @@ import { getAllUnis } from '../Service';
 class RegisterForm extends Component {
     state = {
         showPassword: false,
-        universities: []
+        universities: [],
+        showLoading: false,
     }
 
     componentDidMount = async () => {
@@ -42,10 +44,21 @@ class RegisterForm extends Component {
     }
 
     handleRegister = (values, props) => {
+        this.setState({
+            showLoading: true
+        });
         signUpWithEmail(values)
             .then((result) => {
                 console.log(result);
-            }).catch(console.log)
+                this.setState({
+                    showLoading: false
+                });
+            }).catch(error => {
+                console.log(error)
+                this.setState({
+                    showLoading: false
+                });
+            })
     }
 
     render() {
@@ -263,6 +276,10 @@ class RegisterForm extends Component {
                                 <Button disabled={Boolean(errors.email) || Boolean(errors.password) || Boolean(errors.university) || Boolean(errors.status) || Boolean(errors.firstname) || Boolean(errors.lastname) || Boolean(errors.gender) || Boolean(errors.termsAndConditions)} color="secondary" variant="outlined" size="large" type="submit" style={{ padding: "1vh 6vw", fontFamily: "Ubuntu", marginTop: "0.5rem" }}>Register</Button>
                             </Grid>
                         </Grid>
+                        <LoadingDialog
+                            openDialog={this.state.showLoading}
+                            label={"Creating new account for you ..."}
+                            />
                     </Form>
                 }
             </Formik>

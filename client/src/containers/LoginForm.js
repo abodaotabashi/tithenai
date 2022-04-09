@@ -2,18 +2,21 @@ import React, { Component } from "react";
 import { Grid, TextField,  Button, InputAdornment, IconButton, Divider } from '@mui/material';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import LoadingDialog from "../components/LoadingDialog";
+import ForgotPasswordDialog from "../components/ForgotPasswordDialog";
+import { signInWithEmail, forgetPassword, signInWithGoogle } from "../auth/auth";  
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import '../assets/styles.css';
 import GoogleGif from '../assets/gifs/GoogleLogoOptimized.gif';
-import ForgotPasswordDialog from "../components/ForgotPasswordDialog";
-import { signInWithEmail, forgetPassword, signInWithGoogle } from "../auth/auth";  
+import '../assets/styles.css';
 
 class LoginForm extends Component {
     state = {
         showPassword: false,
         openForgotPasswordDialog: false,
+        showLoading: false,
+        loadingMessage: ""
     }
 
     handleToggleForgotPasswordDialog = (status) => {
@@ -21,11 +24,18 @@ class LoginForm extends Component {
     }
 
     handleLogin = (values, props) => {
-        // values.email, values.password
+        this.setState({
+            showLoading: true,
+            loadingMessage: "Logging in ..."
+        });
         signInWithEmail(values)
-        .then((result)=>{
-            console.log(result);
-        })
+            .then((result)=>{
+                console.log(result);
+                this.setState({
+                    showLoading: false,
+                    loadingMessage: ""
+                });
+            })
     }
 
     handleSignInWithGoogle = () => {
@@ -33,15 +43,23 @@ class LoginForm extends Component {
         signInWithGoogle()
             .then((result)=>{
                 console.log(result);
-            }).catch(console.log)
+            }).catch(error => console.log(error))
     }
 
     handleSendResetPasswordEmail = (email) => {
         // Send Email to reset the password to the entered email address if exists in the database
+        this.setState({
+            showLoading: true,
+            loadingMessage: "Sending the email ..."
+        });
         forgetPassword(email)
-        .then((result)=>{
-            console.log(result); 
-        })
+            .then((result)=>{
+                console.log(result);
+                this.setState({
+                    showLoading: false,
+                    loadingMessage: ""
+                });
+            })
     }
 
     render() {
@@ -129,6 +147,10 @@ class LoginForm extends Component {
                         sendEmailFunction={this.handleSendResetPasswordEmail}
                         openDialog={this.state.openForgotPasswordDialog}
                         toggleDialog={this.handleToggleForgotPasswordDialog} />
+                    <LoadingDialog
+                        openDialog={this.state.showLoading}
+                        label={this.state.loadingMessage}
+                        />
                 </Form>
                 }
             </Formik>
