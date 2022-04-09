@@ -35,7 +35,6 @@ class RegisterForm extends Component {
     componentDidMount = async () => {
         getAllUnis()
             .then(response => {
-                console.log(response)
                 const sortedData = response.sort(sortAlphabetically("uniName", "tr"))
                 this.setState({ universities: sortedData })
             })

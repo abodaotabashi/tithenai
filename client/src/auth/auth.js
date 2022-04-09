@@ -9,6 +9,7 @@ import {
     createUserWithEmailAndPassword,
     sendPasswordResetEmail
 } from "firebase/auth";
+import { FormatName } from "../utils/HelperFunctions";
 
 // =========================================================== Setup
 
@@ -72,9 +73,10 @@ export const signUpWithEmail = (values) => {
     return createUserWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
             const userData = {
-                universityID: values.university.uniID,
+                universityID: values.university.uniId,
                 academicStatus: values.status,
-                fullname: values.firstname + " " + values.lastname,
+                firstname: FormatName(values.firstname),
+                lastname: FormatName(values.lastname),
                 gender: values.gender
             };
             return addNewUser(userCredential, userData)
@@ -114,7 +116,8 @@ export const signUpWithGoogle = () => {
             const userData = {
                 universityID: "",   //By continuing with google some values are missing and the user has to enter those values from the layout of edit profile page.
                 academicStatus: "",
-                fullname: userCredential.user.displayName,
+                firstname: userCredential.user.displayName.substring(0, userCredential.user.displayName.indexOf(' ')),
+                lastname: userCredential.user.displayName.substring(userCredential.user.displayName.indexOf(' ') + 1),
                 gender: ""
             };
             return addNewUser(userCredential, userData)

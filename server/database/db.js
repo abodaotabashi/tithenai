@@ -20,7 +20,8 @@ async function addNewUser(data) {
         userUniversityID: data.userdata.universityID,
         userAcademicStatus: data.userdata.academicStatus,
         userAdmin: data.userdata.admin,
-        userFullname: data.userdata.fullname,
+        userFirstname: data.userdata.firstname,
+        userLastname: data.userdata.lastname,
         userGender: data.userdata.gender,
         userTheses: [], // first time adding a user, not theses yet.
         userAdmin: false // This value is false by default which means that this user is not an adminstrator.
