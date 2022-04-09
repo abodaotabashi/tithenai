@@ -3,15 +3,14 @@ import axios from "axios";
 const BASEURL = "http://localhost:9000";
 axios.defaults.baseURL = BASEURL
 
-// =========================================================== Universities 
+// =========================================================== Universities
 
-export function getAllUnis() {
+export const getAllUnis = () => {
     return axios.get("/universities/getAllUnis")
         .then((result) => {
             return result.data;
-        }).catch(console.log)
+        }).catch(error => console.log(error))
 }
-
 
 // =========================================================== Users
 
@@ -23,13 +22,13 @@ export function getAllUnis() {
 //     })
 //         .then((result) => {
 //             return result.data;
-//         }).catch(console.log)
+//         }).catch(error => console.log(error))
 // }
 export function getUser() {
     return axios.get("/users/getUser")
         .then((result) => {
             return result.data;
-        }).catch(console.log)
+        }).catch(error => console.log(error))
 }
 
 export function updateUser(user) {
@@ -41,6 +40,6 @@ export function updateUser(user) {
         userTheses: user.userTheses,
     }).then((result) => {
         return result.data;
-    }).catch(console.log)
+    }).catch(error => console.log(error))
 }
 

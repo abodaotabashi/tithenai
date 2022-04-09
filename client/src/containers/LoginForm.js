@@ -121,7 +121,7 @@ class LoginForm extends Component {
                         <Grid item container xs={12} sm={12} md={12} lg={12} direction="row" alignItems="center" justifyContent="center">
                             <p style={{fontFamily: "Ubuntu", paddingRight: "3px", color: "#14325A"}}>Sign in with Google</p>
                             <IconButton aria-label="google" size="small" color="secondary" onClick={this.handleSignInWithGoogle}>
-                                <img src={GoogleGif} alt="SigninWithGoogle" style={{width: "42px", borderRadius: "50%", margin: "3px"}}/>
+                                <img src={GoogleGif} alt="SigninWithGoogle" style={{width: "42px", borderRadius: "50%", margin: "3px", border: "1px solid #00000050"}}/>
                             </IconButton>
                         </Grid>
                     </Grid>

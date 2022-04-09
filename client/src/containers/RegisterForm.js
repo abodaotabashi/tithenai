@@ -23,9 +23,9 @@ import * as Yup from 'yup';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import '../assets/styles.css';
-import { sortObjectsAscending } from '../utils/HelperFunctions';
+import { sortAlphabetically } from '../utils/HelperFunctions';
 import { signUpWithEmail } from '../auth/auth';
-import { getAllUnis, getUser, updateUser } from '../Service';
+import { getAllUnis } from '../Service';
 class RegisterForm extends Component {
     state = {
         showPassword: false,
@@ -33,43 +33,16 @@ class RegisterForm extends Component {
     }
 
     componentDidMount = async () => {
-        getAllUnis().then((unis) => {
-            console.log(unis);
-        }).catch(console.log)
-
-        //block to test the functions
-        /*
-            getUser().then((doc) => {
-                console.log(doc);
-            }).catch(console.log)
-            updateUser({
-                fullname: "Mahasin Mahho",
-                gender: "Female",
-                academicStatus: "Student",
-                admin: true,
-                userTheses: ["google.com", " Youtube.com"], // first time adding a user, not theses yet.
-            }).then((doc) => {
-                console.log(doc);
-            }).catch(console.log)
-        */
-
-        fetch("http://universities.hipolabs.com/search?country=turkey")
-            .then(response => response.json())
-            .then(result => {
-                const cleanData = result.filter((value, index, self) =>
-                    index === self.findIndex((t) => (
-                        t.name === value.name
-                    ))
-                )
-                const sortedData = cleanData.sort(sortObjectsAscending("name"))
+        getAllUnis()
+            .then(response => {
+                console.log(response)
+                const sortedData = response.sort(sortAlphabetically("uniName", "tr"))
                 this.setState({ universities: sortedData })
             })
-            .catch(console.log);
+            .catch(error => console.log(error));
     }
 
-    handleRegister = (values, props) => { //firstname, lastname, email, password, university(.name), status
-        // console.log("email : ", values.email)
-        // console.log("password : ", password)
+    handleRegister = (values, props) => {
         signUpWithEmail(values)
             .then((result) => {
                 console.log(result);
@@ -79,7 +52,7 @@ class RegisterForm extends Component {
     render() {
         const filterOptions = createFilterOptions({
             matchFrom: 'start',
-            stringify: (option) => option.name,
+            stringify: (option) => option.uniName,
         });
         const form_validation_schema = Yup.object().shape({
             firstname: Yup.string()
@@ -226,7 +199,7 @@ class RegisterForm extends Component {
                                     name="university"
                                     filterOptions={filterOptions}
                                     options={this.state.universities}
-                                    getOptionLabel={(option) => option.name ? option.name : ""}
+                                    getOptionLabel={(option) => option.uniName ? option.uniName : ""}
                                     autoComplete
                                     onChange={(e, value) => setFieldValue("university", value)}
                                     renderInput={(params) => (

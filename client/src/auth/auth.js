@@ -10,7 +10,7 @@ import {
     sendPasswordResetEmail
 } from "firebase/auth";
 
-// =========================================================== Setup 
+// =========================================================== Setup
 
 const firebaseConfig = {
     apiKey: "AIzaSyBw1CCPiDZuLKnWRMHhPg1ZCe9e5fqyQJM",
@@ -33,11 +33,11 @@ export const appSignOut = () => {
     signOut(auth)
         .then(() => {
             return true;
-        }).catch(console.log)
+        }).catch(error => console.log(error))
 };
 
-// returns true, if the user is added correctly to the database 
-// returns false, if an error occurred when adding the user to the database 
+// returns true, if the user is added correctly to the database
+// returns false, if an error occurred when adding the user to the database
 async function addNewUser(userCredential, userData) {
     const auth = getAuth();
     return auth.currentUser.getIdToken().then((idToken) => {
@@ -46,10 +46,10 @@ async function addNewUser(userCredential, userData) {
             uid: userCredential.user.uid,
             userdata: userData
         }).then(() => {
-            return true; 
+            return true;
         }).catch((error) => {
             console.log(error);
-            return false; 
+            return false;
         })
     })
 }
@@ -61,7 +61,7 @@ export const forgetPassword = (email) => {
             return true;
         }).catch((error)=>{
             console.log(error);
-            return false; 
+            return false;
         });
 }
 
@@ -72,7 +72,7 @@ export const signUpWithEmail = (values) => {
     return createUserWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
             const userData = {
-                // TODO: add the uni of the user, using the uni id 
+                universityID: values.university.uniID,
                 academicStatus: values.status,
                 fullname: values.firstname + " " + values.lastname,
                 gender: values.gender
@@ -99,7 +99,7 @@ export const signInWithEmail = (userCredential) => {
         })
         .catch((error)=>{
             console.log(error);
-            return false; 
+            return false;
         });
 }
 
@@ -112,7 +112,7 @@ export const signUpWithGoogle = () => {
         .then((result) => {
             const userCredential = result;
             const userData = {
-                // TODO: add the uni of the user, using the uni id 
+                universityID: "",   //By continuing with google some values are missing and the user has to enter those values from the layout of edit profile page.
                 academicStatus: "",
                 fullname: userCredential.user.displayName,
                 gender: ""
@@ -127,7 +127,7 @@ export const signUpWithGoogle = () => {
         })
         .catch((error)=>{
             console.log(error);
-            return false; 
+            return false;
         });
 };
 
@@ -140,6 +140,6 @@ export const signInWithGoogle = () => {
         })
         .catch((error)=>{
             console.log(error);
-            return false; 
+            return false;
         });
 };

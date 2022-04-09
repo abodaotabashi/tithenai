@@ -10,22 +10,23 @@ admin.initializeApp({
 
 db = admin.firestore()
 
-// =========================================================== Mange Users 
+// =========================================================== Manage Users
 
 async function addNewUser(data) {
     // console.log(data);
     uid = data.uid
     idToken = data.idToken
     dbUserData = {
+        userUniversityID: data.userdata.universityID,
         userAcademicStatus: data.userdata.academicStatus,
         userAdmin: data.userdata.admin,
         userFullname: data.userdata.fullname,
         userGender: data.userdata.gender,
         userTheses: [], // first time adding a user, not theses yet.
-        userAdmin: false // TODO: should this be false by default?
+        userAdmin: false // This value is false by default which means that this user is not an adminstrator.
     }
 
-    // When user try to authenticate with google, they might exist in the database 
+    // When user try to authenticate with google, they might exist in the database
     // Check if the user exist before adding any new data
 
     return db
@@ -105,10 +106,11 @@ function updateUser(user) {
             userFullname: user.fullname,
             userGender: user.gender,
             userTheses: user.userTheses,
+            //TODO: Update University ID
         })
 }
 
-// =========================================================== Universities 
+// =========================================================== Universities
 
 async function getAllUnis() {
     return db

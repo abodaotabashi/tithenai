@@ -115,7 +115,7 @@ const RegisterPage = (props) => {
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12} container alignItems="center" justifyContent="center" direction="row">
                             <p className="forwardingSpan" style={{cursor: "pointer"}} onClick={handleSignUpWithGoogle}>Continue with Google</p>
                             <IconButton aria-label="google" size="small" color="secondary" onClick={handleSignUpWithGoogle}>
-                                <img src={GoogleGif} alt="SigninWithGoogle" style={{width: "32px", borderRadius: "50%", margin: "2px"}}/>
+                                <img src={GoogleGif} alt="SigninWithGoogle" style={{width: "32px", borderRadius: "50%", margin: "2px", border: "1px solid #00000050"}}/>
                             </IconButton>
                         </Grid>
                         <Divider variant="middle" style={{textAlign: "center", width: "80%", padding: "0.5vh 0", color: "#14325A"}}>Or</Divider>
