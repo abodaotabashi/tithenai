@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Toolbar, AppBar, Grid, IconButton, Tooltip } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import LanguageDropDownList from './LanguageDropDownList';
 
 import '../assets/styles.css';
 import PublicIcon from '@mui/icons-material/Public';
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         lineHeight: "1",
         fontSize: "1.35rem",
         fontWeight: "bold",
-        fontFamily: "Ubuntu=",
+        fontFamily: "Ubuntu-Light",
         [theme.breakpoints.down('md')]: {
             fontSize: "1.25rem",
             paddingLeft: "0.6rem",
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const Navbar = (props) => {
+    const [openDropDownMenu, setOpenDropDownMenu] = useState(null);
     const classes = useStyles();
 
     return(
@@ -57,10 +59,11 @@ const Navbar = (props) => {
                     <Grid item container xs={1} sm={1} md={1} lg={1} alignItems="center" justifyContent="flex-end">
                         <Grid item>
                             <Tooltip title="Languages" placement="bottom" arrow leaveDelay={100}>
-                                <IconButton size="medium" color="primary">
+                                <IconButton size="medium" color="primary" aria-haspopup="true" onClick={(event) => setOpenDropDownMenu(event.currentTarget)}>
                                     <PublicIcon style={{fontSize: "2rem"}} color="secondary"/>
                                 </IconButton>
                             </Tooltip>
+                            <LanguageDropDownList openDropDownMenu={openDropDownMenu} setOpenDropDownMenu={setOpenDropDownMenu} />
                         </Grid>
                     </Grid>
                 </Grid>
