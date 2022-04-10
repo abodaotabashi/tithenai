@@ -30,15 +30,12 @@ const useStyles = makeStyles(theme => ({
         color: "white",
         paddingRight: "3rem",
         [theme.breakpoints.down('md')]: {
-            fontSize: "xx-large",
+            fontSize: "x-large",
             paddingRight: "1rem",
         },
         [theme.breakpoints.down('sm')]: {
             fontSize: "x-large",
             paddingRight: "1rem",
-        },
-        [theme.breakpoints.down('xs')]: {
-            fontSize: "medium",
         },
     },
     loginIllustration: {
