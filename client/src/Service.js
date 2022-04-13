@@ -24,11 +24,21 @@ export const getAllUnis = () => {
 //             return result.data;
 //         }).catch(error => console.log(error))
 // }
-export function getUser() {
-    return axios.get("/users/getUser")
-        .then((result) => {
-            return result.data;
-        }).catch(error => console.log(error))
+export const getUser = async (tokenID) => {
+    return await axios.get("/users/getUser", {
+        params: {
+            tokenID: tokenID
+        }
+    }).then((result) => {
+        //TODO: Get the email address of the user
+        const userInfo = {
+            "status": result.data.userAcademicStatus,
+            "firstname": result.data.userFirstname,
+            "lastname": result.data.userLastname,
+            "university": result.data.userUniversityID, //TODO: Get the Ref of University (complete object of University instead of id)
+        }
+        return userInfo;
+    }).catch(error => console.log(error))
 }
 
 export function updateUser(user) {

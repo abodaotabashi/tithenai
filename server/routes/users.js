@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require('../database/db.js');
 
-// =========================================================== 
+// ===========================================================
 
 router.get("/", function (req, res, next) {
     return res.send("hello world");
@@ -28,8 +28,8 @@ router.get("/DeleteAllUsers", function (req, res, next) {
     res.sendStatus(200);
 });
 
-router.get("/getUser", function (req, res, next) {
-    db.getUser().then((result) => {
+router.get("/getUser", async function (req, res, next) {
+    await db.getUser(req.query.tokenID).then((result) => {
         res.send(result);
     }).catch((error) => {
         console.log(error)

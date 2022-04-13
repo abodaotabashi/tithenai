@@ -98,14 +98,14 @@ function deleteAllUsers(nextPageToken) {
 }
 
 
-function getUser() {
+async function getUser(tokenID) {
+    const uid = await getUniqueID(tokenID)
     return db
         .collection("users")
-        .doc("wu7kefnFETdjYt1OlWf4qzD38Tj1")
+        .doc(uid)
         .get()
-        .then((doc) => {
-            console.log(doc)
-            return doc;
+        .then((docRef) => {
+            return docRef.data();
         }).catch((error) => {
             console.log(error);
             return false;
