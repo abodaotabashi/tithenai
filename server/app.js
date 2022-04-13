@@ -5,9 +5,10 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require("cors");
 
-const indexRouter = require('./routes/index.js');
-const userRouter = require('./routes/users.js');
-const uniRouter = require('./routes/universities.js');
+var indexRouter = require('./routes/index.js');
+var userRouter = require('./routes/users.js');
+var uniRouter = require('./routes/universities.js');
+var thesesRouter = require('./routes/theses.js');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/universities', uniRouter);
+app.use('/theses', thesesRouter);
 
 
 module.exports = app;

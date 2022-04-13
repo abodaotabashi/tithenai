@@ -42,7 +42,7 @@ export const appSignOut = () => {
 async function addNewUser(userCredential, userData) {
     const auth = getAuth();
     return auth.currentUser.getIdToken().then((idToken) => {
-        return axios.post("/users/AddNewUser", {
+        return axios.post("/users/addNewUser", {
             idToken: idToken,
             uid: userCredential.user.uid,
             userdata: userData

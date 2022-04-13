@@ -2,16 +2,11 @@ const express = require("express");
 const router = express.Router();
 const db = require('../database/db.js');
 
-// ===========================================================
+// =========================================================== Endpoints 
 
-router.get("/", function (req, res, next) {
-    return res.send("hello world");
-});
-
-router.post("/AddNewUser", function (req, res, next) {
+router.post("/addNewUser", function (req, res, next) {
     db.addNewUser(req.body)
         .then((status) => {
-            console.log(status);
             if (status === false) {
                 return res.sendStatus(500)
             } else {
@@ -21,11 +16,6 @@ router.post("/AddNewUser", function (req, res, next) {
             console.log(error);
             return res.sendStatus(500)
         })
-});
-
-router.get("/DeleteAllUsers", function (req, res, next) {
-    db.deleteAllUsers();
-    res.sendStatus(200);
 });
 
 router.get("/getUser", async function (req, res, next) {
@@ -51,5 +41,32 @@ router.post("/updateUser", function (req, res, next) {
             return res.sendStatus(500)
         })
 });
+
+router.get("/getUserInfo", function (req, res, next) {
+    db.getUserInfo(req.body.uid)
+        .then((userInfo) => {
+            if(userInfo){
+                res.send(userInfo)
+            }else{
+                return res.sendStatus(500)
+            }
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+});
+
+// =========================================================== Testing endpoints 
+
+router.get("/", function (req, res, next) {
+    return res.send("hello world");
+});
+
+router.get("/deleteAllUsers", function (req, res, next) {
+    db.deleteAllUsers();
+    res.sendStatus(200);
+});
+
+// ===========================================================
 
 module.exports = router;
