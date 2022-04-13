@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import LoginForm from '../containers/LoginForm';
 import Navbar from '../components/Navbar';
 
-import '../assets/styles.css'
+import '../assets/styles.css';
 import TithenaiLogo from '../assets/logos/Uncircled Navyblue.png';
 import LoginGif from '../assets/gifs/Login_300_35.gif';
 

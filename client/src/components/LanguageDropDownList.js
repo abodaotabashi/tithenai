@@ -8,6 +8,39 @@ import BritainFlag from "../assets/icons/great_britain_flag.png";
 import GermanyFlag from "../assets/icons/germany_flag.png";
 import TurkeyFlag from "../assets/icons/turkey_flag.png";
 
+const StyledMenu = withStyles({
+    paper: {
+        border: '1px solid #d3d4d5',
+    },
+})((props) => (
+    <Menu
+        elevation={0}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+        }}
+        {...props}
+    />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+    root: {
+        ' & .MuiListItemText-primary': {
+            fontFamily: "Ubuntu",
+        },
+        '&:hover': {
+            backgroundColor: "#A5F3BC !important",
+            ' & .MuiListItemText-primary': {
+                color: theme.palette.common.black,
+            },
+        },
+    },
+}))(MenuItem);
+
 const LanguageDropDownList = (props) => {
     const { openDropDownMenu, setOpenDropDownMenu } = props;
     const [ currentLang, setCurrentLang ] = useState(localStorage.getItem("i18nextLng") || "en");
@@ -17,40 +50,6 @@ const LanguageDropDownList = (props) => {
         setOpenDropDownMenu(null);
         setCurrentLang(lang);
     }
-
-    const StyledMenu = withStyles({
-        paper: {
-            border: '1px solid #d3d4d5',
-        },
-    })((props) => (
-        <Menu
-            elevation={0}
-            getContentAnchorEl={null}
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-            }}
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-            }}
-            {...props}
-        />
-    ));
-
-    const StyledMenuItem = withStyles((theme) => ({
-        root: {
-            ' & .MuiListItemText-primary': {
-                fontFamily: "Ubuntu",
-            },
-            '&:hover': {
-                backgroundColor: "#A5F3BC !important",
-                ' & .MuiListItemText-primary': {
-                    color: theme.palette.common.black,
-                },
-            },
-        },
-    }))(MenuItem);
 
     const handleCloseDropDownMenu = () => {
         setOpenDropDownMenu(null);

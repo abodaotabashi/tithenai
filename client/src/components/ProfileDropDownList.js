@@ -19,7 +19,6 @@ const ProfileDropDownList = (props) => {
     })((props) => (
         <Menu
             elevation={0}
-            getContentAnchorEl={null}
             anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'center',

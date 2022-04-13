@@ -11,7 +11,7 @@ import PublicIcon from '@mui/icons-material/Public';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import UploadIcon from '@mui/icons-material/Upload';
 import MenuIcon from '@mui/icons-material/Menu';
-import TithenaiLogo from '../assets/logos/Uncircled Green.png';
+import TithenaiLogo from '../assets/logos/Uncircled Navyblue.png';
 
 const useStyles = makeStyles((theme) => ({
     logo: {
@@ -86,7 +86,7 @@ const NavbarWithUser = (props) => {
 
 
     return(
-        <AppBar position="sticky" color="default">
+        <AppBar position="sticky" style={{backgroundColor: "#4BE77A"}}>
             <Toolbar>
                 <Grid container>
                     <Grid item container xs={9} sm={4} md={6} lg={6} direction="row" className="navbarLogoWrapper" alignItems="center" justifyContent="flex-start">
