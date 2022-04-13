@@ -10,6 +10,21 @@ admin.initializeApp({
 
 db = admin.firestore()
 
+// =========================================================== Tokens
+const getUniqueID = async (idToken) => {
+    return await admin
+        .auth()
+        .verifyIdToken(idToken)
+        .then((decodedToken) => {
+            const uid = decodedToken.uid;
+            return uid;
+        })
+        .catch((error) => {
+            console.log(error);
+            return null;
+        });
+};
+
 // =========================================================== Manage Users
 
 async function addNewUser(data) {
