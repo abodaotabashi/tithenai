@@ -36,6 +36,12 @@
     width: 100%;
 }
 
+.whitePageContainer {
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
 .loginBanner {
     width: 100%;
     background: linear-gradient(60deg, #2a3a53, #03122D);
