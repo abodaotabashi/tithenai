@@ -129,6 +129,44 @@
     padding: 10px;
 }
 
+/* ----- Footer ----- */
+
+
+.footer {
+    min-height: 4vh;
+    height: auto !important;
+    width: 100%;
+    background: #03122D;
+    color: #ffffff;
+    position:fixed;
+    bottom:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Ubuntu-Light";
+}
+
+.footerSection{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footerSocialLinkIcon {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.footerLogo {
+    width: 2rem;
+    -moz-user-select: none; 
+    -webkit-user-select: none; 
+    -ms-user-select:none; 
+    user-select:none;
+    -o-user-select:none;
+}
+
 /* ----- Responsive Design ----- */
 
 @media only screen and (max-width: 1199px) {
