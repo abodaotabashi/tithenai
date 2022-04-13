@@ -1,0 +1,279 @@
+/* ----- Overall styles ----- */
+
+.appMain {
+    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+/* ----- Navbar ----- */
+
+.navbarLogoWrapper {
+    font-family: 'Ubuntu-Light';
+    -moz-user-select: none; 
+    -webkit-user-select: none; 
+    -ms-user-select:none; 
+    user-select:none;
+    -o-user-select:none;
+}
+
+/* ----- User Access Layouts ----- */
+
+.loginPageContainer {
+    align-items: center;
+    min-height: 100vh;
+}
+
+.registerPageContainer {
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(60deg, #2a3a53, #03122D);
+    background-size: 300% 200%;
+    animation: navyblueGradientBackground 6s ease infinite;
+    -webkit-animation: navyblueGradientBackground 6s ease infinite;
+    -moz-animation: navyblueGradientBackground 6s ease infinite;
+    width: 100%;
+}
+
+.whitePageContainer {
+    align-items: center;
+    min-height: 100vh;
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+.loginBanner {
+    width: 100%;
+    background: linear-gradient(60deg, #2a3a53, #03122D);
+    background-size: 300% 200%;
+    animation: navyblueGradientBackground 6s ease infinite;
+    -webkit-animation: navyblueGradientBackground 6s ease infinite;
+    -moz-animation: navyblueGradientBackground 6s ease infinite;
+    border-radius: 10px;
+    height: 80vh;
+    margin: auto;
+}
+
+.glassmorphismEffect75 {
+    border-radius: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    background:rgba(255, 255, 255, 0.75);
+    box-shadow: 20px 0 85px rgba(0, 0, 0, 1);
+    backdrop-filter: blur(5px);
+}
+
+.headerLabelLogo {
+    width: 128px;
+    margin-bottom: 0.5vh;
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select:none;
+    user-select:none;
+    -o-user-select:none;
+}
+
+.forwardingSpan {
+    color: #109937;
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
+    font-family: 'Ubuntu-Light';
+}
+
+.forwardingSpan:hover {
+    color: #03122D;
+}
+
+.cropperContainer {
+    max-height: 60vh;
+    min-height: 4vh;
+    min-width: 4vw;
+    max-width: 100%;
+    margin: auto;
+}
+
+.previewerContainer {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.previewerImage {
+    margin: auto;
+    margin-bottom: 2vh;
+    border-radius: 50%;
+    width: 8vw;
+}
+
+.profileInfoViewer {
+    margin: auto;
+    border-radius: 30px;
+    padding: 10px;
+    padding-left: 20px;
+    transition: 500ms;
+}
+
+.profileInfoViewer:hover {
+    background-color: #00000010;
+}
+
+/* ----- Dialogs ----- */
+
+.dialogTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Ubuntu';
+}
+
+.dialogRowContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px;
+}
+
+/* ----- Footer ----- */
+
+.footer {
+    min-height: 4vh;
+    height: auto !important;
+    width: 100%;
+    background: #03122D;
+    color: #ffffff;
+    position:fixed;
+    bottom:0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Ubuntu-Light";
+}
+
+.footerSection{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footerSocialLinkIcon {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.footerLogo {
+    width: 2rem;
+    -moz-user-select: none; 
+    -webkit-user-select: none; 
+    -ms-user-select:none; 
+    user-select:none;
+    -o-user-select:none;
+}
+
+.footerText {
+    margin-block-start: 0.7rem;
+    margin-block-end: 0.7rem;
+    font-family: "Ubuntu-Light";
+}
+
+/* ----- Responsive Design ----- */
+
+@media only screen and (max-width: 1199px) {
+
+    .headerLabelLogo {
+        width: 100px;
+        margin-bottom: 0.5vh;
+        cursor: pointer;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+        -o-user-select:none;
+    }
+}
+
+@media only screen and (max-width: 899px) {
+    .glassmorphismEffect75 {
+        height: fit-content;
+        padding: 30px 0;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        background:rgba(255, 255, 255, 0.75);
+        box-shadow: 20px 0 85px rgba(0, 0, 0, 1);
+        backdrop-filter: blur(5px);
+    }
+}
+
+@media only screen and (max-width: 599px) {
+    .glassmorphismEffect75 {
+        height: fit-content;
+        padding: 30px 0;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        background:rgba(255, 255, 255, 0.75);
+        box-shadow: 20px 0 85px rgba(0, 0, 0, 1);
+        backdrop-filter: blur(5px);
+    }
+
+    .headerLabelLogo {
+        width: 82px;
+        margin-bottom: 0.5vh;
+        cursor: pointer;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select:none;
+        user-select:none;
+        -o-user-select:none;
+    }
+}
+
+/* ----- Animations ----- */
+
+@keyframes navyblueGradientBackground {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+@-webkit-keyframes navyblueGradientBackground {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+@-moz-keyframes navyblueGradientBackground {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}

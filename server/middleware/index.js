@@ -1,4 +1,4 @@
-const admin = require("../routes/users");
+const admin = require("../routes/users.js");
 const { getAuth } = require("firebase-admin/auth");
 
 // class Middleware {
