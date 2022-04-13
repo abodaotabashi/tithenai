@@ -82,11 +82,45 @@
     color: #03122D;
 }
 
+.cropperContainer {
+    max-height: 60vh;
+    min-height: 4vh;
+    min-width: 4vw;
+    max-width: 100%;
+    margin: auto;
+}
+
+.previewerContainer {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.previewerImage {
+    margin: auto;
+    margin-bottom: 2vh;
+    border-radius: 50%;
+    width: 8vw;
+}
+
+/* ----- Dialogs ----- */
+
 .dialogTitle {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Raleway';
+    font-family: 'Ubuntu';
+}
+
+.dialogRowContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px;
 }
 
 /* ----- Responsive Design ----- */
