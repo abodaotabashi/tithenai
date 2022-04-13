@@ -10,10 +10,18 @@ admin.initializeApp({
 
 db = admin.firestore()
 
+// collection names 
+
+const USERS = 'users'; 
+const UNIS = 'universities'; 
+const THESES = 'theses'; 
+const REPORTS = 'reports'; 
+const reviews = 'reviews'; 
+
+
 // =========================================================== Mange Users 
 
 async function addNewUser(data) {
-    // console.log(data);
     uid = data.uid
     idToken = data.idToken
     dbUserData = {
@@ -22,14 +30,16 @@ async function addNewUser(data) {
         userFullname: data.userdata.fullname,
         userGender: data.userdata.gender,
         userTheses: [], // first time adding a user, not theses yet.
-        userAdmin: false // TODO: should this be false by default?
+        userAdmin: false, // TODO: should this be false by default?
+        userReports: [], 
+        // userUniId: data.userdata.uniId // TODO: uncomment this when uniId is ready to use
     }
 
     // When user try to authenticate with google, they might exist in the database 
     // Check if the user exist before adding any new data
 
     return db
-        .collection('users')
+        .collection(USERS)
         .doc(uid)
         .get()
         .then((doc) => {
@@ -38,7 +48,7 @@ async function addNewUser(data) {
                 return true
             } else {
                 return db
-                    .collection('users')
+                    .collection(USERS)
                     .doc(uid)
                     .set(dbUserData)
                     .then(() => { return true })
@@ -53,6 +63,41 @@ async function addNewUser(data) {
         })
 }
 
+async function getUserInfo(uid){
+    
+    // getting the user
+    return db.collection(USERS).doc(uid)
+    .get()
+    .then(async (doc)=> {
+        const userData = doc.data()
+        const uniId = userData.userUniId
+        const userThesesIds = userData.userTheses
+
+        // getting the uni of the user
+        const uniSnapshot = await db.collection(UNIS).doc(uniId).get()
+        const uni = uniSnapshot.data()
+
+        // getting the theses of the user
+        let theses = []; 
+        for (const thesisId of userThesesIds) {
+            const thesissnapshot = await db.collection(THESES).doc(thesisId).get()
+            theses.push(thesissnapshot.data())
+        }
+
+        delete userData.uniId
+        delete userData.userTheses
+
+        const userInfo = {
+            ...userData, 
+            userUniversity: uni, 
+            userTheses: theses
+        }
+        return userInfo; 
+    }).catch((error) => {
+        console.log(error);
+        return false; 
+    })
+}
 
 function deleteAllUsers(nextPageToken) {
     let uids = [];
@@ -71,7 +116,7 @@ function deleteAllUsers(nextPageToken) {
             admin.auth().deleteUsers(uids);
         });
 
-    db.collection('users')
+    db.collection(USERS)
         .get()
         .then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
@@ -84,7 +129,7 @@ function deleteAllUsers(nextPageToken) {
 
 async function getAllUnis() {
     return db
-        .collection("universities")
+        .collection(UNIS)
         .orderBy("uniName", "asc")
         .get()
         .then((querySnapshot) => {
@@ -103,49 +148,26 @@ async function getAllUnis() {
         })
 }
 
-function addUni(uni) {
-    db
-        .collection('universities')
-        .doc()
-        .set({
-            uniCountry: "Turkey",
-            uniName: uni.Name,
-            uniState: uni.State,
-            uniTheses: [],
-            uniType: uni.Type,
-            uniUrl: uni.URL
-        })
-}
+// function addUni(uni) {
+//     db
+//         .collection(UNIS)
+//         .doc()
+//         .set({
+//             uniCountry: "Turkey",
+//             uniName: uni.Name,
+//             uniState: uni.State,
+//             uniTheses: [],
+//             uniType: uni.Type,
+//             uniUrl: uni.URL
+//         })
+// }
 
 
 // =========================================================== Theses
 
-// function addAllTheses() {
-//     const theses = require('./theses.json')
-//     const newTheses = []
-//     theses.forEach(thesis => {
-//         thesis.thesisDate = new Date(thesis.thesisDate)
-//         newThesis = {
-//             ...thesis,
-//             thesisAutherID: "",
-//             thesisUniID: "",
-//             thesisUploadDate: new Date()
-//         }
-//         newTheses.push(newThesis)
-//     });
-//     // console.log(newTheses)
-
-//     newTheses.forEach(thesis => {
-//         db.collection('theses')
-//             .doc()
-//             .set(thesis)
-//     });
-// }
-
-
 async function getAllTheses() {
     return db
-        .collection("theses")
+        .collection(THESES)
         .orderBy("thesisTitle", "asc")
         .get()
         .then((querySnapshot) => {
@@ -164,13 +186,34 @@ async function getAllTheses() {
         })
 }
 
+// function addAllTheses() {
+//     const theses = require('./theses.json')
+//     const newTheses = []
+//     theses.forEach(thesis => {
+//         thesis.thesisDate = new Date(thesis.thesisDate)
+//         newThesis = {
+//             ...thesis,
+//             thesisAutherID: "",
+//             thesisUniID: "",
+//             thesisUploadDate: new Date()
+//         }
+//         newTheses.push(newThesis)
+//     });
+//     // console.log(newTheses)
+
+//     newTheses.forEach(thesis => {
+//         db.collection(THESES)
+//             .doc()
+//             .set(thesis)
+//     });
+// }
+
 // =========================================================== Exports
 
 module.exports.deleteAllUsers = deleteAllUsers;
 module.exports.addNewUser = addNewUser;
 module.exports.getAllUnis = getAllUnis;
-module.exports.addUni = addUni;
 module.exports.getAllTheses = getAllTheses;
+module.exports.getUserInfo = getUserInfo; 
 // module.exports.addAllTheses = addAllTheses;
-
-
+// module.exports.addUni = addUni;
