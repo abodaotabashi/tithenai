@@ -18,15 +18,21 @@ const Footer = (props) => {
                     component={Grid}
                     className='footerSection'
                     item
-                    sm={4} md={4} lg={3}
-                    sx={{ display: { xs: 'none', sm: 'block', md: 'block', lg:"block" } }}
+                    xs={12} sm={4} md={4} lg={3}
+                    sx={{ display: { xs: 'block', sm: 'block', md: 'block', lg:"block" } }}
                     >
                     <p className='footerText'>Tithenai {new Date().getFullYear()} ©</p>
                 </Box>
-                <Grid item xs={2} sm={4} md={4} lg={6} className='footerSection' >
+                <Box
+                    component={Grid}
+                    className='footerSection'
+                    item
+                    sm={4} md={4} lg={6}
+                    sx={{ display: { xs: 'none', sm: 'block', md: 'block', lg:"block" } }}
+                    >
                     <img className='footerLogo' src={TithenaiLogo} alt='TithenaiLogo'/>
-                </Grid>
-                <Grid item container xs={10} sm={4} md={4} lg={3} className='footerSection' >
+                </Box>
+                <Grid item container xs={12} sm={4} md={4} lg={3} className='footerSection' >
                     <IconButton size="small" style={{color: "white", margin: "auto"}} onClick={() => window.location.href = `https://www.facebook.com/`}>
                         <img className='footerSocialLinkIcon' src={FacebookIcon} alt='facebookIcon'/>
                     </IconButton>

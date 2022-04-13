@@ -5,6 +5,7 @@ import { CssBaseline } from '@mui/material';
 
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
+import MyProfilePage from '../pages/MyProfilePage';
 
 class App extends Component {
     constructor(props){
@@ -70,9 +71,9 @@ class App extends Component {
                         <Routes>
                             <Route path='/login' exact element={<LoginPage/>} />
                             <Route path='/register' exact element={<RegisterPage/>}/>
+                            <Route path='/myProfile' exact element={<MyProfilePage/>} />
                             {/*
                             <Route path='/' exact element={<LandingPage/>}/>
-                            <Route path='/editProfile' exact element={<EditProfilePage/>}/>
                             */}
                         </Routes>
                     </Router>

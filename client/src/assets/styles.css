@@ -143,7 +143,6 @@
 
 /* ----- Footer ----- */
 
-
 .footer {
     min-height: 4vh;
     height: auto !important;
@@ -177,6 +176,12 @@
     -ms-user-select:none; 
     user-select:none;
     -o-user-select:none;
+}
+
+.footerText {
+    margin-block-start: 0.7rem;
+    margin-block-end: 0.7rem;
+    font-family: "Ubuntu-Light";
 }
 
 /* ----- Responsive Design ----- */
