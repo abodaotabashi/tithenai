@@ -18,24 +18,10 @@ router.post("/addNewUser", function (req, res, next) {
         })
 });
 
-router.get("/getUser", async function (req, res, next) {
-    await db.getUser(req.query.tokenID).then((result) => {
-        res.send(result);
-    }).catch((error) => {
-        console.log(error)
-        res.sendStatus(200);
-    })
-});
-
 router.post("/updateUser", function (req, res, next) {
     db.updateUser(req.body)
         .then((status) => {
-            console.log(status);
-            if (status === false) {
-                return res.sendStatus(500)
-            } else {
-                return res.sendStatus(200)
-            }
+            return status ? res.sendStatus(200) : res.sendStatus(500); 
         }).catch((error) => {
             console.log(error);
             return res.sendStatus(500)

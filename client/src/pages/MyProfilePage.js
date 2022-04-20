@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { makeStyles } from '@mui/styles';
 import { CssBaseline, Grid, Paper, Avatar, Button, AccordionSummary, Accordion, AccordionDetails, Typography, AccordionActions, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -10,8 +10,7 @@ import EditProfileForm from '../containers/EditProfileForm';
 import ImageViewDialog from '../components/ImageViewDialog';
 import ImageCropperDialog from '../components/ImageCropperDialog';
 
-import { getMyToken } from '../auth/auth';
-import { getUser } from '../Service';
+import { getUserInfo, updateUser } from '../Service';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TelegramIcon from '@mui/icons-material/Telegram';
@@ -105,6 +104,7 @@ const MyProfilePage = () => {
     const handleUpdateImage = (croppedImageBase64) => {
         setUserPhoto(croppedImageBase64)
         //TODO: Update the photo in Database
+        //TODO: Nur: updating the photo and the data should happen together. 
     }
 
     const handleToggleToEditMode = () => {
@@ -113,6 +113,10 @@ const MyProfilePage = () => {
 
     const handleUpdateProfile = (values, props) => {
         //TODO: Update Profile
+        if(userAuth){
+            const uid = userAuth.uid; 
+            updateUser(values, uid)
+        } 
         setIsEditing(false);
     }
 

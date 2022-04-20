@@ -12,10 +12,10 @@ db = admin.firestore()
 
 // collection names 
 
-const USERS = 'users'; 
-const UNIS = 'universities'; 
-const THESES = 'theses'; 
-const REPORTS = 'reports'; 
+const USERS = 'users';
+const UNIS = 'universities';
+const THESES = 'theses';
+const REPORTS = 'reports';
 const REVIEWS = 'reviews';
 
 const DEFAULT_UNI = {
@@ -40,7 +40,7 @@ async function addNewUser(data) {
         userGender: data.userdata.userGender,
         userTheses: [], // first time adding a user, no theses yet.
         userAdmin: false,
-        userReports: [], 
+        userReports: [],
     }
 
     // When user try to authenticate with google, they might exist in the database
@@ -51,15 +51,15 @@ async function addNewUser(data) {
         .doc(uid)
         .get()
         .then((doc) => {
-                return db
-                    .collection(USERS)
-                    .doc(uid)
-                    .set(dbUserData)
+            return db
+                .collection(USERS)
+                .doc(uid)
+                .set(dbUserData)
                 .then(() => true)
-                    .catch((error) => {
-                        console.log(error);
-                        return false;
-                    })
+                .catch((error) => {
+                    console.log(error);
+                    return false;
+                })
         }).catch((error) => {
             console.log(error);
             return false;
@@ -68,42 +68,42 @@ async function addNewUser(data) {
 
 async function getUserInfo(uid) {
     return db.collection(USERS).doc(uid)
-    .get()
+        .get()
         .then(async (doc) => {
             const authUserData = await admin.auth().getUser(uid)
             const firebaseUserData = doc.data()
             const uniID = firebaseUserData.userUniversityID
             const userThesesIds = firebaseUserData.userTheses
 
-        // getting the uni of the user
+            // getting the uni of the user
             let uni = DEFAULT_UNI
             if (uniID) {
                 const uniSnapshot = await db.collection(UNIS).doc(uniID).get();
                 uni = uniSnapshot.data()
             }
 
-        // getting the theses of the user
-        let theses = []; 
-        for (const thesisId of userThesesIds) {
+            // getting the theses of the user
+            let theses = [];
+            for (const thesisId of userThesesIds) {
                 const thesissnapshot = await db.collection(THESES).doc(thesisId).get();
-            theses.push(thesissnapshot.data())
-        }
+                theses.push(thesissnapshot.data())
+            }
 
             delete firebaseUserData.uniId
             delete firebaseUserData.userTheses
 
-        const userInfo = {
+            const userInfo = {
                 ...firebaseUserData,
                 userEmail: authUserData.email,
                 userPhotoURL: authUserData.photoURL, // undefined if there is no image
-            userUniversity: uni, 
-            userTheses: theses
-        }
-        return userInfo; 
-    }).catch((error) => {
-        console.log(error);
-        return false; 
-    })
+                userUniversity: uni,
+                userTheses: theses
+            }
+            return userInfo;
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        })
 }
 
 function deleteAllUsers(nextPageToken) {
@@ -126,33 +126,57 @@ function deleteAllUsers(nextPageToken) {
         });
 }
 
+// TODO: update photo url, email, university
+async function updateUser(newUserData) {
 
-async function getUser(tokenID) {
-    const uid = await getUniqueID(tokenID)
-    return db
-        .collection("users")
-        .doc(uid)
-        .get()
-        .then((docRef) => {
-            return docRef.data();
-        }).catch((error) => {
-            console.log(error);
-            return false;
-        })
-}
+    async function updateNameInCollection(collectionName, uid, userIDField, userNameField) {
+        const docs = await db.collection(collectionName).where(userIDField, '==', uid).get();
+        docs.forEach(async doc => {
+            await db.collection(collectionName)
+                .doc(doc.id)
+                .update({
+                    [userNameField]: `${newUserData.userFirstname} ${newUserData.userLastname}`,
+                })
+        });
+    }
 
-function updateUser(user) {
-    return db
-        .collection('users')
-        .doc("wu7kefnFETdjYt1OlWf4qzD38Tj1")
-        .set({
-            userAcademicStatus: user.academicStatus,
-            userAdmin: user.admin,
-            userFullname: user.fullname,
-            userGender: user.gender,
-            userTheses: user.userTheses,
-            //TODO: Update University ID
-        })
+    try {
+        // 1. update user data in the users collcection  
+        await db.collection(USERS)
+            .doc(newUserData.uid)
+            .update({
+                userFirstname: newUserData.userFirstname,
+                userLastname: newUserData.userLastname,
+                userAcademicStatus: newUserData.userAcademicStatus,
+                userUniversityID: newUserData.userUniversityID
+            })
+
+        // TODO: change ids to newUserData.uid
+        // 2. update user name in reports collection 
+        await updateNameInCollection(REPORTS, "H3oTJBNenKcZbvBZUSSpFMmACTw1", 'reportReporterID', "reporterName");
+
+        // 3. update user name in reviews collection 
+        await updateNameInCollection(REVIEWS, "BJNZ5b1Lxw1hT3UmjTXw", 'reviewAuthorID', "reviewAuthorName");
+
+        // 4. update user name in theses collection 
+        await updateNameInCollection(THESES, "3tHhtdMqrnRfG6LULfHBC3VPlk03", 'thesisAutherID', "thesisAuthorName");
+
+        // 5. update user data in auth 
+        // TODO: 1. photo url 
+        // 2. email 
+
+        admin.auth()
+            .updateUser(newUserData.uid, {
+                email: newUserData.userEmail,
+                emailVerified: false,
+                // userPhotoURL: ''
+            })
+
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+    return true;
 }
 
 // =========================================================== Universities
@@ -208,6 +232,6 @@ module.exports.addNewUser = addNewUser;
 module.exports.getAllUnis = getAllUnis;
 module.exports.updateUser = updateUser;
 module.exports.getAllTheses = getAllTheses;
-module.exports.getUserInfo = getUserInfo; 
+module.exports.getUserInfo = getUserInfo;
 // module.exports.addAllTheses = addAllTheses;
 // module.exports.addUni = addUni;

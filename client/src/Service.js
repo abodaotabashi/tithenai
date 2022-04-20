@@ -33,15 +33,17 @@ export const getUserInfo = async (uid) => {
     }).catch(error => console.log(error))
 }
 
-export function updateUser(user) {
+export function updateUser(values, uid) {
+
     return axios.post("/users/updateUser", {
-        academicStatus: user.academicStatus,
-        admin: user.admin,
-        fullname: user.fullname,
-        gender: user.gender,
-        userTheses: user.userTheses,
+        uid: uid,
+        userFirstname: values.firstname, 
+        userLastname: values.lastname, 
+        userAcademicStatus: values.status,
+        userEmail: values.email,
+        userUniversityID: values.university.uniId
+        // TODO: update photo here
     }).then((result) => {
         return result.data;
     }).catch(error => console.log(error))
 }
-
