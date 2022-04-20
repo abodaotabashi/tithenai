@@ -72,7 +72,7 @@ router.get("/search", function (req, res, next) {
                     isSearched = englishThesisLanguage.includes(query) || isSearched;
                 }
 
-                // TODO: Is it a range or a specific year?
+                // TODO: When searching for a specific year, is it a range or a specific year?
 
             } else {
                 isSearched = true;

@@ -14,28 +14,20 @@ export const getAllUnis = () => {
 
 // =========================================================== Users
 
-// export function getAllUnis(data) {
-//     return axios.post("/universities/getAllUnis", {
-//         header: {
-//             username: data.username
-//         }
-//     })
-//         .then((result) => {
-//             return result.data;
-//         }).catch(error => console.log(error))
-// }
-export const getUser = async (tokenID) => {
-    return await axios.get("/users/getUser", {
+export const getUserInfo = async (uid) => {
+    return await axios.get("/users/getUserInfo", {
         params: {
-            tokenID: tokenID
+            uid: uid
         }
     }).then((result) => {
-        //TODO: Get the email address of the user
+        console.log(result.data);
         const userInfo = {
-            "status": result.data.userAcademicStatus,
-            "firstname": result.data.userFirstname,
-            "lastname": result.data.userLastname,
-            "university": result.data.userUniversityID, //TODO: Get the Ref of University (complete object of University instead of id)
+            status: result.data.userAcademicStatus,
+            firstname: result.data.userFirstname,
+            lastname: result.data.userLastname,
+            university: result.data.userUniversity, 
+            email: result.data.userEmail, 
+            photoURL: result.data.userPhotoURL // undefined if there is no photo
         }
         return userInfo;
     }).catch(error => console.log(error))

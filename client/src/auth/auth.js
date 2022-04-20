@@ -73,11 +73,11 @@ export const signUpWithEmail = (values) => {
     return createUserWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
             const userData = {
-                universityID: values.university.uniId,
-                academicStatus: values.status,
-                firstname: FormatName(values.firstname),
-                lastname: FormatName(values.lastname),
-                gender: values.gender
+                userUniversityID: values.university.uniId,
+                userAcademicStatus: values.status,
+                userFirstname: FormatName(values.firstname),
+                userLastname: FormatName(values.lastname),
+                userGender: values.gender
             };
             return addNewUser(userCredential, userData)
             .then((result) => {
@@ -113,33 +113,23 @@ export const signUpWithGoogle = () => {
     return signInWithPopup(auth, provider)
         .then((result) => {
             const userCredential = result;
-            const userData = {
-                universityID: "",   //By continuing with google some values are missing and the user has to enter those values from the layout of edit profile page.
-                academicStatus: "",
-                firstname: userCredential.user.displayName.substring(0, userCredential.user.displayName.indexOf(' ')),
-                lastname: userCredential.user.displayName.substring(userCredential.user.displayName.indexOf(' ') + 1),
-                gender: ""
-            };
-            return addNewUser(userCredential, userData)
-            .then((result) => {
-                return result;
-            }).catch((error) => {
-                console.log(error)
-                return false;
-            })
-        })
-        .catch((error)=>{
-            console.log(error);
-            return false;
-        });
-};
-
-export const signInWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    const auth = getAuth();
-    return signInWithPopup(auth, provider)
-        .then((result) => {
-            return true;
+            // some values are missing and the user has to enter those values from the layout of edit profile page.
+            if(result._tokenResponse.isNewUser){
+                const userData = {
+                    userUniversityID: "",   
+                    userAcademicStatus: "",
+                    userFirstname: userCredential.user.displayName.split(" ")[0],
+                    userLastname: userCredential.user.displayName.split(" ")[1],
+                    userGender: ""
+                };
+                return addNewUser(userCredential, userData)
+                .then((result) => {
+                    return result;
+                }).catch((error) => {
+                    console.log(error)
+                    return false;
+                })
+            }
         })
         .catch((error)=>{
             console.log(error);

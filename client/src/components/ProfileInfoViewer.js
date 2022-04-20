@@ -18,13 +18,13 @@ const ProfileInfoViewer = (props) => {
                     <Typography variant="subtitle1" component="div" style={{textAlign: "start", fontFamily: "Ubuntu", fontWeight: "bold", paddingBottom: "1rem"}}>
                         E-Mail Address: &nbsp;
                         <Typography variant="subtitle1" component="span" style={{textAlign: "start", fontFamily: "Ubuntu-Light"}}>
-                            {/*userInfo.email*/}
+                            {userInfo.email}
                         </Typography>
                     </Typography>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Typography variant="subtitle1" component="div" style={{textAlign: "start", fontFamily: "Ubuntu", fontWeight: "bold", paddingBottom: "1rem"}}>
-                        {userInfo.status} at {userInfo.university}
+                        {userInfo.status} at {userInfo.university.uniName}
                     </Typography>
                 </Grid>
             </Grid>

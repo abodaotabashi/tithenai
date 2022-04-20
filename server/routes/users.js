@@ -43,11 +43,12 @@ router.post("/updateUser", function (req, res, next) {
 });
 
 router.get("/getUserInfo", function (req, res, next) {
-    db.getUserInfo(req.body.uid)
+    const uid = req.query.uid;
+    db.getUserInfo(uid)
         .then((userInfo) => {
-            if(userInfo){
+            if (userInfo) {
                 res.send(userInfo)
-            }else{
+            } else {
                 return res.sendStatus(500)
             }
         }).catch((error) => {
@@ -57,10 +58,6 @@ router.get("/getUserInfo", function (req, res, next) {
 });
 
 // =========================================================== Testing endpoints 
-
-router.get("/", function (req, res, next) {
-    return res.send("hello world");
-});
 
 router.get("/deleteAllUsers", function (req, res, next) {
     db.deleteAllUsers();

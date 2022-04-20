@@ -83,8 +83,11 @@ const MyProfilePage = () => {
     useEffect(() => {
         if(userAuth){
             const uid = userAuth.uid; 
+            getUserInfo(uid).then(userInfo =>{
                 setUserInfo(userInfo)
-                //TODO: Setting State of UserPhoto
+                if(userInfo.photoURL){
+                    setUserPhoto(userInfo.photoURL)
+                }
             })
         }
     }, [userAuth]);

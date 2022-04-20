@@ -16,22 +16,16 @@ const USERS = 'users';
 const UNIS = 'universities'; 
 const THESES = 'theses'; 
 const REPORTS = 'reports'; 
-const reviews = 'reviews'; 
+const REVIEWS = 'reviews';
 
-// =========================================================== Tokens
-const getUniqueID = async (idToken) => {
-    return await admin
-        .auth()
-        .verifyIdToken(idToken)
-        .then((decodedToken) => {
-            const uid = decodedToken.uid;
-            return uid;
-        })
-        .catch((error) => {
-            console.log(error);
-            return null;
-        });
-};
+const DEFAULT_UNI = {
+    uniCountry: "",
+    uniName: "",
+    uniState: "",
+    uniTheses: "",
+    uniType: "",
+    uniUrl: ""
+}
 
 // =========================================================== Manage Users
 
@@ -39,16 +33,14 @@ async function addNewUser(data) {
     uid = data.uid
     idToken = data.idToken
     dbUserData = {
-        userUniversityID: data.userdata.universityID,
-        userAcademicStatus: data.userdata.academicStatus,
-        userAdmin: data.userdata.admin,
-        userFirstname: data.userdata.firstname,
-        userLastname: data.userdata.lastname,
-        userGender: data.userdata.gender,
-        userTheses: [], // first time adding a user, not theses yet.
-        userAdmin: false, // TODO: should this be false by default?
+        userUniversityID: data.userdata.userUniversityID,
+        userAcademicStatus: data.userdata.userAcademicStatus,
+        userFirstname: data.userdata.userFirstname,
+        userLastname: data.userdata.userLastname,
+        userGender: data.userdata.userGender,
+        userTheses: [], // first time adding a user, no theses yet.
+        userAdmin: false,
         userReports: [], 
-        // userUniId: data.userdata.uniId // TODO: uncomment this when uniId is ready to use
     }
 
     // When user try to authenticate with google, they might exist in the database
@@ -59,52 +51,51 @@ async function addNewUser(data) {
         .doc(uid)
         .get()
         .then((doc) => {
-            if (doc.exists) {
-                console.log("The user already exist in the database");
-                return true
-            } else {
                 return db
                     .collection(USERS)
                     .doc(uid)
                     .set(dbUserData)
-                    .then(() => { return true })
+                .then(() => true)
                     .catch((error) => {
                         console.log(error);
                         return false;
                     })
-            }
         }).catch((error) => {
             console.log(error);
             return false;
         })
 }
 
-async function getUserInfo(uid){
-    
-    // getting the user
+async function getUserInfo(uid) {
     return db.collection(USERS).doc(uid)
     .get()
-    .then(async (doc)=> {
-        const userData = doc.data()
-        const uniId = userData.userUniId
-        const userThesesIds = userData.userTheses
+        .then(async (doc) => {
+            const authUserData = await admin.auth().getUser(uid)
+            const firebaseUserData = doc.data()
+            const uniID = firebaseUserData.userUniversityID
+            const userThesesIds = firebaseUserData.userTheses
 
         // getting the uni of the user
-        const uniSnapshot = await db.collection(UNIS).doc(uniId).get()
-        const uni = uniSnapshot.data()
+            let uni = DEFAULT_UNI
+            if (uniID) {
+                const uniSnapshot = await db.collection(UNIS).doc(uniID).get();
+                uni = uniSnapshot.data()
+            }
 
         // getting the theses of the user
         let theses = []; 
         for (const thesisId of userThesesIds) {
-            const thesissnapshot = await db.collection(THESES).doc(thesisId).get()
+                const thesissnapshot = await db.collection(THESES).doc(thesisId).get();
             theses.push(thesissnapshot.data())
         }
 
-        delete userData.uniId
-        delete userData.userTheses
+            delete firebaseUserData.uniId
+            delete firebaseUserData.userTheses
 
         const userInfo = {
-            ...userData, 
+                ...firebaseUserData,
+                userEmail: authUserData.email,
+                userPhotoURL: authUserData.photoURL, // undefined if there is no image
             userUniversity: uni, 
             userTheses: theses
         }
@@ -123,12 +114,6 @@ function deleteAllUsers(nextPageToken) {
         .then((listUsersResult) => {
             uids = uids.concat(listUsersResult.users.map((userRecord) => userRecord.uid));
             console.log(uids);
-            if (listUsersResult.pageToken) {
-                deleteAllUsers(listUsersResult.pageToken);
-            }
-        })
-        .catch((error) => {
-            console.log('Error listing users:', error);
             admin.auth().deleteUsers(uids);
         });
 
@@ -193,21 +178,6 @@ async function getAllUnis() {
         })
 }
 
-// function addUni(uni) {
-//     db
-//         .collection(UNIS)
-//         .doc()
-//         .set({
-//             uniCountry: "Turkey",
-//             uniName: uni.Name,
-//             uniState: uni.State,
-//             uniTheses: [],
-//             uniType: uni.Type,
-//             uniUrl: uni.URL
-//         })
-// }
-
-
 // =========================================================== Theses
 
 async function getAllTheses() {
@@ -231,34 +201,11 @@ async function getAllTheses() {
         })
 }
 
-// function addAllTheses() {
-//     const theses = require('./theses.json')
-//     const newTheses = []
-//     theses.forEach(thesis => {
-//         thesis.thesisDate = new Date(thesis.thesisDate)
-//         newThesis = {
-//             ...thesis,
-//             thesisAutherID: "",
-//             thesisUniID: "",
-//             thesisUploadDate: new Date()
-//         }
-//         newTheses.push(newThesis)
-//     });
-//     // console.log(newTheses)
-
-//     newTheses.forEach(thesis => {
-//         db.collection(THESES)
-//             .doc()
-//             .set(thesis)
-//     });
-// }
-
 // =========================================================== Exports
 
 module.exports.deleteAllUsers = deleteAllUsers;
 module.exports.addNewUser = addNewUser;
 module.exports.getAllUnis = getAllUnis;
-module.exports.getUser = getUser;
 module.exports.updateUser = updateUser;
 module.exports.getAllTheses = getAllTheses;
 module.exports.getUserInfo = getUserInfo; 
