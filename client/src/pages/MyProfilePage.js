@@ -18,6 +18,9 @@ import TelegramIcon from '@mui/icons-material/Telegram';
 import '../assets/styles.css'
 import Footer from '../components/Footer';
 
+import { AuthContext } from '../utils/Context';
+
+
 const useStyles = makeStyles(theme => ({
     paper: {
         padding: "20px",
@@ -75,16 +78,17 @@ const MyProfilePage = () => {
     const classes = useStyles();
     const inputField = useRef(null);
 
-    useEffect(async () => {
-        //const myToken = await getMyToken();
-        //console.log(myToken)
-        await getUser("eyJhbGciOiJSUzI1NiIsImtpZCI6ImFhZmE4MTJiMTY5NzkxODBmYzc4MjA5ZWE3Y2NhYjkxZTY4NDM2NTkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vdGl0aGVuYWktMjM4NjciLCJhdWQiOiJ0aXRoZW5haS0yMzg2NyIsImF1dGhfdGltZSI6MTY0OTgyMDk3MywidXNlcl9pZCI6IlNJY215NkFOUG9TZ2hoWldPVXpZMFRQeEQwRTMiLCJzdWIiOiJTSWNteTZBTlBvU2doaFpXT1V6WTBUUHhEMEUzIiwiaWF0IjoxNjQ5ODI4Nzc0LCJleHAiOjE2NDk4MzIzNzQsImVtYWlsIjoiYWJkQGFiZC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsiYWJkQGFiZC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.QEDX3eBNVwWK68xoIn08izGpRYnkMRRmVejTh8XcYHaADnfai4PVmSt7yeT94vW700i9j4UKAOtJ0IDy4pvj45sJ6IQkCCfRBkEsVk42kKNVDZJuMeYlpGM7ONaMCeSybZlqY4OBPwuu4hgN0UApaHx-j2Ilt6FZQT86x6JdYN6Xiy70tgs731tRLQqzeSCqO4EKnPmh8Lmol1txe1RFRBC2-KXPlbOekoxJMfPZiFXrwC-vXvduoA4iP4yN8rP0VaRY90dkp5ipSraa-5d37BQt6vfH3mOT2nBFPDY0cRCh1wNvQTmVW2FVb4aIcNfcNW_Nu0ItxDuGCJLRdORifg")
-            .then(userInfo => {
+    const { userAuth, setUserAuth } = useContext(AuthContext)
+
+    useEffect(() => {
+        if(userAuth){
+            const uid = userAuth.uid; 
                 setUserInfo(userInfo)
                 //TODO: Setting State of UserPhoto
             })
-            .catch(error => console.log(error));
-    }, []);
+        }
+    }, [userAuth]);
+
 
     const handleOpenCropper = (event) => {
         if (!event.target.files || Object.keys(event.target.files).length === 0) {
