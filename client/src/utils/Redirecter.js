@@ -13,3 +13,7 @@ export const redirectToLandingPage = (navigator) => {
 export const redirectToMyProfilePage = (navigator) => {
     navigator("/myProfile");
 }
+
+export const redirectToMyPapersPage = (navigator) => {
+    navigator("/myPapers");
+}

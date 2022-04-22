@@ -79,7 +79,10 @@ async function getUserInfo(uid) {
             let uni = DEFAULT_UNI
             if (uniID) {
                 const uniSnapshot = await db.collection(UNIS).doc(uniID).get();
-                uni = uniSnapshot.data()
+                uni = {
+                    uniId: uniID,
+                    ...uniSnapshot.data()
+                }
             }
 
             // getting the theses of the user

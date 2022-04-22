@@ -3,22 +3,23 @@ import { makeStyles } from '@mui/styles';
 import { CssBaseline, Grid, Paper, Avatar, Button, AccordionSummary, Accordion, AccordionDetails, Typography, AccordionActions, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { getUserInfo, updateUser } from '../Service';
+import { AuthContext } from '../utils/Context';
+import { redirectToMyPapersPage } from '../utils/Redirecter';
 
 import NavbarWithUser from '../components/NavbarWithUser';
 import ProfileInfoViewer from '../components/ProfileInfoViewer';
 import EditProfileForm from '../containers/EditProfileForm';
 import ImageViewDialog from '../components/ImageViewDialog';
 import ImageCropperDialog from '../components/ImageCropperDialog';
+import Footer from '../components/Footer';
+import AnimatedNumber from 'react-animated-number';
 
-import { getUserInfo, updateUser } from '../Service';
+
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TelegramIcon from '@mui/icons-material/Telegram';
-import '../assets/styles.css'
-import Footer from '../components/Footer';
-
-import { AuthContext } from '../utils/Context';
-
+import '../assets/styles.css';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -29,7 +30,15 @@ const useStyles = makeStyles(theme => ({
         borderRadius: "30px",
         border: "3px solid",
         borderImageSlice: "1",
-        borderImageSource: "linear-gradient(45deg, #1BC54B, #00290F)"
+        borderImageSource: "linear-gradient(45deg, #1BC54B, #00290F)",
+        [theme.breakpoints.down('md')]: {
+            marginBlockStart: "0",
+            marginBlockEnd: "0",
+            marginBottom: "10vh",
+        },
+        [theme.breakpoints.down('sm')]: {
+            marginBottom: "10vh",
+        },
     },
     avatarWrapper: {
         display: "flex",
@@ -37,7 +46,42 @@ const useStyles = makeStyles(theme => ({
         alignItems: "center",
         justifyContent: "flex-start",
         width: "100%",
-    }
+    },
+    papersCounter: {
+        fontFamily: "Ubuntu-Light",
+        color: theme.palette.secondary.dark,
+        fontSize: "5rem",
+        [theme.breakpoints.down('md')]: {
+            fontSize: "3rem",
+        },
+        [theme.breakpoints.down('sm')]: {
+            fontSize: "3rem",
+        },
+        [theme.breakpoints.down('xs')]: {
+            fontSize: "3rem",
+        },
+    },
+    papersLabel: {
+        fontSize: "xx-large",
+        fontFamily: "Ubuntu",
+        textAlign: "start",
+        paddingLeft: "2rem",
+        color: theme.palette.secondary.dark,
+        [theme.breakpoints.down('md')]: {
+            marginBlockStart: "0.5em",
+            marginBlockEnd: "0.5em",
+            textAlign: "center",
+            paddingLeft: "0",
+            fontSize: "x-large",
+        },
+        [theme.breakpoints.down('sm')]: {
+            marginBlockStart: "0.5em",
+            marginBlockEnd: "0.5em",
+            textAlign: "center",
+            paddingLeft: "0",
+            fontSize: "x-large",
+        },
+    },
 }));
 
 const UpdateImageButton = styled(Button)(({ theme }) => ({
@@ -66,6 +110,18 @@ const ResetPasswordButton = styled(Button)(({ theme }) => ({
     },
 }));
 
+const MyPapersBox = styled(Paper)(({ theme }) => ({
+    fontFamily: "Ubuntu-Light",
+    fontWeight: "bold",
+    background: "linear-gradient(75deg, #1BC54B80, #A5F3BC70)",
+    padding: "10px",
+    border: `2px solid ${theme.palette.primary.dark}`,
+    '&:hover': {
+        background: "linear-gradient(75deg, #1BC54B98, #A5F3BC90)",
+        cursor: "pointer"
+    },
+}));
+
 const MyProfilePage = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [userInfo, setUserInfo] = useState();
@@ -77,11 +133,11 @@ const MyProfilePage = () => {
     const classes = useStyles();
     const inputField = useRef(null);
 
-    const { userAuth, setUserAuth } = useContext(AuthContext)
+    const { userAuth } = useContext(AuthContext)
 
     useEffect(() => {
         if(userAuth){
-            const uid = userAuth.uid; 
+            const uid = userAuth.uid;
             getUserInfo(uid).then(userInfo =>{
                 setUserInfo(userInfo)
                 if(userInfo.photoURL){
@@ -104,19 +160,29 @@ const MyProfilePage = () => {
     const handleUpdateImage = (croppedImageBase64) => {
         setUserPhoto(croppedImageBase64)
         //TODO: Update the photo in Database
-        //TODO: Nur: updating the photo and the data should happen together. 
+        //TODO: Nur: updating the photo and the data should happen together.
+        //TODO: Abdurrahman: The photo updating button is separated from another info updating button, thus we should have a separated function for it.
     }
 
     const handleToggleToEditMode = () => {
         setIsEditing(true);
     }
 
-    const handleUpdateProfile = (values, props) => {
-        //TODO: Update Profile
+    const handleUpdateProfile = async (values, props) => {
         if(userAuth){
-            const uid = userAuth.uid; 
-            updateUser(values, uid)
-        } 
+            const uid = userAuth.uid;
+            updateUser(values, uid).then((result) => {
+                if( result.status === 200 && result.data === "OK" ) {
+                    setUserInfo({
+                        email: values.email,
+                        firstname: values.firstname,
+                        lastname: values.lastname,
+                        status: values.status,
+                        university: values.university
+                    });
+                }
+            })
+        }
         setIsEditing(false);
     }
 
@@ -171,15 +237,32 @@ const MyProfilePage = () => {
                                     <ResetPasswordButton startIcon={<TelegramIcon />} style={{ fontFamily: "Ubuntu", marginLeft: "1vw"}} >Send Me A Link</ResetPasswordButton>
                                 </AccordionActions>
                             </Accordion>
-                            <br ></br>
-                            {/* <Divider variant="middle" />
-                            <br ></br>*/}
+                            <br />
+                            <Divider variant="middle" />
+                            <br />
                         </Grid>
-                        {/*<Grid item xs={12} sm={12} md={11} lg={11}>
-                            <Paper elevation={8} className="profileMySubmissionPaper">
-                                asdas
-                            </Paper>
-                        </Grid>*/}
+                        <Grid item xs={12} sm={12} md={11} lg={11}>
+                            <MyPapersBox elevation={12} onClick={() => redirectToMyPapersPage(navigator)}>
+                                <Grid container alignItems="center" justifyContent="center">
+                                    <Grid item xs={12} sm={12} md={9} lg={9}>
+                                        <p className={classes.papersLabel}>My Papers</p>
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={3} lg={3}>
+                                    {typeof(userInfo) !== "undefined" && typeof(userInfo.theses) !== "undefined" ?
+                                        <AnimatedNumber
+                                            className={classes.papersCounter}
+                                            value={userInfo.theses.length}
+                                            formatValue={n => n.toFixed(0)}
+                                            frameStyle={percentage => percentage > 15 && percentage < 85 ? { opacity: 0.5 } : {}}
+                                            duration={500}
+                                        />
+                                        :
+                                        null
+                                    }
+                                    </Grid>
+                                </Grid>
+                            </MyPapersBox>
+                        </Grid>
                     </Grid>
                 </Grid>
                 <ImageCropperDialog
