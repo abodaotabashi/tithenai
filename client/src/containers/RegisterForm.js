@@ -189,6 +189,7 @@ class RegisterForm extends Component {
                                     autoComplete
                                     includeInputInList
                                     onChange={(e, value) => setFieldValue("status", value !== null ? value : initial_form_values.status)}
+                                    isOptionEqualToValue={(option, value) => option === value}
                                     renderInput={(params) => (
                                         <TextField {...params}
                                             name="status"
@@ -213,6 +214,7 @@ class RegisterForm extends Component {
                                     options={this.state.universities}
                                     getOptionLabel={(option) => option.uniName ? option.uniName : ""}
                                     autoComplete
+                                    isOptionEqualToValue={(option, value) => option.uniName === value.uniName}
                                     onChange={(e, value) => setFieldValue("university", value)}
                                     renderInput={(params) => (
                                         <TextField {...params}

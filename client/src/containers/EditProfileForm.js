@@ -174,6 +174,7 @@ export default class EditProfileForm extends Component {
                                     name="university"
                                     filterOptions={filterOptions}
                                     options={this.state.universities}
+                                    isOptionEqualToValue={(option, value) => option.uniName === value.uniName}
                                     getOptionLabel={(option) => option.uniName ? option.uniName : ""}
                                     autoComplete
                                     onChange={(e, value) => setFieldValue("university", value)}

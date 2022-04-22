@@ -9,6 +9,7 @@ import RegisterGif from '../assets/gifs/Register_480.gif';
 import GoogleGif from '../assets/gifs/GoogleLogoOptimized.gif';
 import '../assets/styles.css'
 import { signUpWithGoogle } from '../auth/auth';
+import { redirectToLoginPage } from '../utils/Redirecter';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -86,10 +87,6 @@ const RegisterPage = (props) => {
     const classes = useStyles();
     const navigator = useNavigate();
 
-    const redirectToLoginPage = () =>{
-        navigator('/login');
-    }
-
     const handleSignUpWithGoogle = () => {
         signUpWithGoogle()
             .then((result)=>{
@@ -121,7 +118,7 @@ const RegisterPage = (props) => {
                         <Divider variant="middle" style={{textAlign: "center", width: "80%", padding: "0.5vh 0", color: "#14325A"}}>Or</Divider>
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <p className={classes.headerSpan}>
-                                <span className="forwardingSpan" onClick={redirectToLoginPage}>just login, </span>
+                                <span className="forwardingSpan" onClick={() => redirectToLoginPage(navigator)}>just login, </span>
                                 if you already have an account
                             </p>
                         </Grid>

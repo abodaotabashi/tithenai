@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar';
 import '../assets/styles.css';
 import TithenaiLogo from '../assets/logos/Uncircled Navyblue.png';
 import LoginGif from '../assets/gifs/Login_300_35.gif';
+import { redirectToLandingPage, redirectToRegisterPage } from '../utils/Redirecter';
 
 
 const useStyles = makeStyles(theme => ({
@@ -56,14 +57,6 @@ const LoginPage = () => {
     const classes = useStyles();
     const navigator = useNavigate();
 
-    const redirectToLandingPage = () =>{
-        navigator('/');
-    }
-
-    const redirectToRegisterPage = () =>{
-        navigator('/register');
-    }
-
     return(
         <div className="loginPageContainer">
             <Navbar />
@@ -77,12 +70,12 @@ const LoginPage = () => {
                         <Grid item container xs={12} sm={12} md={12} lg={12} xl={12} direction="row">
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
                                 <div style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>
-                                    <img src={TithenaiLogo} alt="Tithenai" className='headerLabelLogo' onClick={redirectToLandingPage}/>
+                                    <img src={TithenaiLogo} alt="Tithenai" className='headerLabelLogo' onClick={() => redirectToLandingPage(navigator)}/>
                                 </div>
                                 <p className={classes.header}>Sign In to Tithenai</p>
                                 <p className={classes.headerSpan}>
                                     New Here?
-                                    <span className="forwardingSpan" onClick={redirectToRegisterPage}>&nbsp;Create an Account</span>
+                                    <span className="forwardingSpan" onClick={() => redirectToRegisterPage(navigator)}>&nbsp;Create an Account</span>
                                 </p>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>

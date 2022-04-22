@@ -141,7 +141,7 @@ async function updateUser(newUserData) {
     }
 
     try {
-        // 1. update user data in the users collcection  
+        // 1. update user data in the users collcection
         await db.collection(USERS)
             .doc(newUserData.uid)
             .update({
@@ -152,18 +152,18 @@ async function updateUser(newUserData) {
             })
 
         // TODO: change ids to newUserData.uid
-        // 2. update user name in reports collection 
+        // 2. update user name in reports collection
         await updateNameInCollection(REPORTS, "H3oTJBNenKcZbvBZUSSpFMmACTw1", 'reportReporterID', "reporterName");
 
-        // 3. update user name in reviews collection 
+        // 3. update user name in reviews collection
         await updateNameInCollection(REVIEWS, "BJNZ5b1Lxw1hT3UmjTXw", 'reviewAuthorID', "reviewAuthorName");
 
         // 4. update user name in theses collection 
         await updateNameInCollection(THESES, "3tHhtdMqrnRfG6LULfHBC3VPlk03", 'thesisAutherID', "thesisAuthorName");
 
-        // 5. update user data in auth 
-        // TODO: 1. photo url 
-        // 2. email 
+        // 5. update user data in auth
+        // TODO: 1. photo url
+        // 2. email
 
         admin.auth()
             .updateUser(newUserData.uid, {
