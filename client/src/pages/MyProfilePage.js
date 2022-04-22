@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { getUserInfo, updateUser } from '../Service';
 import { AuthContext } from '../utils/Context';
-import { redirectToMyPapersPage } from '../utils/Redirecter';
+import { redirectToLoginPage, redirectToMyPapersPage } from '../utils/Redirecter';
 
 import NavbarWithUser from '../components/NavbarWithUser';
 import ProfileInfoViewer from '../components/ProfileInfoViewer';
@@ -144,6 +144,8 @@ const MyProfilePage = () => {
                     setUserPhoto(userInfo.photoURL)
                 }
             })
+        } else {
+            redirectToLoginPage(navigator);
         }
     }, [userAuth]);
 
@@ -182,6 +184,8 @@ const MyProfilePage = () => {
                     });
                 }
             })
+        }else{
+            redirectToLoginPage(navigator);
         }
         setIsEditing(false);
     }
