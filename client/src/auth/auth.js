@@ -9,7 +9,7 @@ import {
     createUserWithEmailAndPassword,
     sendPasswordResetEmail
 } from "firebase/auth";
-import { FormatName } from "../utils/HelperFunctions";
+import { formatName } from "../utils/HelperFunctions";
 
 // =========================================================== Setup
 
@@ -75,8 +75,8 @@ export const signUpWithEmail = (values) => {
             const userData = {
                 userUniversityID: values.university.uniId,
                 userAcademicStatus: values.status,
-                userFirstname: FormatName(values.firstname),
-                userLastname: FormatName(values.lastname),
+                userFirstname: formatName(values.firstname),
+                userLastname: formatName(values.lastname),
                 userGender: values.gender
             };
             return addNewUser(userCredential, userData)

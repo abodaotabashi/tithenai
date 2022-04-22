@@ -4,7 +4,8 @@ import { makeStyles } from '@mui/styles';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
-import ContactPageIcon from '@mui/icons-material/ContactPage';
+import PersonIcon from '@mui/icons-material/Person';
+import ArticleIcon from '@mui/icons-material/Article';
 import UploadIcon from '@mui/icons-material/Upload';
 
 const useStyles = makeStyles((theme) => ({
@@ -45,11 +46,18 @@ const NavbarDrawer = (props) => {
                     <ListItemText primary="Upload" />
                 </ListItem>
                 <Divider variant="fullWidth" />
-                <ListItem button key={"My Profile"} onClick={() => toggleDrawer(false)}>
+                <ListItem button key={"Profile"} onClick={() => toggleDrawer(false)}>
                     <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
-                        <ContactPageIcon style={{fontSize: "1.75rem", color: "#0A481C"}}/>
+                        <PersonIcon style={{fontSize: "1.75rem", color: "#0A481C"}}/>
                     </ListItemIcon>
-                    <ListItemText primary="My Profile" style={{fontFamily: "Ubuntu"}} />
+                    <ListItemText primary="Profile" style={{fontFamily: "Ubuntu"}} />
+                </ListItem>
+                <Divider variant="inset" />
+                <ListItem button key={"My Papers"} onClick={() => toggleDrawer(false)}>
+                    <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
+                        <ArticleIcon style={{fontSize: "1.75rem", color: "#0A481C"}}/>
+                    </ListItemIcon>
+                    <ListItemText primary="My Papers" style={{fontFamily: "Ubuntu"}} />
                 </ListItem>
                 <Divider variant="inset" />
                 <ListItem button key={"Saved List"} onClick={() => toggleDrawer(false)}>

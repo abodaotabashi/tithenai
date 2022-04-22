@@ -6,7 +6,8 @@ import '../assets/styles.css';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
-import ContactPageIcon from '@mui/icons-material/ContactPage';
+import PersonIcon from '@mui/icons-material/Person';
+import ArticleIcon from '@mui/icons-material/Article';
 
 const ProfileDropDownList = (props) => {
     const { openDropDownMenu, setOpenDropDownMenu } = props;
@@ -61,6 +62,12 @@ const ProfileDropDownList = (props) => {
         handleCloseDropDownMenu();
     };
 
+    const handleRedirectToPapersPage = () => {
+        //TODO
+        //navigator('/');
+        handleCloseDropDownMenu();
+    };
+
     const handleRedirectToSavedListPage = () => {
         //TODO
         //navigator('/');
@@ -83,9 +90,15 @@ const ProfileDropDownList = (props) => {
             </StyledMenuItem>
             <StyledMenuItem onClick={handleRedirectToProfilePage}>
                 <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
-                    <ContactPageIcon style={{fontSize: "1.75rem", color: "#0A481C"}} />
+                    <PersonIcon style={{fontSize: "1.75rem", color: "#0A481C"}} />
                 </ListItemIcon>
-                <ListItemText primary="My Profile" />
+                <ListItemText primary="Profile" />
+            </StyledMenuItem>
+            <StyledMenuItem onClick={handleRedirectToPapersPage}>
+                <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
+                    <ArticleIcon style={{fontSize: "1.75rem", color: "#0A481C"}} />
+                </ListItemIcon>
+                <ListItemText primary="My Papers" />
             </StyledMenuItem>
             <StyledMenuItem onClick={handleRedirectToSavedListPage}>
                 <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
