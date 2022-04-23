@@ -6,6 +6,7 @@ import { CssBaseline } from '@mui/material';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import MyProfilePage from '../pages/MyProfilePage';
+import MainPage from '../pages/MainPages/MainPage';
 
 import { AuthContext } from '../utils/Context'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -61,7 +62,7 @@ const App = () => {
         direction: 'ltr',
     });
 
-    const [userAuth, setUserAuth] = useState(null)
+    const [userAuth, setUserAuth] = useState()
 
     const checkLoggedInUser = () => {
         const auth = getAuth(); 
@@ -87,9 +88,7 @@ const App = () => {
                             <Route path='/login' exact element={<LoginPage />} />
                             <Route path='/register' exact element={<RegisterPage />} />
                             <Route path='/myProfile' exact element={<MyProfilePage />} />
-                            {/*
-                            <Route path='/' exact element={<LandingPage/>}/>
-                            */}
+                            <Route path='/' exact element={<MainPage />}/>
                         </Routes>
                     </Router>
                     <CssBaseline />
