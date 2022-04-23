@@ -35,6 +35,7 @@ class LoginForm extends Component {
                     showLoading: false,
                     loadingMessage: ""
                 });
+                this.props.redirectToSearchPage();
             })
     }
 
@@ -43,6 +44,7 @@ class LoginForm extends Component {
         signUpWithGoogle()
             .then((result)=>{
                 console.log(result);
+                this.props.redirectToSearchPage();
             }).catch(error => console.log(error))
     }
 

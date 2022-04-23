@@ -6,7 +6,7 @@ export const redirectToLoginPage = (navigator) => {
     navigator("/login");
 }
 
-export const redirectToLandingPage = (navigator) => {
+export const redirectToMainPage = (navigator) => {
     navigator("/");
 }
 

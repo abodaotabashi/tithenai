@@ -4,6 +4,7 @@ import { CssBaseline, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import LoginForm from '../containers/LoginForm';
 import Navbar from '../components/Navbar';
+import { redirectToMainPage, redirectToRegisterPage } from '../utils/Redirecter';
 
 import '../assets/styles.css';
 import TithenaiLogo from '../assets/logos/Uncircled Navyblue.png';
@@ -57,6 +58,10 @@ const LoginPage = () => {
     const classes = useStyles();
     const navigator = useNavigate();
 
+    const redirectToSearchPage = () => {
+        redirectToMainPage(navigator);
+    }
+
     return(
         <div className="loginPageContainer">
             <Navbar />
@@ -79,14 +84,7 @@ const LoginPage = () => {
                                 </p>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>
-                                <LoginForm />
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <CssBaseline />
-        </div>
+                                    <LoginForm redirectToSearchPage={redirectToSearchPage}/>
     );
 }
 
