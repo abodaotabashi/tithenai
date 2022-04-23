@@ -7,7 +7,7 @@ import NavbarWithUser from '../../components/NavbarWithUser';
 import Footer from '../../components/Footer';
 import SearchUniversityPanel from '../../components/SearchUniversityPanel';
 import SearchThesisPanel from '../../components/SearchThesisPanel';
-import { searchTheses } from '../../Service';
+import { searchTheses, searchUniversities } from '../../Service';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../utils/Context';
 import { redirectToLoginPage } from '../../utils/Redirecter';
@@ -132,6 +132,15 @@ const SearchPage = () => {
     }
 
     const handleSearchUniversities = async (searchingValues) => {
+        if(typeof(userAuth) !== "undefined") {
+            if(userAuth){
+                searchUniversities(searchingValues).then((result) => {
+                    console.log(result);
+                })
+            } else {
+                redirectToLoginPage(navigator);
+            }
+        }
     }
 
     return (

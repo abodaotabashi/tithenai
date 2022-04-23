@@ -25,6 +25,17 @@ export const getAllUnis = async () => {
         }).catch(error => console.log(error))
 }
 
+export const searchUniversities = async ( searchingValues ) => {
+    return await axios.get("/universities/search", {
+        params: {
+            query: searchingValues.query,
+            dimensions: searchingValues.dimensions,
+        }
+    }).then((result) => {
+        return result.data;
+    }).catch(error => console.log(error))
+}
+
 // =========================================================== Users
 
 export const getUserInfo = async (uid) => {

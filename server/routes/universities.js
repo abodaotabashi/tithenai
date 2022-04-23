@@ -15,32 +15,26 @@ router.get("/getAllUnis", function (req, res, next) {
 });
 
 router.get("/search", function (req, res, next) {
-
-    /*
-        Example body: 
-        {"qurey": "Turk", "dimensions": ["state", "country", "name"]}
-    */
-
-    const query = turkishtoEnglish(req.body.query).toLowerCase()
-    const dims = req.body.dimensions
+    const query = turkishtoEnglish(req.query.query).toLowerCase()
+    const dims = req.query.dimensions
 
     db.getAllUnis().then((unis) => {
         const searchedUnis = unis.filter(uni => {
 
-            let isSearched = false; 
+            let isSearched = false;
             if(dims.includes('state')){
-                const englishStateName = turkishtoEnglish(uni.uniState).toLowerCase(); 
-                isSearched = englishStateName.includes(query) || isSearched; 
+                const englishStateName = turkishtoEnglish(uni.uniState).toLowerCase();
+                isSearched = englishStateName.includes(query) || isSearched;
             }
             if(dims.includes('country')){
                 const englishCountryName = turkishtoEnglish(uni.uniCountry).toLowerCase(); 
                 isSearched = englishCountryName.includes(query) || isSearched;
             }
             if(dims.includes('name')){
-                const englishUniName = turkishtoEnglish(uni.uniName).toLowerCase(); 
+                const englishUniName = turkishtoEnglish(uni.uniName).toLowerCase();
                 isSearched = englishUniName.includes(query) || isSearched;
             }
-            return isSearched; 
+            return isSearched;
         })
 
         res.send(searchedUnis);
