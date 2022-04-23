@@ -5,6 +5,7 @@ import { makeStyles, useTheme } from '@mui/styles';
 import TabPanel, { a11yProps } from "../../components/TabPanel";
 import NavbarWithUser from '../../components/NavbarWithUser';
 import Footer from '../../components/Footer';
+import SearchThesisPanel from '../../components/SearchThesisPanel';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../utils/Context';
 import { redirectToLoginPage } from '../../utils/Redirecter';
@@ -90,6 +91,18 @@ const useStyles = makeStyles(theme => ({
             paddingLeft: "0",
         },
     },
+    panel: {
+        width: "80%",
+        margin: "auto",
+        [theme.breakpoints.down('md')]: {
+            width: "90%",
+            margin: "auto",
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: "95%",
+            margin: "auto",
+        },
+    }
 }));
 
 
@@ -135,7 +148,7 @@ const SearchPage = () => {
                         index={selectedTab}
                         onChangeIndex={(index) => setSelectedTab(index)}>
                         <TabPanel value={selectedTab} index={0} dir={theme.direction}>
-                            thesis
+                            <SearchThesisPanel />
                         </TabPanel>
                         <TabPanel value={selectedTab} index={1} dir={theme.direction}>
                             uni
