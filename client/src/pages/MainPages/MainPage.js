@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { CircularProgress } from '@mui/material';
 import { AuthContext } from '../../utils/Context';
 
 import LandingPage from './LandingPage';

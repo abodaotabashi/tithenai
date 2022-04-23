@@ -123,6 +123,17 @@
     background-color: #00000010;
 }
 
+.textWithSecondaryGradient {
+    display: inline-block;
+    text-align: justify;
+    font-family: 'Ubuntu';
+    font-size: 1.5rem;
+    background: linear-gradient(45deg, #18529e 0%, #036328 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 /* ----- Dialogs ----- */
 
 .dialogTitle {
