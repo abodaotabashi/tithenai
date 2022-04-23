@@ -27,16 +27,15 @@ const useStyles = makeStyles(theme => ({
         width: "90%",
         margin: "auto",
         marginTop: "4vh",
-        borderRadius: "30px",
         border: "3px solid",
         borderImageSlice: "1",
         borderImageSource: "linear-gradient(45deg, #1BC54B, #00290F)",
         [theme.breakpoints.down('md')]: {
-            marginBlockStart: "0",
-            marginBlockEnd: "0",
+            marginTop: "2vh",
             marginBottom: "10vh",
         },
         [theme.breakpoints.down('sm')]: {
+            marginTop: "2vh",
             marginBottom: "10vh",
         },
     },
