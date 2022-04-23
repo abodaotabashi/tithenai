@@ -178,7 +178,6 @@ const SearchPage = () => {
                             <SearchThesisPanel handleSearchTheses={handleSearchTheses} />
                         </TabPanel>
                         <TabPanel value={selectedTab} index={1} dir={theme.direction}>
-                            uni
                             <SearchUniversityPanel handleSearchUniversities={handleSearchUniversities} />
                         </TabPanel>
                     </SwipeableViews>

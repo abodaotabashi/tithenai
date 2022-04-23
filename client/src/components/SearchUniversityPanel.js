@@ -26,32 +26,35 @@ const SearchUniversityPanel = (props) => {
     const [searchByCountry, setSearchByCountry] = useState(false);
     const [searchByState, setSearchByState] = useState(false);
     const [errorIndicator, setErrorIndicator] = useState(false);
+    const [searchBoxError, setSearchBoxError] = useState(false);
 
     const handleSearch = () => {
-        if( searchByName    === false &&
-            searchByCountry === false &&
-            searchByState   === false ) {
-                setErrorIndicator(true);
+        if(searchedValue === "") {
+            setSearchBoxError(true);
         } else {
-            setErrorIndicator(false);
-
-            let dimensions = [];
-            if( searchByName === true ) {
-                dimensions.push("name");
+            setSearchBoxError(false);
+            if( searchByName    === false &&
+                searchByCountry === false &&
+                searchByState   === false ) {
+                    setErrorIndicator(true);
+            } else {
+                setErrorIndicator(false);
+                let dimensions = [];
+                if( searchByName === true ) {
+                    dimensions.push("name");
+                }
+                if( searchByCountry === true ) {
+                    dimensions.push("country");
+                }
+                if( searchByState === true ) {
+                    dimensions.push("state");
+                }
+                const requestBody = {
+                    "query": searchedValue,
+                    "dimensions": dimensions,
+                }
+                handleSearchUniversities(requestBody);
             }
-            if( searchByCountry === true ) {
-                dimensions.push("country");
-            }
-            if( searchByState === true ) {
-                dimensions.push("state");
-            }
-
-            const requestBody = {
-                "query": searchedValue,
-                "dimensions": dimensions,
-            }
-
-            handleSearchUniversities(requestBody);
         }
     }
 
@@ -61,11 +64,12 @@ const SearchUniversityPanel = (props) => {
                 <TextField
                     color="secondary"
                     label="Search"
-                    required
                     placeholder='e.g. Türk Alman Üniversitesi'
                     type="text"
                     variant="outlined"
                     value={searchedValue}
+                    error={searchBoxError}
+                    helperText={searchBoxError === true ? "This Field is required!" : ""}
                     onChange={(event) => setSearchedValue(event.target.value)}
                     className={classes.searchBox}
                     InputLabelProps={{
