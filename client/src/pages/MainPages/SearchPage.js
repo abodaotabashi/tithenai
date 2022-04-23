@@ -6,6 +6,7 @@ import TabPanel, { a11yProps } from "../../components/TabPanel";
 import NavbarWithUser from '../../components/NavbarWithUser';
 import Footer from '../../components/Footer';
 import SearchThesisPanel from '../../components/SearchThesisPanel';
+import { searchTheses } from '../../Service';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../utils/Context';
 import { redirectToLoginPage } from '../../utils/Redirecter';
@@ -117,6 +118,18 @@ const SearchPage = () => {
         setSelectedTab(newValue);
     }
 
+    const handleSearchTheses = async (searchingValues) => {
+        if(typeof(userAuth) !== "undefined") {
+            if(userAuth){
+                searchTheses(searchingValues).then((result) => {
+                    console.log(result);
+                })
+            } else {
+                redirectToLoginPage(navigator);
+            }
+        }
+    }
+
     return (
         <div className="whitePageContainer">
             <NavbarWithUser />
@@ -148,7 +161,7 @@ const SearchPage = () => {
                         index={selectedTab}
                         onChangeIndex={(index) => setSelectedTab(index)}>
                         <TabPanel value={selectedTab} index={0} dir={theme.direction}>
-                            <SearchThesisPanel />
+                            <SearchThesisPanel handleSearchTheses={handleSearchTheses} />
                         </TabPanel>
                         <TabPanel value={selectedTab} index={1} dir={theme.direction}>
                             uni

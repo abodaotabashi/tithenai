@@ -1,38 +1,21 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 const db = require('../database/db.js');
 const { turkishtoEnglish } = require("../Utils/util.js");
 
 // ===========================================================
 
 router.get("/search", function (req, res, next) {
-
-    /*
-        Example body 1: 
-        {
-            // this can be empty 
-            "query": "Nur",
-
-            // you can choose from theses what you want
-            "dimensions": ["title", "author", "university", "faculty", "language"], 
-
-            // this can be an empty array
-            "tags": ["Anomaly Detection", "Object Detection"]
-        }
-
-    */
-
-    const query = turkishtoEnglish(req.body.query).toLowerCase()
-    const dims = req.body.dimensions;
-    const tags = req.body.tags;
-
+    const query = turkishtoEnglish(req.query.query).toLowerCase()
+    const dims = req.query.dimensions;
+    const tags = req.query.tags;
 
 
     db.getAllTheses().then((theses) => {
         const searchedTheses = theses.filter(thesis => {
 
-            // If there are tags, filter using them 
-            // If there are no tags, don't filter anything 
+            // If there are tags, filter using them
+            // If there are no tags, don't filter anything
 
             if (tags.length > 0) {
                 let isContainTags = true;
@@ -41,7 +24,7 @@ router.get("/search", function (req, res, next) {
                     isContainTags = thesis.thesisTags.includes(tag) && isContainTags;
                 });
 
-                // We filter out all the theses that don't contain the tags. 
+                // We filter out all the theses that don't contain the tags.
                 if (!isContainTags) {
                     return false;
                 }

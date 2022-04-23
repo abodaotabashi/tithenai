@@ -2,6 +2,19 @@ import axios from "axios";
 
 const BASEURL = "http://localhost:9000";
 axios.defaults.baseURL = BASEURL
+// =========================================================== Theses
+
+export const searchTheses = async ( searchingValues ) => {
+    return await axios.get("/theses/search", {
+        params: {
+            query: searchingValues.query,
+            dimensions: searchingValues.dimensions,
+            tags: searchingValues.tags,
+        }
+    }).then((result) => {
+        return result.data;
+    }).catch(error => console.log(error))
+}
 
 // =========================================================== Universities
 
