@@ -5,6 +5,7 @@ import { makeStyles, useTheme } from '@mui/styles';
 import TabPanel, { a11yProps } from "../../components/TabPanel";
 import NavbarWithUser from '../../components/NavbarWithUser';
 import Footer from '../../components/Footer';
+import SearchUniversityPanel from '../../components/SearchUniversityPanel';
 import SearchThesisPanel from '../../components/SearchThesisPanel';
 import { searchTheses } from '../../Service';
 import { useNavigate } from 'react-router-dom';
@@ -130,6 +131,9 @@ const SearchPage = () => {
         }
     }
 
+    const handleSearchUniversities = async (searchingValues) => {
+    }
+
     return (
         <div className="whitePageContainer">
             <NavbarWithUser />
@@ -165,6 +169,7 @@ const SearchPage = () => {
                         </TabPanel>
                         <TabPanel value={selectedTab} index={1} dir={theme.direction}>
                             uni
+                            <SearchUniversityPanel handleSearchUniversities={handleSearchUniversities} />
                         </TabPanel>
                     </SwipeableViews>
                 </Grid>
