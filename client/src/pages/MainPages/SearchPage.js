@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AppBar, CssBaseline, Tabs, Tab, Grid, Paper } from '@mui/material';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, useTheme } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 import TabPanel, { a11yProps } from "../../components/TabPanel";
 import NavbarWithUser from '../../components/NavbarWithUser';
 import Footer from '../../components/Footer';
@@ -43,19 +44,6 @@ const useStyles = makeStyles(theme => ({
         },
         [theme.breakpoints.down('sm')]: {
             padding: 0,
-        },
-    },
-    tabBar: {
-        width: "38%",
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: "30px",
-        margin: "0 auto",
-        [theme.breakpoints.down('md')]: {
-            width: "58%",
-        },
-        [theme.breakpoints.down('sm')]: {
-            width: "98%",
         },
     },
     welcomeIllustration: {
@@ -107,6 +95,19 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+    width: "38%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "30px",
+    margin: "0 auto",
+    [theme.breakpoints.down('md')]: {
+        width: "58%",
+    },
+    [theme.breakpoints.down('sm')]: {
+        width: "98%",
+    },
+}));
 
 const SearchPage = () => {
     const classes = useStyles();
@@ -156,7 +157,7 @@ const SearchPage = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} className={classes.content}>
-                    <AppBar position="static" color="default" className={classes.tabBar}>
+                    <StyledAppBar position="static" color="default">
                         <Tabs
                             value={selectedTab}
                             onChange={handleChangeMode}
@@ -167,7 +168,7 @@ const SearchPage = () => {
                             <Tab label="Theses" wrapped style={{fontFamily: "Ubuntu", fontSize: "medium"}} {... a11yProps(0)} />
                             <Tab label="Universities" wrapped style={{fontFamily: "Ubuntu", fontSize: "medium"}} {... a11yProps(1)} />
                         </Tabs>
-                    </AppBar>
+                    </StyledAppBar>
                     <SwipeableViews
                         className={classes.panel}
                         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
