@@ -133,21 +133,23 @@ const MyProfilePage = () => {
     const classes = useStyles();
     const inputField = useRef(null);
 
-    const { userAuth } = useContext(AuthContext)
+    const { userAuth } = useContext(AuthContext);
 
     useEffect(() => {
-        if(userAuth){
-            const uid = userAuth.uid;
-            getUserInfo(uid).then(userInfo =>{
-                setUserInfo(userInfo)
-                if(userInfo.photoURL){
-                    setUserPhoto(userInfo.photoURL)
-                }
-            })
-        } else {
-            redirectToLoginPage(navigator);
+        if(typeof(userAuth) !== "undefined") {
+            if(userAuth) {
+                const uid = userAuth.uid;
+                getUserInfo(uid).then(userInfo => {
+                    setUserInfo(userInfo)
+                    if(userInfo.photoURL){
+                        setUserPhoto(userInfo.photoURL)
+                    }
+                })
+            } else {
+                redirectToLoginPage(navigator);
+            }
         }
-    }, [userAuth]);
+    }, [userAuth, navigator]);
 
 
     const handleOpenCropper = (event) => {
@@ -171,23 +173,26 @@ const MyProfilePage = () => {
     }
 
     const handleUpdateProfile = async (values, props) => {
-        if(userAuth){
-            const uid = userAuth.uid;
-            updateUser(values, uid).then((result) => {
-                if( result.status === 200 && result.data === "OK" ) {
-                    setUserInfo({
-                        email: values.email,
-                        firstname: values.firstname,
-                        lastname: values.lastname,
-                        status: values.status,
-                        university: values.university
-                    });
-                }
-            })
-        }else{
-            redirectToLoginPage(navigator);
+        if(typeof(userAuth) !== "undefined") {
+            if(userAuth){
+                const uid = userAuth.uid;
+                updateUser(values, uid).then((result) => {
+                    if( result.status === 200 && result.data === "OK" ) {
+                        setUserInfo({
+                            email: values.email,
+                            firstname: values.firstname,
+                            lastname: values.lastname,
+                            status: values.status,
+                            university: values.university
+                        });
+                        setIsEditing(false);
+                    }
+                })
+            } else {
+                redirectToLoginPage(navigator);
+                setIsEditing(false);
+            }
         }
-        setIsEditing(false);
     }
 
     return(

@@ -4,6 +4,7 @@ import { AuthContext } from '../../utils/Context';
 
 import LandingPage from './LandingPage';
 import SearchPage from './SearchPage';
+import LoadingPage from '../LoadingPage';
 
 import '../../assets/styles.css';
 
@@ -24,11 +25,7 @@ const MainPage = () => {
     return(
         <>
             {userAuthStatus === 1 &&
-                <div className="whitePageContainer">
-                    <div style={{ width: "100%", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
-                        <CircularProgress style={{color: "#0A481C"}} fullwidth="true" />
-                    </div>
-                </div>
+                <LoadingPage />
             }
             {userAuthStatus === 2 &&
                 <SearchPage />
