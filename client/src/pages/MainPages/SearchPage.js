@@ -11,7 +11,7 @@ import SearchThesisPanel from '../../components/SearchThesisPanel';
 import { searchTheses, searchUniversities } from '../../Service';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../utils/Context';
-import { redirectToLoginPage } from '../../utils/Redirecter';
+import { redirectToLoginPage, redirectToSearchResultsPage } from '../../utils/Redirecter';
 
 import WelcomeIllustration from "../../assets/gifs/Welcome.gif";
 import '../../assets/styles.css';
@@ -124,7 +124,7 @@ const SearchPage = () => {
         if(typeof(userAuth) !== "undefined") {
             if(userAuth){
                 searchTheses(searchingValues).then((result) => {
-                    console.log(result);
+                    redirectToSearchResultsPage(navigator, "Theses", result, searchingValues);
                 })
             } else {
                 redirectToLoginPage(navigator);
@@ -136,7 +136,7 @@ const SearchPage = () => {
         if(typeof(userAuth) !== "undefined") {
             if(userAuth){
                 searchUniversities(searchingValues).then((result) => {
-                    console.log(result);
+                    redirectToSearchResultsPage(navigator, "Universities", result, searchingValues);
                 })
             } else {
                 redirectToLoginPage(navigator);

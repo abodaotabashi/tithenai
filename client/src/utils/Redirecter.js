@@ -14,6 +14,16 @@ export const redirectToMyProfilePage = (navigator) => {
     navigator("/myProfile");
 }
 
+export const redirectToSearchResultsPage = (navigator, resultType, results, searchingValues) => {
+    navigator("/searchResults", {
+        state: {
+            resultType: resultType,
+            results: results,
+            searchingValues: searchingValues,
+        }
+    });
+}
+
 export const redirectToMyPapersPage = (navigator) => {
     navigator("/myPapers");
 }
