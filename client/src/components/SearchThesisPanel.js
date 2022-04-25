@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SearchThesisPanel = (props) => {
-    const { handleSearchTheses } = props;
+    const { handleSearchTheses, initialSearchingValues } = props;
     const classes = useStyles();
     const [searchedValue, setSearchedValue] = useState("");
     const [searchByTitle, setSearchByTitle] = useState(true);
@@ -35,6 +35,40 @@ const SearchThesisPanel = (props) => {
         //TODO: getAllTags from the database
         setTagsList(["Natural Language Processing", "Computer Vision", "Image Inpainting"])
     }, [])
+
+    useEffect(() => {
+        if(typeof(initialSearchingValues) !== "undefined" && initialSearchingValues !== null) {
+            setSearchedValue(initialSearchingValues.query);
+            if(initialSearchingValues.dimensions.includes('title')) {
+                setSearchByTitle(true)
+            } else {
+                setSearchByTitle(false)
+            }
+            if(initialSearchingValues.dimensions.includes('author')) {
+                setSearchByAuthor(true)
+            } else {
+                setSearchByAuthor(false)
+            }
+            if(initialSearchingValues.dimensions.includes('university')) {
+                setSearchByUniversity(true)
+            } else {
+                setSearchByUniversity(false)
+            }
+            if(initialSearchingValues.dimensions.includes('faculty')) {
+                setSearchByFaculty(true)
+            } else {
+                setSearchByFaculty(false)
+            }
+            if(initialSearchingValues.dimensions.includes('language')) {
+                setSearchByLanguage(true)
+            } else {
+                setSearchByLanguage(false)
+            }
+            if(typeof(initialSearchingValues.tags) !== "undefined") {
+                setSearchedTags(initialSearchingValues.tags);
+            }
+        }
+    }, [initialSearchingValues])
 
     const handleSearch = () => {
         if( searchByTitle       === false &&
@@ -79,7 +113,7 @@ const SearchThesisPanel = (props) => {
             <Grid item xs={12} sm={12} md={12} lg={12}>
                 <TextField
                     color="secondary"
-                    label="Search"
+                    label="Search for"
                     placeholder='e.g. Artificial Intelligence'
                     type="text"
                     variant="outlined"
@@ -118,7 +152,7 @@ const SearchThesisPanel = (props) => {
                 <p style={{fontFamily: "Ubuntu"}}>Search By:</p>
             </Grid>
             <Grid item container xs={12} sm={12} md={8} lg={9} alignItems="center" justifyContent="flex-start" style={{textAlign: "start"}}>
-                <Grid item xs={12} sm={12} md={4} lg={4}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <FormControlLabel
                         control={
                         <Checkbox
@@ -134,7 +168,7 @@ const SearchThesisPanel = (props) => {
                         labelPlacement="end"
                     />
                 </Grid>
-                <Grid item xs={12} sm={12} md={4} lg={4}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <FormControlLabel
                         control={
                         <Checkbox
@@ -150,7 +184,7 @@ const SearchThesisPanel = (props) => {
                         labelPlacement="end"
                     />
                 </Grid>
-                <Grid item xs={12} sm={12} md={4} lg={4}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <FormControlLabel
                         control={
                         <Checkbox
@@ -166,7 +200,7 @@ const SearchThesisPanel = (props) => {
                         labelPlacement="end"
                     />
                 </Grid>
-                <Grid item xs={12} sm={12} md={4} lg={4}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <FormControlLabel
                         control={
                         <Checkbox
@@ -182,7 +216,7 @@ const SearchThesisPanel = (props) => {
                         labelPlacement="end"
                     />
                 </Grid>
-                <Grid item xs={12} sm={12} md={4} lg={4}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <FormControlLabel
                         control={
                         <Checkbox
@@ -206,7 +240,7 @@ const SearchThesisPanel = (props) => {
                 <Autocomplete
                     multiple
                     filterSelectedOptions
-                    defaultValue={searchedTags}
+                    value={searchedTags}
                     isOptionEqualToValue={(option, value) => option === value}
                     options={tagsList.map((option) => option)}
                     disableCloseOnSelect

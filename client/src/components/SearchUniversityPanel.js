@@ -1,5 +1,5 @@
 import { Grid, IconButton, TextField, InputAdornment, FormControlLabel, Checkbox, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SearchUniversityPanel = (props) => {
-    const { handleSearchUniversities } = props;
+    const { handleSearchUniversities, initialSearchingValues } = props;
     const classes = useStyles();
     const [searchedValue, setSearchedValue] = useState("");
     const [searchByName, setSearchByName] = useState(true);
@@ -27,6 +27,27 @@ const SearchUniversityPanel = (props) => {
     const [searchByState, setSearchByState] = useState(false);
     const [errorIndicator, setErrorIndicator] = useState(false);
     const [searchBoxError, setSearchBoxError] = useState(false);
+
+    useEffect(() => {
+        if(typeof(initialSearchingValues) !== "undefined" && initialSearchingValues !== null) {
+            setSearchedValue(initialSearchingValues.query);
+            if(initialSearchingValues.dimensions.includes('name')) {
+                setSearchByName(true)
+            } else {
+                setSearchByName(false)
+            }
+            if(initialSearchingValues.dimensions.includes('country')) {
+                setSearchByCountry(true)
+            } else {
+                setSearchByCountry(false)
+            }
+            if(initialSearchingValues.dimensions.includes('state')) {
+                setSearchByState(true)
+            } else {
+                setSearchByState(false)
+            }
+        }
+    }, [initialSearchingValues])
 
     const handleSearch = () => {
         if(searchedValue === "") {
@@ -63,7 +84,7 @@ const SearchUniversityPanel = (props) => {
             <Grid item xs={12} sm={12} md={12} lg={12}>
                 <TextField
                     color="secondary"
-                    label="Search"
+                    label="Search for"
                     placeholder='e.g. Türk Alman Üniversitesi'
                     type="text"
                     variant="outlined"
@@ -100,11 +121,11 @@ const SearchUniversityPanel = (props) => {
             <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">
                 <p style={{fontFamily: "Ubuntu", color: "#b5201e", display: (errorIndicator === true) ? "flex" : "none"}}>You should select at least one option or one tag to search by!</p>
             </Grid>
-            <Grid item xs={12} sm={12} md={4} lg={3}>
+            <Grid item xs={12} sm={12} md={3} lg={3}>
                 <p style={{fontFamily: "Ubuntu"}}>Search By:</p>
             </Grid>
-            <Grid item container xs={12} sm={12} md={8} lg={9} alignItems="center" justifyContent="flex-start" style={{textAlign: "start"}}>
-                <Grid item xs={12} sm={12} md={4} lg={4}>
+            <Grid item container xs={12} sm={12} md={9} lg={9} alignItems="center" justifyContent="flex-start" style={{textAlign: "start"}}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <FormControlLabel
                         control={
                         <Checkbox
@@ -120,7 +141,7 @@ const SearchUniversityPanel = (props) => {
                         labelPlacement="end"
                     />
                 </Grid>
-                <Grid item xs={12} sm={12} md={4} lg={4}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <FormControlLabel
                         control={
                         <Checkbox
@@ -136,7 +157,7 @@ const SearchUniversityPanel = (props) => {
                         labelPlacement="end"
                     />
                 </Grid>
-                <Grid item xs={12} sm={12} md={4} lg={4}>
+                <Grid item xs={12} sm={4} md={4} lg={4}>
                     <FormControlLabel
                         control={
                         <Checkbox
