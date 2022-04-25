@@ -10,23 +10,23 @@ router.get("/search", function (req, res, next) {
     const dims = req.query.dimensions;
     const tags = req.query.tags;
 
-
     db.getAllTheses().then((theses) => {
         const searchedTheses = theses.filter(thesis => {
 
             // If there are tags, filter using them
             // If there are no tags, don't filter anything
+            if (tags !== "nothing") {   //The server will get the string value "nothing" when there is no tag selected, otherwise it will get an array of tags
+                if (tags.length > 0) {
+                    let isContainTags = true;
 
-            if (tags.length > 0) {
-                let isContainTags = true;
+                    tags.forEach(tag => {
+                        isContainTags = thesis.thesisTags.includes(tag) && isContainTags;
+                    });
 
-                tags.forEach(tag => {
-                    isContainTags = thesis.thesisTags.includes(tag) && isContainTags;
-                });
-
-                // We filter out all the theses that don't contain the tags.
-                if (!isContainTags) {
-                    return false;
+                    // We filter out all the theses that don't contain the tags.
+                    if (!isContainTags) {
+                        return false;
+                    }
                 }
             }
 

@@ -5,11 +5,12 @@ axios.defaults.baseURL = BASEURL
 // =========================================================== Theses
 
 export const searchTheses = async ( searchingValues ) => {
+
     return await axios.get("/theses/search", {
         params: {
             query: searchingValues.query,
             dimensions: searchingValues.dimensions,
-            tags: searchingValues.tags,
+            tags: (searchingValues.tags.length === 0) ? "nothing" : searchingValues.tags,
         }
     }).then((result) => {
         return result.data;
