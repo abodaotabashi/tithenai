@@ -5,6 +5,8 @@ import LanguageDropDownList from './LanguageDropDownList';
 import ProfileDropDownList from './ProfileDropDownList';
 import NavbarDrawer from './NavbarDrawer';
 import { styled } from '@mui/material/styles';
+import { redirectToMainPage } from '../utils/Redirecter';
+import { useNavigate } from 'react-router-dom';
 
 import '../assets/styles.css';
 import PublicIcon from '@mui/icons-material/Public';
@@ -16,6 +18,7 @@ import TithenaiLogo from '../assets/logos/Uncircled Navyblue.png';
 const useStyles = makeStyles((theme) => ({
     logo: {
         width: "3.5rem",
+        cursor: "pointer",
         [theme.breakpoints.down('md')]: {
             width: "2rem",
         },
@@ -29,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     logoLabel: {
         paddingLeft: "0.75rem",
         lineHeight: "1",
+        cursor: "pointer",
         fontSize: "1.35rem",
         fontWeight: "bold",
         fontFamily: "Ubuntu-Light",
@@ -82,6 +86,7 @@ const NavbarWithUser = (props) => {
     const [openLangDropDownMenu, setOpenLangDropDownMenu] = useState(null);
     const [openProfileDropDownMenu, setOpenProfileDropDownMenu] = useState(null);
     const [openSideDrawer, setOpenSideDrawer] = useState(false);
+    const navigator = useNavigate();
     const classes = useStyles();
 
 
@@ -96,10 +101,10 @@ const NavbarWithUser = (props) => {
                             </DrawerButton>
                         </Grid>
                         <Grid item>
-                            <img src={TithenaiLogo} className={classes.logo} alt="Tithenai"/>
+                            <img src={TithenaiLogo} className={classes.logo} alt="Tithenai" onClick={() => redirectToMainPage(navigator)}/>
                         </Grid>
                         <Grid item>
-                            <p className={classes.logoLabel}>Tithenai</p>
+                            <p className={classes.logoLabel} onClick={() => redirectToMainPage(navigator)}>Tithenai</p>
                         </Grid>
                     </Grid>
                     <Grid item container xs={3} sm={8} md={6} lg={6} alignItems="center" justifyContent="flex-end">
