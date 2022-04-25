@@ -10,6 +10,7 @@ import MainPage from '../pages/MainPages/MainPage';
 
 import { AuthContext } from '../utils/Context'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import SearchResultsPage from '../pages/SearchResultsPage';
 
 const App = () => {
     const theme = createTheme({
@@ -88,7 +89,8 @@ const App = () => {
                             <Route path='/login' exact element={<LoginPage />} />
                             <Route path='/register' exact element={<RegisterPage />} />
                             <Route path='/myProfile' exact element={<MyProfilePage />} />
-                            <Route path='/' exact element={<MainPage />}/>
+                            <Route path='/' exact element={<MainPage />} />
+                            <Route path='/searchResults' exact element={<SearchResultsPage />} />
                         </Routes>
                     </Router>
                     <CssBaseline />
