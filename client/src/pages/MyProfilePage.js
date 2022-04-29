@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 import { CssBaseline, Grid, Paper, Avatar, Button, AccordionSummary, Accordion, AccordionDetails, Typography, AccordionActions, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { getUserInfo, updateUser } from '../Service';
+import { getUserInfo, updateUser, upadteImage } from '../Service';
 import { AuthContext } from '../utils/Context';
 import { redirectToLoginPage, redirectToMyPapersPage } from '../utils/Redirecter';
 
@@ -135,12 +135,12 @@ const MyProfilePage = () => {
     const { userAuth } = useContext(AuthContext);
 
     useEffect(() => {
-        if(typeof(userAuth) !== "undefined") {
-            if(userAuth) {
+        if (typeof (userAuth) !== "undefined") {
+            if (userAuth) {
                 const uid = userAuth.uid;
                 getUserInfo(uid).then(userInfo => {
                     setUserInfo(userInfo)
-                    if(userInfo.photoURL){
+                    if (userInfo.photoURL) {
                         setUserPhoto(userInfo.photoURL)
                     }
                 })
@@ -161,10 +161,15 @@ const MyProfilePage = () => {
     };
 
     const handleUpdateImage = (croppedImageBase64) => {
+        
         setUserPhoto(croppedImageBase64)
-        //TODO: Update the photo in Database
-        //TODO: Nur: updating the photo and the data should happen together.
-        //TODO: Abdurrahman: The photo updating button is separated from another info updating button, thus we should have a separated function for it.
+        if (typeof (userAuth) !== "undefined") {
+            if (userAuth) {
+                const uid = userAuth.uid;
+                //TODO: Do whatever you want to do when the image is updated
+                upadteImage(croppedImageBase64, uid)
+            }
+        }
     }
 
     const handleToggleToEditMode = () => {
@@ -172,11 +177,11 @@ const MyProfilePage = () => {
     }
 
     const handleUpdateProfile = async (values, props) => {
-        if(typeof(userAuth) !== "undefined") {
-            if(userAuth){
+        if (typeof (userAuth) !== "undefined") {
+            if (userAuth) {
                 const uid = userAuth.uid;
                 updateUser(values, uid).then((result) => {
-                    if( result.status === 200 && result.data === "OK" ) {
+                    if (result.status === 200 && result.data === "OK") {
                         setUserInfo({
                             email: values.email,
                             firstname: values.firstname,
@@ -194,19 +199,19 @@ const MyProfilePage = () => {
         }
     }
 
-    return(
+    return (
         <div className="whitePageContainer">
             <NavbarWithUser />
             <Paper elevation={8} className={classes.paper}>
                 <Grid container alignItems="center" justifyContent="center">
                     <Grid container item xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">
-                        <Grid item container xs={12} sm={12} md={4} lg={3} className={classes.avatarWrapper} style={{marginBottom: "40px"}}>
+                        <Grid item container xs={12} sm={12} md={4} lg={3} className={classes.avatarWrapper} style={{ marginBottom: "40px" }}>
                             <Grid item xs={12} sm={12} md={12} lg={12}>
                                 <Avatar
                                     variant="circular"
                                     alt="ProfilePhoto"
-                                    style={userPhoto !== null && typeof(userPhoto) !== "undefined" && userPhoto !== null ? {width: "9rem", height: "9rem", margin: "auto", border: "2px solid #0A481C", cursor: "pointer"} : {width: "9rem", height: "9rem", margin: "auto", border: "2px solid #0A481C"}}
-                                    src={userPhoto !== null && typeof(userPhoto) !== "undefined" ? userPhoto : ""}
+                                    style={userPhoto !== null && typeof (userPhoto) !== "undefined" && userPhoto !== null ? { width: "9rem", height: "9rem", margin: "auto", border: "2px solid #0A481C", cursor: "pointer" } : { width: "9rem", height: "9rem", margin: "auto", border: "2px solid #0A481C" }}
+                                    src={userPhoto !== null && typeof (userPhoto) !== "undefined" ? userPhoto : ""}
                                     onClick={() => setOpenViewImageDialog(true)}
                                 />
                                 <br />
@@ -219,30 +224,30 @@ const MyProfilePage = () => {
                                     color="secondary"
                                     startIcon={<CameraAltIcon />}
                                     onClick={() => inputField.current.click()}>
-                                        Update Profile Photo
+                                    Update Profile Photo
                                 </UpdateImageButton>
                             </Grid>
                         </Grid>
                         <Grid item xs={12} sm={12} md={8} lg={9}>
-                        { isEditing === false ?
-                            <ProfileInfoViewer userInfo={userInfo} handleEditInfos={handleToggleToEditMode}/>
-                            :
-                            <EditProfileForm userInfo={userInfo} handleUpdateProfile={handleUpdateProfile} />
-                        }
+                            {isEditing === false ?
+                                <ProfileInfoViewer userInfo={userInfo} handleEditInfos={handleToggleToEditMode} />
+                                :
+                                <EditProfileForm userInfo={userInfo} handleUpdateProfile={handleUpdateProfile} />
+                            }
                         </Grid>
                         <Grid item xs={12} sm={12} md={11} lg={11}>
-                            <Accordion style={{backgroundColor: "#00000020", color: "#000000"}}>
+                            <Accordion style={{ backgroundColor: "#00000020", color: "#000000" }}>
                                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                    <Typography variant="subtitle1" style={{fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "start"}}>Update Password</Typography>
+                                    <Typography variant="subtitle1" style={{ fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "start" }}>Update Password</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
-                                    <Typography variant="body2" style={{fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "start"}}>
+                                    <Typography variant="body2" style={{ fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "start" }}>
                                         We will send to your email a link that allows you to update your password.
                                     </Typography>
                                 </AccordionDetails>
                                 <Divider />
                                 <AccordionActions>
-                                    <ResetPasswordButton startIcon={<TelegramIcon />} style={{ fontFamily: "Ubuntu", marginLeft: "1vw"}} >Send Me A Link</ResetPasswordButton>
+                                    <ResetPasswordButton startIcon={<TelegramIcon />} style={{ fontFamily: "Ubuntu", marginLeft: "1vw" }} >Send Me A Link</ResetPasswordButton>
                                 </AccordionActions>
                             </Accordion>
                             <br />
@@ -256,17 +261,17 @@ const MyProfilePage = () => {
                                         <p className={classes.papersLabel}>My Papers</p>
                                     </Grid>
                                     <Grid item xs={12} sm={12} md={3} lg={3}>
-                                    {typeof(userInfo) !== "undefined" && typeof(userInfo.theses) !== "undefined" ?
-                                        <AnimatedNumber
-                                            className={classes.papersCounter}
-                                            value={userInfo.theses.length}
-                                            formatValue={n => n.toFixed(0)}
-                                            frameStyle={percentage => percentage > 15 && percentage < 85 ? { opacity: 0.5 } : {}}
-                                            duration={500}
-                                        />
-                                        :
-                                        null
-                                    }
+                                        {typeof (userInfo) !== "undefined" && typeof (userInfo.theses) !== "undefined" ?
+                                            <AnimatedNumber
+                                                className={classes.papersCounter}
+                                                value={userInfo.theses.length}
+                                                formatValue={n => n.toFixed(0)}
+                                                frameStyle={percentage => percentage > 15 && percentage < 85 ? { opacity: 0.5 } : {}}
+                                                duration={500}
+                                            />
+                                            :
+                                            null
+                                        }
                                     </Grid>
                                 </Grid>
                             </MyPapersBox>

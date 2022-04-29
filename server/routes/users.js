@@ -21,7 +21,7 @@ router.post("/addNewUser", function (req, res, next) {
 router.post("/updateUser", function (req, res, next) {
     db.updateUser(req.body)
         .then((status) => {
-            return status ? res.sendStatus(200) : res.sendStatus(500); 
+            return status ? res.sendStatus(200) : res.sendStatus(500);
         }).catch((error) => {
             console.log(error);
             return res.sendStatus(500)
@@ -37,6 +37,16 @@ router.get("/getUserInfo", function (req, res, next) {
             } else {
                 return res.sendStatus(500)
             }
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+});
+
+router.post("/updateUserImage", function (req, res, next) {
+    db.updateUserImage(req.body)
+        .then((status) => {
+            return status ? res.sendStatus(200) : res.sendStatus(500);
         }).catch((error) => {
             console.log(error);
             return res.sendStatus(500)

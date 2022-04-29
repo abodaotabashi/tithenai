@@ -66,10 +66,16 @@ export const updateUser = async (values, uid) => {
         userAcademicStatus: values.status,
         userEmail: values.email,
         userUniversityID: values.university.uniId
-        // TODO: update photo here
     }).then((result) => {
         return result;
     }).catch(error => console.log(error))
 }
 
-//TODO: separated updateUserPhoto Function implementation
+export const upadteImage = async (image, uid) => {
+    return await axios.post("/users/updateUserImage", {
+        imageBase64: image, 
+        uid: uid
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}

@@ -98,11 +98,11 @@ async function getUserInfo(uid) {
 
             delete firebaseUserData.uniId
             delete firebaseUserData.userTheses
-
+            
             const userInfo = {
                 ...firebaseUserData,
                 userEmail: authUserData.email,
-                userPhotoURL: authUserData.photoURL, // undefined if there is no image
+                userPhotoURL: authUserData.photoURL,
                 userUniversity: uni,
                 userTheses: theses
             }
@@ -133,7 +133,6 @@ function deleteAllUsers(nextPageToken) {
         });
 }
 
-// TODO: update photo url, email, university
 async function updateUser(newUserData) {
 
     async function updateNameInCollection(collectionName, uid, userIDField, userNameField) {
@@ -158,25 +157,20 @@ async function updateUser(newUserData) {
                 userUniversityID: newUserData.userUniversityID
             })
 
-        // TODO: change ids to newUserData.uid
         // 2. update user name in reports collection
-        await updateNameInCollection(REPORTS, "H3oTJBNenKcZbvBZUSSpFMmACTw1", 'reportReporterID', "reporterName");
+        await updateNameInCollection(REPORTS, newUserData.uid, 'reportReporterID', "reporterName");
 
         // 3. update user name in reviews collection
-        await updateNameInCollection(REVIEWS, "BJNZ5b1Lxw1hT3UmjTXw", 'reviewAuthorID', "reviewAuthorName");
+        await updateNameInCollection(REVIEWS, newUserData.uid, 'reviewAuthorID', "reviewAuthorName");
 
         // 4. update user name in theses collection 
-        await updateNameInCollection(THESES, "3tHhtdMqrnRfG6LULfHBC3VPlk03", 'thesisAutherID', "thesisAuthorName");
+        await updateNameInCollection(THESES, newUserData.uid, 'thesisAutherID', "thesisAuthorName");
 
         // 5. update user data in auth
-        // TODO: 1. photo url
-        // 2. email
-
         admin.auth()
             .updateUser(newUserData.uid, {
                 email: newUserData.userEmail,
                 emailVerified: false,
-                // userPhotoURL: ''
             })
 
     } catch (error) {
@@ -186,6 +180,28 @@ async function updateUser(newUserData) {
     return true;
 }
 
+async function updateUserImage(data) {
+    try {
+        const imageBase64 = data.imageBase64; 
+        const uid = data.uid; 
+        const stripedImage = imageBase64.replace(/^data:image\/\w+;base64,/, "");
+        const buf = new Buffer.from(stripedImage, 'base64');
+        const file = storage.bucket(BUCKETNAME).file(`userImages/${uid}.png`); 
+        await file.save(buf);
+        const publicUrl = await file.getSignedUrl({
+            action: 'read',
+            expires: '03-17-2025',
+          });
+        admin.auth()
+        .updateUser(uid, {
+            photoURL: publicUrl[0]
+        })
+        return true
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
 // =========================================================== Universities
 
 async function getAllUnis() {
@@ -201,7 +217,7 @@ async function getAllUnis() {
             const uniImageUrl = uniImgRef.publicUrl();
             uni = {
                 ...doc.data(),
-                uniId: doc.id, 
+                uniId: doc.id,
                 uniImageUrl: uniImageUrl
             }
             unis.push(uni)
@@ -214,16 +230,12 @@ async function getAllUnis() {
 }
 
 async function uploadUniImages() {
-    // fileNames = fs.readdirSync('database/uniImages/');
-    // fileNames.forEach(async(filename) => {
-    //     await storage.bucket(BUCKETNAME).upload("database/uniImages/" + filename, {
-    //         destination: "uniImages/" + filename,
-    //     });
-    // });
-    const file = storage.bucket(BUCKETNAME).file("uniImages/0D8DEwNTPtM0bN5iCZPB.png")
-    await file.makePublic()
-    const publicUrl = file.publicUrl();
-    console.log(publicUrl);
+    fileNames = fs.readdirSync('database/uniImages/');
+    fileNames.forEach(async(filename) => {
+        await storage.bucket(BUCKETNAME).upload("database/uniImages/" + filename, {
+            destination: "uniImages/" + filename,
+        });
+    });
 }
 
 // =========================================================== Theses
@@ -258,5 +270,6 @@ module.exports.updateUser = updateUser;
 module.exports.getAllTheses = getAllTheses;
 module.exports.getUserInfo = getUserInfo;
 module.exports.uploadUniImages = uploadUniImages;
+module.exports.updateUserImage = updateUserImage;
 // module.exports.addAllTheses = addAllTheses;
 // module.exports.addUni = addUni;
