@@ -1,22 +1,27 @@
 // =========================================================== Setup
-
 const admin = require("firebase-admin");
-
 const serviceAccount = require("./serviceAccountKey.json");
+const firebaseStorage = require("firebase-admin/storage");
+const fs = require('fs');
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-});
 
-db = admin.firestore()
 
-// collection names 
+const firebaseConfig = {
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: "tithenai-23867.appspot.com"
+}
 
+const firebseApp = admin.initializeApp(firebaseConfig);
+const db = admin.firestore();
+const storage = firebaseStorage.getStorage(firebseApp);
+
+//=========================================================== collection names 
 const USERS = 'users';
 const UNIS = 'universities';
 const THESES = 'theses';
 const REPORTS = 'reports';
 const REVIEWS = 'reviews';
+const BUCKETNAME = 'tithenai-23867.appspot.com'
 
 const DEFAULT_UNI = {
     uniCountry: "",
@@ -26,7 +31,6 @@ const DEFAULT_UNI = {
     uniType: "",
     uniUrl: ""
 }
-
 // =========================================================== Manage Users
 
 async function addNewUser(data) {
@@ -205,6 +209,19 @@ async function getAllUnis() {
         })
 }
 
+async function uploadUniImages() {
+    // fileNames = fs.readdirSync('database/uniImages/');
+    // fileNames.forEach(async(filename) => {
+    //     await storage.bucket(BUCKETNAME).upload("database/uniImages/" + filename, {
+    //         destination: "uniImages/" + filename,
+    //     });
+    // });
+    // const file = storage.bucket(BUCKETNAME).file("uniImages/0D8DEwNTPtM0bN5iCZPB.png")
+    // await file.makePublic()
+    // const publicUrl = file.publicUrl();
+    // console.log(publicUrl);
+}
+
 // =========================================================== Theses
 
 async function getAllTheses() {
@@ -236,5 +253,6 @@ module.exports.getAllUnis = getAllUnis;
 module.exports.updateUser = updateUser;
 module.exports.getAllTheses = getAllTheses;
 module.exports.getUserInfo = getUserInfo;
+module.exports.uploadUniImages = uploadUniImages;
 // module.exports.addAllTheses = addAllTheses;
 // module.exports.addUni = addUni;

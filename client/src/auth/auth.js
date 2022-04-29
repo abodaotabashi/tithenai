@@ -20,6 +20,7 @@ const firebaseConfig = {
     storageBucket: "tithenai-23867.appspot.com",
     messagingSenderId: "765684955136",
     appId: "1:765684955136:web:12b021a0972cd2426c40e5",
+    databaseURL: "https://tithenai-23867.appspot.com",
     measurementId: "G-EBZ5KF9QLT"
 };
 initializeApp(firebaseConfig);

@@ -17,4 +17,13 @@ function turkishtoEnglish (str) {
 // test 
 // console.log(turkishtoEnglish('ğğĞĞÜÜüüŞŞşşÖÖööÇÇçç'))
 
+// sortAlphabetically("uniName", "tr")
+function sortAlphabetically (property, languageCode){
+    return function(a, b) {
+        return a[property].localeCompare(b[property], languageCode)
+    }
+}
+
+
 module.exports.turkishtoEnglish = turkishtoEnglish
+module.exports.sortAlphabetically = sortAlphabetically
