@@ -11,12 +11,12 @@ router.get("/getAllUnis", function (req, res, next) {
         res.send(result);
     }).catch((error) => {
         console.log(error)
-        res.sendStatus(200);
+        res.sendStatus(500);
     })
 });
 
 router.get("/search", function (req, res, next) {
-    const query = turkishtoEnglish(req.query.query).toLowerCase() 
+    const query = turkishtoEnglish(req.query.query).toLowerCase()
     const dims = req.query.dimensions
 
     db.getAllUnis().then((unis) => {
@@ -48,19 +48,19 @@ router.get("/getUniNames", function (req, res, next) {
     db.getAllUnis().then((unis) => {
         const uniNames = unis.map(uni => {
             return {
-                uniId: uni.uniId, 
+                uniId: uni.uniId,
                 uniName: uni.uniName
             }
         })
-        res.send(uniNames.sort(sortAlphabetically("uniName", "tr"))); 
+        res.send(uniNames.sort(sortAlphabetically("uniName", "tr")));
     }).catch((error) => {
         console.log(error);
         res.sendStatus(500);
     });
 })
 
-router.get("/uploadUniImages", function(req, res, next){
-    db.uploadUniImages(); 
+router.get("/uploadUniImages", function (req, res, next) {
+    db.uploadUniImages();
     res.sendStatus(200);
 })
 

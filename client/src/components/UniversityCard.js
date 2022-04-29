@@ -69,14 +69,14 @@ const UniversityCard = (props) => {
         <Grid container alignItems="center" justifyContent="center" direction="row" className={classes.container}>
             <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">
                 <Grid item container xs={12} sm={3} md={3} lg={3}>
-                    {university.uniPhotoURL === "" || university.uniPhotoURL === null || typeof(university.uniPhotoURL) === "undefined" ?
+                    {university.uniImageUrl === "" || university.uniImageUrl === null || typeof(university.uniImageUrl) === "undefined" ?
                         <SchoolIcon className={classes.avatar} />
                         :
                         <Avatar
                             variant="rounded"
                             alt="universityLogo"
                             className={classes.avatar}
-                            src={university.uniPhotoURL}
+                            src={university.uniImageUrl}
                         />
                     }
                 </Grid>

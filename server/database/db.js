@@ -189,24 +189,28 @@ async function updateUser(newUserData) {
 // =========================================================== Universities
 
 async function getAllUnis() {
-    return db
-        .collection(UNIS)
-        .orderBy("uniName", "asc")
-        .get()
-        .then((querySnapshot) => {
-            unis = []
-            querySnapshot.forEach((doc) => {
-                uni = {
-                    ...doc.data(),
-                    uniId: doc.id
-                }
-                unis.push(uni)
-            });
-            return unis;
-        }).catch((error) => {
-            console.log(error);
-            return false;
-        })
+    try {
+        const querySnapshot = await db.collection(UNIS)
+            .orderBy("uniName", "asc")
+            .get();
+
+        unis = []
+        let counter = 0;
+        querySnapshot.forEach((doc) => {
+            const uniImgRef = storage.bucket(BUCKETNAME).file(`uniImages/${doc.id}.png`)
+            const uniImageUrl = uniImgRef.publicUrl();
+            uni = {
+                ...doc.data(),
+                uniId: doc.id, 
+                uniImageUrl: uniImageUrl
+            }
+            unis.push(uni)
+        });
+        return unis;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
 }
 
 async function uploadUniImages() {
@@ -216,10 +220,10 @@ async function uploadUniImages() {
     //         destination: "uniImages/" + filename,
     //     });
     // });
-    // const file = storage.bucket(BUCKETNAME).file("uniImages/0D8DEwNTPtM0bN5iCZPB.png")
-    // await file.makePublic()
-    // const publicUrl = file.publicUrl();
-    // console.log(publicUrl);
+    const file = storage.bucket(BUCKETNAME).file("uniImages/0D8DEwNTPtM0bN5iCZPB.png")
+    await file.makePublic()
+    const publicUrl = file.publicUrl();
+    console.log(publicUrl);
 }
 
 // =========================================================== Theses
