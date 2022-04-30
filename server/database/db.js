@@ -79,7 +79,7 @@ const DEFAULT_UNI = {
     uniState: "",
     uniTheses: "",
     uniType: "",
-    uniUrl: "", 
+    uniUrl: "",
     uniID: ""
 }
 // =========================================================== Manage Users
@@ -160,7 +160,7 @@ async function getUserInfo(uid) {
                 userEmail: authUserData.email,
                 userPhotoURL: authUserData.photoURL,
                 userUniversity: uni,
-                userTheses: theses, 
+                userTheses: theses,
                 userId: uid
             }
             return userInfo;
@@ -262,6 +262,21 @@ async function updateUserImage(data) {
 async function saveThesis(data) {
     const uid = data.uid;
     const thesisId = data.thesisId
+    try {
+        // Get the list of saved thesis for this user
+        const user = await db.collection(USERS_COLLECTION).doc(uid).get();
+        const savedThesesList = user.data()[USER_SAVED_THESES]
+
+        if (!savedThesesList.includes(thesisId)) {
+            await db.collection(USERS_COLLECTION).doc(uid).update({
+                [USER_SAVED_THESES]: [...savedThesesList, thesisId]
+            })
+        }
+        return true
+    } catch (error) {
+        console.log(error);
+        return false
+    }
 }
 
 // =========================================================== Universities
@@ -369,3 +384,4 @@ module.exports.getUserInfo = getUserInfo;
 module.exports.uploadUniImages = uploadUniImages;
 module.exports.updateUserImage = updateUserImage;
 module.exports.uploadThesis = uploadThesis;
+module.exports.saveThesis = saveThesis;

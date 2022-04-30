@@ -53,6 +53,16 @@ router.post("/updateUserImage", function (req, res, next) {
         })
 });
 
+router.post("/saveThesis", function (req, res, next) {
+    db.saveThesis(req.body)
+        .then((status) => {
+            return status ? res.sendStatus(200) : res.sendStatus(500);
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+})
+
 // =========================================================== Testing endpoints 
 
 router.get("/deleteAllUsers", function (req, res, next) {
