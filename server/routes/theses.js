@@ -91,7 +91,6 @@ router.post("/uploadThesis", function (req, res, next) {
     }
     */
    
-    
     db.uploadThesis(req.body)
         .then((status) => {
             return status ? res.sendStatus(200) : res.sendStatus(500);

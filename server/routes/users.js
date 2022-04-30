@@ -53,6 +53,22 @@ router.post("/updateUserImage", function (req, res, next) {
         })
 });
 
+router.get("/getUserTheses", function (req, res, next) {
+    const uid = req.query.uid;
+    db.getUserTheses(uid)
+        .then((theses) => {
+            if (theses) {
+                res.send(theses)
+            } else {
+                return res.sendStatus(500)
+            }
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+});
+
+
 // =========================================================== Testing endpoints 
 
 router.get("/deleteAllUsers", function (req, res, next) {

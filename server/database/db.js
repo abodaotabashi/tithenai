@@ -202,6 +202,24 @@ async function updateUserImage(data) {
         return false;
     }
 }
+
+async function getUserTheses(uid) {
+    try {
+        // TODO: change sK6ZvwH30gX1L0nQ4VQzCuF5sC02 to uid
+        // Note: don't use ctrl+right click to access the url from visual code, instead copy it
+        const thesesSnapshot = await db.collection(THESES).where("thesisAutherID", '==', "sK6ZvwH30gX1L0nQ4VQzCuF5sC02").get();
+        const theses = []
+        thesesSnapshot.forEach( thesisObj => {
+            theses.push(thesisObj.data()); 
+        });
+        return(theses)
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+    return true
+}
+
 // =========================================================== Universities
 
 async function getAllUnis() {
@@ -279,7 +297,7 @@ async function uploadThesis(data) {
         await file.save(buf);
         const publicUrl = await file.getSignedUrl({
             action: 'read',
-            expires: '03-09-2491', 
+            expires: '03-09-2491',
         });
 
         // update document with the url
@@ -306,3 +324,4 @@ module.exports.getUserInfo = getUserInfo;
 module.exports.uploadUniImages = uploadUniImages;
 module.exports.updateUserImage = updateUserImage;
 module.exports.uploadThesis = uploadThesis;
+module.exports.getUserTheses = getUserTheses;
