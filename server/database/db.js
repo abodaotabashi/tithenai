@@ -279,6 +279,25 @@ async function saveThesis(data) {
     }
 }
 
+async function removeSavedThesis(data) {
+    const uid = data.uid;
+    const thesisId = data.thesisId
+    try {
+        const user = await db.collection(USERS_COLLECTION).doc(uid).get();
+        const savedThesesList = user.data()[USER_SAVED_THESES]
+
+        const newList = savedThesesList.filter((id) => id !== thesisId)
+
+        await db.collection(USERS_COLLECTION).doc(uid).update({
+            [USER_SAVED_THESES]: newList
+        })
+        return true
+    } catch (error) {
+        console.log(error);
+        return false
+    }
+}
+
 // =========================================================== Universities
 
 async function getAllUnis() {
@@ -385,3 +404,4 @@ module.exports.uploadUniImages = uploadUniImages;
 module.exports.updateUserImage = updateUserImage;
 module.exports.uploadThesis = uploadThesis;
 module.exports.saveThesis = saveThesis;
+module.exports.removeSavedThesis = removeSavedThesis;
