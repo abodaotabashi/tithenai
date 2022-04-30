@@ -100,4 +100,52 @@ router.post("/uploadThesis", function (req, res, next) {
         })
 })
 
+router.post("/saveThesis", function (req, res, next) {
+    db.saveThesis(req.body)
+        .then((status) => {
+            return status ? res.sendStatus(200) : res.sendStatus(500);
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+})
+
+router.post("/removeSavedThesis", function (req, res, next) {
+    db.removeSavedThesis(req.body)
+        .then((status) => {
+            return status ? res.sendStatus(200) : res.sendStatus(500);
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+})
+
+router.get("/getSavedTheses", function (req, res, next) {
+    db.getSavedTheses(req.query)
+        .then((theses) => {
+            if (theses) {
+                res.send(theses)
+            } else {
+                return res.sendStatus(500)
+            }
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+});
+
+router.get("/getUserTheses", function (req, res, next) {
+    db.getUserTheses(req.query)
+        .then((theses) => {
+            if (theses) {
+                res.send(theses)
+            } else {
+                return res.sendStatus(500)
+            }
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+});
+
 module.exports = router;

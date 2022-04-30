@@ -259,44 +259,6 @@ async function updateUserImage(data) {
     }
 }
 
-async function saveThesis(data) {
-    const uid = data.uid;
-    const thesisId = data.thesisId
-    try {
-        // Get the list of saved thesis for this user
-        const user = await db.collection(USERS_COLLECTION).doc(uid).get();
-        const savedThesesList = user.data()[USER_SAVED_THESES]
-
-        if (!savedThesesList.includes(thesisId)) {
-            await db.collection(USERS_COLLECTION).doc(uid).update({
-                [USER_SAVED_THESES]: [...savedThesesList, thesisId]
-            })
-        }
-        return true
-    } catch (error) {
-        console.log(error);
-        return false
-    }
-}
-
-async function removeSavedThesis(data) {
-    const uid = data.uid;
-    const thesisId = data.thesisId
-    try {
-        const user = await db.collection(USERS_COLLECTION).doc(uid).get();
-        const savedThesesList = user.data()[USER_SAVED_THESES]
-
-        const newList = savedThesesList.filter((id) => id !== thesisId)
-
-        await db.collection(USERS_COLLECTION).doc(uid).update({
-            [USER_SAVED_THESES]: newList
-        })
-        return true
-    } catch (error) {
-        console.log(error);
-        return false
-    }
-}
 
 // =========================================================== Universities
 
@@ -392,6 +354,90 @@ async function uploadThesis(data) {
     return true
 }
 
+async function getUserTheses(data) {
+    const uid = data.uid
+    try {
+        // TODO: change sK6ZvwH30gX1L0nQ4VQzCuF5sC02 to uid
+        // Note: don't use ctrl+right click to access the url from visual code, instead copy it
+        const thesesSnapshot = await db.collection(THESES_COLLECTION).where("thesisAutherID", '==', uid).get();
+        const theses = []
+        thesesSnapshot.forEach(thesisObj => {
+            const thesis = {
+                thesisId: thesisObj.id, 
+                ...thesisObj.data()
+            }
+            theses.push(thesis); 
+        });
+        return(theses)
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
+async function saveThesis(data) {
+    const uid = data.uid;
+    const thesisId = data.thesisId
+    try {
+        // Get the list of saved thesis for this user
+        const user = await db.collection(USERS_COLLECTION).doc(uid).get();
+        const savedThesesList = user.data()[USER_SAVED_THESES]
+
+        if (!savedThesesList.includes(thesisId)) {
+            await db.collection(USERS_COLLECTION).doc(uid).update({
+                [USER_SAVED_THESES]: [...savedThesesList, thesisId]
+            })
+        }
+        return true
+    } catch (error) {
+        console.log(error);
+        return false
+    }
+}
+
+async function removeSavedThesis(data) {
+    const uid = data.uid;
+    const thesisId = data.thesisId
+    try {
+        const user = await db.collection(USERS_COLLECTION).doc(uid).get();
+        const savedThesesList = user.data()[USER_SAVED_THESES]
+
+        const newList = savedThesesList.filter((id) => id !== thesisId)
+
+        await db.collection(USERS_COLLECTION).doc(uid).update({
+            [USER_SAVED_THESES]: newList
+        })
+        return true
+    } catch (error) {
+        console.log(error);
+        return false
+    }
+}
+
+async function getSavedTheses(data) {
+    const uid = data.uid;
+    try {
+        const user = await db.collection(USERS_COLLECTION).doc(uid).get();
+        const savedThesesList = user.data()[USER_SAVED_THESES]
+        console.log(savedThesesList)
+        const theses = [];
+        for (let i = 0; i < savedThesesList.length; i++) {
+            const thesisId = savedThesesList[i];
+            thesisData = await getThesis(thesisId);
+            const thesis = {
+                thesisId: thesisId,
+                ...thesisData
+            }
+            theses.push(thesis);
+        }
+        return theses;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
+
 // =========================================================== Exports
 
 module.exports.deleteAllUsers = deleteAllUsers;
@@ -405,3 +451,13 @@ module.exports.updateUserImage = updateUserImage;
 module.exports.uploadThesis = uploadThesis;
 module.exports.saveThesis = saveThesis;
 module.exports.removeSavedThesis = removeSavedThesis;
+module.exports.getSavedTheses = getSavedTheses;
+module.exports.getUserTheses = getUserTheses;
+
+
+// =========================================================== Private funcitons 
+
+async function getThesis(thesisId) {
+    const thesis = await db.collection(THESES_COLLECTION).doc(thesisId).get()
+    return thesis.data()
+}
