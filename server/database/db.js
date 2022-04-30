@@ -22,7 +22,8 @@ const UNIS_COLLECTION = 'universities';
 const THESES_COLLECTION = 'theses';
 const REPORTS_COLLECTION = 'reports';
 const REVIEWS_COLLECTION = 'reviews';
-const BUCKETNAME_COLLECTION = 'tithenai-23867.appspot.com'
+const BUCKETNAME = 'tithenai-23867.appspot.com'
+const TAGS_COLLECTION = "tags"
 
 // =========================================================== Database Strings 
 // Reporsts 
@@ -242,7 +243,7 @@ async function updateUserImage(data) {
         const uid = data.uid;
         const imageBase64 = formatBase64(data.imageBase64)
         const buf = new Buffer.from(imageBase64, 'base64');
-        const file = storage.bucket(BUCKETNAME_COLLECTION).file(`userImages/${uid}.png`);
+        const file = storage.bucket(BUCKETNAME).file(`userImages/${uid}.png`);
         await file.save(buf);
         const publicUrl = await file.getSignedUrl({
             action: 'read',
@@ -271,7 +272,7 @@ async function getAllUnis() {
         unis = []
         let counter = 0;
         querySnapshot.forEach((doc) => {
-            const uniImgRef = storage.bucket(BUCKETNAME_COLLECTION).file(`uniImages/${doc.id}.png`)
+            const uniImgRef = storage.bucket(BUCKETNAME).file(`uniImages/${doc.id}.png`)
             const uniImageUrl = uniImgRef.publicUrl();
             uni = {
                 ...doc.data(),
@@ -290,7 +291,7 @@ async function getAllUnis() {
 async function uploadUniImages() {
     fileNames = fs.readdirSync('database/uniImages/');
     fileNames.forEach(async (filename) => {
-        await storage.bucket(BUCKETNAME_COLLECTION).upload("database/uniImages/" + filename, {
+        await storage.bucket(BUCKETNAME).upload("database/uniImages/" + filename, {
             destination: "uniImages/" + filename,
         });
     });
@@ -335,7 +336,7 @@ async function uploadThesis(data) {
         // TODO: get a real pdf file as Base64
         const pdfFile = await fs.readFileSync('database/myThesis.pdf', 'base64');
         const buf = new Buffer.from(pdfFile, 'base64');
-        const file = storage.bucket(BUCKETNAME_COLLECTION).file(`theses/${addedThesis.id}.pdf`);
+        const file = storage.bucket(BUCKETNAME).file(`theses/${addedThesis.id}.pdf`);
         await file.save(buf);
         const publicUrl = await file.getSignedUrl({
             action: 'read',
@@ -345,13 +346,16 @@ async function uploadThesis(data) {
         // update document with the url
         await db.collection(THESES_COLLECTION).doc(addedThesis.id).update({
             thesisPdfUrl: publicUrl
-        })
+        });
 
+        // update tags list 
+        await addNewTags(thesisData.thesisTags); 
+    
+        return true
     } catch (error) {
         console.log(error);
         return false;
     }
-    return true
 }
 
 async function getUserTheses(data) {
@@ -363,12 +367,12 @@ async function getUserTheses(data) {
         const theses = []
         thesesSnapshot.forEach(thesisObj => {
             const thesis = {
-                thesisId: thesisObj.id, 
+                thesisId: thesisObj.id,
                 ...thesisObj.data()
             }
-            theses.push(thesis); 
+            theses.push(thesis);
         });
-        return(theses)
+        return (theses)
     } catch (error) {
         console.log(error);
         return false;
@@ -437,6 +441,14 @@ async function getSavedTheses(data) {
     }
 }
 
+async function getAllTags(){
+    try {
+        return (await db.collection(TAGS_COLLECTION).get()).docs[0].data().tags
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
 
 // =========================================================== Exports
 
@@ -453,6 +465,7 @@ module.exports.saveThesis = saveThesis;
 module.exports.removeSavedThesis = removeSavedThesis;
 module.exports.getSavedTheses = getSavedTheses;
 module.exports.getUserTheses = getUserTheses;
+module.exports.getAllTags = getAllTags;
 
 
 // =========================================================== Private funcitons 
@@ -461,3 +474,18 @@ async function getThesis(thesisId) {
     const thesis = await db.collection(THESES_COLLECTION).doc(thesisId).get()
     return thesis.data()
 }
+
+async function addNewTags(tags) {
+    try {
+        const oldTagsObj = (await db.collection(TAGS_COLLECTION).get()).docs[0];
+        const docId = oldTagsObj.id; 
+        const oldTagsList = oldTagsObj.data().tags; 
+        const newTagsList = [...new Set([...oldTagsList, ...tags])]
+        await db.collection(TAGS_COLLECTION).doc(docId).update({
+            tags: newTagsList
+        })
+    } catch (error) {
+        console.log(error);
+    }
+}
+

@@ -1,3 +1,3 @@
-const date = new Date("2020-10-21T13:28:06.419Z")
-
-console.log(date.getTime());
+const s = ["12asdf", "asdf", "asdf"]
+const se = new Set(s)
+console.log(se);

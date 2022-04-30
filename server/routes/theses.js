@@ -148,4 +148,18 @@ router.get("/getUserTheses", function (req, res, next) {
         })
 });
 
+router.get("/getAllTags", function (req, res, next) {
+    db.getAllTags(req.query)
+    .then((tags) => {
+        if (tags) {
+            res.send(tags)
+        } else {
+            return res.sendStatus(500)
+        }
+    }).catch((error) => {
+        console.log(error);
+        return res.sendStatus(500)
+    })
+})
+
 module.exports = router;
