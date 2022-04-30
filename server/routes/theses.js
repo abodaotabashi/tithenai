@@ -101,6 +101,12 @@ router.post("/uploadThesis", function (req, res, next) {
 })
 
 router.post("/saveThesis", function (req, res, next) {
+    /** Example body
+     * {
+     *  uid: "asdfasfdasdfasd", 
+     *  thesisId: "asdfasfasdfasd"
+     * }
+     */
     db.saveThesis(req.body)
         .then((status) => {
             return status ? res.sendStatus(200) : res.sendStatus(500);
@@ -111,6 +117,12 @@ router.post("/saveThesis", function (req, res, next) {
 })
 
 router.post("/removeSavedThesis", function (req, res, next) {
+    /** Example body
+     * {
+     *  uid: "asdfasfdasdfasd", 
+     *  thesisId: "asdfasfasdfasd"
+     * }
+     */
     db.removeSavedThesis(req.body)
         .then((status) => {
             return status ? res.sendStatus(200) : res.sendStatus(500);
@@ -121,6 +133,11 @@ router.post("/removeSavedThesis", function (req, res, next) {
 })
 
 router.get("/getSavedTheses", function (req, res, next) {
+    /** Example query
+     * {
+     *  uid: "asdfasfdasdfasd"
+     * }
+     */
     db.getSavedTheses(req.query)
         .then((theses) => {
             if (theses) {
@@ -135,6 +152,7 @@ router.get("/getSavedTheses", function (req, res, next) {
 });
 
 router.get("/getUserTheses", function (req, res, next) {
+    // just send a uid as a query 
     db.getUserTheses(req.query)
         .then((theses) => {
             if (theses) {
@@ -149,6 +167,7 @@ router.get("/getUserTheses", function (req, res, next) {
 });
 
 router.get("/getAllTags", function (req, res, next) {
+    // no parameters are required 
     db.getAllTags(req.query)
         .then((tags) => {
             if (tags) {
@@ -163,6 +182,12 @@ router.get("/getAllTags", function (req, res, next) {
 })
 
 router.post("/addViewer", function (req, res, next) {
+    /** Example body
+     * {
+     *  uid: "asdfasfdasdfasd", 
+     *  thesisId: "asdfasfasdfasd"
+     * }
+     */
     db.addViewer(req.body)
         .then((status) => {
             return status ? res.sendStatus(200) : res.sendStatus(500);
