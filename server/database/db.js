@@ -54,6 +54,7 @@ const THESIS_UNI_ID = "thesisUniId"
 const THESIS_UNI_NAME = "thesisUniName"
 const THESIS_UPLOAD_DATE = "thesisUploadDate"
 const THESIS_ID = "thesisId"
+const VIEWERS_LIST = "viewersList"
 
 // Universities
 const UNI_COUNTRY = "uniCountry"
@@ -260,7 +261,6 @@ async function updateUserImage(data) {
     }
 }
 
-
 // =========================================================== Universities
 
 async function getAllUnis() {
@@ -349,8 +349,8 @@ async function uploadThesis(data) {
         });
 
         // update tags list 
-        await addNewTags(thesisData.thesisTags); 
-    
+        await addNewTags(thesisData.thesisTags);
+
         return true
     } catch (error) {
         console.log(error);
@@ -441,12 +441,29 @@ async function getSavedTheses(data) {
     }
 }
 
-async function getAllTags(){
+async function getAllTags() {
     try {
         return (await db.collection(TAGS_COLLECTION).get()).docs[0].data().tags
     } catch (error) {
         console.log(error);
         return false;
+    }
+}
+
+async function addViewer(data) {
+    try {
+        const uid = data.uid;
+        const thesisId = data.thesisId;
+        const thesis = await getThesis(thesisId);
+        const oldViewersList = thesis[VIEWERS_LIST]
+        const newViewersList = [...new Set([...oldViewersList, uid])]
+        await db.collection(THESES_COLLECTION).doc(thesisId).update({
+            [VIEWERS_LIST]: newViewersList
+        })
+        return true
+    } catch (error) {
+        console.log(error);
+        return false
     }
 }
 
@@ -466,6 +483,7 @@ module.exports.removeSavedThesis = removeSavedThesis;
 module.exports.getSavedTheses = getSavedTheses;
 module.exports.getUserTheses = getUserTheses;
 module.exports.getAllTags = getAllTags;
+module.exports.addViewer = addViewer;
 
 
 // =========================================================== Private funcitons 
@@ -478,8 +496,8 @@ async function getThesis(thesisId) {
 async function addNewTags(tags) {
     try {
         const oldTagsObj = (await db.collection(TAGS_COLLECTION).get()).docs[0];
-        const docId = oldTagsObj.id; 
-        const oldTagsList = oldTagsObj.data().tags; 
+        const docId = oldTagsObj.id;
+        const oldTagsList = oldTagsObj.data().tags;
         const newTagsList = [...new Set([...oldTagsList, ...tags])]
         await db.collection(TAGS_COLLECTION).doc(docId).update({
             tags: newTagsList

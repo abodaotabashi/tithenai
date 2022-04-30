@@ -90,7 +90,7 @@ router.post("/uploadThesis", function (req, res, next) {
         thesisPdfBase64: "data:application/pdf;base64,JVBERi0xLjYNJ ..."
     }
     */
-   
+
     db.uploadThesis(req.body)
         .then((status) => {
             return status ? res.sendStatus(200) : res.sendStatus(500);
@@ -150,16 +150,25 @@ router.get("/getUserTheses", function (req, res, next) {
 
 router.get("/getAllTags", function (req, res, next) {
     db.getAllTags(req.query)
-    .then((tags) => {
-        if (tags) {
-            res.send(tags)
-        } else {
+        .then((tags) => {
+            if (tags) {
+                res.send(tags)
+            } else {
+                return res.sendStatus(500)
+            }
+        }).catch((error) => {
+            console.log(error);
             return res.sendStatus(500)
-        }
-    }).catch((error) => {
-        console.log(error);
-        return res.sendStatus(500)
-    })
+        })
 })
 
+router.post("/addViewer", function (req, res, next) {
+    db.addViewer(req.body)
+        .then((status) => {
+            return status ? res.sendStatus(200) : res.sendStatus(500);
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+})
 module.exports = router;
