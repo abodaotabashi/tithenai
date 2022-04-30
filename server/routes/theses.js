@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require('../database/db.js');
 const { turkishtoEnglish } = require("../Utils/util.js");
+const upload = require('multer')();
 
 // ===========================================================
 
@@ -71,5 +72,33 @@ router.get("/search", function (req, res, next) {
     })
     // return res.send("hello world");
 });
+
+router.post("/uploadThesis", function (req, res, next) {
+    /* Example body 
+    {
+        thesisAutherID: "sK6ZvwH30gX1L0nQ4VQzCuF5sC02",
+        thesisAbstract: "",
+        thesisAuthorName: "Tithenai Tithenai1",
+        thesisDate: "2020-10-21T13:28:06.419Z", 
+        thesisFaculty: "CS", 
+        thesisLanguage: "TR",
+        thesisTags:["Model Selection", "Deep Nonparametric Clustering"], 
+        thesisTitle: "How to use deep learning to train a deep learning model", 
+        thesisUniID:"13DODS8bV4fDg7OvcEer",
+        thesisUniName: "Türk Alman Üniversitesi",
+        thesisUploadDate: "2020-10-21T13:28:06.419Z",
+        thesisPdfBase64: "data:application/pdf;base64,JVBERi0xLjYNJ ..."
+    }
+    */
+   
+    
+    db.uploadThesis(req.body)
+        .then((status) => {
+            return status ? res.sendStatus(200) : res.sendStatus(500);
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+})
 
 module.exports = router;

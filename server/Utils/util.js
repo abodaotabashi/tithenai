@@ -1,3 +1,5 @@
+// test 
+// console.log(turkishtoEnglish('ğğĞĞÜÜüüŞŞşşÖÖööÇÇçç'))
 function turkishtoEnglish (str) {
     return str
         .replace(/Ğ/g, "G")
@@ -14,16 +16,18 @@ function turkishtoEnglish (str) {
         .replace(/ç/g, "c");
 };
 
-// test 
-// console.log(turkishtoEnglish('ğğĞĞÜÜüüŞŞşşÖÖööÇÇçç'))
 
-// sortAlphabetically("uniName", "tr")
+// sortAlphabetically("uniName", "tr"); 
 function sortAlphabetically (property, languageCode){
     return function(a, b) {
         return a[property].localeCompare(b[property], languageCode)
     }
 }
 
+function formatBase64(base64File){
+    return base64File.replace(/^data:image\/\w+;base64,/, "");
+}
 
 module.exports.turkishtoEnglish = turkishtoEnglish
 module.exports.sortAlphabetically = sortAlphabetically
+module.exports.formatBase64 = formatBase64

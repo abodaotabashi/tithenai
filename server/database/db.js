@@ -3,6 +3,7 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 const firebaseStorage = require("firebase-admin/storage");
 const fs = require('fs');
+const { formatBase64 } = require("../Utils/util");
 
 
 
@@ -98,7 +99,7 @@ async function getUserInfo(uid) {
 
             delete firebaseUserData.uniId
             delete firebaseUserData.userTheses
-            
+
             const userInfo = {
                 ...firebaseUserData,
                 userEmail: authUserData.email,
@@ -182,20 +183,19 @@ async function updateUser(newUserData) {
 
 async function updateUserImage(data) {
     try {
-        const imageBase64 = data.imageBase64; 
-        const uid = data.uid; 
-        const stripedImage = imageBase64.replace(/^data:image\/\w+;base64,/, "");
-        const buf = new Buffer.from(stripedImage, 'base64');
-        const file = storage.bucket(BUCKETNAME).file(`userImages/${uid}.png`); 
+        const uid = data.uid;
+        const imageBase64 = formatBase64(data.imageBase64)
+        const buf = new Buffer.from(imageBase64, 'base64');
+        const file = storage.bucket(BUCKETNAME).file(`userImages/${uid}.png`);
         await file.save(buf);
         const publicUrl = await file.getSignedUrl({
             action: 'read',
-            expires: '03-17-2025',
-          });
+            expires: '03-17-2025', // TODO: make this dynamic 
+        });
         admin.auth()
-        .updateUser(uid, {
-            photoURL: publicUrl[0]
-        })
+            .updateUser(uid, {
+                photoURL: publicUrl[0]
+            })
         return true
     } catch (error) {
         console.log(error);
@@ -231,7 +231,7 @@ async function getAllUnis() {
 
 async function uploadUniImages() {
     fileNames = fs.readdirSync('database/uniImages/');
-    fileNames.forEach(async(filename) => {
+    fileNames.forEach(async (filename) => {
         await storage.bucket(BUCKETNAME).upload("database/uniImages/" + filename, {
             destination: "uniImages/" + filename,
         });
@@ -261,6 +261,40 @@ async function getAllTheses() {
         })
 }
 
+async function uploadThesis(data) {
+    const uid = data.thesisAutherID;
+    // const thesisPdfBase64 = data.thesisPdfBase64;
+    const thesis = { ...data, thesisPdfUrl: "" };
+    thesis.thesisUploadDate = new Date(thesis.thesisUploadDate)
+    thesis.thesisDate = new Date(thesis.thesisDate)
+    delete thesis.thesisPdfBase64;
+    try {
+        // add new thesis 
+        const addedThesis = await db.collection(THESES).add(thesis)
+
+        // TODO: get a real pdf file as Base64
+        const pdfFile = await fs.readFileSync('database/myThesis.pdf', 'base64');
+        const buf = new Buffer.from(pdfFile, 'base64');
+        const file = storage.bucket(BUCKETNAME).file(`theses/${addedThesis.id}.pdf`);
+        await file.save(buf);
+        const publicUrl = await file.getSignedUrl({
+            action: 'read',
+            expires: '03-09-2491', 
+        });
+
+        // update document with the url
+        await db.collection(THESES).doc(addedThesis.id).update({
+            thesisPdfUrl: publicUrl
+        })
+
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+    return true
+}
+
+
 // =========================================================== Exports
 
 module.exports.deleteAllUsers = deleteAllUsers;
@@ -271,5 +305,4 @@ module.exports.getAllTheses = getAllTheses;
 module.exports.getUserInfo = getUserInfo;
 module.exports.uploadUniImages = uploadUniImages;
 module.exports.updateUserImage = updateUserImage;
-// module.exports.addAllTheses = addAllTheses;
-// module.exports.addUni = addUni;
+module.exports.uploadThesis = uploadThesis;
