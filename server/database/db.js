@@ -28,21 +28,21 @@ const TAGS_COLLECTION = "tags"
 // =========================================================== Database Strings 
 // Reporsts 
 const REPORT_CONTENT = "reportContent"
-const REPORT_REPORTER_ID = "reportReporterId"
-const REPORT_THESIS_ID = "reportThesisId"
+const REPORT_REPORTER_ID = "reportReporterID"
+const REPORT_THESIS_ID = "reportThesisID"
 const REPORTER_NAME = "reporterName"
-const REPORT_ID = "reportId"
+const REPORT_ID = "reportID"
 
 // Reviews 
-const REVIEW_AUTHOR_ID = "reviewAuthorId"
+const REVIEW_AUTHOR_ID = "reviewAuthorID"
 const REVIEW_AUTHOR_NAME = "reviewAuthorName"
 const REVIEW_BODY = "reviewBody"
 const REVIEW_RATING = "reviewRating"
-const REVIEW_THESIS_ID = "reviewThesisId"
+const REVIEW_THESIS_ID = "reviewThesisID"
 
 // Theses 
 const THESIS_ABSTRACT = "thesisAbstract"
-const THESIS_AUTHER_ID = "thesisAutherId"
+const THESIS_AUTHER_ID = "thesisAutherID"
 const THESIS_AUTHOR_NAME = "thesisAuthorName"
 const THESIS_DATE = "thesisDate"
 const THESIS_FACULTY = "thesisFaculty"
@@ -50,10 +50,10 @@ const THESIS_LANGUAGE = "thesisLanguage"
 const THESIS_PDF_URL = "thesisPdfUrl"
 const THESIS_TAGS = "thesisTags"
 const THESIS_TITLE = "thesisTitle"
-const THESIS_UNI_ID = "thesisUniId"
+const THESIS_UNI_ID = "thesisUniID"
 const THESIS_UNI_NAME = "thesisUniName"
 const THESIS_UPLOAD_DATE = "thesisUploadDate"
-const THESIS_ID = "thesisId"
+const THESIS_ID = "thesisID"
 const VIEWERS_LIST = "viewersList"
 
 // Universities
@@ -63,12 +63,12 @@ const UNI_STATE = "uniState"
 const UNI_THESES = "uniTheses"
 const UNI_TYPE = "uniType"
 const UNI_URL = "uniUrl"
-const UNI_ID = "uniId"
+const UNI_ID = "uniID"
 
 // Users 
 const USER_LASTNAME = "userLastname"
 const USER_FIRSTNAME = "userFirstname"
-const USER_UNI_ID = "userUniId"
+const USER_UNI_ID = "userUniID"
 const USER_ACADEMIC_STATUS = "userAcademicStatus"
 const USER_GENDER = "userGender"
 const USER_ADMIN = "userAdmin"
@@ -90,7 +90,7 @@ async function addNewUser(data) {
     uid = data.uid
     idToken = data.idToken
     dbUserData = {
-        userUniID: data.userdata.userUniversityID,
+        userUniID: data.userdata.userUniId,
         userAcademicStatus: data.userdata.userAcademicStatus,
         userFirstname: data.userdata.userFirstname,
         userLastname: data.userdata.userLastname,
@@ -137,7 +137,7 @@ async function getUserInfo(uid) {
             if (uniID) {
                 const uniSnapshot = await db.collection(UNIS_COLLECTION).doc(uniID).get();
                 uni = {
-                    uniId: uniID,
+                    uniID: uniID,
                     ...uniSnapshot.data()
                 }
             }

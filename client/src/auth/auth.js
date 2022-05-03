@@ -74,7 +74,7 @@ export const signUpWithEmail = (values) => {
     return createUserWithEmailAndPassword(auth, values.email, values.password)
         .then((userCredential) => {
             const userData = {
-                userUniversityID: values.university.uniId,
+                userUniId: values.university.uniId,
                 userAcademicStatus: values.status,
                 userFirstname: formatName(values.firstname),
                 userLastname: formatName(values.lastname),
