@@ -8,7 +8,7 @@ import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import PersonIcon from '@mui/icons-material/Person';
 import ArticleIcon from '@mui/icons-material/Article';
 import UploadIcon from '@mui/icons-material/Upload';
-import { redirectToLoginPage, redirectToMainPage, redirectToMyProfilePage } from '../utils/Redirecter';
+import { redirectToLoginPage, redirectToMainPage, redirectToMyPapersPage, redirectToMyProfilePage } from '../utils/Redirecter';
 import { appSignOut } from '../auth/auth';
 
 const useStyles = makeStyles((theme) => ({
@@ -50,8 +50,7 @@ const NavbarDrawer = (props) => {
     };
 
     const handleRedirectToPapersPage = () => {
-        //TODO
-        //navigator('/');
+        redirectToMyPapersPage(navigator);
         toggleDrawer(false);
     };
 

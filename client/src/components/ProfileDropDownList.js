@@ -9,7 +9,7 @@ import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import PersonIcon from '@mui/icons-material/Person';
 import ArticleIcon from '@mui/icons-material/Article';
 import { appSignOut } from '../auth/auth';
-import { redirectToLoginPage, redirectToMainPage, redirectToMyProfilePage } from '../utils/Redirecter';
+import { redirectToLoginPage, redirectToMainPage, redirectToMyPapersPage, redirectToMyProfilePage } from '../utils/Redirecter';
 
 const ProfileDropDownList = (props) => {
     const { openDropDownMenu, setOpenDropDownMenu } = props;
@@ -63,8 +63,7 @@ const ProfileDropDownList = (props) => {
     };
 
     const handleRedirectToPapersPage = () => {
-        //TODO
-        //navigator('/');
+        redirectToMyPapersPage(navigator);
         handleCloseDropDownMenu();
     };
 
