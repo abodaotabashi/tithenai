@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 import { CssBaseline, Grid, Paper, Avatar, Button, AccordionSummary, Accordion, AccordionDetails, Typography, AccordionActions, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { getUserInfo, updateUser, upadteImage } from '../Service';
+import { getUserInfo, updateUser, updateImage } from '../Service';
 import { AuthContext } from '../utils/Context';
 import { redirectToLoginPage, redirectToMyPapersPage } from '../utils/Redirecter';
 
@@ -161,13 +161,12 @@ const MyProfilePage = () => {
     };
 
     const handleUpdateImage = (croppedImageBase64) => {
-        
         setUserPhoto(croppedImageBase64)
         if (typeof (userAuth) !== "undefined") {
             if (userAuth) {
                 const uid = userAuth.uid;
                 //TODO: Do whatever you want to do when the image is updated
-                upadteImage(croppedImageBase64, uid)
+                updateImage(croppedImageBase64, uid)
             }
         }
     }
