@@ -42,7 +42,7 @@ const REVIEW_THESIS_ID = "reviewThesisID"
 
 // Theses 
 const THESIS_ABSTRACT = "thesisAbstract"
-const THESIS_AUTHER_ID = "thesisAutherID"
+const THESIS_AUTHOR_ID = "thesisAuthorID"
 const THESIS_AUTHOR_NAME = "thesisAuthorName"
 const THESIS_DATE = "thesisDate"
 const THESIS_FACULTY = "thesisFaculty"
@@ -144,7 +144,7 @@ async function getUserInfo(uid) {
             // TODO: change this 
             // getting the theses of the user
 
-            const thesesSnapshot = await db.collection(THESES_COLLECTION).where("thesisAutherID", '==', uid).get();
+            const thesesSnapshot = await db.collection(THESES_COLLECTION).where("thesisAuthorID", '==', uid).get();
             const theses = []
             thesesSnapshot.forEach(thesisObj => {
                 const thesis = {
@@ -223,7 +223,7 @@ async function updateUser(newUserData) {
         await updateNameInCollection(REVIEWS_COLLECTION, newUserData.uid, 'reviewAuthorID', "reviewAuthorName");
 
         // 4. update user name in theses collection 
-        await updateNameInCollection(THESES_COLLECTION, newUserData.uid, 'thesisAutherID', "thesisAuthorName");
+        await updateNameInCollection(THESES_COLLECTION, newUserData.uid, 'thesisAuthorID', "thesisAuthorName");
 
         // 5. update user data in auth
         admin.auth()
@@ -322,7 +322,7 @@ async function getAllTheses() {
 
 async function uploadThesis(data) {
     const thesisData = { ...data, thesisPdfUrl: "" }
-    const uid = thesisData.thesisAutherID;
+    const uid = thesisData.thesisAuthorID;
     const thesisPdfBase64 = thesisData.thesisPdfBase64;
     delete thesisData.uid;
     delete thesisData.thesisPdfBase64;
@@ -330,7 +330,7 @@ async function uploadThesis(data) {
     thesisData.thesisDate = new Date(thesisData.thesisDate)
 
     try {
-        // add new thesis 
+        // add new thesis
         const addedThesis = await db.collection(THESES_COLLECTION).add(thesis)
 
         // TODO: get a real pdf file as Base64
@@ -348,7 +348,7 @@ async function uploadThesis(data) {
             thesisPdfUrl: publicUrl
         });
 
-        // update tags list 
+        // update tags list
         await addNewTags(thesisData.thesisTags);
 
         return true
@@ -363,7 +363,7 @@ async function getUserTheses(data) {
     try {
         // TODO: change sK6ZvwH30gX1L0nQ4VQzCuF5sC02 to uid
         // Note: don't use ctrl+right click to access the url from visual code, instead copy it
-        const thesesSnapshot = await db.collection(THESES_COLLECTION).where("thesisAutherID", '==', uid).get();
+        const thesesSnapshot = await db.collection(THESES_COLLECTION).where("thesisAuthorID", '==', uid).get();
         const theses = []
         thesesSnapshot.forEach(thesisObj => {
             const thesis = {
