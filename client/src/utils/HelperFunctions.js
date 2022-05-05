@@ -1,3 +1,5 @@
+import Languages from './Languages.js';
+
 export const formatName = (name) => {
     const arr = name.split(" ");
     for (let i = 0; i < arr.length; i++) {
@@ -33,4 +35,8 @@ export const sortObjectsDescending = (property) => {
         }
         return 0;
     }
+}
+
+export const getAllLanguages = () => {
+    return Languages.sort(sortObjectsAscending("name"));
 }
