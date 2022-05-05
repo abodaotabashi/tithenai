@@ -11,6 +11,7 @@ import MainPage from '../pages/MainPages/MainPage';
 import { AuthContext } from '../utils/Context'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import SearchResultsPage from '../pages/SearchResultsPage';
+import NotFoundPage from '../pages/NotFoundPage';
 
 const App = () => {
     const theme = createTheme({
@@ -86,11 +87,12 @@ const App = () => {
                 <div className="appMain">
                     <Router>
                         <Routes>
-                            <Route path='/login' exact element={<LoginPage />} />
-                            <Route path='/register' exact element={<RegisterPage />} />
-                            <Route path='/myProfile' exact element={<MyProfilePage />} />
-                            <Route path='/' exact element={<MainPage />} />
-                            <Route path='/searchResults' exact element={<SearchResultsPage />} />
+                            <Route path='/login' element={<LoginPage />} />
+                            <Route path='/register' element={<RegisterPage />} />
+                            <Route path='/myProfile' element={<MyProfilePage />} />
+                            <Route path='/' element={<MainPage />} />
+                            <Route path='/searchResults' element={<SearchResultsPage />} />
+                            <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </Router>
                     <CssBaseline />
