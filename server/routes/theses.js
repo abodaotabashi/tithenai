@@ -76,7 +76,7 @@ router.get("/search", function (req, res, next) {
 router.post("/uploadThesis", function (req, res, next) {
     /* Example body 
     {
-        thesisAutherID: "sK6ZvwH30gX1L0nQ4VQzCuF5sC02",
+        thesisAuthorID: "sK6ZvwH30gX1L0nQ4VQzCuF5sC02",
         thesisAbstract: "",
         thesisAuthorName: "Tithenai Tithenai1",
         thesisDate: "2020-10-21T13:28:06.419Z", 
@@ -184,7 +184,7 @@ router.get("/getAllTags", function (req, res, next) {
 router.post("/addViewer", function (req, res, next) {
     /** Example body
      * {
-     *  uid: "asdfasfdasdfasd", 
+     *  uid: "asdfasfdasdfasd",
      *  thesisId: "asdfasfasdfasd"
      * }
      */

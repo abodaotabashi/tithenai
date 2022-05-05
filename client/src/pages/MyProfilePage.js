@@ -266,7 +266,7 @@ const MyProfilePage = () => {
                                                 value={userInfo.theses.length}
                                                 formatValue={n => n.toFixed(0)}
                                                 frameStyle={percentage => percentage > 15 && percentage < 85 ? { opacity: 0.5 } : {}}
-                                                duration={500}
+                                                duration={750}
                                             />
                                             :
                                             null

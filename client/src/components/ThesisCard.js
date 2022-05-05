@@ -1,45 +1,49 @@
 import React from 'react';
-import { Chip, Divider, Grid, Typography } from '@mui/material';
+import { Chip, Divider, Grid, Typography, Avatar } from '@mui/material';
 
-import FeedIcon from '@mui/icons-material/Feed';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
+import DocumentIllustration from "../assets/gifs/Document.gif";
+
+
+const ContainerGrid = styled(Grid)(({ theme }) => ({
+    minHeight: "15vh",
+    height: "100%",
+    width: "90%",
+    cursor: "pointer",
+    background: "linear-gradient(315deg, #06214430 0%, transparent 45% )",
+    borderTopRightRadius: "10px",
+    borderBottomLeftRadius: "10px",
+    border: "2px solid #002677",
+    margin: "0 auto",
+    transition: "300ms",
+    "&:hover" : {
+        backgroundColor: "#00000010"
+    }
+}));
+
+const CustomIcon = styled(Avatar)(({ theme }) => ({
+    width: theme.spacing(8),
+    height: theme.spacing(9),
+    margin: "auto",
+    border: `2px solid ${theme.palette.secondary.main}`,
+    borderRadius: "10px",
+    backgroundColor: "transparent",
+    [theme.breakpoints.down('md')]: {
+        width: theme.spacing(6),
+        height: theme.spacing(7),
+        marginTop: "5px",
+    },
+    [theme.breakpoints.down('sm')]: {
+        width: theme.spacing(5),
+        height: theme.spacing(6),
+        marginTop: "5px",
+    },
+}));
 
 const useStyles = makeStyles(theme => ({
-    container: {
-        minHeight: "15vh",
-        height: "100%",
-        width: "90%",
-        cursor: "pointer",
-        background: "linear-gradient(315deg, #06214430 0%, transparent 45% )",
-        borderTopRightRadius: "10px",
-        borderBottomLeftRadius: "10px",
-        border: "2px solid #002677",
-        margin: "0 auto",
-        transition: "300ms",
-        "&:hover" : {
-            backgroundColor: "#00000010"
-        }
-    },
-    avatar: {
-        width: theme.spacing(8),
-        height: theme.spacing(8),
-        margin: "auto",
-        border: `2px solid ${theme.palette.secondary.main}`,
-        borderRadius: "10px",
-        backgroundColor: "transparent",
-        [theme.breakpoints.down('md')]: {
-            width: theme.spacing(6),
-            height: theme.spacing(6),
-            marginTop: "5px",
-        },
-        [theme.breakpoints.down('sm')]: {
-            width: theme.spacing(5),
-            height: theme.spacing(5),
-            marginTop: "5px",
-        },
-    },
     texts: {
         display: "flex",
         alignItems: "flex-start",
@@ -103,10 +107,10 @@ const ThesisCard = (props) => {
     const classes = useStyles();
 
     return (
-        <Grid container alignItems="center" justifyContent="center" direction="row" className={classes.container}>
+        <ContainerGrid container alignItems="center" justifyContent="center" direction="row">
             <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">
                 <Grid item container xs={12} sm={2} md={3} lg={2}>
-                    <FeedIcon className={classes.avatar} />
+                    <CustomIcon src={DocumentIllustration} alt="thesis" />
                 </Grid>
                 <Grid item container xs={12} sm={10} md={9} lg={10} alignItems="flex-start" className={classes.texts}>
                     <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -154,10 +158,13 @@ const ThesisCard = (props) => {
                         </Grid>
                         : null
                     }
-                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <Grid item xs={12} sm={12} md={12} lg={12} style={{width:"65%", margin: "1vh 0"}}>
+                        <Divider variant='fullWidth' />
+                    </Grid>
+                    <Grid container item xs={12} sm={12} md={12} lg={12} className={classes.texts}>
                         <Typography variant="body2" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700", textAlign: "start", display: "flex", alignItems: "center"}}>
                             <VisibilityIcon color="info" style={{width: "1.25rem", marginRight: "0.5rem"}}/>
-                            {/*thesis.seen_times*/} 324
+                            {thesis.viewersList.length}
                             &nbsp;&nbsp;
                             <StarRateIcon color="warning" style={{width: "1.25rem", marginRight: "0.5rem"}}/>
                             {/*thesis.rating*/} 4.1
@@ -165,7 +172,7 @@ const ThesisCard = (props) => {
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </ContainerGrid>
     )
 }
 
