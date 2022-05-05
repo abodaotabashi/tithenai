@@ -248,7 +248,7 @@ async function updateUserImage(data) {
         await file.save(buf);
         const publicUrl = await file.getSignedUrl({
             action: 'read',
-            expires: '03-17-2025', // TODO: make this dynamic 
+            expires: '03-17-2025', // TODO: make this dynamic
         });
         admin.auth()
             .updateUser(uid, {

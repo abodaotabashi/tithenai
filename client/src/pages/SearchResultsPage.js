@@ -128,7 +128,7 @@ const SearchResultsPage = (props) => {
 
     return (
         <div className="whitePageContainer">
-            <NavbarWithUser />
+            <NavbarWithUser hideUpload={false} />
             <Paper elevation={8} className={classes.paper}>
                 <Grid container alignItems="center" justifyContent="center">
                     <Grid item xs={12} sm={12} md={2} lg={2}>

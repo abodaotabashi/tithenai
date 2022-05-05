@@ -108,9 +108,11 @@ const NavbarWithUser = (props) => {
                         </Grid>
                     </Grid>
                     <Grid item container xs={3} sm={8} md={6} lg={6} alignItems="center" justifyContent="flex-end">
-                        <Grid item style={{margin: "0 1rem"}}>
-                            <UploadButton variant="outlined" size="large" color="secondary" startIcon={<UploadIcon />}>Upload</UploadButton>
-                        </Grid>
+                        { props.hideUpload === false &&
+                            <Grid item style={{margin: "0 1rem"}}>
+                                <UploadButton variant="outlined" size="large" color="secondary" startIcon={<UploadIcon />}>Upload</UploadButton>
+                            </Grid>
+                        }
                         <Grid item style={{margin: "0 0.1rem"}}>
                             <Tooltip title="Languages" placement="bottom" arrow leaveDelay={100}>
                                 <IconButton size="medium" color="secondary" aria-haspopup="true" onClick={(event) => setOpenLangDropDownMenu(event.currentTarget)}>

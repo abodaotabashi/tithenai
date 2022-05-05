@@ -200,7 +200,7 @@ const MyProfilePage = () => {
 
     return (
         <div className="whitePageContainer">
-            <NavbarWithUser />
+            <NavbarWithUser hideUpload={false} />
             <Paper elevation={8} className={classes.paper}>
                 <Grid container alignItems="center" justifyContent="center">
                     <Grid container item xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">

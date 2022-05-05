@@ -35,7 +35,7 @@ const SearchThesisPanel = (props) => {
     useEffect(() => {
         getAllTags()
             .then(response => {
-                setTagsList(response)
+                setTagsList(response.sort())
             })
             .catch(error => console.log(error));
     }, [])

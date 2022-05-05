@@ -9,6 +9,7 @@ import Footer from '../components/Footer';
 
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
+import '../assets/styles.css';
 import { sortAlphabetically } from '../utils/HelperFunctions';
 import UploadIcon from '@mui/icons-material/Upload';
 import ThesisCard from '../components/ThesisCard';
@@ -123,7 +124,7 @@ const MyPapersPage = () => {
 
     return (
         <div className="whitePageContainer">
-            <NavbarWithUser />
+            <NavbarWithUser hideUpload={false} />
             <Paper elevation={8} className={classes.paper}>
                 <Grid container alignItems="center" justifyContent="center">
                     <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">
