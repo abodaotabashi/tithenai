@@ -5,7 +5,6 @@ axios.defaults.baseURL = BASEURL
 // =========================================================== Tags
 
 export const getAllTags = async () => {
-
     return await axios.get("/theses/getAllTags")
         .then((result) => {
             return result.data;
@@ -15,7 +14,6 @@ export const getAllTags = async () => {
 // =========================================================== Theses
 
 export const searchTheses = async (searchingValues) => {
-
     return await axios.get("/theses/search", {
         params: {
             query: searchingValues.query,
@@ -27,8 +25,26 @@ export const searchTheses = async (searchingValues) => {
     }).catch(error => console.log(error))
 }
 
-export const getUserTheses = async (uid) => {
+export const uploadThesis = async (thesisInfo) => {
+    return await axios.post("/theses/uploadThesis", {
+        thesisAuthorID: thesisInfo.thesisAuthorID,
+        thesisAbstract: thesisInfo.thesisAbstract,
+        thesisAuthorName: thesisInfo.thesisAuthorName,
+        thesisDate: thesisInfo.thesisDate,
+        thesisFaculty: thesisInfo.thesisFaculty,
+        thesisLanguage: thesisInfo.thesisLanguage,
+        thesisTags: thesisInfo.thesisTags,
+        thesisTitle: thesisInfo.thesisTitle,
+        thesisUniID: thesisInfo.thesisUniID,
+        thesisUniName: thesisInfo.thesisUniName,
+        thesisUploadDate: new Date(),
+        thesisPdfBase64: thesisInfo.thesisPdfBase64,
+    }).then((result) => {
+        return result.data;
+    }).catch(error => console.log(error))
+}
 
+export const getUserTheses = async (uid) => {
     return await axios.get("/theses/getUserTheses", {
         params: {
             uid: uid
