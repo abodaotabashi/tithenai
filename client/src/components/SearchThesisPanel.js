@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
+import { getAllTags } from '../Service';
 
 const useStyles = makeStyles(theme => ({
     searchBox: {
@@ -32,8 +33,11 @@ const SearchThesisPanel = (props) => {
     const [tagsList, setTagsList] = useState([]);
 
     useEffect(() => {
-        //TODO: getAllTags from the database
-        setTagsList(["Natural Language Processing", "Computer Vision", "Image Inpainting"])
+        getAllTags()
+            .then(response => {
+                setTagsList(response)
+            })
+            .catch(error => console.log(error));
     }, [])
 
     useEffect(() => {

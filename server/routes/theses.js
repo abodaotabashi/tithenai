@@ -168,7 +168,7 @@ router.get("/getUserTheses", function (req, res, next) {
 
 router.get("/getAllTags", function (req, res, next) {
     // no parameters are required 
-    db.getAllTags(req.query)
+    db.getAllTags()
         .then((tags) => {
             if (tags) {
                 res.send(tags)

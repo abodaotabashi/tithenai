@@ -2,6 +2,16 @@ import axios from "axios";
 
 const BASEURL = "http://localhost:9000";
 axios.defaults.baseURL = BASEURL
+// =========================================================== Tags
+
+export const getAllTags = async () => {
+
+    return await axios.get("/theses/getAllTags")
+        .then((result) => {
+            return result.data;
+        }).catch(error => console.log(error))
+}
+
 // =========================================================== Theses
 
 export const searchTheses = async ( searchingValues ) => {
@@ -45,6 +55,7 @@ export const getUserInfo = async (uid) => {
             uid: uid
         }
     }).then((result) => {
+        console.log(result.data.userPhotoURL)
         const userInfo = {
             status: result.data.userAcademicStatus,
             firstname: result.data.userFirstname,
@@ -71,9 +82,9 @@ export const updateUser = async (values, uid) => {
     }).catch(error => console.log(error))
 }
 
-export const upadteImage = async (image, uid) => {
+export const updateImage = async (image, uid) => {
     return await axios.post("/users/updateUserImage", {
-        imageBase64: image, 
+        imageBase64: image,
         uid: uid
     }).then((result) => {
         return result;

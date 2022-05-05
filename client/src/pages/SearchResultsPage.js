@@ -90,8 +90,6 @@ const SearchResultsPage = (props) => {
             setNumberOfPages(Math.ceil( location.state.results.length / resultsPerPage));
             handleShowCurrentPageOfResults(1)
         }
-
-        console.log(location.state.results)
     }, [location])
 
     const handleShowCurrentPageOfResults = (pageNumber) => {
