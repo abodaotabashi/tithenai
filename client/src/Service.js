@@ -14,13 +14,24 @@ export const getAllTags = async () => {
 
 // =========================================================== Theses
 
-export const searchTheses = async ( searchingValues ) => {
+export const searchTheses = async (searchingValues) => {
 
     return await axios.get("/theses/search", {
         params: {
             query: searchingValues.query,
             dimensions: searchingValues.dimensions,
             tags: (searchingValues.tags.length === 0) ? "nothing" : searchingValues.tags,
+        }
+    }).then((result) => {
+        return result.data;
+    }).catch(error => console.log(error))
+}
+
+export const getUserTheses = async (uid) => {
+
+    return await axios.get("/theses/getUserTheses", {
+        params: {
+            uid: uid
         }
     }).then((result) => {
         return result.data;
@@ -36,7 +47,7 @@ export const getAllUnis = async () => {
         }).catch(error => console.log(error))
 }
 
-export const searchUniversities = async ( searchingValues ) => {
+export const searchUniversities = async (searchingValues) => {
     return await axios.get("/universities/search", {
         params: {
             query: searchingValues.query,
