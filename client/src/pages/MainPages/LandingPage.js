@@ -7,6 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 import LandingWelcomeGif from '../../assets/gifs/LandingWelcome.gif';
 
+import {Link} from 'react-scroll';
+import {TextField,  Button, InputAdornment, IconButton, Divider, AccordionActions } from '@mui/material';
+
 import '../../assets/styles.css';
 const useStyles = makeStyles(theme => ({
     header: {
@@ -19,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     headerSpan: {
         paddingBottom: "0.5rem",
         fontFamily: "Ubuntu-Light",
-        fontSize: "medium",
+        fontSize: "large",
         textAlign: "center",
     },
     illustrationLabel: {
@@ -43,6 +46,7 @@ const useStyles = makeStyles(theme => ({
         },
     }
 }));
+
 const LandingPage = () => {
     const classes = useStyles();
     const navigator = useNavigate();
@@ -59,19 +63,40 @@ const LandingPage = () => {
                         <Grid item xs={12} sm={12} md={7} lg={8}>
                             <p className="textWithSecondaryGradient">Get inspired by others' thesis, publish your own one and share your thoughts with your colleages.</p>
                         </Grid>
-                        <Grid item xs={12} sm={12} md={12} lg={12}>
-                            <p className={classes.headerSpan}>
-                                To start,
-                                <span className="forwardingSpan" onClick={() => redirectToRegisterPage(navigator)}>&nbsp;Sign Up Now!</span>
-                            </p>
-                            <p className={classes.headerSpan}>
-                                Or
-                                <span className="forwardingSpan" onClick={() => redirectToLoginPage(navigator)}>&nbsp;Sign In </span>
-                                if you already have an account :)
-                            </p>
+                        <Grid container alignItems="center" direction="column">
+                            <Grid item xs={12} sm={12} md={7} lg={8}>
+                                <p className={classes.headerSpan}>
+                                    To start
+                                </p>
+                                <Button 
+                                        className="forwardingSpan" 
+                                        onClick={() => redirectToRegisterPage(navigator)}
+                                        color="secondary" 
+                                                variant="outlined" 
+                                                size="large" 
+                                                type="submit" 
+                                                style={{padding: "1vh 2vw", fontFamily: "Ubuntu", backgroundColor: "green", color: "white"}}>
+                                        &nbsp;Sign Up Now!
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={7} lg={8}>
+                                <p className={classes.headerSpan}>
+                                    If you already have an account
+                                </p>
+                                <Button 
+                                    className="forwardingSpan" 
+                                    onClick={() => redirectToRegisterPage(navigator)}
+                                    color="secondary" 
+                                            variant="outlined" 
+                                            size="large" 
+                                            type="submit" 
+                                            style={{padding: "1vh 2vw", fontFamily: "Ubuntu", backgroundColor: "green", color: "white"}}>
+                                    &nbsp;Sign In
+                                </Button>
+                            </Grid>
                             <p className={classes.headerSpan}>
                                 To learn more,
-                                <span className="forwardingSpan" to="aboutTithenai" onClick="aboutTithenai">&nbsp;click here.</span>
+                                <Link className="forwardingSpan" to="aboutTithenai">&nbsp;click here.</Link>
                             </p>
                         </Grid>
                     </Grid>
