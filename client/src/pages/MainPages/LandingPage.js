@@ -85,7 +85,7 @@ const LandingPage = () => {
                                 </p>
                                 <Button 
                                     className="forwardingSpan" 
-                                    onClick={() => redirectToRegisterPage(navigator)}
+                                    onClick={() => redirectToLoginPage(navigator)}
                                     color="secondary" 
                                             variant="outlined" 
                                             size="large" 
@@ -106,10 +106,11 @@ const LandingPage = () => {
                 <Paper style={{width: "80%", padding: "50px"}} id="aboutTithenai">
                     <p className={classes.illustrationLabel}>About Tithenai</p>
                     <p className={classes.header}>
-                        The application was developed to target two groups. The first group consists of undergraduate
-                        students who are undertaking or plan to undertake research for their thesis. The second group
-                        includes students who have completed their studies and have a ready-to-publish thesis and wish
-                        to present their work in a professional setting where they can also inspire other students.
+                    Tithenai is a social platform for researchers to share their work and inspire others or
+                    find inspiration. We believe in making knowledge more accessible and aim to provide an
+                    environment to help academicians and undergraduate students collaborate and communicate
+                    throughout every step of the process wether they are conducting research or have a
+                    ready-to-publish thesis and wish to present their work.
                     </p>
                 </Paper>
             </div>
