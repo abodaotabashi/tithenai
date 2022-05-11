@@ -17,13 +17,14 @@ const db = admin.firestore();
 const storage = firebaseStorage.getStorage(firebseApp);
 
 //=========================================================== collection names 
+
 const USERS_COLLECTION = 'users';
 const UNIS_COLLECTION = 'universities';
 const THESES_COLLECTION = 'theses';
 const REPORTS_COLLECTION = 'reports';
 const REVIEWS_COLLECTION = 'reviews';
-const BUCKETNAME = 'tithenai-23867.appspot.com'
-const TAGS_COLLECTION = "tags"
+const BUCKETNAME = 'tithenai-23867.appspot.com';
+const TAGS_COLLECTION = "tags";
 
 // =========================================================== Database Strings 
 // Reporsts 
@@ -292,7 +293,7 @@ async function uploadUniImages() {
     fileNames = fs.readdirSync('database/uniImages/');
     fileNames.forEach(async (filename) => {
         await storage.bucket(BUCKETNAME).upload("database/uniImages/" + filename, {
-            destination: "uniImages/" + filename,
+            destination: "uniImages/" + filename
         });
     });
 }
@@ -323,39 +324,38 @@ async function getAllTheses() {
 async function uploadThesis(data) {
     const thesisData = { ...data, thesisPdfUrl: "" }
     const uid = thesisData.thesisAuthorID;
+
     const thesisPdfBase64 = thesisData.thesisPdfBase64;
+
     delete thesisData.uid;
     delete thesisData.thesisPdfBase64;
+
     thesisData.thesisUploadDate = new Date(thesisData.thesisUploadDate)
     thesisData.thesisDate = new Date(thesisData.thesisDate)
 
-    try {
-        // add new thesis
-        const addedThesis = await db.collection(THESES_COLLECTION).add(thesis)
+    const userData = await getUserDataById(uid);
+    thesisData.thesisAuthorName = `${userData.userFirstname} ${userData.userLastname}`
 
-        // TODO: get a real pdf file as Base64
-        const pdfFile = await fs.readFileSync('database/myThesis.pdf', 'base64');
-        const buf = new Buffer.from(pdfFile, 'base64');
-        const file = storage.bucket(BUCKETNAME).file(`theses/${addedThesis.id}.pdf`);
-        await file.save(buf);
-        const publicUrl = await file.getSignedUrl({
-            action: 'read',
-            expires: '03-09-2491',
-        });
+    // add new thesis
+    const addedThesis = await db.collection(THESES_COLLECTION).add(thesisData)
 
-        // update document with the url
-        await db.collection(THESES_COLLECTION).doc(addedThesis.id).update({
-            thesisPdfUrl: publicUrl
-        });
+    // TODO: get a real pdf file as Base64 
+    const pdfFile = await fs.readFileSync('database/myThesis.pdf', 'base64');
+    const buf = new Buffer.from(pdfFile, 'base64');
+    const file = storage.bucket(BUCKETNAME).file(`theses/${addedThesis.id}.pdf`);
+    await file.save(buf);
+    const publicUrl = await file.getSignedUrl({
+        action: 'read',
+        expires: '03-09-2491',
+    });
 
-        // update tags list
-        await addNewTags(thesisData.thesisTags);
+    // update document with the url
+    await db.collection(THESES_COLLECTION).doc(addedThesis.id).update({
+        thesisPdfUrl: publicUrl
+    });
 
-        return true
-    } catch (error) {
-        console.log(error);
-        return false;
-    }
+    // // update tags list
+    // await addNewTags(thesisData.thesisTags);
 }
 
 async function getUserTheses(data) {
@@ -450,6 +450,17 @@ async function getAllTags() {
     }
 }
 
+async function addNewTag(tag) {
+    const oldTagsObj = (await db.collection(TAGS_COLLECTION).get()).docs[0];
+    const docId = oldTagsObj.id;
+    const oldTagsList = oldTagsObj.data().tags;
+    const newTagsList = [...new Set([...oldTagsList, tag])]
+    console.log(newTagsList);
+    await db.collection("asdf").doc(docId).update({
+        tags: newTagsList
+    })
+}
+
 async function addViewer(data) {
     try {
         const uid = data.uid;
@@ -523,6 +534,7 @@ module.exports.getAllTags = getAllTags;
 module.exports.addViewer = addViewer;
 module.exports.addNewReport = addNewReport;
 module.exports.getReviews = getReviews;
+module.exports.addNewTag = addNewTag;
 
 
 // =========================================================== Private funcitons 
@@ -532,17 +544,11 @@ async function getThesis(thesisId) {
     return thesis.data()
 }
 
-async function addNewTags(tags) {
-    try {
-        const oldTagsObj = (await db.collection(TAGS_COLLECTION).get()).docs[0];
-        const docId = oldTagsObj.id;
-        const oldTagsList = oldTagsObj.data().tags;
-        const newTagsList = [...new Set([...oldTagsList, ...tags])]
-        await db.collection(TAGS_COLLECTION).doc(docId).update({
-            tags: newTagsList
+async function getUserDataById(uid) {
+    return db.collection(USERS_COLLECTION).doc(uid)
+        .get()
+        .then(async (doc) => {
+            const userData = doc.data()
+            return userData;
         })
-    } catch (error) {
-        console.log(error);
-    }
 }
-
