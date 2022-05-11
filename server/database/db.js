@@ -349,8 +349,8 @@ async function uploadThesis(data) {
             thesisPdfUrl: publicUrl
         });
 
-        // update tags list
-        await addNewTags(thesisData.thesisTags);
+        // // update tags list
+        // await addNewTags(thesisData.thesisTags);
 
         return true
     } catch (error) {
@@ -451,6 +451,17 @@ async function getAllTags() {
     }
 }
 
+async function addNewTag(tag) {
+    const oldTagsObj = (await db.collection(TAGS_COLLECTION).get()).docs[0];
+    const docId = oldTagsObj.id;
+    const oldTagsList = oldTagsObj.data().tags;
+    const newTagsList = [...new Set([...oldTagsList, tag])]
+    console.log(newTagsList);
+    await db.collection("asdf").doc(docId).update({
+        tags: newTagsList
+    })
+}
+
 async function addViewer(data) {
     try {
         const uid = data.uid;
@@ -485,6 +496,7 @@ module.exports.getSavedTheses = getSavedTheses;
 module.exports.getUserTheses = getUserTheses;
 module.exports.getAllTags = getAllTags;
 module.exports.addViewer = addViewer;
+module.exports.addNewTag = addNewTag;
 
 
 // =========================================================== Private funcitons 
@@ -494,16 +506,3 @@ async function getThesis(thesisId) {
     return thesis.data()
 }
 
-async function addNewTags(tags) {
-    try {
-        const oldTagsObj = (await db.collection(TAGS_COLLECTION).get()).docs[0];
-        const docId = oldTagsObj.id;
-        const oldTagsList = oldTagsObj.data().tags;
-        const newTagsList = [...new Set([...oldTagsList, ...tags])]
-        await db.collection(TAGS_COLLECTION).doc(docId).update({
-            tags: newTagsList
-        })
-    } catch (error) {
-        console.log(error);
-    }
-}

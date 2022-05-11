@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require('../database/db.js');
 const { turkishtoEnglish } = require("../Utils/util.js");
-const upload = require('multer')();
+const { body, validationResult } = require('express-validator');
 
 // ===========================================================
 
@@ -196,4 +196,19 @@ router.post("/addViewer", function (req, res, next) {
             return res.sendStatus(500)
         })
 })
+
+router.post("/addNewTag", body('tag').exists().isString(), (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    } else {
+        db.addNewTag(req.body.tag).then((status) => {
+            return status ? res.status(201).json({ tag }) : res.sendStatus(500);
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500);
+        })
+    }
+});
+
 module.exports = router;
