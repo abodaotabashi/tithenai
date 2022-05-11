@@ -17,13 +17,14 @@ const db = admin.firestore();
 const storage = firebaseStorage.getStorage(firebseApp);
 
 //=========================================================== collection names 
+
 const USERS_COLLECTION = 'users';
 const UNIS_COLLECTION = 'universities';
 const THESES_COLLECTION = 'theses';
 const REPORTS_COLLECTION = 'reports';
 const REVIEWS_COLLECTION = 'reviews';
-const BUCKETNAME = 'tithenai-23867.appspot.com'
-const TAGS_COLLECTION = "tags"
+const BUCKETNAME = 'tithenai-23867.appspot.com';
+const TAGS_COLLECTION = "tags";
 
 // =========================================================== Database Strings 
 // Reporsts 
@@ -292,7 +293,7 @@ async function uploadUniImages() {
     fileNames = fs.readdirSync('database/uniImages/');
     fileNames.forEach(async (filename) => {
         await storage.bucket(BUCKETNAME).upload("database/uniImages/" + filename, {
-            destination: "uniImages/" + filename,
+            destination: "uniImages/" + filename
         });
     });
 }
@@ -506,4 +507,3 @@ async function addNewTags(tags) {
         console.log(error);
     }
 }
-
