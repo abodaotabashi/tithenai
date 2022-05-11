@@ -466,6 +466,43 @@ async function addViewer(data) {
         return false
     }
 }
+// =========================================================== Reports
+async function addNewReport(data) {
+    dbReportData = {
+        reportContent: data.reportdata.reportContent,
+        reportReporterID: data.reportdata.reportReporterID,
+        reportThesisID: data.reportdata.reportThesisID,
+        reporterName: data.reportdata.reporterName + " " + data.reportdata.reporterLastName,
+    }
+
+    console.log(data.reportdata.reportContent)
+    return db
+        .collection(REPORTS_COLLECTION)
+        .doc()
+        .set(dbReportData)
+}
+// =========================================================== Reviews
+async function getReviews(data) {
+    const thesesId = data.thesesId
+    try {
+        const reviewsSnapshot = await db.collection(REVIEWS_COLLECTION).where("reviewThesisID", '==', thesesId).get();
+        const reviews = []
+        reviewsSnapshot.forEach(reviewObj => {
+            const review = {
+                thesisId: reviewObj.id,
+                ...reviewObj.data()
+            }
+            reviews.push(review);
+        });
+        console.log(reviews.data)
+        return (reviews)
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
+
 
 // =========================================================== Exports
 
@@ -484,6 +521,8 @@ module.exports.getSavedTheses = getSavedTheses;
 module.exports.getUserTheses = getUserTheses;
 module.exports.getAllTags = getAllTags;
 module.exports.addViewer = addViewer;
+module.exports.addNewReport = addNewReport;
+module.exports.getReviews = getReviews;
 
 
 // =========================================================== Private funcitons 

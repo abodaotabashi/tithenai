@@ -9,6 +9,8 @@ var indexRouter = require('./routes/index.js');
 var userRouter = require('./routes/users.js');
 var uniRouter = require('./routes/universities.js');
 var thesesRouter = require('./routes/theses.js');
+var reportsRouter = require('./routes/reports.js');
+var reviewsRouter = require('./routes/reviews.js');
 
 const app = express();
 
@@ -25,6 +27,8 @@ app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/universities', uniRouter);
 app.use('/theses', thesesRouter);
+app.use('/reports', reportsRouter);
+app.use('/reviws', reviewsRouter);
 
 
 module.exports = app;

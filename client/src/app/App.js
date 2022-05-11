@@ -68,7 +68,7 @@ const App = () => {
     const [userAuth, setUserAuth] = useState()
 
     const checkLoggedInUser = () => {
-        const auth = getAuth(); 
+        const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUserAuth(user);

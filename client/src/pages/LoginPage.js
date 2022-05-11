@@ -59,11 +59,11 @@ const LoginPage = () => {
     const classes = useStyles();
     const navigator = useNavigate();
     const { userAuth } = useContext(AuthContext);
-    const [ userAuthStatus, setUserAuthStatus ] = useState(1);
+    const [userAuthStatus, setUserAuthStatus] = useState(1);
 
     useEffect(() => {
-        if(typeof(userAuth) !== "undefined") {
-            if(userAuth) {
+        if (typeof (userAuth) !== "undefined") {
+            if (userAuth) {
                 redirectToMainPage(navigator);
             } else {
                 setUserAuthStatus(2);
@@ -75,42 +75,42 @@ const LoginPage = () => {
         redirectToMainPage(navigator);
     }
 
-    return(
+    return (
         <>
-        { userAuthStatus === 1 &&
-            <LoadingPage />
-        }
-        { userAuthStatus === 2 &&
-            <div className="loginPageContainer">
-                <Navbar />
-                <Grid container alignItems="center" justifyContent="center" style={{paddingTop: "2%", paddingBottom: "2%"}}>
-                    <Grid item container xs={11} sm={11} md={11} lg={11} direction="row-reverse" alignItems="center" justifyContent="center" className="loginBanner">
-                        <Grid item container xs={12} sm={12} md={7} lg={8} direction="row" alignItems="center" justifyContent="center">
-                            <p className={classes.illustrationLabel}>Welcome to Tithenai</p>
-                            <img src={LoginGif} alt="Welcome" className={classes.loginIllustration}/>
-                        </Grid>
-                        <Grid item container xs={12} sm={12} md={5} lg={4} className="glassmorphismEffect75" justifyContent="center">
-                            <Grid item container xs={12} sm={12} md={12} lg={12} xl={12} direction="row">
-                                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
-                                    <div style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>
-                                        <img src={TithenaiLogo} alt="Tithenai" className='headerLabelLogo' onClick={() => redirectToMainPage(navigator)}/>
-                                    </div>
-                                    <p className={classes.header}>Sign In to Tithenai</p>
-                                    <p className={classes.headerSpan}>
-                                        New Here?
-                                        <span className="forwardingSpan" onClick={() => redirectToRegisterPage(navigator)}>&nbsp;Create an Account</span>
-                                    </p>
-                                </Grid>
-                                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}>
-                                    <LoginForm redirectToSearchPage={redirectToSearchPage}/>
+            {userAuthStatus === 1 &&
+                <LoadingPage />
+            }
+            {userAuthStatus === 2 &&
+                <div className="loginPageContainer">
+                    <Navbar />
+                    <Grid container alignItems="center" justifyContent="center" style={{ paddingTop: "2%", paddingBottom: "2%" }}>
+                        <Grid item container xs={11} sm={11} md={11} lg={11} direction="row-reverse" alignItems="center" justifyContent="center" className="loginBanner">
+                            <Grid item container xs={12} sm={12} md={7} lg={8} direction="row" alignItems="center" justifyContent="center">
+                                <p className={classes.illustrationLabel}>Welcome to Tithenai</p>
+                                <img src={LoginGif} alt="Welcome" className={classes.loginIllustration} />
+                            </Grid>
+                            <Grid item container xs={12} sm={12} md={5} lg={4} className="glassmorphismEffect75" justifyContent="center">
+                                <Grid item container xs={12} sm={12} md={12} lg={12} xl={12} direction="row">
+                                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                                        <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                            <img src={TithenaiLogo} alt="Tithenai" className='headerLabelLogo' onClick={() => redirectToMainPage(navigator)} />
+                                        </div>
+                                        <p className={classes.header}>Sign In to Tithenai</p>
+                                        <p className={classes.headerSpan}>
+                                            New Here?
+                                            <span className="forwardingSpan" onClick={() => redirectToRegisterPage(navigator)}>&nbsp;Create an Account</span>
+                                        </p>
+                                    </Grid>
+                                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                        <LoginForm redirectToSearchPage={redirectToSearchPage} />
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-                <CssBaseline />
-            </div>
-        }
+                    <CssBaseline />
+                </div>
+            }
         </>
     );
 }

@@ -10,6 +10,11 @@ export const getAllTags = async () => {
             return result.data;
         }).catch(error => console.log(error))
 }
+// =========================================================== Tags
+
+
+
+
 
 // =========================================================== Theses
 
@@ -117,3 +122,6 @@ export const updateImage = async (image, uid) => {
         return result;
     }).catch(error => console.log(error))
 }
+
+// =========================================================== Tags
+

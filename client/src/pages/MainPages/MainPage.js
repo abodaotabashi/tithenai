@@ -9,11 +9,11 @@ import '../../assets/styles.css';
 
 const MainPage = () => {
     const { userAuth } = useContext(AuthContext);
-    const [ userAuthStatus, setUserAuthStatus ] = useState(1);
+    const [userAuthStatus, setUserAuthStatus] = useState(1);
 
     useEffect(() => {
-        if(typeof(userAuth) !== "undefined") {
-            if(userAuth) {
+        if (typeof (userAuth) !== "undefined") {
+            if (userAuth) {
                 setUserAuthStatus(2);
             } else {
                 setUserAuthStatus(3);
@@ -21,7 +21,7 @@ const MainPage = () => {
         }
     }, [userAuth])
 
-    return(
+    return (
         <>
             {userAuthStatus === 1 &&
                 <LoadingPage />

@@ -21,6 +21,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import '../assets/styles.css';
 
+
 const useStyles = makeStyles(theme => ({
     paper: {
         padding: "20px",
@@ -133,8 +134,15 @@ const MyProfilePage = () => {
     const inputField = useRef(null);
 
     const { userAuth } = useContext(AuthContext);
-
+    /*const dbReportData = {
+        reportContent: "data.reportdata.reportContent",
+        reportReporterID: "data.uid",
+        reportThesisID: "data.reportdata.reportThesisID",
+        reporterName: "data.reportdata.reporterName",
+        reporterLastName: "data.reportdata.reporterLastName",
+    }*/
     useEffect(() => {
+        /*        addNewReport(dbReportData);*/
         if (typeof (userAuth) !== "undefined") {
             if (userAuth) {
                 const uid = userAuth.uid;
