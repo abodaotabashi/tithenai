@@ -78,7 +78,6 @@ router.post("/uploadThesis", function (req, res, next) {
     {
         thesisAuthorID: "sK6ZvwH30gX1L0nQ4VQzCuF5sC02",
         thesisAbstract: "",
-        thesisAuthorName: "Tithenai Tithenai1",
         thesisDate: "2020-10-21T13:28:06.419Z", 
         thesisFaculty: "CS", 
         thesisLanguage: "TR",
@@ -92,8 +91,8 @@ router.post("/uploadThesis", function (req, res, next) {
     */
 
     db.uploadThesis(req.body)
-        .then((status) => {
-            return status ? res.sendStatus(200) : res.sendStatus(500);
+        .then(() => {
+            res.sendStatus(200);
         }).catch((error) => {
             console.log(error);
             return res.sendStatus(500)
@@ -202,8 +201,8 @@ router.post("/addNewTag", body('tag').exists().isString(), (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     } else {
-        db.addNewTag(req.body.tag).then((status) => {
-            return status ? res.status(201).json({ tag }) : res.sendStatus(500);
+        db.addNewTag(req.body.tag).then(() => {
+            return res.status(201).json({ tag })
         }).catch((error) => {
             console.log(error);
             return res.sendStatus(500);

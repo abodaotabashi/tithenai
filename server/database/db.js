@@ -324,39 +324,38 @@ async function getAllTheses() {
 async function uploadThesis(data) {
     const thesisData = { ...data, thesisPdfUrl: "" }
     const uid = thesisData.thesisAuthorID;
+    
     const thesisPdfBase64 = thesisData.thesisPdfBase64;
+        
     delete thesisData.uid;
     delete thesisData.thesisPdfBase64;
+
     thesisData.thesisUploadDate = new Date(thesisData.thesisUploadDate)
     thesisData.thesisDate = new Date(thesisData.thesisDate)
 
-    try {
-        // add new thesis
-        const addedThesis = await db.collection(THESES_COLLECTION).add(thesis)
+    const userData = await getUserDataById(uid); 
+    thesisData.thesisAuthorName = `${userData.userFirstname} ${userData.userLastname}`
 
-        // TODO: get a real pdf file as Base64
-        const pdfFile = await fs.readFileSync('database/myThesis.pdf', 'base64');
-        const buf = new Buffer.from(pdfFile, 'base64');
-        const file = storage.bucket(BUCKETNAME).file(`theses/${addedThesis.id}.pdf`);
-        await file.save(buf);
-        const publicUrl = await file.getSignedUrl({
-            action: 'read',
-            expires: '03-09-2491',
-        });
+    // add new thesis
+    const addedThesis = await db.collection(THESES_COLLECTION).add(thesisData)
 
-        // update document with the url
-        await db.collection(THESES_COLLECTION).doc(addedThesis.id).update({
-            thesisPdfUrl: publicUrl
-        });
+    // TODO: get a real pdf file as Base64 
+    const pdfFile = await fs.readFileSync('database/myThesis.pdf', 'base64');
+    const buf = new Buffer.from(pdfFile, 'base64');
+    const file = storage.bucket(BUCKETNAME).file(`theses/${addedThesis.id}.pdf`);
+    await file.save(buf);
+    const publicUrl = await file.getSignedUrl({
+        action: 'read',
+        expires: '03-09-2491',
+    });
 
-        // // update tags list
-        // await addNewTags(thesisData.thesisTags);
+    // update document with the url
+    await db.collection(THESES_COLLECTION).doc(addedThesis.id).update({
+        thesisPdfUrl: publicUrl
+    });
 
-        return true
-    } catch (error) {
-        console.log(error);
-        return false;
-    }
+    // // update tags list
+    // await addNewTags(thesisData.thesisTags);
 }
 
 async function getUserTheses(data) {
@@ -506,3 +505,11 @@ async function getThesis(thesisId) {
     return thesis.data()
 }
 
+async function getUserDataById(uid) {
+    return db.collection(USERS_COLLECTION).doc(uid)
+        .get()
+        .then(async (doc) => {
+            const userData = doc.data()
+            return userData;
+        })
+}
