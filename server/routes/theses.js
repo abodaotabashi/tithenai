@@ -201,6 +201,7 @@ router.post("/addNewTag", body('tag').exists().isString(), (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     } else {
+        const tag = req.body.tag 
         db.addNewTag(req.body.tag).then(() => {
             return res.status(201).json({ tag })
         }).catch((error) => {

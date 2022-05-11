@@ -14,5 +14,15 @@ router.post("/addNewReport", function (req, res, next) {
         })
 });
 
+
+router.get("/getAllReports", function (req, res, next) {
+    db.getAllReports().then((result) => {
+        res.send(result);
+    }).catch((error) => {
+        console.log(error)
+        res.sendStatus(500);
+    })
+});
+
 module.exports = router;
 

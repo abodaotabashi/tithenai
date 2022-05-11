@@ -479,38 +479,100 @@ async function addViewer(data) {
 }
 // =========================================================== Reports
 async function addNewReport(data) {
+    const uid = data.uid;
+    const userData = await getUserDataById(uid);
+    const reporterName = userData.userFirstname + " " + userData.userLastname;
+    console.log(reporterName);
     dbReportData = {
         reportContent: data.reportdata.reportContent,
         reportReporterID: data.reportdata.reportReporterID,
         reportThesisID: data.reportdata.reportThesisID,
-        reporterName: data.reportdata.reporterName + " " + data.reportdata.reporterLastName,
+        reporterName: reporterName
     }
-
-    console.log(data.reportdata.reportContent)
     return db
         .collection(REPORTS_COLLECTION)
         .doc()
         .set(dbReportData)
 }
+
+async function getAllReports() {
+    return db
+        .collection(REPORTS_COLLECTION)
+        .get()
+        .then((querySnapshot) => {
+            const reports = []
+            querySnapshot.forEach((doc) => {
+                report = {
+                    ...doc.data(),
+                    reportId: doc.id
+                }
+                reports.push(report)
+            });
+            return reports;
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        })
+}
+
+//Reprot: 
+// add
+// get all reports: make sure to include the document id in the data you return. 
+// look at get all unis function to learn how to do this. 
+//DONE
+
+// get thesis is already done. 
+
+// Ratings 
+// add rating of user by adding id and value to the map of ratings in the thesis document
+// update rating: search for user id in the map, then delete the value and add the new rating. 
+
+
+// Comments : 
+// get thesis comments : you get thesis id, using this id you get all the comments with reviewThesisID equal to this id
+// make sure to include the document id in the data you return.
+// add thesis comment: you get, uid, unitid and body. 
+// delete thesis comment: uid, comment id
+//Done
+
 // =========================================================== Reviews
-async function getReviews(data) {
-    const thesesId = data.thesesId
-    try {
-        const reviewsSnapshot = await db.collection(REVIEWS_COLLECTION).where("reviewThesisID", '==', thesesId).get();
-        const reviews = []
-        reviewsSnapshot.forEach(reviewObj => {
-            const review = {
-                thesisId: reviewObj.id,
-                ...reviewObj.data()
-            }
-            reviews.push(review);
-        });
-        console.log(reviews.data)
-        return (reviews)
-    } catch (error) {
-        console.log(error);
-        return false;
+
+async function addNewReview(data) {
+    const uid = data.uid;
+    const userData = await getUserDataById(uid);
+    const reviewAuthorName = userData.userFirstname + " " + userData.userLastname;
+    dbReviewData = {
+        reviewAuthorID: data.reviewdata.reviewAuthorID,
+        reviewThesisID: data.reviewdata.reviewThesisID,
+        reviewBody: data.reviewdata.reviewBody,
+        reviewAuthorName: reviewAuthorName
     }
+    return db
+        .collection(REVIEWS_COLLECTION)
+        .doc()
+        .set(dbReviewData)
+}
+
+async function deleteReview(commentId) {
+    return db
+        .collection(REVIEWS_COLLECTION)
+        .doc(commentId)
+        .delete()
+}
+
+
+async function getReviews(thesisId) {
+    const reviewsSnapshot = await db.collection(REVIEWS_COLLECTION).where("reviewThesisID", '==', thesisId).get();
+    const reviews = []
+    reviewsSnapshot.forEach(reviewObj => {
+        const review = {
+            thesisId: reviewObj.id,
+            ...reviewObj.data()
+        }
+        reviews.push(review);
+    });
+    console.log(reviews.data)
+    return (reviews)
 }
 
 
@@ -535,6 +597,9 @@ module.exports.addViewer = addViewer;
 module.exports.addNewReport = addNewReport;
 module.exports.getReviews = getReviews;
 module.exports.addNewTag = addNewTag;
+module.exports.getAllReports = getAllReports;
+module.exports.addNewReview = addNewReview;
+module.exports.deleteReview = deleteReview;
 
 
 // =========================================================== Private funcitons 

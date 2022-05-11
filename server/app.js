@@ -18,7 +18,7 @@ const app = express();
 
 app.use(cors());
 app.use(logger('dev'));
-app.use(express.json({limit: '100mb'}));
+app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -28,7 +28,7 @@ app.use('/users', userRouter);
 app.use('/universities', uniRouter);
 app.use('/theses', thesesRouter);
 app.use('/reports', reportsRouter);
-app.use('/reviws', reviewsRouter);
+app.use('/reviews', reviewsRouter);
 
 
 module.exports = app;
