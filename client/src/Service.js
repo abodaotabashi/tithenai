@@ -126,6 +126,3 @@ export const updateImage = async (image, uid) => {
         return result;
     }).catch(error => console.log(error))
 }
-
-// =========================================================== Tags
-
