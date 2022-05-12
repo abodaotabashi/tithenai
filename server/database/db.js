@@ -361,7 +361,6 @@ async function uploadThesis(data) {
 async function getUserTheses(data) {
     const uid = data.uid
     try {
-        // TODO: change sK6ZvwH30gX1L0nQ4VQzCuF5sC02 to uid
         // Note: don't use ctrl+right click to access the url from visual code, instead copy it
         const thesesSnapshot = await db.collection(THESES_COLLECTION).where("thesisAuthorID", '==', uid).get();
         const theses = []
@@ -455,8 +454,7 @@ async function addNewTag(tag) {
     const docId = oldTagsObj.id;
     const oldTagsList = oldTagsObj.data().tags;
     const newTagsList = [...new Set([...oldTagsList, tag])]
-    console.log(newTagsList);
-    await db.collection("asdf").doc(docId).update({
+    await db.collection(TAGS_COLLECTION).doc(docId).update({
         tags: newTagsList
     })
 }

@@ -38,5 +38,5 @@ export const sortObjectsDescending = (property) => {
 }
 
 export const getAllLanguages = () => {
-    return Languages.sort(sortObjectsAscending("name"));
+    return Languages.sort(sortObjectsAscending("nativeName"));
 }

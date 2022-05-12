@@ -10,11 +10,14 @@ export const getAllTags = async () => {
             return result.data;
         }).catch(error => console.log(error))
 }
-// =========================================================== Tags
 
-
-
-
+export const addNewTag = async (newTag) => {
+    return await axios.post("/theses/addNewTag", {
+        tag : newTag
+    }).then((result) => {
+        return result.data;
+    }).catch(error => console.log(error))
+}
 
 // =========================================================== Theses
 
@@ -34,9 +37,9 @@ export const uploadThesis = async (thesisInfo) => {
     return await axios.post("/theses/uploadThesis", {
         thesisAuthorID: thesisInfo.thesisAuthorID,
         thesisAbstract: thesisInfo.thesisAbstract,
-        thesisAuthorName: thesisInfo.thesisAuthorName,
+        thesisType: thesisInfo.thesisType,
         thesisDate: thesisInfo.thesisDate,
-        thesisFaculty: thesisInfo.thesisFaculty,
+        thesisFieldOfStudy: thesisInfo.thesisFieldOfStudy,
         thesisLanguage: thesisInfo.thesisLanguage,
         thesisTags: thesisInfo.thesisTags,
         thesisTitle: thesisInfo.thesisTitle,
@@ -44,8 +47,9 @@ export const uploadThesis = async (thesisInfo) => {
         thesisUniName: thesisInfo.thesisUniName,
         thesisUploadDate: new Date(),
         thesisPdfBase64: thesisInfo.thesisPdfBase64,
+        viewersList: []
     }).then((result) => {
-        return result.data;
+        return result;
     }).catch(error => console.log(error))
 }
 
