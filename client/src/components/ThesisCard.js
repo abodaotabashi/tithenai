@@ -136,7 +136,7 @@ const ThesisCard = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Typography variant="body2" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                            Language: {thesis.thesisLanguage}
+                            Language: {thesis.thesisLanguage.nativeName}
                         </Typography>
                     </Grid>
                     {thesis.thesisTags.length > 0 ?
