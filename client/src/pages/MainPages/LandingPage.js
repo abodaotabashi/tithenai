@@ -1,14 +1,13 @@
 import React from 'react';
-import { CssBaseline, Grid, Paper } from '@mui/material';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
+import { CssBaseline, Grid, Paper, Button } from '@mui/material';
+import { Link } from 'react-scroll';
 import { redirectToLoginPage, redirectToRegisterPage } from '../../utils/Redirecter';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+
 import { makeStyles } from '@mui/styles';
 import LandingWelcomeGif from '../../assets/gifs/LandingWelcome.gif';
-
-import {Link} from 'react-scroll';
-import {TextField,  Button, InputAdornment, IconButton, Divider, AccordionActions } from '@mui/material';
 
 import '../../assets/styles.css';
 const useStyles = makeStyles(theme => ({
@@ -68,13 +67,13 @@ const LandingPage = () => {
                                 <p className={classes.headerSpan}>
                                     To start
                                 </p>
-                                <Button 
-                                        className="forwardingSpan" 
+                                <Button
+                                        className="forwardingSpan"
                                         onClick={() => redirectToRegisterPage(navigator)}
-                                        color="secondary" 
-                                                variant="outlined" 
-                                                size="large" 
-                                                type="submit" 
+                                        color="secondary"
+                                                variant="outlined"
+                                                size="large"
+                                                type="submit"
                                                 style={{padding: "1vh 2vw", fontFamily: "Ubuntu", backgroundColor: "green", color: "white"}}>
                                         &nbsp;Sign Up Now!
                                 </Button>
@@ -83,20 +82,20 @@ const LandingPage = () => {
                                 <p className={classes.headerSpan}>
                                     If you already have an account
                                 </p>
-                                <Button 
-                                    className="forwardingSpan" 
+                                <Button
+                                    className="forwardingSpan"
                                     onClick={() => redirectToLoginPage(navigator)}
-                                    color="secondary" 
-                                            variant="outlined" 
-                                            size="large" 
-                                            type="submit" 
+                                    color="secondary"
+                                            variant="outlined"
+                                            size="large"
+                                            type="submit"
                                             style={{padding: "1vh 2vw", fontFamily: "Ubuntu", backgroundColor: "green", color: "white"}}>
                                     &nbsp;Sign In
                                 </Button>
                             </Grid>
                             <p className={classes.headerSpan}>
                                 To learn more,
-                                <Link className="forwardingSpan" to="aboutTithenai">&nbsp;click here.</Link>
+                                <Link className="forwardingSpan" to="aboutTithenai" smooth="true">&nbsp;click here.</Link>
                             </p>
                         </Grid>
                     </Grid>

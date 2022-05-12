@@ -5,7 +5,7 @@ import LanguageDropDownList from './LanguageDropDownList';
 import ProfileDropDownList from './ProfileDropDownList';
 import NavbarDrawer from './NavbarDrawer';
 import { styled } from '@mui/material/styles';
-import { redirectToMainPage } from '../utils/Redirecter';
+import { redirectToMainPage, redirectToUploadThesisPage } from '../utils/Redirecter';
 import { useNavigate } from 'react-router-dom';
 
 import '../assets/styles.css';
@@ -110,7 +110,7 @@ const NavbarWithUser = (props) => {
                     <Grid item container xs={3} sm={8} md={6} lg={6} alignItems="center" justifyContent="flex-end">
                         { props.hideUpload === false &&
                             <Grid item style={{margin: "0 1rem"}}>
-                                <UploadButton variant="outlined" size="large" color="secondary" startIcon={<UploadIcon />}>Upload</UploadButton>
+                                <UploadButton variant="outlined" size="large" color="secondary" onClick={() => redirectToUploadThesisPage(navigator)} startIcon={<UploadIcon />}>Upload</UploadButton>
                             </Grid>
                         }
                         <Grid item style={{margin: "0 0.1rem"}}>
