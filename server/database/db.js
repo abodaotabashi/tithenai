@@ -22,7 +22,7 @@ const USERS_COLLECTION = 'users';
 const UNIS_COLLECTION = 'universities';
 const THESES_COLLECTION = 'theses';
 const REPORTS_COLLECTION = 'reports';
-const REVIEWS_COLLECTION = 'reviews';
+const COMMENTS_COLLECTION = 'coments';
 const BUCKETNAME = 'tithenai-23867.appspot.com';
 const TAGS_COLLECTION = "tags";
 
@@ -34,12 +34,12 @@ const REPORT_THESIS_ID = "reportThesisID"
 const REPORTER_NAME = "reporterName"
 const REPORT_ID = "reportID"
 
-// Reviews
-const REVIEW_AUTHOR_ID = "reviewAuthorID"
-const REVIEW_AUTHOR_NAME = "reviewAuthorName"
-const REVIEW_BODY = "reviewBody"
-const REVIEW_RATING = "reviewRating"
-const REVIEW_THESIS_ID = "reviewThesisID"
+// Comments
+const COMMENT_AUTHOR_ID = "commentAuthorID"
+const COMMENT_AUTHOR_NAME = "commentAuthorName"
+const COMMENT_BODY = "commentBody"
+const COMMENT_RATING = "commentRating"
+const COMMENT_THESIS_ID = "commentThesisID"
 
 // Theses
 const THESIS_ABSTRACT = "thesisAbstract"
@@ -219,8 +219,8 @@ async function updateUser(newUserData) {
         // 2. update user name in reports collection
         await updateNameInCollection(REPORTS_COLLECTION, newUserData.uid, 'reportReporterID', "reporterName");
 
-        // 3. update user name in reviews collection
-        await updateNameInCollection(REVIEWS_COLLECTION, newUserData.uid, 'reviewAuthorID', "reviewAuthorName");
+        // 3. update user name in comments collection
+        await updateNameInCollection(COMMENTS_COLLECTION, newUserData.uid, 'commentAuthorID', "commentAuthorName");
 
         // 4. update user name in theses collection 
         await updateNameInCollection(THESES_COLLECTION, newUserData.uid, 'thesisAuthorID', "thesisAuthorName");
@@ -521,53 +521,71 @@ async function getAllReports() {
 // add rating of user by adding id and value to the map of ratings in the thesis document
 // update rating: search for user id in the map, then delete the value and add the new rating. 
 
+// =========================================================== Ratings
+
+async function addNewRate(data) {
+    const thesisId = data.thesisId;
+    const thesisData = await getThesis(thesisId);
+    const rates = thesisData.rates;
+    console.log(rates);
+
+    dbRateData = {
+        uid: data.uid,
+        rateValue: data.rateValue,
+    }
+    rates.add(dbRateData)
+    return db
+        .collection(REPORTS_COLLECTION)
+        .doc()
+        .set(dbReportData)
+}
 
 
 // Comments : 
-// get thesis comments : you get thesis id, using this id you get all the comments with reviewThesisID equal to this id
+// get thesis comments : you get thesis id, using this id you get all the comments with commentThesisID equal to this id
 // make sure to include the document id in the data you return.
 // add thesis comment: you get, uid, unitid and body. 
 // delete thesis comment: uid, comment id
 //Done
 
-// =========================================================== Reviews
+// =========================================================== Comments
 
-async function addNewReview(data) {
+async function addNewComment(data) {
     const uid = data.uid;
     const userData = await getUserDataById(uid);
-    const reviewAuthorName = userData.userFirstname + " " + userData.userLastname;
-    dbReviewData = {
-        reviewAuthorID: data.reviewdata.reviewAuthorID,
-        reviewThesisID: data.reviewdata.reviewThesisID,
-        reviewBody: data.reviewdata.reviewBody,
-        reviewAuthorName: reviewAuthorName
+    const commentAuthorName = userData.userFirstname + " " + userData.userLastname;
+    dbCommentData = {
+        commentAuthorID: data.commentdata.commentAuthorID,
+        commentThesisID: data.commentdata.commentThesisID,
+        commentBody: data.commentdata.commentBody,
+        commentAuthorName: commentAuthorName
     }
     return db
-        .collection(REVIEWS_COLLECTION)
+        .collection(COMMENTS_COLLECTION)
         .doc()
-        .set(dbReviewData)
+        .set(dbCommentData)
 }
 
-async function deleteReview(commentId) {
+async function deleteComment(commentId) {
     return db
-        .collection(REVIEWS_COLLECTION)
+        .collection(COMMENTS_COLLECTION)
         .doc(commentId)
         .delete()
 }
 
 
-async function getReviews(thesisId) {
-    const reviewsSnapshot = await db.collection(REVIEWS_COLLECTION).where("reviewThesisID", '==', thesisId).get();
-    const reviews = []
-    reviewsSnapshot.forEach(reviewObj => {
-        const review = {
-            thesisId: reviewObj.id,
-            ...reviewObj.data()
+async function getComments(thesisId) {
+    const commentsSnapshot = await db.collection(COMMENTS_COLLECTION).where("commentThesisID", '==', thesisId).get();
+    const comments = []
+    commentsSnapshot.forEach(commentObj => {
+        const comment = {
+            thesisId: commentObj.id,
+            ...commentObj.data()
         }
-        reviews.push(review);
+        comments.push(comment);
     });
-    console.log(reviews.data)
-    return (reviews)
+    console.log(comments.data)
+    return (comments)
 }
 
 
@@ -590,11 +608,11 @@ module.exports.getUserTheses = getUserTheses;
 module.exports.getAllTags = getAllTags;
 module.exports.addViewer = addViewer;
 module.exports.addNewReport = addNewReport;
-module.exports.getReviews = getReviews;
+module.exports.getComments = getComments;
 module.exports.addNewTag = addNewTag;
 module.exports.getAllReports = getAllReports;
-module.exports.addNewReview = addNewReview;
-module.exports.deleteReview = deleteReview;
+module.exports.addNewComment = addNewComment;
+module.exports.deleteComment = deleteComment;
 module.exports.addNewRate = addNewRate;
 
 
