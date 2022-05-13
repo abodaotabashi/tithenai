@@ -10,7 +10,7 @@ var userRouter = require('./routes/users.js');
 var uniRouter = require('./routes/universities.js');
 var thesesRouter = require('./routes/theses.js');
 var reportsRouter = require('./routes/reports.js');
-var reviewsRouter = require('./routes/reviews.js');
+var commentsRouter = require('./routes/comments.js');
 var ratessRouter = require('./routes/rates.js');
 
 const app = express();
@@ -29,7 +29,7 @@ app.use('/users', userRouter);
 app.use('/universities', uniRouter);
 app.use('/theses', thesesRouter);
 app.use('/reports', reportsRouter);
-app.use('/reviews', reviewsRouter);
+app.use('/comments', commentsRouter);
 app.use('/rates', ratessRouter);
 
 

@@ -22,7 +22,7 @@ const USERS_COLLECTION = 'users';
 const UNIS_COLLECTION = 'universities';
 const THESES_COLLECTION = 'theses';
 const REPORTS_COLLECTION = 'reports';
-const COMMENTS_COLLECTION = 'coments';
+const COMMENTS_COLLECTION = 'comments';
 const BUCKETNAME = 'tithenai-23867.appspot.com';
 const TAGS_COLLECTION = "tags";
 
@@ -555,7 +555,7 @@ async function addNewComment(data) {
     const userData = await getUserDataById(uid);
     const commentAuthorName = userData.userFirstname + " " + userData.userLastname;
     dbCommentData = {
-        commentAuthorID: data.commentdata.commentAuthorID,
+        commentAuthorID: uid,
         commentThesisID: data.commentdata.commentThesisID,
         commentBody: data.commentdata.commentBody,
         commentAuthorName: commentAuthorName
