@@ -27,3 +27,7 @@ export const redirectToSearchResultsPage = (navigator, resultType, results, sear
 export const redirectToMyPapersPage = (navigator) => {
     navigator("/myPapers");
 }
+
+export const redirectToUploadThesisPage = (navigator) => {
+    navigator("/upload");
+}

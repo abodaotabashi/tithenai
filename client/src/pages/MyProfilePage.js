@@ -169,12 +169,13 @@ const MyProfilePage = () => {
     };
 
     const handleUpdateImage = (croppedImageBase64) => {
-        setUserPhoto(croppedImageBase64)
         if (typeof (userAuth) !== "undefined") {
             if (userAuth) {
                 const uid = userAuth.uid;
-                //TODO: Do whatever you want to do when the image is updated
                 updateImage(croppedImageBase64, uid)
+                    .then(() => {
+                        setUserPhoto(croppedImageBase64)
+                    })
             }
         }
     }

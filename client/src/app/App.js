@@ -13,6 +13,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import SearchResultsPage from '../pages/SearchResultsPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import MyPapersPage from '../pages/MyPapersPage';
+import UploadThesisPage from '../pages/UploadThesisPage';
 
 const App = () => {
     const theme = createTheme({
@@ -94,6 +95,7 @@ const App = () => {
                             <Route path='/' element={<MainPage />} />
                             <Route path='/searchResults' element={<SearchResultsPage />} />
                             <Route path='/myPapers' element={<MyPapersPage />} />
+                            <Route path='/upload' element={<UploadThesisPage />} />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </Router>

@@ -16,7 +16,7 @@ const firebseApp = admin.initializeApp(firebaseConfig);
 const db = admin.firestore();
 const storage = firebaseStorage.getStorage(firebseApp);
 
-//=========================================================== collection names 
+//=========================================================== collection names
 
 const USERS_COLLECTION = 'users';
 const UNIS_COLLECTION = 'universities';
@@ -26,22 +26,22 @@ const REVIEWS_COLLECTION = 'reviews';
 const BUCKETNAME = 'tithenai-23867.appspot.com';
 const TAGS_COLLECTION = "tags";
 
-// =========================================================== Database Strings 
-// Reporsts 
+// =========================================================== Database Strings
+// Reports
 const REPORT_CONTENT = "reportContent"
 const REPORT_REPORTER_ID = "reportReporterID"
 const REPORT_THESIS_ID = "reportThesisID"
 const REPORTER_NAME = "reporterName"
 const REPORT_ID = "reportID"
 
-// Reviews 
+// Reviews
 const REVIEW_AUTHOR_ID = "reviewAuthorID"
 const REVIEW_AUTHOR_NAME = "reviewAuthorName"
 const REVIEW_BODY = "reviewBody"
 const REVIEW_RATING = "reviewRating"
 const REVIEW_THESIS_ID = "reviewThesisID"
 
-// Theses 
+// Theses
 const THESIS_ABSTRACT = "thesisAbstract"
 const THESIS_AUTHOR_ID = "thesisAuthorID"
 const THESIS_AUTHOR_NAME = "thesisAuthorName"
@@ -66,7 +66,7 @@ const UNI_TYPE = "uniType"
 const UNI_URL = "uniUrl"
 const UNI_ID = "uniID"
 
-// Users 
+// Users
 const USER_LASTNAME = "userLastname"
 const USER_FIRSTNAME = "userFirstname"
 const USER_UNI_ID = "userUniID"
@@ -142,7 +142,6 @@ async function getUserInfo(uid) {
                     ...uniSnapshot.data()
                 }
             }
-            // TODO: change this 
             // getting the theses of the user
 
             const thesesSnapshot = await db.collection(THESES_COLLECTION).where("thesisAuthorID", '==', uid).get();
@@ -271,7 +270,6 @@ async function getAllUnis() {
             .get();
 
         unis = []
-        let counter = 0;
         querySnapshot.forEach((doc) => {
             const uniImgRef = storage.bucket(BUCKETNAME).file(`uniImages/${doc.id}.png`)
             const uniImageUrl = uniImgRef.publicUrl();
@@ -339,7 +337,7 @@ async function uploadThesis(data) {
     // add new thesis
     const addedThesis = await db.collection(THESES_COLLECTION).add(thesisData)
 
-    // TODO: get a real pdf file as Base64 
+    // TODO: get a real pdf file as Base64
     const pdfFile = await fs.readFileSync('database/myThesis.pdf', 'base64');
     const buf = new Buffer.from(pdfFile, 'base64');
     const file = storage.bucket(BUCKETNAME).file(`theses/${addedThesis.id}.pdf`);
@@ -353,15 +351,11 @@ async function uploadThesis(data) {
     await db.collection(THESES_COLLECTION).doc(addedThesis.id).update({
         thesisPdfUrl: publicUrl
     });
-
-    // // update tags list
-    // await addNewTags(thesisData.thesisTags);
 }
 
 async function getUserTheses(data) {
     const uid = data.uid
     try {
-        // TODO: change sK6ZvwH30gX1L0nQ4VQzCuF5sC02 to uid
         // Note: don't use ctrl+right click to access the url from visual code, instead copy it
         const thesesSnapshot = await db.collection(THESES_COLLECTION).where("thesisAuthorID", '==', uid).get();
         const theses = []
@@ -455,8 +449,7 @@ async function addNewTag(tag) {
     const docId = oldTagsObj.id;
     const oldTagsList = oldTagsObj.data().tags;
     const newTagsList = [...new Set([...oldTagsList, tag])]
-    console.log(newTagsList);
-    await db.collection("asdf").doc(docId).update({
+    await db.collection(TAGS_COLLECTION).doc(docId).update({
         tags: newTagsList
     })
 }

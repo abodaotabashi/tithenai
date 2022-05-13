@@ -206,7 +206,7 @@ export default class EditProfileForm extends Component {
                                 />
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12}>
-                                <UpdateButton 
+                                <UpdateButton
                                     disabled={Boolean(errors.email) || Boolean(errors.university) || Boolean(errors.status) || Boolean(errors.firstname) || Boolean(errors.lastname) } 
                                     size="large"
                                     type="submit"
