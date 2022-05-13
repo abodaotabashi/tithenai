@@ -11,6 +11,7 @@ var uniRouter = require('./routes/universities.js');
 var thesesRouter = require('./routes/theses.js');
 var reportsRouter = require('./routes/reports.js');
 var reviewsRouter = require('./routes/reviews.js');
+var ratessRouter = require('./routes/rates.js');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/universities', uniRouter);
 app.use('/theses', thesesRouter);
 app.use('/reports', reportsRouter);
 app.use('/reviews', reviewsRouter);
+app.use('/rates', ratessRouter);
 
 
 module.exports = app;

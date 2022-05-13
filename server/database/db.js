@@ -478,6 +478,12 @@ async function addViewer(data) {
     }
 }
 // =========================================================== Reports
+//Reprot: 
+// add
+// get all reports: make sure to include the document id in the data you return. 
+// look at get all unis function to learn how to do this. 
+//DONE
+
 async function addNewReport(data) {
     const uid = data.uid;
     const userData = await getUserDataById(uid);
@@ -515,17 +521,13 @@ async function getAllReports() {
         })
 }
 
-//Reprot: 
-// add
-// get all reports: make sure to include the document id in the data you return. 
-// look at get all unis function to learn how to do this. 
-//DONE
 
 // get thesis is already done. 
 
 // Ratings 
 // add rating of user by adding id and value to the map of ratings in the thesis document
 // update rating: search for user id in the map, then delete the value and add the new rating. 
+
 
 
 // Comments : 
@@ -600,6 +602,7 @@ module.exports.addNewTag = addNewTag;
 module.exports.getAllReports = getAllReports;
 module.exports.addNewReview = addNewReview;
 module.exports.deleteReview = deleteReview;
+module.exports.addNewRate = addNewRate;
 
 
 // =========================================================== Private funcitons 
