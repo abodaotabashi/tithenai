@@ -525,19 +525,27 @@ async function getAllReports() {
 
 async function addNewRate(data) {
     const thesisId = data.thesisId;
+    const uid = data.uid;
+    const rateValue = data.rateValue;
     const thesisData = await getThesis(thesisId);
-    const rates = thesisData.rates;
+    const rates = thesisData["rates"];
+    rates[uid] = Number(rateValue)
     console.log(rates);
 
-    dbRateData = {
-        uid: data.uid,
-        rateValue: data.rateValue,
+    avgrate = 0
+    count = 0
+    for (const [key, value] of Object.entries(rates)) {
+        console.log(value);
+        avgrate += value
+        count += 1
     }
-    rates.add(dbRateData)
+    avgrate = avgrate / count
+
+    console.log(avgrate);
     return db
-        .collection(REPORTS_COLLECTION)
-        .doc()
-        .set(dbReportData)
+        .collection(THESES_COLLECTION)
+        .doc(thesisId)
+        .update({ rates: rates, ratesAverage: avgrate })
 }
 
 

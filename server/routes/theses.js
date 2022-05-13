@@ -89,6 +89,8 @@ router.post("/uploadThesis", function (req, res, next) {
         thesisUploadDate: "2020-10-21T13:28:06.419Z",
         thesisPdfBase64: "data:application/pdf;base64,JVBERi0xLjYNJ ...",
         viewersList: []
+        rates{},
+        ratesAverage: "0"
     }
     */
 
