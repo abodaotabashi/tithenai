@@ -14,6 +14,7 @@ import SearchResultsPage from '../pages/SearchResultsPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import MyPapersPage from '../pages/MyPapersPage';
 import UploadThesisPage from '../pages/UploadThesisPage';
+import SavedListPage from '../pages/SavedListPage';
 
 const App = () => {
     const theme = createTheme({
@@ -96,6 +97,7 @@ const App = () => {
                             <Route path='/searchResults' element={<SearchResultsPage />} />
                             <Route path='/myPapers' element={<MyPapersPage />} />
                             <Route path='/upload' element={<UploadThesisPage />} />
+                            <Route path='/savedList' element={<SavedListPage />} />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </Router>

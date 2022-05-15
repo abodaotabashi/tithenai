@@ -23,6 +23,13 @@ export const redirectToSearchResultsPage = (navigator, resultType, results, sear
         }
     });
 }
+export const redirectToSavedListPage = (navigator, results) => {
+    navigator("/savedList", {
+        state: {
+            results: results,
+        }
+    })
+}
 
 export const redirectToMyPapersPage = (navigator) => {
     navigator("/myPapers");
