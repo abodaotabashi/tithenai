@@ -22,7 +22,7 @@ app.use(logger('dev'));
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', userRouter);
@@ -32,9 +32,5 @@ app.use('/reports', reportsRouter);
 app.use('/comments', commentsRouter);
 app.use('/rates', ratessRouter);
 
-app.get("*", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "../client/build/index.html")
-    );
-});
+
 module.exports = app;
