@@ -24,7 +24,7 @@ const THESES_COLLECTION = 'theses';
 const REPORTS_COLLECTION = 'reports';
 const COMMENTS_COLLECTION = 'comments';
 const BUCKETNAME = 'tithenai-23867.appspot.com';
-const TAGS_COLLECTION = "tags";
+const UTILS_COLLECTION = "utils";
 
 // =========================================================== Database Strings
 // Reports
@@ -96,9 +96,7 @@ async function addNewUser(data) {
         userFirstname: data.userdata.userFirstname,
         userLastname: data.userdata.userLastname,
         userGender: data.userdata.userGender,
-        userTheses: [], // first time adding a user, no theses yet.
         userAdmin: false,
-        userReports: [],
         userSavedTheses: []
     }
 
@@ -437,7 +435,8 @@ async function getSavedTheses(data) {
 
 async function getAllTags() {
     try {
-        return (await db.collection(TAGS_COLLECTION).get()).docs[0].data().tags
+        // docs[0] gets the first document, since all lists are inside this document
+        return (await db.collection(UTILS_COLLECTION).get()).docs[0].data().tags
     } catch (error) {
         console.log(error);
         return false;
@@ -445,13 +444,13 @@ async function getAllTags() {
 }
 
 async function addNewTag(tag) {
-    const oldTagsObj = (await db.collection(TAGS_COLLECTION).get()).docs[0];
+    const oldTagsObj = (await db.collection(UTILS_COLLECTION).get()).docs[0];
     const docId = oldTagsObj.id;
     const oldTagsList = oldTagsObj.data().tags;
     const newTagsList = [...new Set([...oldTagsList, tag])]
-    await db.collection(TAGS_COLLECTION).doc(docId).update({
+    await db.collection(UTILS_COLLECTION).doc(docId).update({
         tags: newTagsList
-    })
+    });
 }
 
 async function addViewer(data) {
