@@ -294,6 +294,24 @@ async function uploadUniImages() {
     });
 }
 
+async function addAllDepartments() {
+    const docId = (await db.collection(UTILS_COLLECTION).get()).docs[0].id;
+    const depListFile = fs.readFileSync('database/listOfDepartments.txt');
+    const depListOfObjects = JSON.parse(depListFile);
+    const depList =  depListOfObjects.reduce((acc, next)=> {
+        acc.push(next.departmentName); 
+        return acc; 
+    }, [])
+    await db.collection(UTILS_COLLECTION).doc(docId).update({
+        departments: depList
+    });
+}
+
+async function getAllDepartments(){
+    // docs[0] gets the first document, since all lists are inside this document
+    return (await db.collection(UTILS_COLLECTION).get()).docs[0].data().departments
+} 
+
 // =========================================================== Theses
 
 async function getAllTheses() {
@@ -621,6 +639,8 @@ module.exports.getAllReports = getAllReports;
 module.exports.addNewComment = addNewComment;
 module.exports.deleteComment = deleteComment;
 module.exports.addNewRate = addNewRate;
+module.exports.addAllDepartments = addAllDepartments;
+module.exports.getAllDepartments = getAllDepartments;
 
 
 // =========================================================== Private funcitons 

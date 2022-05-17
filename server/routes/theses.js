@@ -215,4 +215,22 @@ router.post("/addNewTag", body('tag').exists().isString(), (req, res) => {
     }
 });
 
+router.get("/getAllDepartments", (req, res) => {
+    db.getAllDepartments().then((deps) => {
+        return res.status(200).json({ departments: deps })
+    }).catch((error) => {
+        console.log(error);
+        return res.sendStatus(500);
+    })
+})
+
+router.post("/addAllDepartments", (req, res) => {
+    db.addAllDepartments().then(() => {
+        return res.status(201).json({ message: "OK" })
+    }).catch((error) => {
+        console.log(error);
+        return res.sendStatus(500);
+    })
+})
+
 module.exports = router;
