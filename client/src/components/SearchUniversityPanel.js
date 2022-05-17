@@ -84,7 +84,8 @@ const SearchUniversityPanel = (props) => {
             <Grid item xs={12} sm={12} md={12} lg={12}>
                 <TextField
                     color="secondary"
-                    label="Search for"
+                    label="Search for" 
+                    name="searchUniField"
                     placeholder='e.g. Türk Alman Üniversitesi'
                     type="text"
                     variant="outlined"
@@ -109,6 +110,7 @@ const SearchUniversityPanel = (props) => {
                                 </IconButton>
                             }
                             <IconButton
+                                data-testid="search-uni-button"
                                 aria-label="search"
                                 onClick={() => handleSearch()}
                                 >

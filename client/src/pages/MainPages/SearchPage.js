@@ -165,7 +165,7 @@ const SearchPage = () => {
                             textColor="secondary"
                             variant="scrollable"
                             aria-label="full width tabs example">
-                            <Tab label="Theses" wrapped style={{fontFamily: "Ubuntu", fontSize: "medium"}} {... a11yProps(0)} />
+                            <Tab data-testid="theses-section" label="Theses" wrapped style={{fontFamily: "Ubuntu", fontSize: "medium"}} {... a11yProps(0)} />
                             <Tab label="Universities" wrapped style={{fontFamily: "Ubuntu", fontSize: "medium"}} {... a11yProps(1)} />
                         </Tabs>
                     </StyledAppBar>

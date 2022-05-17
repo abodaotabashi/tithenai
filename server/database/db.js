@@ -437,7 +437,7 @@ async function getSavedTheses(data) {
         const theses = [];
         for (let i = 0; i < savedThesesList.length; i++) {
             const thesisId = savedThesesList[i];
-            thesisData = await getThesis(thesisId);
+            const thesisData = await getThesis(thesisId);
             const thesis = {
                 thesisId: thesisId,
                 ...thesisData

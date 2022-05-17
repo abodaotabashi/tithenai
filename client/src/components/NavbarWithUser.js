@@ -122,7 +122,7 @@ const NavbarWithUser = (props) => {
                             <LanguageDropDownList openDropDownMenu={openLangDropDownMenu} setOpenDropDownMenu={setOpenLangDropDownMenu} />
                         </Grid>
                         <Grid item style={{margin: "0 0.1rem"}}>
-                            <DropDownButton size="medium" color="secondary" aria-haspopup="true" onClick={(event) => setOpenProfileDropDownMenu(event.currentTarget)}>
+                            <DropDownButton data-testid="profile-icon" size="medium" color="secondary" aria-haspopup="true" onClick={(event) => setOpenProfileDropDownMenu(event.currentTarget)}>
                                 <AccountCircleIcon style={{fontSize: "2rem"}} color="secondary"/>
                             </DropDownButton>
                             <ProfileDropDownList openDropDownMenu={openProfileDropDownMenu} setOpenDropDownMenu={setOpenProfileDropDownMenu} />
