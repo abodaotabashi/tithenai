@@ -117,6 +117,7 @@ const UploadThesisPage = () => {
                     label={"Uploading New Thesis ..."}
                     />
             </Paper>
+            <br />
             <Footer />
             <CssBaseline />
         </div>
