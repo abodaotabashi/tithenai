@@ -72,6 +72,40 @@ export const getUserTheses = async (uid) => {
     }).catch(error => console.log(error))
 }
 
+
+// =========================================================== Comments
+
+export const addNewComment = async (values) => {
+    return await axios.post("/comments/addNewComment", {
+        uid: values.uid,
+        commentdata: values.commentdata,
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
+
+export const getComments = async (thesisId) => {
+    return await axios.get("/comments/getComments", {
+            params: {
+                thesisId: thesisId,
+            }
+        })
+        .then((result) => {
+            return result.data;
+        }).catch(error => console.log(error))
+}
+
+export const deleteComment = async (commentId) => {
+    return await axios.get("/comments/deleteComment", {
+            params: {
+                commentId: commentId,
+            }
+        })
+        .then((result) => {
+            return result;
+        }).catch(error => console.log(error))
+}
+
 // =========================================================== Universities
 
 export const getAllUnis = async () => {
