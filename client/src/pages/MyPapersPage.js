@@ -168,7 +168,7 @@ const MyPapersPage = () => {
                                             variant="outlined"
                                             style={{display: "flex", justifyContent: "center"}}
                                             onChange={(event) => {
-                                                handleShowCurrentPageOfPapers(null, event.target.textContent)
+                                                handleShowCurrentPageOfPapers(papers, event.target.textContent)
                                             }} />
                                     </Grid>
                                 }

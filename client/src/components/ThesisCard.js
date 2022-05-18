@@ -6,6 +6,7 @@ import StarRateIcon from '@mui/icons-material/StarRate';
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import DocumentIllustration from "../assets/gifs/Document.gif";
+import { formatFirebaseDate } from '../utils/HelperFunctions';
 
 
 const ContainerGrid = styled(Grid)(({ theme }) => ({
@@ -123,7 +124,7 @@ const ThesisCard = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                            {thesis.thesisAuthorName} - {new Date(thesis.thesisDate._seconds * 1000).toLocaleDateString('nl-BE')}
+                            {thesis.thesisAuthorName} - {formatFirebaseDate(thesis.thesisDate)}
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12} style={{width:"65%", margin: "1vh 0"}}>

@@ -41,6 +41,17 @@ export const getAllLanguages = () => {
     return Languages.sort(sortObjectsAscending("nativeName"));
 }
 
+export const formatFirebaseDate = (date) => {
+    return new Date(date._seconds * 1000).toLocaleDateString('nl-BE')
+}
+
+export const formatFirebaseDateAndTime = (firebaseDate) => {
+    const dateObject = new Date(firebaseDate._seconds * 1000);
+    const date = dateObject.toLocaleDateString('nl-BE');
+    const time = (dateObject.getHours() < 10 ? "0"+dateObject.getHours().toString() : dateObject.getHours().toString())+":"+(dateObject.getMinutes() < 10 ? "0"+ dateObject.getMinutes().toString() : dateObject.getMinutes().toString());
+    return date + " - " + time
+}
+
 export const stringifyByteSize = (bytes) => {
     const sizes = ['Bytes', 'KB', 'MB'];
     if (bytes === 0) return '0 Byte';
