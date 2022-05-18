@@ -62,6 +62,33 @@ export const uploadThesis = async (thesisInfo) => {
     }).catch(error => console.log(error))
 }
 
+export const saveThesis = async (values) => {
+    return await axios.post("/theses/saveThesis", {
+        uid: values.uid,
+        thesisId: values.thesisId,
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
+
+export const unsaveThesis = async (values) => {
+    return await axios.post("/theses/removeSavedThesis", {
+        uid: values.uid,
+        thesisId: values.thesisId,
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
+
+export const addViewer = async (values) => {
+    return await axios.post("/theses/addViewer", {
+        uid: values.uid,
+        thesisId: values.thesisId,
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
+
 export const getUserTheses = async (uid) => {
     return await axios.get("/theses/getUserTheses", {
         params: {
@@ -72,6 +99,16 @@ export const getUserTheses = async (uid) => {
     }).catch(error => console.log(error))
 }
 
+// =========================================================== Reports
+
+export const addNewReport = async (values) => {
+    return await axios.post("/reports/addNewReport", {
+        uid: values.uid,
+        reportdata: values.reportdata,
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
 
 // =========================================================== Comments
 
@@ -104,6 +141,18 @@ export const deleteComment = async (commentId) => {
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
+}
+
+// =========================================================== Rates
+
+export const addNewRate = async (values) => {
+    return await axios.post("/rates/addNewRate", {
+        uid: values.uid,
+        thesisId: values.thesisId,
+        rateValue: values.rateValue,
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
 }
 
 // =========================================================== Universities
@@ -147,7 +196,6 @@ export const getUserInfo = async (uid) => {
             uid: uid
         }
     }).then((result) => {
-        console.log(result.data.userPhotoURL)
         const userInfo = {
             status: result.data.userAcademicStatus,
             firstname: result.data.userFirstname,
