@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASEURL = "http://localhost:9000";
 axios.defaults.baseURL = BASEURL
-// =========================================================== Tags
+// =========================================================== Utils
 
 export const getAllTags = async () => {
     return await axios.get("/theses/getAllTags")
@@ -17,6 +17,13 @@ export const addNewTag = async (newTag) => {
     }).then((result) => {
         return result.data;
     }).catch(error => console.log(error))
+}
+
+export const getAllDepartments = async () => {
+    return await axios.get("/theses/getAllDepartments")
+        .then((result) => {
+            return result.data;
+        }).catch(error => console.log(error))
 }
 
 // =========================================================== Theses
@@ -47,7 +54,9 @@ export const uploadThesis = async (thesisInfo) => {
         thesisUniName: thesisInfo.thesisUniName,
         thesisUploadDate: new Date(),
         thesisPdfBase64: thesisInfo.thesisPdfBase64,
-        viewersList: []
+        viewersList: [],
+        rates: {},
+        ratesAverage: 0
     }).then((result) => {
         return result;
     }).catch(error => console.log(error))

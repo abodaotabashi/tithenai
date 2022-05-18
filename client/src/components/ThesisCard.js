@@ -172,7 +172,7 @@ const ThesisCard = (props) => {
                             {thesis.viewersList.length}
                             &nbsp;&nbsp;
                             <StarRateIcon color="warning" style={{width: "1.25rem", marginRight: "0.5rem"}}/>
-                            {/*thesis.rating*/} 4.1
+                            {thesis.ratesAverage}
                         </Typography>
                     </Grid>
                 </Grid>
