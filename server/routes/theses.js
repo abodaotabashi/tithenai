@@ -89,8 +89,8 @@ router.post("/uploadThesis", function (req, res, next) {
         thesisUploadDate: "2020-10-21T13:28:06.419Z",
         thesisPdfBase64: "data:application/pdf;base64,JVBERi0xLjYNJ ...",
         viewersList: []
-        rates{},
-        ratesAverage: "0"
+        rates: {},
+        ratesAverage: 0
     }
     */
 
@@ -216,8 +216,8 @@ router.post("/addNewTag", body('tag').exists().isString(), (req, res) => {
 });
 
 router.get("/getAllDepartments", (req, res) => {
-    db.getAllDepartments().then((deps) => {
-        return res.status(200).json({ departments: deps })
+    db.getAllDepartments().then((departments) => {
+        return res.status(200).send(departments)
     }).catch((error) => {
         console.log(error);
         return res.sendStatus(500);
