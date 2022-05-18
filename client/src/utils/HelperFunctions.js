@@ -15,25 +15,47 @@ export const sortAlphabetically = (property, languageCode) => {
     }
 }
 
-export const sortObjectsAscending = (property) => {
-    return function(a, b) {
-        if (a[property] > b[property]) {
-            return 1;
-        } else if (a[property] < b[property]) {
-            return -1;
+export const sortObjectsAscending = (property, isDoubleProperty, secondProperty) => {
+    if(isDoubleProperty === true) {
+        return function(a, b) {
+            if (a[property][secondProperty] > b[property][secondProperty]) {
+                return 1;
+            } else if (a[property][secondProperty] < b[property][secondProperty]) {
+                return -1;
+            }
+            return 0;
         }
-        return 0;
+    } else {
+        return function(a, b) {
+            if (a[property] > b[property]) {
+                return 1;
+            } else if (a[property] < b[property]) {
+                return -1;
+            }
+            return 0;
+        }
     }
 }
 
-export const sortObjectsDescending = (property) => {
-    return function(a, b) {
-        if (a[property] < b[property]) {
-            return 1;
-        } else if (a[property] > b[property]) {
-            return -1;
+export const sortObjectsDescending = (property, isDoubleProperty, secondProperty) => {
+    if(isDoubleProperty === true) {
+        return function(a, b) {
+            if (a[property][secondProperty] < b[property][secondProperty]) {
+                return 1;
+            } else if (a[property][secondProperty] > b[property][secondProperty]) {
+                return -1;
+            }
+            return 0;
         }
-        return 0;
+    } else {
+        return function(a, b) {
+            if (a[property] < b[property]) {
+                return 1;
+            } else if (a[property] > b[property]) {
+                return -1;
+            }
+            return 0;
+        }
     }
 }
 
