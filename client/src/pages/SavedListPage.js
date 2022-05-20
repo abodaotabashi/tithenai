@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { CircularProgress, CssBaseline, Divider, FormControl, Grid, InputLabel, MenuItem, Pagination, Paper, Select, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../utils/Context';
-import { redirectToLoginPage } from '../utils/Redirecter';
+import { redirectToLoginPage, redirectToViewThesisPage } from '../utils/Redirecter';
 import { sortAlphabetically } from '../utils/HelperFunctions';
 import Footer from '../components/Footer';
 import NavbarWithUser from '../components/NavbarWithUser';
@@ -102,7 +102,7 @@ const SavedListPage = (props) => {
                                 </Grid>
                             {   currentResults !== null && currentResults.map((result) => {
                                     return (
-                                        <Grid item key={result.thesisId} xs={12} sm={12} md={6} lg={6} style={{margin: "1vh 0"}}>
+                                        <Grid item key={result.thesisId} xs={12} sm={12} md={6} lg={6} style={{margin: "1vh 0"}} onClick={() => redirectToViewThesisPage(navigator, result)}>
                                             {<ThesisCard key={result.thesisId} thesis={result} />}
                                         </Grid>
                                     );

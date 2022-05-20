@@ -14,12 +14,11 @@ router.post("/addNewComment", function (req, res, next) {
 });
 
 router.get("/deleteComment", function (req, res, next) {
-    // just send a uid as a query 
+    // just send a uid as a query
     const commentId = req.query.commentId;
-    console.log(commentId);
     db.deleteComment(commentId)
-        .then((comments) => {
-            res.json(comments)
+        .then((status) => {
+            return status ? res.sendStatus(200) : res.sendStatus(500);
         }).catch((error) => {
             console.log(error);
             return res.sendStatus(500)

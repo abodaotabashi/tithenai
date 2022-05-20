@@ -3,7 +3,7 @@ import { CircularProgress, CssBaseline, Grid, Pagination, Paper, Typography, But
 import { getUserTheses } from '../Service';
 import { AuthContext } from '../utils/Context';
 import { useNavigate } from 'react-router-dom';
-import { redirectToLoginPage } from '../utils/Redirecter';
+import { redirectToLoginPage, redirectToViewThesisPage } from '../utils/Redirecter';
 import NavbarWithUser from '../components/NavbarWithUser';
 import Footer from '../components/Footer';
 
@@ -151,7 +151,7 @@ const MyPapersPage = () => {
                                 </Grid>
                                 {currentPapers.map((result) => {
                                     return (
-                                        <Grid item key={result.thesisId} xs={12} sm={12} md={12} lg={12} style={{margin: "1vh 0"}}>
+                                        <Grid item key={result.thesisId} xs={12} sm={12} md={12} lg={12} style={{margin: "1vh 0"}} onClick={() => redirectToViewThesisPage(navigator, result)}>
                                             <ThesisCard key={result.thesisId} thesis={result} />
                                         </Grid>
                                     )})
@@ -168,7 +168,7 @@ const MyPapersPage = () => {
                                             variant="outlined"
                                             style={{display: "flex", justifyContent: "center"}}
                                             onChange={(event) => {
-                                                handleShowCurrentPageOfPapers(null, event.target.textContent)
+                                                handleShowCurrentPageOfPapers(papers, event.target.textContent)
                                             }} />
                                     </Grid>
                                 }

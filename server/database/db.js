@@ -466,7 +466,7 @@ async function getSavedTheses(data) {
         const theses = [];
         for (let i = 0; i < savedThesesList.length; i++) {
             const thesisId = savedThesesList[i];
-            thesisData = await getThesis(thesisId);
+            const thesisData = await getThesis(thesisId);
             const thesis = {
                 thesisId: thesisId,
                 ...thesisData
@@ -516,6 +516,46 @@ async function addViewer(data) {
         return false
     }
 }
+
+async function isThesisSaved(data) {
+    const uid = data.uid;
+    const thesisId = data.thesisId;
+    const userData = await getUserDataById(uid);
+    userSavedTheses = userData.userSavedTheses;
+    console.log(userSavedTheses);
+    return (userSavedTheses.includes(thesisId))
+}
+
+async function deleteThesis(thesisId) {
+    return db
+        .collection(THESES_COLLECTION)
+        .doc(thesisId)
+        .delete()
+}
+
+async function updateThesis(newThesisData) {
+
+    const Uni = await getUniDataById(newThesisData.thesisUniID)
+    const uniName = Uni["uniName"];
+    try {
+        await db.collection(THESES_COLLECTION)
+            .doc(newThesisData.thesisId)
+            .update({
+                thesisAbstract: newThesisData.thesisAbstract,
+                thesisFieldOfStudy: newThesisData.thesisFieldOfStudy,
+                thesisLanguage: newThesisData.thesisLanguage,
+                thesisTags: newThesisData.thesisTags,
+                thesisTitle: newThesisData.thesisTitle,
+                thesisUniID: newThesisData.thesisUniID,
+                thesisUniName: uniName
+            })
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+    return true;
+}
+
 // =========================================================== Reports
 //Reprot: 
 // add
@@ -530,9 +570,10 @@ async function addNewReport(data) {
     console.log(reporterName);
     dbReportData = {
         reportContent: data.reportdata.reportContent,
-        reportReporterID: data.reportdata.reportReporterID,
+        reportReporterID: data.uid,
         reportThesisID: data.reportdata.reportThesisID,
-        reporterName: reporterName
+        reporterName: reporterName,
+        reportDate: new Date()
     }
     return db
         .collection(REPORTS_COLLECTION)
@@ -610,6 +651,7 @@ async function addNewComment(data) {
         commentAuthorID: uid,
         commentThesisID: data.commentdata.commentThesisID,
         commentBody: data.commentdata.commentBody,
+        commentDate: new Date(data.commentdata.commentDate),
         commentAuthorName: commentAuthorName
     }
     return db
@@ -630,7 +672,7 @@ async function getComments(thesisId) {
     const comments = []
     commentsSnapshot.forEach(commentObj => {
         const comment = {
-            thesisId: commentObj.id,
+            commentId: commentObj.id,
             ...commentObj.data()
         }
         comments.push(comment);
@@ -638,6 +680,15 @@ async function getComments(thesisId) {
     console.log(comments.data)
     return (comments)
 }
+
+//Getthesis
+//(Boolean) saved thesis
+//Edit Thesis
+//Delete Thesis
+//add person pic with the comment
+
+
+
 // =========================================================== Exports
 
 module.exports.deleteAllUsers = deleteAllUsers;
@@ -665,6 +716,11 @@ module.exports.addNewRate = addNewRate;
 module.exports.addAllDepartments = addAllDepartments;
 module.exports.getAllDepartments = getAllDepartments;
 module.exports.getUniversity = getUniversity;
+module.exports.isThesisSaved = isThesisSaved;
+module.exports.deleteThesis = deleteThesis;
+module.exports.updateThesis = updateThesis;
+
+
 
 // =========================================================== Private funcitons 
 
@@ -680,4 +736,8 @@ async function getUserDataById(uid) {
             const userData = doc.data()
             return userData;
         })
+}
+async function getUniDataById(uniID) {
+    const uni = await db.collection(UNIS_COLLECTION).doc(uniID).get()
+    return uni.data()
 }

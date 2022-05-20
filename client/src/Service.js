@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASEURL = "http://localhost:9000";
 axios.defaults.baseURL = BASEURL
-// =========================================================== Tags
+// =========================================================== Utils
 
 export const getAllTags = async () => {
     return await axios.get("/theses/getAllTags")
@@ -17,6 +17,13 @@ export const addNewTag = async (newTag) => {
     }).then((result) => {
         return result.data;
     }).catch(error => console.log(error))
+}
+
+export const getAllDepartments = async () => {
+    return await axios.get("/theses/getAllDepartments")
+        .then((result) => {
+            return result.data;
+        }).catch(error => console.log(error))
 }
 
 // =========================================================== Theses
@@ -47,7 +54,36 @@ export const uploadThesis = async (thesisInfo) => {
         thesisUniName: thesisInfo.thesisUniName,
         thesisUploadDate: new Date(),
         thesisPdfBase64: thesisInfo.thesisPdfBase64,
-        viewersList: []
+        viewersList: [],
+        rates: {},
+        ratesAverage: 0
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
+
+export const saveThesis = async (values) => {
+    return await axios.post("/theses/saveThesis", {
+        uid: values.uid,
+        thesisId: values.thesisId,
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
+
+export const unsaveThesis = async (values) => {
+    return await axios.post("/theses/removeSavedThesis", {
+        uid: values.uid,
+        thesisId: values.thesisId,
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
+
+export const addViewer = async (values) => {
+    return await axios.post("/theses/addViewer", {
+        uid: values.uid,
+        thesisId: values.thesisId,
     }).then((result) => {
         return result;
     }).catch(error => console.log(error))
@@ -60,6 +96,62 @@ export const getUserTheses = async (uid) => {
         }
     }).then((result) => {
         return result.data;
+    }).catch(error => console.log(error))
+}
+
+// =========================================================== Reports
+
+export const addNewReport = async (values) => {
+    return await axios.post("/reports/addNewReport", {
+        uid: values.uid,
+        reportdata: values.reportdata,
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
+
+// =========================================================== Comments
+
+export const addNewComment = async (values) => {
+    return await axios.post("/comments/addNewComment", {
+        uid: values.uid,
+        commentdata: values.commentdata,
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
+
+export const getComments = async (thesisId) => {
+    return await axios.get("/comments/getComments", {
+            params: {
+                thesisId: thesisId,
+            }
+        })
+        .then((result) => {
+            return result.data;
+        }).catch(error => console.log(error))
+}
+
+export const deleteComment = async (commentId) => {
+    return await axios.get("/comments/deleteComment", {
+            params: {
+                commentId: commentId,
+            }
+        })
+        .then((result) => {
+            return result;
+        }).catch(error => console.log(error))
+}
+
+// =========================================================== Rates
+
+export const addNewRate = async (values) => {
+    return await axios.post("/rates/addNewRate", {
+        uid: values.uid,
+        thesisId: values.thesisId,
+        rateValue: values.rateValue,
+    }).then((result) => {
+        return result;
     }).catch(error => console.log(error))
 }
 
@@ -104,7 +196,6 @@ export const getUserInfo = async (uid) => {
             uid: uid
         }
     }).then((result) => {
-        console.log(result.data.userPhotoURL)
         const userInfo = {
             status: result.data.userAcademicStatus,
             firstname: result.data.userFirstname,

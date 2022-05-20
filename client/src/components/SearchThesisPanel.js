@@ -118,6 +118,7 @@ const SearchThesisPanel = (props) => {
                 <TextField
                     color="secondary"
                     label="Search for"
+                    name="searchInputField"
                     placeholder='e.g. Artificial Intelligence'
                     type="text"
                     variant="outlined"
@@ -140,6 +141,7 @@ const SearchThesisPanel = (props) => {
                                 </IconButton>
                             }
                             <IconButton
+                                data-testid="search-button"
                                 aria-label="search"
                                 onClick={() => handleSearch()}
                                 >
