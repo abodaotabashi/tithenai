@@ -298,19 +298,19 @@ async function addAllDepartments() {
     const docId = (await db.collection(UTILS_COLLECTION).get()).docs[0].id;
     const depListFile = fs.readFileSync('database/listOfDepartments.txt');
     const depListOfObjects = JSON.parse(depListFile);
-    const depList =  depListOfObjects.reduce((acc, next)=> {
-        acc.push(next.departmentName); 
-        return acc; 
+    const depList = depListOfObjects.reduce((acc, next) => {
+        acc.push(next.departmentName);
+        return acc;
     }, [])
     await db.collection(UTILS_COLLECTION).doc(docId).update({
         departments: depList
     });
 }
 
-async function getAllDepartments(){
+async function getAllDepartments() {
     // docs[0] gets the first document, since all lists are inside this document
     return (await db.collection(UTILS_COLLECTION).get()).docs[0].data().departments
-} 
+}
 
 // =========================================================== Theses
 
@@ -565,7 +565,6 @@ async function addNewRate(data) {
         .update({ rates: rates, ratesAverage: avgrate })
 }
 
-
 // Comments : 
 // get thesis comments : you get thesis id, using this id you get all the comments with commentThesisID equal to this id
 // make sure to include the document id in the data you return.
@@ -612,6 +611,12 @@ async function getComments(thesisId) {
     console.log(comments.data)
     return (comments)
 }
+
+//Getthesis
+//(Boolean) saved thesis
+//Edit Thesis
+//Delete Thesis
+//add person pic with the comment
 
 
 
