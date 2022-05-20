@@ -298,19 +298,48 @@ async function addAllDepartments() {
     const docId = (await db.collection(UTILS_COLLECTION).get()).docs[0].id;
     const depListFile = fs.readFileSync('database/listOfDepartments.txt');
     const depListOfObjects = JSON.parse(depListFile);
-    const depList =  depListOfObjects.reduce((acc, next)=> {
-        acc.push(next.departmentName); 
-        return acc; 
+    const depList = depListOfObjects.reduce((acc, next) => {
+        acc.push(next.departmentName);
+        return acc;
     }, [])
     await db.collection(UTILS_COLLECTION).doc(docId).update({
         departments: depList
     });
 }
 
-async function getAllDepartments(){
+async function getAllDepartments() {
     // docs[0] gets the first document, since all lists are inside this document
     return (await db.collection(UTILS_COLLECTION).get()).docs[0].data().departments
-} 
+}
+
+async function getUniversity(uniId) {
+    // console.log(uniId);
+
+    const uniData = (await db.collection(UNIS_COLLECTION)
+        .doc(uniId)
+        .get()).data();
+
+    const uniThesesSnapshot = await db.collection(THESES_COLLECTION)
+        .where("thesisUniID", '==', uniId)
+        .get();
+
+    const theses = [];
+
+    uniThesesSnapshot.forEach(thesis => {
+        theses.push({
+            thesisId: thesis.id,
+            ...thesis.data()
+        });
+    })
+
+    const uniToReturn = {
+        uniId: uniId,
+        ...uniData,
+        uniTheses: theses
+    }
+    
+    return uniToReturn;
+}
 
 // =========================================================== Theses
 
@@ -531,7 +560,6 @@ async function getAllReports() {
         })
 }
 
-
 // get thesis is already done. 
 
 // Ratings 
@@ -565,7 +593,6 @@ async function addNewRate(data) {
         .update({ rates: rates, ratesAverage: avgrate })
 }
 
-
 // Comments : 
 // get thesis comments : you get thesis id, using this id you get all the comments with commentThesisID equal to this id
 // make sure to include the document id in the data you return.
@@ -598,7 +625,6 @@ async function deleteComment(commentId) {
         .delete()
 }
 
-
 async function getComments(thesisId) {
     const commentsSnapshot = await db.collection(COMMENTS_COLLECTION).where("commentThesisID", '==', thesisId).get();
     const comments = []
@@ -612,9 +638,6 @@ async function getComments(thesisId) {
     console.log(comments.data)
     return (comments)
 }
-
-
-
 // =========================================================== Exports
 
 module.exports.deleteAllUsers = deleteAllUsers;
@@ -641,7 +664,7 @@ module.exports.deleteComment = deleteComment;
 module.exports.addNewRate = addNewRate;
 module.exports.addAllDepartments = addAllDepartments;
 module.exports.getAllDepartments = getAllDepartments;
-
+module.exports.getUniversity = getUniversity;
 
 // =========================================================== Private funcitons 
 

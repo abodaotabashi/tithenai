@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const db = require('../database/db.js');
 const { turkishtoEnglish, sortAlphabetically } = require("../Utils/util.js");
+const { validationResult, query } = require('express-validator');
 
 // ===========================================================
 
@@ -63,5 +64,20 @@ router.get("/uploadUniImages", function (req, res, next) {
     db.uploadUniImages();
     res.sendStatus(200);
 })
+
+router.get("/getUniversity", query("id").exists(), (req, res) =>{
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.sendStatus(400).json(errors); 
+    }else{
+        const uniId = req.query.id; 
+        db.getUniversity(uniId).then((uni) => {
+            return res.status(200).json(uni); 
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500);
+        })
+    }
+}); 
 
 module.exports = router;
