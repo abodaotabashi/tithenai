@@ -498,6 +498,7 @@ async function isThesisSaved(data) {
 }
 
 async function deleteThesis(thesisId) {
+    //delete comments and reports //and user saved Thesis
     return db
         .collection(THESES_COLLECTION)
         .doc(thesisId)
@@ -518,6 +519,7 @@ async function updateThesis(newThesisData) {
                 thesisTags: newThesisData.thesisTags,
                 thesisTitle: newThesisData.thesisTitle,
                 thesisUniID: newThesisData.thesisUniID,
+                thesisDate: newThesisData.thesisDate,
                 thesisUniName: uniName
             })
     } catch (error) {
