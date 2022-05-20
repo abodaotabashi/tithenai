@@ -28,6 +28,15 @@ function formatBase64(base64File){
     return base64File.replace(/^data:image\/\w+;base64,/, "");
 }
 
+function formatFirebaseDate (date, format) {
+    if(format === "year"){
+        return new Date(date._seconds * 1000).getFullYear().toString()
+    }else if (format === "month"){
+        return String(new Date(date._seconds * 1000).getMonth() + 1).padStart(2, '0')
+    }
+}
+
 module.exports.turkishtoEnglish = turkishtoEnglish
 module.exports.sortAlphabetically = sortAlphabetically
 module.exports.formatBase64 = formatBase64
+module.exports.formatFirebaseDate = formatFirebaseDate

@@ -3,7 +3,7 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 const firebaseStorage = require("firebase-admin/storage");
 const fs = require('fs');
-const { formatBase64 } = require("../Utils/util");
+const { formatBase64, formatFirebaseDate } = require("../Utils/util");
 
 
 
@@ -312,6 +312,97 @@ async function getAllDepartments() {
     return (await db.collection(UTILS_COLLECTION).get()).docs[0].data().departments
 }
 
+async function getUniversity(uniId) {
+    const uniData = (await db.collection(UNIS_COLLECTION)
+        .doc(uniId)
+        .get()).data();
+
+    const uniThesesSnapshot = await db.collection(THESES_COLLECTION)
+        .where("thesisUniID", '==', uniId)
+        .get();
+
+    const theses = [];
+
+    uniThesesSnapshot.forEach(thesis => {
+        theses.push({
+            thesisId: thesis.id,
+            ...thesis.data()
+        });
+    })
+
+    // Statistics 
+    let stats = {}
+
+    // typ
+    const typesStats = theses.reduce((acc, next) => {
+        acc[next.thesisType] ? acc[next.thesisType]++ : acc[next.thesisType] = 1;
+        return acc;
+    }, {})
+
+    // field of study
+    const fieldOfStudyStats = theses.reduce((acc, next) => {
+        acc[next.thesisFieldOfStudy] ? acc[next.thesisFieldOfStudy]++ : acc[next.thesisFieldOfStudy] = 1;
+        return acc;
+    }, {})
+
+    // tags 
+    const tagsStats = {};
+    theses.forEach(thesis => {
+        const thesisTags = thesis.thesisTags;
+        thesisTags.forEach(tag => {
+            tagsStats[tag] ? tagsStats[tag]++ : tagsStats[tag] = 1
+        })
+    })
+
+    const yearStats = theses.reduce((acc, next) => {
+        const thesisYear = formatFirebaseDate(next.thesisDate, "year");
+        const thesisMonth = formatFirebaseDate(next.thesisDate, "month");
+        if (acc[thesisYear]) {
+            acc[thesisYear][thesisMonth] ? acc[thesisYear][thesisMonth]++ : acc[thesisYear][thesisMonth] = 1
+        } else {
+            acc[thesisYear] = {
+                [thesisMonth]: 1
+            }
+        }
+        return acc
+    }, {})
+
+    const researchStats = theses.reduce((acc, next) => {
+        if (acc[next.thesisAuthorID]) {
+            acc[next.thesisAuthorID]["uniThesisCount"]++
+        } else {
+            acc[next.thesisAuthorID] = {
+                researcherName: next.thesisAuthorName,
+                uniThesisCount: 1
+            }
+        }
+        return acc;
+    }, {})
+
+
+    const uniMembers = (await db.collection(USERS_COLLECTION)
+        .where("userUniID", '==', uniId)
+        .get()).size;
+
+    stats = {
+        typesStats,
+        fieldOfStudyStats,
+        tagsStats,
+        yearStats,
+        researchStats,
+        uniMembers
+    }
+
+    const uniToReturn = {
+        uniId: uniId,
+        ...uniData,
+        uniTheses: theses,
+        statistics: stats
+    }
+
+    return uniToReturn;
+}
+
 // =========================================================== Theses
 
 async function getAllTheses() {
@@ -574,7 +665,6 @@ async function getAllReports() {
         })
 }
 
-
 // get thesis is already done. 
 
 // Ratings 
@@ -641,7 +731,6 @@ async function deleteComment(commentId) {
         .delete()
 }
 
-
 async function getComments(thesisId) {
     const commentsSnapshot = await db.collection(COMMENTS_COLLECTION).where("commentThesisID", '==', thesisId).get();
     const comments = []
@@ -689,11 +778,11 @@ module.exports.addNewComment = addNewComment;
 module.exports.deleteComment = deleteComment;
 module.exports.addNewRate = addNewRate;
 module.exports.addAllDepartments = addAllDepartments;
+module.exports.getAllDepartments = getAllDepartments;
+module.exports.getUniversity = getUniversity;
 module.exports.isThesisSaved = isThesisSaved;
 module.exports.deleteThesis = deleteThesis;
 module.exports.updateThesis = updateThesis;
-
-
 
 // =========================================================== Private funcitons 
 
@@ -703,12 +792,7 @@ async function getThesis(thesisId) {
 }
 
 async function getUserDataById(uid) {
-    return db.collection(USERS_COLLECTION).doc(uid)
-        .get()
-        .then(async (doc) => {
-            const userData = doc.data()
-            return userData;
-        })
+    return (await db.collection(USERS_COLLECTION).doc(uid).get()).data()
 }
 async function getUniDataById(uniID) {
     const uni = await db.collection(UNIS_COLLECTION).doc(uniID).get()
