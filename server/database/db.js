@@ -487,6 +487,23 @@ async function addViewer(data) {
         return false
     }
 }
+
+async function isThesisSaved(data) {
+    const uid = data.uid;
+    const thesisId = data.thesisId;
+    const userData = await getUserDataById(uid);
+    userSavedTheses = userData.userSavedTheses;
+    console.log(userSavedTheses);
+    return (userSavedTheses.includes(thesisId))
+}
+
+async function deleteThesis(thesisId) {
+    return db
+        .collection(THESES_COLLECTION)
+        .doc(thesisId)
+        .delete()
+}
+
 // =========================================================== Reports
 //Reprot: 
 // add
@@ -647,7 +664,9 @@ module.exports.addNewComment = addNewComment;
 module.exports.deleteComment = deleteComment;
 module.exports.addNewRate = addNewRate;
 module.exports.addAllDepartments = addAllDepartments;
-module.exports.getAllDepartments = getAllDepartments;
+module.exports.isThesisSaved = isThesisSaved;
+module.exports.deleteThesis = deleteThesis;
+
 
 
 // =========================================================== Private funcitons 

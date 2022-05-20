@@ -233,4 +233,25 @@ router.post("/addAllDepartments", (req, res) => {
     })
 })
 
+router.get("/isThesisSaved", function (req, res, next) {
+    db.isThesisSaved(req.query)
+        .then((status) => {
+            res.json(status)
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+});
+
+router.get("/deleteThesis", function (req, res, next) {
+    // just send a uid as a query
+    const deleteThesis = req.query.thesisId;
+    db.deleteThesis(deleteThesis)
+        .then((status) => {
+            return status ? res.sendStatus(200) : res.sendStatus(500);
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+});
 module.exports = router;
