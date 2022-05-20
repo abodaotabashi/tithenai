@@ -620,6 +620,12 @@ async function updateThesis(newThesisData) {
     return true;
 }
 
+async function getThesis(thesisId) {
+    const thesis = await db.collection(THESES_COLLECTION).doc(thesisId).get()
+    return thesis.data()
+}
+
+
 // =========================================================== Reports
 //Reprot: 
 // add
@@ -735,9 +741,11 @@ async function getComments(thesisId) {
     const commentsSnapshot = await db.collection(COMMENTS_COLLECTION).where("commentThesisID", '==', thesisId).get();
     const comments = []
     commentsSnapshot.forEach(commentObj => {
+        
         const comment = {
             commentId: commentObj.id,
-            ...commentObj.data()
+            ...commentObj.data(),
+            //user image
         }
         comments.push(comment);
     });
@@ -783,13 +791,10 @@ module.exports.getUniversity = getUniversity;
 module.exports.isThesisSaved = isThesisSaved;
 module.exports.deleteThesis = deleteThesis;
 module.exports.updateThesis = updateThesis;
+module.exports.getThesis = getThesis;
 
 // =========================================================== Private funcitons 
 
-async function getThesis(thesisId) {
-    const thesis = await db.collection(THESES_COLLECTION).doc(thesisId).get()
-    return thesis.data()
-}
 
 async function getUserDataById(uid) {
     return (await db.collection(USERS_COLLECTION).doc(uid).get()).data()

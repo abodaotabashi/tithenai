@@ -266,4 +266,17 @@ router.post("/updateThesis", function (req, res, next) {
             return res.sendStatus(500)
         })
 });
+
+router.get("/getThesis", function (req, res, next) {
+    // just send a uid as a query
+    const thesisId = req.query.thesisId;
+    db.getThesis(thesisId)
+        .then((thesis) => {
+            return res.sendStatus(200).json(thesis)
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+});
+
 module.exports = router;
