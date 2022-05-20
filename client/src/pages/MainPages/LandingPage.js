@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     },
     headerSpan: {
         paddingBottom: "0.5rem",
-        fontFamily: "Ubuntu-Light",
+        fontFamily: "Ubuntu",
         fontSize: "large",
         textAlign: "center",
     },
@@ -101,8 +101,8 @@ const LandingPage = () => {
                     </Grid>
                 </Paper>
             </div>
-            <div style={{padding: "20px", display: "flex", justifyContent: "center"}}>
-                <Paper style={{width: "80%", padding: "50px"}} id="aboutTithenai">
+            <div style={{padding: "10px", display: "flex", justifyContent: "center"}}>
+                <Paper style={{width: "80%", padding: "40px"}} id="aboutTithenai">
                     <p className={classes.illustrationLabel}>About Tithenai</p>
                     <p className={classes.header}>
                     Tithenai is a social platform for researchers to share their work and inspire others or
@@ -113,6 +113,9 @@ const LandingPage = () => {
                     </p>
                 </Paper>
             </div>
+            <br />
+            <br />
+            <br />
             <Footer />
             <CssBaseline />
         </div>

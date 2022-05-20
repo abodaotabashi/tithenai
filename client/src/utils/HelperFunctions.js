@@ -15,30 +15,63 @@ export const sortAlphabetically = (property, languageCode) => {
     }
 }
 
-export const sortObjectsAscending = (property) => {
-    return function(a, b) {
-        if (a[property] > b[property]) {
-            return 1;
-        } else if (a[property] < b[property]) {
-            return -1;
+export const sortObjectsAscending = (property, isDoubleProperty, secondProperty) => {
+    if(isDoubleProperty === true) {
+        return function(a, b) {
+            if (a[property][secondProperty] > b[property][secondProperty]) {
+                return 1;
+            } else if (a[property][secondProperty] < b[property][secondProperty]) {
+                return -1;
+            }
+            return 0;
         }
-        return 0;
+    } else {
+        return function(a, b) {
+            if (a[property] > b[property]) {
+                return 1;
+            } else if (a[property] < b[property]) {
+                return -1;
+            }
+            return 0;
+        }
     }
 }
 
-export const sortObjectsDescending = (property) => {
-    return function(a, b) {
-        if (a[property] < b[property]) {
-            return 1;
-        } else if (a[property] > b[property]) {
-            return -1;
+export const sortObjectsDescending = (property, isDoubleProperty, secondProperty) => {
+    if(isDoubleProperty === true) {
+        return function(a, b) {
+            if (a[property][secondProperty] < b[property][secondProperty]) {
+                return 1;
+            } else if (a[property][secondProperty] > b[property][secondProperty]) {
+                return -1;
+            }
+            return 0;
         }
-        return 0;
+    } else {
+        return function(a, b) {
+            if (a[property] < b[property]) {
+                return 1;
+            } else if (a[property] > b[property]) {
+                return -1;
+            }
+            return 0;
+        }
     }
 }
 
 export const getAllLanguages = () => {
     return Languages.sort(sortObjectsAscending("nativeName"));
+}
+
+export const formatFirebaseDate = (date) => {
+    return new Date(date._seconds * 1000).toLocaleDateString('nl-BE')
+}
+
+export const formatFirebaseDateAndTime = (firebaseDate) => {
+    const dateObject = new Date(firebaseDate._seconds * 1000);
+    const date = dateObject.toLocaleDateString('nl-BE');
+    const time = (dateObject.getHours() < 10 ? "0"+dateObject.getHours().toString() : dateObject.getHours().toString())+":"+(dateObject.getMinutes() < 10 ? "0"+ dateObject.getMinutes().toString() : dateObject.getMinutes().toString());
+    return date + " - " + time
 }
 
 export const stringifyByteSize = (bytes) => {

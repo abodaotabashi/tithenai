@@ -501,9 +501,10 @@ async function addNewReport(data) {
     console.log(reporterName);
     dbReportData = {
         reportContent: data.reportdata.reportContent,
-        reportReporterID: data.reportdata.reportReporterID,
+        reportReporterID: data.uid,
         reportThesisID: data.reportdata.reportThesisID,
-        reporterName: reporterName
+        reporterName: reporterName,
+        reportDate: new Date()
     }
     return db
         .collection(REPORTS_COLLECTION)
@@ -582,6 +583,7 @@ async function addNewComment(data) {
         commentAuthorID: uid,
         commentThesisID: data.commentdata.commentThesisID,
         commentBody: data.commentdata.commentBody,
+        commentDate: new Date(data.commentdata.commentDate),
         commentAuthorName: commentAuthorName
     }
     return db
@@ -603,7 +605,7 @@ async function getComments(thesisId) {
     const comments = []
     commentsSnapshot.forEach(commentObj => {
         const comment = {
-            thesisId: commentObj.id,
+            commentId: commentObj.id,
             ...commentObj.data()
         }
         comments.push(comment);

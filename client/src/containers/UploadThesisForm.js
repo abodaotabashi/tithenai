@@ -12,7 +12,7 @@ import {
 import { createFilterOptions } from '@mui/material/Autocomplete';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { getAllTags, getAllUnis } from '../Service';
+import { getAllDepartments, getAllTags, getAllUnis } from '../Service';
 import { getAllLanguages, sortAlphabetically } from '../utils/HelperFunctions';
 import CustomDatePicker from '../components/CustomDatePicker';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -57,6 +57,7 @@ export default class UploadThesisForm extends Component {
         languages: [],
         tagsList: [],
         universities: [],
+        departmentsList: [],
         openAddNewTag: false,
     }
 
@@ -70,6 +71,11 @@ export default class UploadThesisForm extends Component {
         getAllTags()
             .then(response => {
                 this.setState({ tagsList: response.sort() })
+            })
+            .catch(error => console.log(error));
+        getAllDepartments()
+            .then(response => {
+                this.setState({ departmentsList: response.sort() })
             })
             .catch(error => console.log(error));
         this.setState({ languages: getAllLanguages() })
@@ -102,6 +108,11 @@ export default class UploadThesisForm extends Component {
             stringify: (option) => option.nativeName,
         });
 
+        const filterOptionsDepartments = createFilterOptions({
+            matchFrom: 'start',
+            stringify: (option) => option,
+        });
+
         const form_validation_schema = Yup.object().shape({
             title: Yup.string()
                 .min(4, "It's too Short!")
@@ -114,7 +125,7 @@ export default class UploadThesisForm extends Component {
             university: Yup.object()
                 .required("This Field is required!").nullable(),
             fieldOfStudy: Yup.string()
-                .required("This Field is required!"),
+                .required("This Field is required!").nullable(),
             pdfBase64: Yup.string()
                 .required("This Field is required!"),
             tags: Yup.array(),
@@ -269,21 +280,41 @@ export default class UploadThesisForm extends Component {
                                     />
                             </Grid>
                             <Grid item xs={12} sm={12} md={6} lg={6} style={{ padding: "0 2vw" }} container direction="column">
-                                <Field
-                                    as={TextField}
+                            <Field
+                                    as={Autocomplete}
                                     name="fieldOfStudy"
-                                    error={touched.fieldOfStudy && Boolean(errors.fieldOfStudy)}
-                                    color="secondary"
-                                    required
-                                    label="Field of Study"
-                                    variant="outlined"
-                                    InputLabelProps={{
-                                        style: {
-                                            fontFamily: 'Ubuntu'
-                                        }
-                                    }}
-                                    style={{ margin: "0.5vh 0", marginTop: "1.5vh" }}
-                                    helperText={<ErrorMessage name="fieldOfStudy" />} />
+                                    filterOptions={filterOptionsDepartments}
+                                    options={this.state.departmentsList}
+                                    isOptionEqualToValue={(option, value) => option === value}
+                                    getOptionLabel={(option) => option ? option : ""}
+                                    autoComplete
+                                    onChange={(e, value) => setFieldValue("fieldOfStudy", value)}
+                                    renderInput={(params) => (
+                                        <TextField {...params}
+                                            name="fieldOfStudy"
+                                            error={touched.fieldOfStudy && Boolean(errors.fieldOfStudy)}
+                                            label="Field of Study"
+                                            variant="outlined"
+                                            color="secondary"
+                                            required
+                                            style={{ margin: "0.5vh 0" }}
+                                            InputLabelProps={{
+                                                style: {
+                                                    fontFamily: 'Ubuntu'
+                                                }
+                                            }}
+                                            helperText={<ErrorMessage name="fieldOfStudy" />}
+                                            InputProps={{
+                                                ...params.InputProps,
+                                                endAdornment: (
+                                                    <React.Fragment>
+                                                        {this.state.departmentsList.length === 0 ? <CircularProgress color="inherit" size={20} /> : null}
+                                                        {params.InputProps.endAdornment}
+                                                    </React.Fragment>
+                                                ),
+                                            }} />
+                                    )}
+                                    />
                             </Grid>
                             <Grid item xs={12} sm={12} md={6} lg={6} style={{ padding: "0 2vw" }} container direction="column" justifyContent="flex-start">
                                 <Field
