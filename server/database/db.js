@@ -504,6 +504,29 @@ async function deleteThesis(thesisId) {
         .delete()
 }
 
+async function updateThesis(newThesisData) {
+
+    const Uni = await getUniDataById(newThesisData.thesisUniID)
+    const uniName = Uni["uniName"];
+    try {
+        await db.collection(THESES_COLLECTION)
+            .doc(newThesisData.thesisId)
+            .update({
+                thesisAbstract: newThesisData.thesisAbstract,
+                thesisFieldOfStudy: newThesisData.thesisFieldOfStudy,
+                thesisLanguage: newThesisData.thesisLanguage,
+                thesisTags: newThesisData.thesisTags,
+                thesisTitle: newThesisData.thesisTitle,
+                thesisUniID: newThesisData.thesisUniID,
+                thesisUniName: uniName
+            })
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+    return true;
+}
+
 // =========================================================== Reports
 //Reprot: 
 // add
@@ -666,6 +689,7 @@ module.exports.addNewRate = addNewRate;
 module.exports.addAllDepartments = addAllDepartments;
 module.exports.isThesisSaved = isThesisSaved;
 module.exports.deleteThesis = deleteThesis;
+module.exports.updateThesis = updateThesis;
 
 
 
@@ -683,4 +707,8 @@ async function getUserDataById(uid) {
             const userData = doc.data()
             return userData;
         })
+}
+async function getUniDataById(uniID) {
+    const uni = await db.collection(UNIS_COLLECTION).doc(uniID).get()
+    return uni.data()
 }

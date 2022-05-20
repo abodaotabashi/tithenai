@@ -76,21 +76,21 @@ router.get("/search", function (req, res, next) {
 router.post("/uploadThesis", function (req, res, next) {
     /* Example body
     {
-        thesisAuthorID: "sK6ZvwH30gX1L0nQ4VQzCuF5sC02",
-        thesisAbstract: "",
-        thesisDate: "2020-10-21T13:28:06.419Z",
-        thesisType: "Undergraduate Thesis",
-        thesisFieldOfStudy: "CS",
-        thesisLanguage: "TR", //Or as Object
-        thesisTags:["Model Selection", "Deep Nonparametric Clustering"],
-        thesisTitle: "How to use deep learning to train a deep learning model",
-        thesisUniID:"13DODS8bV4fDg7OvcEer",
-        thesisUniName: "Türk Alman Üniversitesi",
-        thesisUploadDate: "2020-10-21T13:28:06.419Z",
-        thesisPdfBase64: "data:application/pdf;base64,JVBERi0xLjYNJ ...",
-        viewersList: []
-        rates: {},
-        ratesAverage: 0
+        "thesisAuthorID": "sK6ZvwH30gX1L0nQ4VQzCuF5sC02",
+        "thesisAbstract": "",
+        "thesisDate": "2020-10-21T13:28:06.419Z",
+        "thesisType": "Undergraduate Thesis",
+        "thesisFieldOfStudy": "CS",
+        "thesisLanguage": "TR", //Or as Object
+        "thesisTags":["Model Selection", "Deep Nonparametric Clustering"],
+        "thesisTitle": "How to use deep learning to train a deep learning model",
+        "thesisUniID":"13DODS8bV4fDg7OvcEer",
+        "thesisUniName": "Türk Alman Üniversitesi",
+        "thesisUploadDate": "2020-10-21T13:28:06.419Z",
+        "thesisPdfBase64": "data:application/pdf;base64,JVBERi0xLjYNJ ...",
+        "viewersList": [],
+        "rates": {},
+        "ratesAverage": 0
     }
     */
 
@@ -247,6 +247,18 @@ router.get("/deleteThesis", function (req, res, next) {
     // just send a uid as a query
     const deleteThesis = req.query.thesisId;
     db.deleteThesis(deleteThesis)
+        .then((status) => {
+            return status ? res.sendStatus(200) : res.sendStatus(500);
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+});
+
+
+
+router.post("/updateThesis", function (req, res, next) {
+    db.updateThesis(req.body)
         .then((status) => {
             return status ? res.sendStatus(200) : res.sendStatus(500);
         }).catch((error) => {
