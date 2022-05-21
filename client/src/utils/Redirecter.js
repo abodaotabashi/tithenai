@@ -36,10 +36,10 @@ export const redirectToUploadThesisPage = (navigator) => {
     navigator("/upload");
 }
 
-export const redirectToViewThesisPage = (navigator, result) => {
+export const redirectToViewThesisPage = (navigator, thesisId) => {
     navigator("/view", {
         state: {
-            thesis: result,
+            thesisId: thesisId,
         }
     });
 }

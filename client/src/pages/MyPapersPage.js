@@ -198,6 +198,8 @@ const MyPapersPage = () => {
                     </Grid>
                 </Grid>
             </Paper>
+            <br />
+            <br />
             <Footer />
             <CssBaseline />
         </div>

@@ -155,13 +155,13 @@ const ThesisCard = (props) => {
     return (
         <ContainerGrid container alignItems="center" justifyContent="center" direction="row">
             <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">
-                <Grid item container xs={12} sm={2} md={3} lg={2} onClick={() => redirectToViewThesisPage(navigator, thesis)}>
+                <Grid item container xs={12} sm={2} md={3} lg={2} onClick={() => redirectToViewThesisPage(navigator, thesis.thesisId)}>
                     <CustomIcon src={DocumentIllustration} alt="thesis" />
                 </Grid>
                 <Grid item container xs={12} sm={10} md={9} lg={10} alignItems="flex-start" className={classes.texts}  direction="row">
                     { savingMode === true ?
                         <>
-                            <Grid item container xs={12} sm={12} md={11} lg={11} onClick={() => redirectToViewThesisPage(navigator, thesis)}>
+                            <Grid item container xs={12} sm={12} md={11} lg={11} onClick={() => redirectToViewThesisPage(navigator, thesis.thesisId)}>
                                 <Grid item xs={12} sm={12} md={12} lg={12}>
                                     <Typography variant="subtitle1" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
                                         {thesis.thesisTitle}
@@ -221,7 +221,7 @@ const ThesisCard = (props) => {
                                         {thesis.viewersList.length}
                                         &nbsp;&nbsp;
                                         <StarRateIcon color="warning" style={{width: "1.25rem", marginRight: "0.5rem"}}/>
-                                        {thesis.ratesAverage}
+                                        {thesis.ratesAverage !== 0 ? thesis.ratesAverage : "-"}
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -256,7 +256,7 @@ const ThesisCard = (props) => {
                         </>
                     :
                         <>
-                            <Grid container item xs={12} sm={12} md={12} lg={12} onClick={() => redirectToViewThesisPage(navigator, thesis)}>
+                            <Grid container item xs={12} sm={12} md={12} lg={12} onClick={() => redirectToViewThesisPage(navigator, thesis.thesisId)}>
                                 <Grid item xs={12} sm={12} md={12} lg={12}>
                                     <Typography variant="subtitle1" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
                                         {thesis.thesisTitle}
@@ -316,7 +316,7 @@ const ThesisCard = (props) => {
                                         {thesis.viewersList.length}
                                         &nbsp;&nbsp;
                                         <StarRateIcon color="warning" style={{width: "1.25rem", marginRight: "0.5rem"}}/>
-                                        {thesis.ratesAverage}
+                                        {thesis.ratesAverage !== 0 ? thesis.ratesAverage : "-"}
                                     </Typography>
                                 </Grid>
                             </Grid>

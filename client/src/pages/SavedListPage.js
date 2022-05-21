@@ -136,7 +136,7 @@ const SavedListPage = (props) => {
                             <>
                                 <Grid item xs={12} sm={12} md={12} lg={12} style={{margin: "1vh 0", marginLeft: "3rem", textAlign: "start"}}>
                                     <Typography variant="h6" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                                        {savedTheses.length} Saved theses
+                                        {savedTheses.length} Saved theses found:
                                     </Typography>
                                 </Grid>
                             {   currentTheses !== null && currentTheses.map((thesis) => {
@@ -193,6 +193,8 @@ const SavedListPage = (props) => {
                     </Grid>
                 </Grid>
             </Paper>
+            <br />
+            <br />
             <Footer />
             <CssBaseline />
         </div>

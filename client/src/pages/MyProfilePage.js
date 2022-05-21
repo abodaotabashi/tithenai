@@ -289,6 +289,7 @@ const MyProfilePage = () => {
                     setOpenDialog={setOpenViewImageDialog}
                     image={userPhoto} />
             </Paper>
+            <br />
             <Footer />
             <CssBaseline />
         </div>

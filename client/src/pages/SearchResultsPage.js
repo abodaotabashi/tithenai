@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { CircularProgress, CssBaseline, Divider, FormControl, Grid, InputLabel, MenuItem, Pagination, Paper, Select, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../utils/Context';
-import { redirectToLoginPage, redirectToSearchResultsPage, redirectToViewThesisPage } from '../utils/Redirecter';
+import { redirectToLoginPage, redirectToSearchResultsPage } from '../utils/Redirecter';
 import { searchTheses, searchUniversities } from '../Service';
 import { sortAlphabetically } from '../utils/HelperFunctions';
 import Footer from '../components/Footer';
@@ -215,6 +215,8 @@ const SearchResultsPage = (props) => {
                     </Grid>
                 </Grid>
             </Paper>
+            <br />
+            <br />
             <Footer />
             <CssBaseline />
         </div>
