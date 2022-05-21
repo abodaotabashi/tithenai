@@ -118,6 +118,7 @@ const UploadThesisPage = () => {
                     />
             </Paper>
             <br />
+            <br />
             <Footer />
             <CssBaseline />
         </div>
