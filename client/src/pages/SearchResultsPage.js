@@ -169,8 +169,8 @@ const SearchResultsPage = (props) => {
                             {location.state.resultType === "Theses" &&
                                 currentResults.map((result) => {
                                     return (
-                                        <Grid item key={result.thesisId} xs={12} sm={12} md={6} lg={6} style={{margin: "1vh 0"}} onClick={() => redirectToViewThesisPage(navigator, result)}>
-                                            <ThesisCard key={result.thesisId} thesis={result} />
+                                        <Grid item key={result.thesisId} xs={12} sm={12} md={6} lg={6} style={{margin: "1vh 0"}}>
+                                            <ThesisCard key={result.thesisId} thesis={result} savingMode={false} />
                                         </Grid>
                                     );
                                 })

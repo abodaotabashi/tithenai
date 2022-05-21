@@ -1,22 +1,19 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import { withStyles } from '@mui/styles';
 import { Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../utils/Context';
 import '../assets/styles.css';
 import HomeIcon from '@mui/icons-material/Home';
 import LogoutIcon from '@mui/icons-material/Logout';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import PersonIcon from '@mui/icons-material/Person';
 import ArticleIcon from '@mui/icons-material/Article';
-import {getSavedList} from '../Service'
 import { appSignOut } from '../auth/auth';
 import { redirectToLoginPage, redirectToMainPage, redirectToMyPapersPage, redirectToMyProfilePage, redirectToSavedListPage } from '../utils/Redirecter';
 
 const ProfileDropDownList = (props) => {
     const { openDropDownMenu, setOpenDropDownMenu } = props;
     const navigator = useNavigate();
-    const { userAuth } = useContext(AuthContext);
 
     const StyledMenu = withStyles({
         paper: {
@@ -71,16 +68,7 @@ const ProfileDropDownList = (props) => {
     };
 
     const handleRedirectToSavedListPage = () => {
-        //TODO
-        if (typeof (userAuth) !== "undefined") {
-            if (userAuth) {
-                const uid = userAuth.uid;
-                getSavedList(uid).then((result) => { 
-                    console.log(result)
-                    redirectToSavedListPage(navigator, result.data);
-                })
-            }
-        }
+        redirectToSavedListPage(navigator);
         handleCloseDropDownMenu();
     };
 

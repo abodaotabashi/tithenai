@@ -175,9 +175,6 @@ export const searchUniversities = async (searchingValues) => {
     }).catch(error => console.log(error))
 }
 
-//************************************************ */
-
-// added by mahasin
 export const getSavedList = async (uid) => {
     return await axios.get("/theses/getSavedTheses", {
         params: {
