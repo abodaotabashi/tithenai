@@ -4,6 +4,7 @@ const serviceAccount = require("./serviceAccountKey.json");
 const firebaseStorage = require("firebase-admin/storage");
 const fs = require('fs');
 const { formatBase64, formatFirebaseDate } = require("../Utils/util");
+const { log } = require("console");
 
 
 
@@ -588,12 +589,45 @@ async function isThesisSaved(data) {
     return (userSavedTheses.includes(thesisId))
 }
 
+
 async function deleteThesis(thesisId) {
-    //delete comments and reports //and user saved Thesis
-    return db
-        .collection(THESES_COLLECTION)
-        .doc(thesisId)
-        .delete()
+    //delete comments and reports and user saved Thesis
+    async function deleteThesisfromCollection(collectionName, thesisId, userIDField) {
+        const docs = await db.collection(collectionName).where(userIDField, '==', thesisId).get();
+        docs.forEach(async doc => {
+            await db.collection(collectionName)
+                .doc(doc.id)
+                .delete()
+        });
+    }
+    try {
+
+        // 1. delete thesis data from the thesis collcection
+        await db.collection(THESES_COLLECTION).doc(thesisId).delete()
+
+        // 2. delete thesis data from the reports collcection
+        await deleteThesisfromCollection(REPORTS_COLLECTION, thesisId, 'reportThesisID');
+
+        // 2. delete thesis data from the reports collcection
+        await deleteThesisfromCollection(COMMENTS_COLLECTION, thesisId, 'commentThesisID');
+
+        //3. delete thesis data from the user saved list collcection
+        const usersSnapshot = await db.collection(USERS_COLLECTION).select().get();
+        for (const user of usersSnapshot.docs) {
+
+            const userData = await getUserDataById(user.id);
+            if (userData.userSavedTheses.includes(thesisId)) {
+                userData.userSavedTheses = userData.userSavedTheses.filter(v => v !== thesisId);
+            };
+            await db.collection(USERS_COLLECTION).doc(user.id).update({ userSavedTheses: userData.userSavedTheses })
+
+        }
+
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+    return true
 }
 
 async function updateThesis(newThesisData) {
@@ -611,6 +645,7 @@ async function updateThesis(newThesisData) {
                 thesisTitle: newThesisData.thesisTitle,
                 thesisUniID: newThesisData.thesisUniID,
                 thesisDate: newThesisData.thesisDate,
+                thesisType: newThesisData.thesisType,
                 thesisUniName: uniName
             })
     } catch (error) {
@@ -627,11 +662,6 @@ async function getThesis(thesisId) {
 
 
 // =========================================================== Reports
-//Reprot: 
-// add
-// get all reports: make sure to include the document id in the data you return. 
-// look at get all unis function to learn how to do this. 
-//DONE
 
 async function addNewReport(data) {
     const uid = data.uid;
@@ -741,7 +771,7 @@ async function getComments(thesisId) {
     const commentsSnapshot = await db.collection(COMMENTS_COLLECTION).where("commentThesisID", '==', thesisId).get();
     const comments = []
     commentsSnapshot.forEach(commentObj => {
-        
+
         const comment = {
             commentId: commentObj.id,
             ...commentObj.data(),

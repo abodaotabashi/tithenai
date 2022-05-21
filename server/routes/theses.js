@@ -256,16 +256,35 @@ router.get("/deleteThesis", function (req, res, next) {
 });
 
 
+router.post("/updateThesis", body(['thesisId', "thesisAbstract", "thesisFieldOfStudy", "thesisLanguage",
+    "thesisTitle", "thesisUniID", "thesisDate", "thesisType"]).exists().isString(), body("thesisTags").isArray(), (req, res) => {
+        /*Example body
+        {
+        "thesisId":"Y3x0RZbw6bVbuvOmIPQW",
+        "thesisAbstract": "gsdagdsahgfsdah",
+        "thesisFieldOfStudy": "CS",
+        "thesisLanguage": "TR",
+        "thesisTags":["Model Selfsafsection", "fsafsa Nonfsag"],
+        "thesisTitle": "How to use deep learning to trfsafsain a deep learning model",
+        "thesisUniID":"0D8DEwNTPtM0bN5iCZPB",
+        "thesisDate": "2020-10-21T13:28:06.419Z",
+        "thesisType": "Undergraduate Thesis"
+        }
+        */
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        } else {
+            db.updateThesis(req.body).then(() => {
+                return res.status(201).json({ message: "OK" })
+            }).catch((error) => {
+                console.log(error);
+                return res.sendStatus(500);
+            })
+        }
+    });
 
-router.post("/updateThesis", function (req, res, next) {
-    db.updateThesis(req.body)
-        .then((status) => {
-            return status ? res.sendStatus(200) : res.sendStatus(500);
-        }).catch((error) => {
-            console.log(error);
-            return res.sendStatus(500)
-        })
-});
+
 
 router.get("/getThesis", function (req, res, next) {
     // just send a uid as a query
