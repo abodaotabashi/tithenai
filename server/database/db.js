@@ -765,31 +765,22 @@ async function deleteComment(commentId) {
         .delete()
 }
 async function getComments(thesisId) {
-
-    return db
+    const commentsSnapshot = await db
         .collection(COMMENTS_COLLECTION)
         .where("commentThesisID", '==', thesisId)
-        .get()
-        .then((commentsSnapshot) => {
-            const comments = []
-            commentsSnapshot.forEach(async (commentObj) => {
-                const authUserData = admin.auth().getUser(commentObj.data().commentAuthorID)
-                const profilePic = authUserData.photoURL
-                console.log(profilePic);
-
-                comment = {
-                    ...commentObj.data(),
-                    commentId: commentObj.id,
-                    //profilePic: profilePic
-                }
-                comments.push(comment)
-            });
-
-            return comments;
-        }).catch((error) => {
-            console.log(error);
-            return false;
-        })
+        .get();
+    const comments = []
+    for (let commentObj of commentsSnapshot.docs) {
+        const authUserData = await admin.auth().getUser(commentObj.data().commentAuthorID)
+        const commenterImageURL = authUserData.photoURL
+        comment = {
+            ...commentObj.data(),
+            commentId: commentObj.id,
+            commenterImageURL: commenterImageURL
+        }
+        comments.push(comment)
+    }
+    return comments;
 }
 /*
 async function getComments(thesisId) {
