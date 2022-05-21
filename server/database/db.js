@@ -703,12 +703,7 @@ async function getAllReports() {
         })
 }
 
-// get thesis is already done. 
-
-// Ratings 
-// add rating of user by adding id and value to the map of ratings in the thesis document
-// update rating: search for user id in the map, then delete the value and add the new rating. 
-
+HP6P8
 // =========================================================== Ratings
 
 async function addNewRate(data) {
@@ -732,12 +727,6 @@ async function addNewRate(data) {
         .update({ rates: rates, ratesAverage: avgrate })
 }
 
-// Comments :
-// get thesis comments : you get thesis id, using this id you get all the comments with commentThesisID equal to this id
-// make sure to include the document id in the data you return.
-// add thesis comment: you get, uid, unitid and body. 
-// delete thesis comment: uid, comment id
-//Done
 
 // =========================================================== Comments
 
@@ -764,6 +753,8 @@ async function deleteComment(commentId) {
         .doc(commentId)
         .delete()
 }
+
+
 async function getComments(thesisId) {
     const commentsSnapshot = await db
         .collection(COMMENTS_COLLECTION)
@@ -782,33 +773,6 @@ async function getComments(thesisId) {
     }
     return comments;
 }
-/*
-async function getComments(thesisId) {
-    const commentsSnapshot = await db.collection(COMMENTS_COLLECTION).where("commentThesisID", '==', thesisId).get();
-    const comments = []
-
-    async function getProfilePic(uid) {
-        const authUserData = await admin.auth().getUser(uid)
-        return authUserData.photoURL
-    }
-    commentsSnapshot.forEach(commentObj => {
-        console.log(getProfilePic(commentObj.data().commentAuthorID));
-        const comment = {
-            commentId: commentObj.id,
-            ...commentObj.data(),
-
-            //user image
-        }
-        comments.push(comment);
-    });
-    return (comments)
-}*/
-
-//Getthesis
-//(Boolean) saved thesis
-//Edit Thesis
-//Delete Thesis
-//add person pic with the comment
 
 
 
