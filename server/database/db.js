@@ -289,9 +289,13 @@ async function getAllUnis() {
 async function uploadUniImages() {
     fileNames = fs.readdirSync('database/uniImages/');
     fileNames.forEach(async (filename) => {
-        await storage.bucket(BUCKETNAME).upload("database/uniImages/" + filename, {
-            destination: "uniImages/" + filename
-        });
+        // const file = await storage.bucket(BUCKETNAME).upload("database/uniImages/" + filename, {
+        //     destination: "uniImages/" + filename
+        // });
+        const file = await storage.bucket(BUCKETNAME).file("uniImages/"+ filename); 
+        await file.makePublic(); 
+        const publicUrl = file.publicUrl(); 
+        console.log(publicUrl);
     });
 }
 
@@ -607,10 +611,10 @@ async function deleteThesis(thesisId) {
         // 2. delete thesis data from the reports collcection
         await deleteThesisfromCollection(REPORTS_COLLECTION, thesisId, 'reportThesisID');
 
-        // 2. delete thesis data from the reports collcection
+        // 3. delete thesis data from the comments collcection
         await deleteThesisfromCollection(COMMENTS_COLLECTION, thesisId, 'commentThesisID');
 
-        //3. delete thesis data from the user saved list collcection
+        // 4. delete thesis data from the user saved list collcection
         const usersSnapshot = await db.collection(USERS_COLLECTION).select().get();
         for (const user of usersSnapshot.docs) {
 
@@ -703,7 +707,7 @@ async function getAllReports() {
         })
 }
 
-HP6P8
+// HP6P8
 // =========================================================== Ratings
 
 async function addNewRate(data) {
@@ -726,7 +730,6 @@ async function addNewRate(data) {
         .doc(thesisId)
         .update({ rates: rates, ratesAverage: avgrate })
 }
-
 
 // =========================================================== Comments
 
@@ -773,8 +776,6 @@ async function getComments(thesisId) {
     }
     return comments;
 }
-
-
 
 // =========================================================== Exports
 
