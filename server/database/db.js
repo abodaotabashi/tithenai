@@ -4,7 +4,7 @@ const serviceAccount = require("./serviceAccountKey.json");
 const firebaseStorage = require("firebase-admin/storage");
 const fs = require('fs');
 const { formatBase64, formatFirebaseDate } = require("../Utils/util");
-const { log } = require("console");
+const { log, profile } = require("console");
 
 
 
@@ -764,20 +764,54 @@ async function deleteComment(commentId) {
         .doc(commentId)
         .delete()
 }
+async function getComments(thesisId) {
 
+    return db
+        .collection(COMMENTS_COLLECTION)
+        .where("commentThesisID", '==', thesisId)
+        .get()
+        .then((commentsSnapshot) => {
+            const comments = []
+            commentsSnapshot.forEach(async (commentObj) => {
+                const authUserData = admin.auth().getUser(commentObj.data().commentAuthorID)
+                const profilePic = authUserData.photoURL
+                console.log(profilePic);
+
+                comment = {
+                    ...commentObj.data(),
+                    commentId: commentObj.id,
+                    //profilePic: profilePic
+                }
+                comments.push(comment)
+            });
+
+            return comments;
+        }).catch((error) => {
+            console.log(error);
+            return false;
+        })
+}
+/*
 async function getComments(thesisId) {
     const commentsSnapshot = await db.collection(COMMENTS_COLLECTION).where("commentThesisID", '==', thesisId).get();
     const comments = []
+
+    async function getProfilePic(uid) {
+        const authUserData = await admin.auth().getUser(uid)
+        return authUserData.photoURL
+    }
     commentsSnapshot.forEach(commentObj => {
+        console.log(getProfilePic(commentObj.data().commentAuthorID));
         const comment = {
             commentId: commentObj.id,
             ...commentObj.data(),
+
             //user image
         }
         comments.push(comment);
     });
     return (comments)
-}
+}*/
 
 //Getthesis
 //(Boolean) saved thesis
