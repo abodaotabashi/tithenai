@@ -28,6 +28,37 @@ export const getAllDepartments = async () => {
 
 // =========================================================== Theses
 
+export const getThesis = async (thesisId) => {
+    return await axios.get("/theses/getThesis", {
+        params: {
+            thesisId: thesisId
+        }
+    }).then((result) => {
+        return result.data;
+    }).catch(error => console.log(error))
+}
+
+export const deleteThesis = async (thesisId) => {
+    return await axios.get("/theses/deleteThesis", {
+        params: {
+            thesisId: thesisId
+        }
+    }).then((result) => {
+        return result.data;
+    }).catch(error => console.log(error))
+}
+
+export const isThesisSaved = async (values) => {
+    return await axios.get("/theses/isThesisSaved", {
+        params: {
+            uid: values.uid,
+            thesisId: values.thesisId
+        }
+    }).then((result) => {
+        return result.data;
+    }).catch(error => console.log(error))
+}
+
 export const searchTheses = async (searchingValues) => {
     return await axios.get("/theses/search", {
         params: {
@@ -61,6 +92,24 @@ export const uploadThesis = async (thesisInfo) => {
         return result;
     }).catch(error => console.log(error))
 }
+
+export const updateThesis = async (newThesisData) => {
+    return await axios.post("/theses/updateThesis", {
+        thesisId: newThesisData.thesisId,
+        thesisAbstract: newThesisData.thesisAbstract,
+        thesisType: newThesisData.thesisType,
+        thesisDate: newThesisData.thesisDate,
+        thesisFieldOfStudy: newThesisData.thesisFieldOfStudy,
+        thesisLanguage: newThesisData.thesisLanguage,
+        thesisTags: newThesisData.thesisTags,
+        thesisTitle: newThesisData.thesisTitle,
+        thesisUniID: newThesisData.thesisUniID,
+        thesisUniName: newThesisData.thesisUniName,
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
+
 
 export const saveThesis = async (values) => {
     return await axios.post("/theses/saveThesis", {

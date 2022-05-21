@@ -607,9 +607,10 @@ async function updateThesis(newThesisData) {
                 thesisFieldOfStudy: newThesisData.thesisFieldOfStudy,
                 thesisLanguage: newThesisData.thesisLanguage,
                 thesisTags: newThesisData.thesisTags,
+                thesisType: newThesisData.thesisType,
                 thesisTitle: newThesisData.thesisTitle,
                 thesisUniID: newThesisData.thesisUniID,
-                thesisDate: newThesisData.thesisDate,
+                thesisDate: new Date(newThesisData.thesisDate),
                 thesisUniName: uniName
             })
     } catch (error) {
