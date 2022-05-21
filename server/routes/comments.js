@@ -26,9 +26,8 @@ router.get("/deleteComment", function (req, res, next) {
 });
 
 router.get("/getComments", function (req, res, next) {
-    // just send a uid as a query 
+    // just send a thesisId as a query
     const thesisId = req.query.thesisId;
-    console.log(thesisId);
     db.getComments(thesisId)
         .then((comments) => {
             res.json(comments)

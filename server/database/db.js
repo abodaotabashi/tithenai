@@ -525,7 +525,6 @@ async function getSavedTheses(data) {
     try {
         const user = await db.collection(USERS_COLLECTION).doc(uid).get();
         const savedThesesList = user.data()[USER_SAVED_THESES]
-        console.log(savedThesesList)
         const theses = [];
         for (let i = 0; i < savedThesesList.length; i++) {
             const thesisId = savedThesesList[i];
@@ -584,7 +583,7 @@ async function isThesisSaved(data) {
     const uid = data.uid;
     const thesisId = data.thesisId;
     const userData = await getUserDataById(uid);
-    userSavedTheses = userData.userSavedTheses;
+    const userSavedTheses = userData.userSavedTheses;
     console.log(userSavedTheses);
     return (userSavedTheses.includes(thesisId))
 }
@@ -642,6 +641,7 @@ async function updateThesis(newThesisData) {
                 thesisFieldOfStudy: newThesisData.thesisFieldOfStudy,
                 thesisLanguage: newThesisData.thesisLanguage,
                 thesisTags: newThesisData.thesisTags,
+                thesisType: newThesisData.thesisType,
                 thesisTitle: newThesisData.thesisTitle,
                 thesisUniID: newThesisData.thesisUniID,
                 thesisDate: newThesisData.thesisDate,
@@ -657,9 +657,11 @@ async function updateThesis(newThesisData) {
 
 async function getThesis(thesisId) {
     const thesis = await db.collection(THESES_COLLECTION).doc(thesisId).get()
-    return thesis.data()
+    return {
+        thesisId: thesis.id,
+        ...thesis.data()
+    }
 }
-
 
 // =========================================================== Reports
 
@@ -716,25 +718,21 @@ async function addNewRate(data) {
     const thesisData = await getThesis(thesisId);
     const rates = thesisData["rates"];
     rates[uid] = Number(rateValue)
-    console.log(rates);
 
     avgrate = 0
     count = 0
     for (const [key, value] of Object.entries(rates)) {
-        console.log(value);
         avgrate += value
         count += 1
     }
     avgrate = avgrate / count
-
-    console.log(avgrate);
     return db
         .collection(THESES_COLLECTION)
         .doc(thesisId)
         .update({ rates: rates, ratesAverage: avgrate })
 }
 
-// Comments : 
+// Comments :
 // get thesis comments : you get thesis id, using this id you get all the comments with commentThesisID equal to this id
 // make sure to include the document id in the data you return.
 // add thesis comment: you get, uid, unitid and body. 
@@ -771,7 +769,6 @@ async function getComments(thesisId) {
     const commentsSnapshot = await db.collection(COMMENTS_COLLECTION).where("commentThesisID", '==', thesisId).get();
     const comments = []
     commentsSnapshot.forEach(commentObj => {
-
         const comment = {
             commentId: commentObj.id,
             ...commentObj.data(),
@@ -779,7 +776,6 @@ async function getComments(thesisId) {
         }
         comments.push(comment);
     });
-    console.log(comments.data)
     return (comments)
 }
 

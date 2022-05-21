@@ -16,10 +16,9 @@ import { getAllDepartments, getAllTags, getAllUnis } from '../Service';
 import { getAllLanguages, sortAlphabetically } from '../utils/HelperFunctions';
 import CustomDatePicker from '../components/CustomDatePicker';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import UploadIcon from '@mui/icons-material/Upload';
+import DoneIcon from '@mui/icons-material/Done';
 import { styled } from '@mui/material/styles';
 import AddNewTagDialog from '../components/AddNewTagDialog';
-import UploadFileContainer from '../components/UploadFileContainer';
 
 const TagsIconButtonContainer = styled(Grid)(({ theme }) => ({
     fontFamily: "Ubuntu",
@@ -93,10 +92,6 @@ export default class UploadThesisForm extends Component {
             .catch(error => console.log(error));
     }
 
-    handleSetFile = (fileAsBase64) => {
-        console.log(fileAsBase64)
-    }
-
     render() {
         const filterOptionsUniversities = createFilterOptions({
             matchFrom: 'start',
@@ -126,30 +121,27 @@ export default class UploadThesisForm extends Component {
                 .required("This Field is required!").nullable(),
             fieldOfStudy: Yup.string()
                 .required("This Field is required!").nullable(),
-            pdfBase64: Yup.string()
-                .required("This Field is required!"),
             tags: Yup.array(),
             date: Yup.date()
                 .required("This Field is required!"),
         });
 
         const initial_form_values = {
-            title: "",
-            abstract: "",
-            university: null,
-            fieldOfStudy: "",
-            language: null,
-            thesisType: "",
-            date: new Date(),
-            tags: [],
-            pdfBase64: "",
+            title: this.props.thesis.thesisTitle,
+            abstract: this.props.thesis.thesisAbstract,
+            university: {uniId: this.props.thesis.thesisUniID, uniName: this.props.thesis.thesisUniName},
+            fieldOfStudy: this.props.thesis.thesisFieldOfStudy,
+            language: {code: this.props.thesis.thesisLanguage.code, name: this.props.thesis.thesisLanguage.name, nativeName: this.props.thesis.thesisLanguage.nativeName},
+            thesisType: this.props.thesis.thesisType,
+            date: new Date(this.props.thesis.thesisDate._seconds * 1000),
+            tags: this.props.thesis.thesisTags,
         };
 
         return (
             <Formik
                 initialValues={initial_form_values}
                 validationSchema={form_validation_schema}
-                onSubmit={this.props.handleUploadThesis}>
+                onSubmit={this.props.handleUpdateThesis}>
                 {({ values, touched, errors, setFieldValue }) =>
                     <Form>
                         <Grid container alignItems="center" justifyContent="center">
@@ -408,19 +400,24 @@ export default class UploadThesisForm extends Component {
                                     </Button>
                                 </TagsLargeButtonContainer>
                             </Grid>
-                            <Grid item xs={12} sm={12} md={12} lg={12} container alignItems="center" justifyContent="center">
-                                <UploadFileContainer handleSetFile={setFieldValue}/>
-                            </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} style={{paddingBottom: "3vh"}}>
                                 <Button
-                                    disabled={Boolean(errors.date) || Boolean(errors.pdfBase64) || Boolean(errors.fieldOfStudy) || Boolean(errors.university) || Boolean(errors.title) || Boolean(errors.abstract)}
-                                    color="secondary"
+                                    color="error"
+                                    variant="outlined"
+                                    size="large"
+                                    onClick={this.props.handleCancelUpdating}
+                                    style={{ padding: "1vh 2vw", fontFamily: "Ubuntu", marginTop: "0.5rem" }}>
+                                    Cancel
+                                </Button>
+                                <Button
+                                    disabled={Boolean(errors.date) || Boolean(errors.fieldOfStudy) || Boolean(errors.university) || Boolean(errors.title) || Boolean(errors.abstract) || Boolean(errors.language) || Boolean(errors.thesisType) }
+                                    color="success"
                                     variant="contained"
                                     size="large"
                                     type="submit"
-                                    style={{ padding: "1vh 6vw", fontFamily: "Ubuntu", marginTop: "0.5rem" }}
-                                    startIcon={<UploadIcon fontSize='large' />}>
-                                    Upload Thesis
+                                    style={{ padding: "1vh 4vw", fontFamily: "Ubuntu", marginTop: "0.5rem", marginLeft: "2rem" }}
+                                    startIcon={<DoneIcon fontSize='large' />}>
+                                    Update Thesis
                                 </Button>
                             </Grid>
                         </Grid>

@@ -8,7 +8,7 @@ import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import PersonIcon from '@mui/icons-material/Person';
 import ArticleIcon from '@mui/icons-material/Article';
 import UploadIcon from '@mui/icons-material/Upload';
-import { redirectToLoginPage, redirectToMainPage, redirectToMyPapersPage, redirectToMyProfilePage, redirectToUploadThesisPage } from '../utils/Redirecter';
+import { redirectToLoginPage, redirectToMainPage, redirectToMyPapersPage, redirectToMyProfilePage, redirectToSavedListPage, redirectToUploadThesisPage } from '../utils/Redirecter';
 import { appSignOut } from '../auth/auth';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const NavbarDrawer = (props) => {
     const classes = useStyles();
     const navigator = useNavigate();
-    const {toggleDrawer} = props;
+    const { toggleDrawer } = props;
 
     const handleRedirectToHomePage = () =>{
         redirectToMainPage(navigator);
@@ -54,8 +54,7 @@ const NavbarDrawer = (props) => {
     };
 
     const handleRedirectToSavedListPage = () => {
-        //TODO
-        //navigator('/');
+        redirectToSavedListPage(navigator);
         toggleDrawer(false);
     };
 

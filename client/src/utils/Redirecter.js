@@ -24,12 +24,8 @@ export const redirectToSearchResultsPage = (navigator, resultType, results, sear
     });
 }
 
-export const redirectToSavedListPage = (navigator, results) => {
-    navigator("/savedList", {
-        state: {
-            results: results,
-        }
-    })
+export const redirectToSavedListPage = (navigator) => {
+    navigator("/savedList")
 }
 
 export const redirectToMyPapersPage = (navigator) => {
@@ -40,10 +36,10 @@ export const redirectToUploadThesisPage = (navigator) => {
     navigator("/upload");
 }
 
-export const redirectToViewThesisPage = (navigator, result) => {
+export const redirectToViewThesisPage = (navigator, thesisId) => {
     navigator("/view", {
         state: {
-            thesis: result,
+            thesisId: thesisId,
         }
     });
 }

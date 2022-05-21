@@ -287,11 +287,11 @@ router.post("/updateThesis", body(['thesisId', "thesisAbstract", "thesisFieldOfS
 
 
 router.get("/getThesis", function (req, res, next) {
-    // just send a uid as a query
+    // just send a thesisId as a query
     const thesisId = req.query.thesisId;
     db.getThesis(thesisId)
         .then((thesis) => {
-            return res.sendStatus(200).json(thesis)
+            return res.status(200).json(thesis)
         }).catch((error) => {
             console.log(error);
             return res.sendStatus(500)
