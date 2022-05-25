@@ -30,8 +30,8 @@ const ProfileInfoViewer = (props) => {
             </Grid>
             <Grid item container xs={1} sm={1} md={1} lg={1} alignItems="center" justifyContent="flex-end">
                 <Tooltip title="Update Profile" placement="bottom" arrow leaveDelay={100}>
-                    <IconButton data-testid="profileInfoUpdate" color="secondary" onClick={handleEditInfos}>
-                        <EditIcon color="secondary" />
+                    <IconButton  color="secondary" onClick={handleEditInfos}>
+                        <EditIcon data-testid="profileInfoUpdate" color="secondary" />
                     </IconButton>
                 </Tooltip>
             </Grid>

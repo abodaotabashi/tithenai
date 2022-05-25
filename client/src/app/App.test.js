@@ -173,7 +173,7 @@ test('logout', async() => {
   expect(element).toBeInTheDocument();
 })
 
-/* 
+/*
 test('edit profile', async () => {
   const { getByText, getByRole, findByTestId, findByText, container, findByRole, findByAltText, getByTestId, findByTitle } = render(<App />)
 
@@ -217,14 +217,13 @@ test('edit profile', async () => {
   await waitFor(() => {
     fireEvent.change(firstName, {
       target: {
-        value: "Süreyya"
+        value: "MahoReis"
       }
     })
   })
   const save = await waitFor(() => findByText(/Save Changes/i));
   await waitFor(() => {userEvent.click(save, leftClick)});
-  const checkChanged = await waitFor(() => {findByText(/Süreyya Elderviş/i)})
-  expect(checkChanged).toBeInTheDocument();
+  const checkChanged = await waitFor(() => {findByText(/MahoReis Elderviş/i)})
 }) */
 /*
 test('saved list page no saved theses', async () => {
