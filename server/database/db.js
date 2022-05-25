@@ -767,7 +767,7 @@ async function getComments(thesisId) {
     for (let commentObj of commentsSnapshot.docs) {
         const authUserData = await admin.auth().getUser(commentObj.data().commentAuthorID)
         const commenterImageURL = authUserData.photoURL
-        comment = {
+        const comment = {
             ...commentObj.data(),
             commentId: commentObj.id,
             commenterImageURL: commenterImageURL

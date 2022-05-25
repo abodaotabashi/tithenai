@@ -277,11 +277,25 @@ const ThesisInfoViewer = (props) => {
                     {   commentsDisplayed !== null && commentsDisplayed.length > 0 && commentsDisplayed.map((comment) => {
                             if ( comment.commentAuthorID === userID ) {
                                 return (
-                                    <CommentCard key={comment.commentId} isOwn={true} comment={comment} handleDeleteComment={handleDeleteComment}/>
+                                    <CommentCard
+                                        key={comment.commentId}
+                                        isOwn={true}
+                                        comment={comment}
+                                        handleDeleteComment={() => {
+                                            setNumberOfCommentsDisplayed(null);
+                                            handleDeleteComment(comment.commentId);
+                                        }}/>
                                 );
                             } else {
                                 return (
-                                    <CommentCard key={comment.commentId} isOwn={false} comment={comment} handleDeleteComment={handleDeleteComment}/>
+                                    <CommentCard
+                                        key={comment.commentId}
+                                        isOwn={false}
+                                        comment={comment}
+                                        handleDeleteComment={() => {
+                                            setNumberOfCommentsDisplayed(null);
+                                            handleDeleteComment(comment.commentId);
+                                        }}/>
                                 );
                             }
                         })
@@ -318,6 +332,7 @@ const ThesisInfoViewer = (props) => {
                         <InputAdornment position="end">
                             <IconButton
                                 onClick={() => {
+                                    setNumberOfCommentsDisplayed(null);
                                     handleAddComment(commentValue);
                                     setCommentValue("");
                                     }}>

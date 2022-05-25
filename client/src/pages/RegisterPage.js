@@ -125,6 +125,7 @@ const RegisterPage = (props) => {
                     </Grid>
                 </Grid>
             </Paper>
+            <br />
             <CssBaseline />
         </div>
     );
