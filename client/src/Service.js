@@ -262,7 +262,7 @@ export const updateUser = async (values, uid) => {
         userLastname: values.lastname,
         userAcademicStatus: values.status,
         userEmail: values.email,
-        userUniversityID: values.university.uniId
+        userUniversityID: values.university.uniID
     }).then((result) => {
         return result;
     }).catch(error => console.log(error))

@@ -48,10 +48,6 @@ export default class EditProfileForm extends Component {
             .catch(error => console.log(error));
     }
 
-    handleUpdateProfile = () => {
-        //TODO: Update Profile
-    }
-
     render() {
         const filterOptions = createFilterOptions({
             matchFrom: 'start',
