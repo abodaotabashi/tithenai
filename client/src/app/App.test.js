@@ -131,7 +131,7 @@ test('Register', async () => {
   //expect(homeElement).toBeInTheDocument();
 
 }); */
-
+/*
 test('logout', async() => {
   const { getByText, getByRole, findAllByText, findByText, container, findByRole, findByAltText, getByTestId } = render(<App />)
 
@@ -171,7 +171,7 @@ test('logout', async() => {
   await wait();
   const element = await waitFor(() => findByText(/Sign Up Now!/i));
   expect(element).toBeInTheDocument();
-})
+})*/
 
 /*
 test('edit profile', async () => {
