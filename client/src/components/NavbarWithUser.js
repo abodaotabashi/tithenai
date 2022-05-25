@@ -104,7 +104,7 @@ const NavbarWithUser = (props) => {
                             <img src={TithenaiLogo} className={classes.logo} alt="Tithenai" onClick={() => redirectToMainPage(navigator)}/>
                         </Grid>
                         <Grid item>
-                            <p className={classes.logoLabel} onClick={() => redirectToMainPage(navigator)}>Tithenai</p>
+                            <p className={classes.logoLabel} onClick={() => redirectToMainPage(navigator)} data-testid="tithenaiLogo">Tithenai</p>
                         </Grid>
                     </Grid>
                     <Grid item container xs={3} sm={8} md={6} lg={6} alignItems="center" justifyContent="flex-end">
@@ -122,8 +122,8 @@ const NavbarWithUser = (props) => {
                             <LanguageDropDownList openDropDownMenu={openLangDropDownMenu} setOpenDropDownMenu={setOpenLangDropDownMenu} />
                         </Grid>
                         <Grid item style={{margin: "0 0.1rem"}}>
-                            <DropDownButton data-testid="profile-icon" size="medium" color="secondary" aria-haspopup="true" onClick={(event) => setOpenProfileDropDownMenu(event.currentTarget)}>
-                                <AccountCircleIcon style={{fontSize: "2rem"}} color="secondary"/>
+                            <DropDownButton  size="medium" color="secondary" aria-haspopup="true" onClick={(event) => setOpenProfileDropDownMenu(event.currentTarget)}>
+                                <AccountCircleIcon data-testid="profile-icon" style={{fontSize: "2rem"}} color="secondary"/>
                             </DropDownButton>
                             <ProfileDropDownList openDropDownMenu={openProfileDropDownMenu} setOpenDropDownMenu={setOpenProfileDropDownMenu} />
                         </Grid>
