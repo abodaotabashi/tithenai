@@ -144,7 +144,7 @@ const ThesisInfoViewer = (props) => {
                         <Typography
                             variant="subtitle1"
                             component="span"
-                            style={{cursor: "pointer", textAlign: "start", fontFamily: "Ubuntu", paddingBottom: "1rem"}}
+                            style={{cursor: "pointer", textAlign: "start", fontFamily: "Ubuntu", paddingBottom: "1rem", textDecoration: "underline"}}
                             onClick={() => redirectToUniversityProfilePage(navigator, thesis.thesisUniID)}>
                             {thesis.thesisUniName}
                         </Typography>
