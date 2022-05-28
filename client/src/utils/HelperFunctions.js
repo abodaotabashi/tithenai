@@ -107,3 +107,66 @@ export const getChartBorderColors = () => {
     ];
 }
 
+export const getTopKResearchers = (data, k) => {
+    let stats = Object.values(data);
+    stats = stats.sort(sortObjectsDescending("uniThesisCount", false));
+    stats = stats.slice(0, k);
+    return stats;
+}
+
+export const getTopTags = (data, k) => {
+    let stats = [];
+    for(const key in data){
+        stats.push({"tagName":key, "counter":data[key]});
+    }
+    stats = stats.sort(sortObjectsDescending("counter", false));
+    stats = stats.slice(0, k);
+    return stats;
+}
+
+export const getMonthName = (date, languageCode) => {
+    const formatter = new Intl.DateTimeFormat(languageCode, { month: 'long' });
+    const month = formatter.format(date);
+    return month;
+}
+
+export const getThisYearData = (data) => {
+    let stats = [];
+    for(const key in data){
+        if(parseInt(key) === new Date().getFullYear()) {
+            for(let i=1; i<13; i++){
+                if(i < 10) {
+                    const monthString = "0"+i;
+                    if (typeof(data[key][monthString]) === "undefined") {
+                        stats.push({"monthName":getMonthName(new Date(2000, i-1, 1), 'en'), "counter":0});
+                    } else {
+                        stats.push({"monthName":getMonthName(new Date(2000, i-1, 1), 'en'), "counter":data[key][monthString]});
+                    }
+                } else {
+                    if (typeof(data[key][i]) === "undefined") {
+                        stats.push({"monthName":getMonthName(new Date(2000, i-1, 1), 'en'), "counter":0});
+                    } else {
+                        stats.push({"monthName":getMonthName(new Date(2000, i-1, 1), 'en'), "counter":data[key][i]});
+                    }
+                }
+            }
+        }
+    }
+    if (stats.length === 0) {
+        for(let i=0; i<12; i++){
+            stats.push({"monthName":getMonthName(new Date(2000, i, 1), 'en'), "counter":0});
+        }
+    }
+    return stats;
+}
+export const getYearsData = (data) => {
+    let stats = [];
+    for(const key in data){
+        let sum = 0;
+        Object.keys(data[key]).forEach(secondKey => {
+            sum += data[key][secondKey];
+        });
+        stats.push({"year":key, "counter":sum});
+    }
+    return stats;
+}
