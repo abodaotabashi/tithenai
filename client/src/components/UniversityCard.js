@@ -85,7 +85,7 @@ const UniversityCard = (props) => {
                 <Grid item container xs={12} sm={9} md={9} lg={9} className={classes.texts}>
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Typography variant="subtitle1" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                            {university.uniName} ({university.uniType})
+                            {university.uniName}
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -95,7 +95,7 @@ const UniversityCard = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                            Theses: {university.uniTheses.length}
+                            Type: {university.uniType}
                         </Typography>
                     </Grid>
                 </Grid>

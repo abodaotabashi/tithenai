@@ -11,9 +11,9 @@
 
 .navbarLogoWrapper {
     font-family: 'Ubuntu-Light';
-    -moz-user-select: none; 
-    -webkit-user-select: none; 
-    -ms-user-select:none; 
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select:none;
     user-select:none;
     -o-user-select:none;
 }
@@ -123,6 +123,12 @@
     background-color: #00000010;
 }
 
+.universityInfoViewer {
+    margin: auto;
+    padding: 10px;
+    padding-left: 15px;
+}
+
 .textWithSecondaryGradient {
     display: inline-block;
     text-align: justify;
@@ -224,6 +230,12 @@
         box-shadow: 20px 0 85px rgba(0, 0, 0, 1);
         backdrop-filter: blur(5px);
     }
+
+    .universityInfoViewer {
+        margin: auto;
+        padding: 5px;
+        padding-top: 20px;
+    }
 }
 
 @media only screen and (max-width: 599px) {
@@ -249,6 +261,12 @@
         -ms-user-select:none;
         user-select:none;
         -o-user-select:none;
+    }
+
+    .universityInfoViewer {
+        margin: auto;
+        padding: 5px;
+        padding-top: 20px;
     }
 }
 
