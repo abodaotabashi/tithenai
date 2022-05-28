@@ -80,3 +80,30 @@ export const stringifyByteSize = (bytes) => {
     const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
     return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }
+
+export const getChartBackgroundColors = () => {
+    return [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(0, 139, 0, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(236, 100, 24, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(92, 0, 210, 0.2)',
+    ];
+}
+
+export const getChartBorderColors = () => {
+    return [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(0, 139, 0, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(236, 100, 24, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(92, 0, 210, 1)',
+    ];
+}
+
