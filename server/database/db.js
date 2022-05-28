@@ -335,7 +335,7 @@ async function getUniversity(uniId) {
         });
     })
 
-    // Statistics 
+    // Statistics
     let stats = {}
 
     // typ
@@ -350,7 +350,7 @@ async function getUniversity(uniId) {
         return acc;
     }, {})
 
-    // tags 
+    // tags
     const tagsStats = {};
     theses.forEach(thesis => {
         const thesisTags = thesis.thesisTags;
@@ -398,9 +398,13 @@ async function getUniversity(uniId) {
         uniMembers
     }
 
+    const uniImgRef = storage.bucket(BUCKETNAME).file(`uniImages/${uniId}.png`)
+    const uniImageUrl = uniImgRef.publicUrl();
+
     const uniToReturn = {
         uniId: uniId,
         ...uniData,
+        uniImageUrl: uniImageUrl,
         uniTheses: theses,
         statistics: stats
     }
