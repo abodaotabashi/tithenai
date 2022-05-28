@@ -147,6 +147,16 @@ export const getUserTheses = async (uid) => {
     }).catch(error => console.log(error))
 }
 
+export const getSavedList = async (uid) => {
+    return await axios.get("/theses/getSavedTheses", {
+        params: {
+            uid: uid,
+        }
+    }).then((result) => {
+        return result;
+    }).catch(error => console.log(error))
+}
+
 // =========================================================== Reports
 
 export const addNewReport = async (values) => {
@@ -223,13 +233,13 @@ export const searchUniversities = async (searchingValues) => {
     }).catch(error => console.log(error))
 }
 
-export const getSavedList = async (uid) => {
-    return await axios.get("/theses/getSavedTheses", {
+export const getUniversity = async (universityId) => {
+    return await axios.get("/universities/getUniversity", {
         params: {
-            uid: uid,
+            id: universityId,
         }
     }).then((result) => {
-        return result;
+        return result.data;
     }).catch(error => console.log(error))
 }
 
