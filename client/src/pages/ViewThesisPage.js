@@ -199,7 +199,7 @@ const ViewThesisPage = () => {
                     thesisUniName: values.university.uniName,
                 }
                 updateThesis(newThesisData).then((result) => {
-                    if (result.status === 200 && result.data === "OK") {
+                    if (result.status === 201 && result.data.message === "OK") {
                         setShowLoading(false);
                         setLoadingMessage("");
                         setIsEditing(false);

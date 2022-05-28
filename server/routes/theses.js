@@ -256,7 +256,7 @@ router.get("/deleteThesis", function (req, res, next) {
 });
 
 
-router.post("/updateThesis", body(['thesisId', "thesisAbstract", "thesisFieldOfStudy", "thesisLanguage",
+router.post("/updateThesis", body(['thesisId', "thesisAbstract", "thesisFieldOfStudy",
     "thesisTitle", "thesisUniID", "thesisDate", "thesisType"]).exists().isString(), body("thesisTags").isArray(), (req, res) => {
         /*Example body
         {

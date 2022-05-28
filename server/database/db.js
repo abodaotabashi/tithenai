@@ -648,7 +648,7 @@ async function updateThesis(newThesisData) {
                 thesisType: newThesisData.thesisType,
                 thesisTitle: newThesisData.thesisTitle,
                 thesisUniID: newThesisData.thesisUniID,
-                thesisDate: newThesisData.thesisDate,
+                thesisDate: new Date(newThesisData.thesisDate),
                 thesisType: newThesisData.thesisType,
                 thesisUniName: uniName
             })

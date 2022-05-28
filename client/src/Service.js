@@ -110,7 +110,6 @@ export const updateThesis = async (newThesisData) => {
     }).catch(error => console.log(error))
 }
 
-
 export const saveThesis = async (values) => {
     return await axios.post("/theses/saveThesis", {
         uid: values.uid,
