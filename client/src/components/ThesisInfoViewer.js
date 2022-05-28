@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Typography, CircularProgress, IconButton, Chip, Button, Rating, Paper, Divider, TextField, InputAdornment } from '@mui/material';
 import { formatFirebaseDate } from '../utils/HelperFunctions';
+import { redirectToUniversityProfilePage } from '../utils/Redirecter';
+import { useNavigate } from 'react-router-dom';
 import CommentCard from './CommentCard';
 import AddNewReportDialog from './AddNewReportDialog';
 import WarningDialog from './WarningDialog';
@@ -83,6 +85,7 @@ const ThesisInfoViewer = (props) => {
         handleDeleteThesis
     } = props;
     const classes = useStyles();
+    const navigator = useNavigate();
     const [commentValue, setCommentValue] = useState("");
     const [isShowMoreCommentsButtonVisible, setIsShowMoreCommentsButtonVisible] = useState("none");
     const [numberOfCommentsDisplayed, setNumberOfCommentsDisplayed] = useState(null);
@@ -108,7 +111,7 @@ const ThesisInfoViewer = (props) => {
                 }
             }
         }
-    }, [comments])
+    }, [comments, numberOfCommentsDisplayed])
 
     const handleShowMoreComments = () => {
         if (comments.length <= numberOfCommentsDisplayed + 3) {
@@ -138,7 +141,16 @@ const ThesisInfoViewer = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Typography variant="subtitle1" component="div" style={{textAlign: "start", fontFamily: "Ubuntu", paddingBottom: "1rem"}}>
-                        {thesis.thesisUniName} &nbsp; - &nbsp; {thesis.thesisFieldOfStudy}
+                        <Typography
+                            variant="subtitle1"
+                            component="span"
+                            style={{cursor: "pointer", textAlign: "start", fontFamily: "Ubuntu", paddingBottom: "1rem"}}
+                            onClick={() => redirectToUniversityProfilePage(navigator, thesis.thesisUniID)}>
+                            {thesis.thesisUniName}
+                        </Typography>
+                        <Typography variant="subtitle1" component="span" style={{cursor: "text", textAlign: "start", fontFamily: "Ubuntu", paddingBottom: "1rem"}}>
+                            &nbsp; - &nbsp; {thesis.thesisFieldOfStudy}
+                        </Typography>
                     </Typography>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>

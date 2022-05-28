@@ -43,3 +43,11 @@ export const redirectToViewThesisPage = (navigator, thesisId) => {
         }
     });
 }
+
+export const redirectToUniversityProfilePage = (navigator, UniversityID) => {
+    navigator("/university", {
+        state: {
+            universityID: UniversityID,
+        }
+    });
+}

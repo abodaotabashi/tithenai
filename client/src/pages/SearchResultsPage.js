@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { CircularProgress, CssBaseline, Divider, FormControl, Grid, InputLabel, MenuItem, Pagination, Paper, Select, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../utils/Context';
-import { redirectToLoginPage, redirectToSearchResultsPage } from '../utils/Redirecter';
+import { redirectToLoginPage, redirectToSearchResultsPage, redirectToUniversityProfilePage } from '../utils/Redirecter';
 import { searchTheses, searchUniversities } from '../Service';
 import { sortAlphabetically } from '../utils/HelperFunctions';
 import Footer from '../components/Footer';
@@ -178,7 +178,7 @@ const SearchResultsPage = (props) => {
                             { location.state.resultType === "Universities" &&
                                 currentResults.map((result) => {
                                     return (
-                                        <Grid item key={result.uniId} xs={12} sm={12} md={6} lg={6} style={{margin: "1vh 0"}}>
+                                        <Grid item key={result.uniId} xs={12} sm={12} md={6} lg={6} style={{margin: "1vh 0"}} onClick={() => redirectToUniversityProfilePage(navigator, result.uniId)} >
                                             <UniversityCard key={result.uniId} university={result} />
                                         </Grid>
                                     );
