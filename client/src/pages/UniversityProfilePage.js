@@ -6,6 +6,7 @@ import { getUniversity } from '../Service';
 import { AuthContext } from '../utils/Context';
 import { redirectToLoginPage } from '../utils/Redirecter';
 import { getChartBackgroundColors, getChartBorderColors, getThisYearData, getTopKResearchers, getTopTags, getYearsData, sortObjectsDescending } from '../utils/HelperFunctions';
+import { withTranslation } from 'react-i18next';
 
 import NavbarWithUser from '../components/NavbarWithUser';
 import Footer from '../components/Footer';
@@ -51,6 +52,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const UniversityProfilePage = () => {
+    const { t } = this.props;
     const [universityInfo, setUniversityInfo] = useState();
     const [universityID, setUniversityID] = useState("");
 
@@ -81,7 +83,7 @@ const UniversityProfilePage = () => {
                         setFieldOfStudyStats({
                             labels: Object.keys(universityInfo.statistics.fieldOfStudyStats).map((fieldOfStudy) => fieldOfStudy),
                             datasets: [{
-                                label: "Number of Theses",
+                                label: t('uniprofile.notheses'),
                                 data: Object.values(universityInfo.statistics.fieldOfStudyStats).map((number) => number),
                                 backgroundColor: getChartBackgroundColors(),
                                 borderColor: getChartBorderColors(),
@@ -91,7 +93,7 @@ const UniversityProfilePage = () => {
                         setTypesStats({
                             labels: Object.keys(universityInfo.statistics.typesStats).map((type) => type),
                             datasets: [{
-                                label: "Number of Theses",
+                                label: t('uniprofile.notheses'),
                                 data: Object.values(universityInfo.statistics.typesStats).map((number) => number),
                                 backgroundColor: getChartBackgroundColors(),
                                 borderColor: getChartBorderColors(),
@@ -101,7 +103,7 @@ const UniversityProfilePage = () => {
                         setResearchStats({
                             labels: getTopKResearchers(universityInfo.statistics.researchStats, 5).map((researcher) => researcher.researcherName),
                             datasets: [{
-                                label: "Number of Theses",
+                                label: t('uniprofile.notheses'),
                                 data: getTopKResearchers(universityInfo.statistics.researchStats, 5).map((researcher) => researcher.uniThesisCount),
                                 backgroundColor: getChartBackgroundColors(),
                                 borderColor: getChartBorderColors(),
@@ -111,7 +113,7 @@ const UniversityProfilePage = () => {
                         setTagsStats({
                             labels: getTopTags(universityInfo.statistics.tagsStats, 7).map((tag) => tag.tagName),
                             datasets: [{
-                                label: "Number of Theses",
+                                label: t('uniprofile.notheses'),
                                 data: getTopTags(universityInfo.statistics.tagsStats, 7).map((tag) => tag.counter),
                                 backgroundColor: getChartBackgroundColors(),
                                 borderColor: getChartBorderColors(),
@@ -121,7 +123,7 @@ const UniversityProfilePage = () => {
                         setThisYearStats({
                             labels: getThisYearData(universityInfo.statistics.yearStats).map((month) => month.monthName),
                             datasets: [{
-                                label: "Number of Theses",
+                                label: t('uniprofile.notheses'),
                                 data: getThisYearData(universityInfo.statistics.yearStats).map((month) => month.counter),
                                 backgroundColor: getChartBackgroundColors(),
                                 borderColor: getChartBorderColors(),
@@ -131,7 +133,7 @@ const UniversityProfilePage = () => {
                         setYearsStats({
                             labels: getYearsData(universityInfo.statistics.yearStats).map((year) => year.year),
                             datasets: [{
-                                label: "Number of Theses",
+                                label: t('uniprofile.notheses'),
                                 data: getYearsData(universityInfo.statistics.yearStats).map((year) => year.counter),
                                 backgroundColor: getChartBackgroundColors(),
                                 borderColor: getChartBorderColors(),
@@ -207,13 +209,13 @@ const UniversityProfilePage = () => {
                                     </Grid>
                                     <Grid item xs={12} sm={12} md={12} lg={12}>
                                         <Typography variant="h6" component="div" style={{flexGrow:1, fontFamily: "Ubuntu-Light", fontWeight: "bold", margin: "2vh 0"}}>
-                                            University Statistics
+                                            {t('uniprofile.statistics')}
                                         </Typography>
                                     </Grid>
                                     {universityInfo !== null && typeof (universityInfo) !== "undefined" && Object.keys(universityInfo.statistics.fieldOfStudyStats).length !== 0 ?
                                         <Grid item container xs={12} sm={12} md={6} lg={6} alignItems="center" justifyContent="center" style={{margin: "1vh 0"}}>
                                             <Grid item xs={11} sm={11} md={11} lg={11} className={classes.graphicContainer}>
-                                                <BarChart data={fieldOfStudyStats} title="Top Field of Studies" />
+                                                <BarChart data={fieldOfStudyStats} title={t('uniprofile.topfield')} />
                                             </Grid>
                                         </Grid>
                                         :
@@ -222,7 +224,7 @@ const UniversityProfilePage = () => {
                                     {universityInfo !== null && typeof (universityInfo) !== "undefined" && Object.keys(universityInfo.statistics.tagsStats).length !== 0 ?
                                         <Grid item container xs={12} sm={12} md={6} lg={6} alignItems="center" justifyContent="center" style={{margin: "1vh 0"}}>
                                             <Grid item xs={11} sm={11} md={11} lg={11} className={classes.graphicContainer}>
-                                                <BarChart data={tagsStats} title="Top researched Tags" />
+                                                <BarChart data={tagsStats} title={t('uniprofile.toptags')} />
                                             </Grid>
                                         </Grid>
                                         :
@@ -231,7 +233,7 @@ const UniversityProfilePage = () => {
                                     {universityInfo !== null && typeof (universityInfo) !== "undefined" && Object.keys(universityInfo.statistics.typesStats).length !== 0 ?
                                         <Grid item container xs={12} sm={12} md={6} lg={6} alignItems="center" justifyContent="center" style={{margin: "1vh 0"}}>
                                             <Grid item xs={11} sm={11} md={11} lg={11} className={classes.graphicContainer}>
-                                                <PieChart data={typesStats} title="Distribution of Theses according to their type" />
+                                                <PieChart data={typesStats} title={t('uniprofile.distribution')}  />
                                             </Grid>
                                         </Grid>
                                         :
@@ -240,7 +242,7 @@ const UniversityProfilePage = () => {
                                     {universityInfo !== null && typeof (universityInfo) !== "undefined" && Object.keys(universityInfo.statistics.typesStats).length !== 0 ?
                                         <Grid item container xs={12} sm={12} md={6} lg={6} alignItems="center" justifyContent="center" style={{margin: "1vh 0"}}>
                                             <Grid item xs={11} sm={11} md={11} lg={11} className={classes.graphicContainer}>
-                                                <BarChart data={researchStats} title="Top Researchers" />
+                                                <BarChart data={researchStats} title={t('uniprofile.topresearchers')} />
                                             </Grid>
                                         </Grid>
                                         :
@@ -249,7 +251,7 @@ const UniversityProfilePage = () => {
                                     {universityInfo !== null && typeof (universityInfo) !== "undefined" && Object.keys(universityInfo.statistics.typesStats).length !== 0 ?
                                         <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center" style={{margin: "1vh 0"}}>
                                             <Grid item xs={11} sm={11} md={11} lg={11} className={classes.graphicContainer}>
-                                                <BarChart data={yearsStats} title="Total Theses per year" />
+                                                <BarChart data={yearsStats} title={t('uniprofile.totaltheses')} />
                                             </Grid>
                                         </Grid>
                                         :
@@ -258,7 +260,7 @@ const UniversityProfilePage = () => {
                                     {universityInfo !== null && typeof (universityInfo) !== "undefined" && Object.keys(universityInfo.statistics.yearStats).length !== 0 ?
                                         <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center" style={{margin: "1vh 0"}}>
                                             <Grid item xs={11} sm={11} md={11} lg={11} className={classes.graphicContainer}>
-                                                <LineChart data={thisYearStats} title="This Year's Activity" />
+                                                <LineChart data={thisYearStats} title={t('uniprofile.thisyear')} />
                                             </Grid>
                                         </Grid>
                                         :
@@ -275,7 +277,7 @@ const UniversityProfilePage = () => {
                                     </Grid>
                                     <Grid item xs={12} sm={12} md={12} lg={12}>
                                         <Typography variant="h6" component="div" style={{flexGrow:1, fontFamily: "Ubuntu-Light", fontWeight: "bold", margin: "2vh 0"}}>
-                                            Last theses of this university
+                                            {t('uniprofile.lasttheses')}
                                         </Typography>
                                     </Grid>
                                     {thesesDisplayed.map((thesis) => {
@@ -292,7 +294,7 @@ const UniversityProfilePage = () => {
                                             style={{fontFamily: "Ubuntu", padding: "1vh 2vw", display: `${isShowMoreThesesButtonVisible}`}}
                                             startIcon={<ExpandMoreIcon />}
                                             onClick={handleShowMoreTheses}>
-                                            Show More
+                                            {t('uniprofile.showmore')}
                                         </Button>
                                     </Grid>
                                 </Grid>
@@ -315,4 +317,4 @@ const UniversityProfilePage = () => {
     );
 }
 
-export default UniversityProfilePage
+export default withTranslation()(UniversityProfilePage);

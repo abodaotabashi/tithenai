@@ -7,6 +7,7 @@ import Navbar from '../components/Navbar';
 import LoadingPage from './LoadingPage';
 import { AuthContext } from '../utils/Context';
 import { redirectToMainPage, redirectToRegisterPage } from '../utils/Redirecter';
+import { withTranslation } from 'react-i18next';
 
 import '../assets/styles.css';
 import TithenaiLogo from '../assets/logos/Uncircled Navyblue.png';
@@ -56,6 +57,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const LoginPage = () => {
+    const { t } = this.props;
     const classes = useStyles();
     const navigator = useNavigate();
     const { userAuth } = useContext(AuthContext);
@@ -86,7 +88,7 @@ const LoginPage = () => {
                     <Grid container alignItems="center" justifyContent="center" style={{ paddingTop: "2%", paddingBottom: "2%" }}>
                         <Grid item container xs={11} sm={11} md={11} lg={11} direction="row-reverse" alignItems="center" justifyContent="center" className="loginBanner">
                             <Grid item container xs={12} sm={12} md={7} lg={8} direction="row" alignItems="center" justifyContent="center">
-                                <p className={classes.illustrationLabel}>Welcome to Tithenai</p>
+                                <p className={classes.illustrationLabel}>{t('login_page.welcome')}</p>
                                 <img src={LoginGif} alt="Welcome" className={classes.loginIllustration} />
                             </Grid>
                             <Grid item container xs={12} sm={12} md={5} lg={4} className="glassmorphismEffect75" justifyContent="center">
@@ -95,10 +97,10 @@ const LoginPage = () => {
                                         <div style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                                             <img src={TithenaiLogo} alt="Tithenai" className='headerLabelLogo' onClick={() => redirectToMainPage(navigator)} />
                                         </div>
-                                        <p className={classes.header}>Sign In to Tithenai</p>
+                                        <p className={classes.header}>{t('login_page.signin_to')}</p>
                                         <p className={classes.headerSpan}>
-                                            New Here?
-                                            <span className="forwardingSpan" onClick={() => redirectToRegisterPage(navigator)}>&nbsp;Create an Account</span>
+                                            {t('login_page.new')}
+                                            <span className="forwardingSpan" onClick={() => redirectToRegisterPage(navigator)}>&nbsp;{t('login_page.create')}</span>
                                         </p>
                                     </Grid>
                                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -115,4 +117,4 @@ const LoginPage = () => {
     );
 }
 
-export default LoginPage;
+export default withTranslation()(LoginPage);

@@ -10,6 +10,7 @@ import NavbarWithUser from '../components/NavbarWithUser';
 import SearchThesisPanel from '../components/SearchThesisPanel';
 import SearchUniversityPanel from '../components/SearchUniversityPanel';
 import UniversityCard from '../components/UniversityCard';
+import { withTranslation } from 'react-i18next';
 
 import NoResultsIllustration from "../assets/gifs/NoResults.gif";
 import '../assets/styles.css';
@@ -64,6 +65,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SearchResultsPage = (props) => {
+    const { t } = this.props;
     const location = useLocation();
     const navigator = useNavigate();
     const { userAuth } = useContext(AuthContext);
@@ -133,14 +135,14 @@ const SearchResultsPage = (props) => {
                 <Grid container alignItems="center" justifyContent="center">
                     <Grid item xs={12} sm={12} md={2} lg={2}>
                         <FormControl fullWidth>
-                            <InputLabel color='secondary' style={{fontFamily: 'Ubuntu'}}>Searching</InputLabel>
+                            <InputLabel color='secondary' style={{fontFamily: 'Ubuntu'}}>{t('sresults.searching')}</InputLabel>
                             <Select
                                 color='secondary'
                                 value={resultType}
-                                label="Searching"
+                                label={t('sresults.searching')}
                                 onChange={(event) => setResultType(event.target.value)}>
-                                <MenuItem style={{fontFamily: 'Ubuntu'}} value={"Theses"}>Theses</MenuItem>
-                                <MenuItem style={{fontFamily: 'Ubuntu'}} value={"Universities"}>Universities</MenuItem>
+                                <MenuItem style={{fontFamily: 'Ubuntu'}} value={"Theses"}>{t('sresults.theses')}</MenuItem>
+                                <MenuItem style={{fontFamily: 'Ubuntu'}} value={"Universities"}>s{t('sresults.universities')}</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -163,7 +165,7 @@ const SearchResultsPage = (props) => {
                             <>
                                 <Grid item xs={12} sm={12} md={12} lg={12} style={{margin: "1vh 0", marginLeft: "3rem", textAlign: "start"}}>
                                     <Typography variant="h6" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                                        {results.length} Results found:
+                                        {results.length} {t('sresults.resultsf')}
                                     </Typography>
                                 </Grid>
                             {location.state.resultType === "Theses" &&
@@ -208,7 +210,7 @@ const SearchResultsPage = (props) => {
                                     <img src={NoResultsIllustration} alt="noResults" style={{width: "10rem"}}/>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={7} lg={7} className={classes.noResultsRightSection}>
-                                    <p className='textWithSecondaryGradient' >Oops! No results found.</p>
+                                    <p className='textWithSecondaryGradient' >{t('sresults.oops')}</p>
                                 </Grid>
                             </Grid>
                         }
@@ -223,4 +225,4 @@ const SearchResultsPage = (props) => {
     )
 }
 
-export default SearchResultsPage;
+export default withTranslation()(SearchResultsPage);

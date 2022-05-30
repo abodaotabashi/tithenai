@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import NotFoundIllustration from "../assets/gifs/NotFound.gif";
 import Navbar from '../components/Navbar';
 import HomeIcon from '@mui/icons-material/Home';
+import { withTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NotFoundPage = () => {
+    const { t } = this.props;
     const classes = useStyles();
     const navigator = useNavigate();
     return (
@@ -59,13 +61,13 @@ const NotFoundPage = () => {
             <Paper elevation={10} className={classes.wrapper}>
                 <img src={NotFoundIllustration} className={classes.notFoundLogo} alt="404"/>
                 <p className={classes.notFoundText}>
-                    You didn't break the internet. It's just a 404 Error!
+                    {t('not_found.you_didnt')}
                 </p>
                 <p className={classes.notFoundText}>
-                    We couldn't find the page you were looking for.
+                {t('not_found.we')}
                 </p>
                 <p className={classes.notFoundText}>
-                    But don't worry, everything is still awesome 😉
+                {t('not_found.but')} 😉
                 </p>
                 <Button
                     variant="contained"
@@ -73,7 +75,7 @@ const NotFoundPage = () => {
                     style={{marginTop: "3vh", fontFamily: "Ubuntu"}}
                     startIcon={<HomeIcon />}
                     onClick={() => redirectToMainPage(navigator)}>
-                    Home Sweet Home
+                    {t('not_found.home')}
                 </Button>
             </Paper>
             <CssBaseline />
@@ -81,4 +83,4 @@ const NotFoundPage = () => {
     )
 }
 
-export default NotFoundPage
+export default withTranslation()(NotFoundPage);

@@ -20,6 +20,7 @@ import { createFilterOptions } from '@mui/material/Autocomplete';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import LoadingDialog from "../components/LoadingDialog";
+import { withTranslation } from 'react-i18next';
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -62,30 +63,31 @@ class RegisterForm extends Component {
     }
 
     render() {
+        const { t } = this.props;
         const filterOptions = createFilterOptions({
             matchFrom: 'start',
             stringify: (option) => option.uniName,
         });
         const form_validation_schema = Yup.object().shape({
             firstname: Yup.string()
-                .min(2, "It's too Short!")
-                .required("This Field is required!"),
+                .min(2, t('register.too_short'))
+                .required(t('register.required_field')),
             lastname: Yup.string()
-                .min(2, "It's too Short!")
-                .required("This Field is required!"),
+                .min(2, t('register.too_short'))
+                .required(t('register.required_field')),
             status: Yup.string()
-                .required("This Field is required!"),
+                .required(t('register.required_field')),
             university: Yup.object()
-                .required("This Field is required!").nullable(),
+                .required(t('register.required_field')).nullable(),
             email: Yup.string()
-                .email("Invalid Email! Please enter a valid E-Mail address!")
-                .required("This Field is required!"),
+                .email(t('register.invalid_email'))
+                .required(t('register.required_field')),
             password: Yup.string()
-                .min(8, 'Your Password must have at least 8 characters!')
-                .max(32, 'Your Password must have at most 32 characters!')
-                .required("This Field is required!"),
-            gender: Yup.string().oneOf(["male", "female", "other"], "This Field is required!"),
-            termsAndConditions: Yup.string().oneOf(["true"], "Please Accept the terms of service & Privacy policy!"),
+                .min(8, t('register.your_pass'))
+                .max(32, t('register.your_pass_t'))
+                .required(t('register.required_field')),
+            gender: Yup.string().oneOf([t('register.male'), t('register.female'), t('register.other')], t('register.required_field')),
+            termsAndConditions: Yup.string().oneOf(["true"], t('register.accept')),
         });
 
         const initial_form_values = {
@@ -114,7 +116,7 @@ class RegisterForm extends Component {
                                     error={touched.firstname && Boolean(errors.firstname)}
                                     color="secondary"
                                     required
-                                    label="Your Firstname"
+                                    label={t('register.your_firstname')}
                                     variant="outlined"
                                     InputLabelProps={{
                                         style: {
@@ -129,7 +131,7 @@ class RegisterForm extends Component {
                                     error={touched.lastname && Boolean(errors.lastname)}
                                     color="secondary"
                                     required
-                                    label="Your Lastname"
+                                    label={t('register.your_lastname')}
                                     variant="outlined"
                                     InputLabelProps={{
                                         style: {
@@ -144,7 +146,7 @@ class RegisterForm extends Component {
                                     error={touched.email && Boolean(errors.email)}
                                     color="secondary"
                                     required
-                                    label="Your E-Mail Address"
+                                    label={t('register.your_email')}
                                     variant="outlined"
                                     InputLabelProps={{
                                         style: {
@@ -160,7 +162,7 @@ class RegisterForm extends Component {
                                     name="password"
                                     error={touched.password && Boolean(errors.password)}
                                     color="secondary"
-                                    required label="Your Password"
+                                    required label={t('register.your_password')}
                                     type={this.state.showPassword ? "text" : "password"}
                                     variant="outlined"
                                     style={{ margin: "0.5vh 0", fontFamily: "Ubuntu" }}
@@ -185,7 +187,7 @@ class RegisterForm extends Component {
                                     as={Autocomplete}
                                     data-testid="autocomplete-status"
                                     name="status"
-                                    options={["Undergraduate Student", "Master's Student", "Doctoral Student"]}
+                                    options={[t('register.undergraduate'), t('register.master'), t('register.doctoral')]}
                                     getOptionLabel={(option) => option}
                                     autoComplete
                                     includeInputInList
@@ -195,7 +197,7 @@ class RegisterForm extends Component {
                                         <TextField {...params}
                                             name="status"
                                             error={touched.status && Boolean(errors.status)}
-                                            label="Academic Status"
+                                            label={t('register.academic_status')}
                                             variant="outlined"
                                             color="secondary"
                                             required
@@ -222,7 +224,7 @@ class RegisterForm extends Component {
                                         <TextField {...params}
                                             name="university"
                                             error={touched.university && Boolean(errors.university)}
-                                            label="University"
+                                            label={t('register.university')}
                                             variant="outlined"
                                             color="secondary"
                                             required
@@ -247,12 +249,12 @@ class RegisterForm extends Component {
                             </Grid>
                             <Grid item xs={12} sm={12} md={6} lg={6} style={{ padding: "0 2vw" }} container direction="column" justifyContent="flex-start">
                                 <FormControl style={{ margin: "1vh 0" }}>
-                                    <FormLabel color="secondary" style={{ textAlign: "left" }}>Gender</FormLabel>
+                                    <FormLabel color="secondary" style={{ textAlign: "left" }}>{t('register.gender')}</FormLabel>
                                     <Field
                                         as={RadioGroup} row name="gender">
-                                        <FormControlLabel value="female" control={<Radio color="secondary" required={true} />} label="Female" />
-                                        <FormControlLabel value="male" control={<Radio color="secondary" required={true} />} label="Male" />
-                                        <FormControlLabel value="other" control={<Radio color="secondary" required={true} />} label="Other" />
+                                        <FormControlLabel value="female" control={<Radio color="secondary" required={true} />} label={t('register.female')} />
+                                        <FormControlLabel value="male" control={<Radio color="secondary" required={true} />} label={t('register.male')} />
+                                        <FormControlLabel value="other" control={<Radio color="secondary" required={true} />} label={t('register.other')} />
                                     </Field>
                                     <FormHelperText style={Boolean(errors.gender) === true ? { display: "flex", color: "red" } : { display: "none" }}><ErrorMessage name="gender" /></FormHelperText>
                                 </FormControl>
@@ -270,7 +272,7 @@ class RegisterForm extends Component {
                                     }
                                     label={
                                         <Typography variant="subtitle2" component="div" style={{ fontFamily: "Ubuntu" }}>
-                                            I agree to the Terms of Service and Privacy Policy, including Cookie Use.
+                                            {t('register.agreement')}
                                         </Typography>}
                                     labelPlacement="end"
                                 />
@@ -284,13 +286,13 @@ class RegisterForm extends Component {
                                     size="large" 
                                     type="submit" 
                                     style={{ padding: "1vh 6vw", fontFamily: "Ubuntu", marginTop: "0.5rem" }}>
-                                    Register
+                                    {t('register.register')}
                                 </Button>
                             </Grid>
                         </Grid>
                         <LoadingDialog
                             openDialog={this.state.showLoading}
-                            label={"Creating new account for you ..."}
+                            label={t('register.creating')}
                             />
                     </Form>
                 }
@@ -299,4 +301,4 @@ class RegisterForm extends Component {
     }
 }
 
-export default RegisterForm;
+export default withTranslation()(RegisterForm);

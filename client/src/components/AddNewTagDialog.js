@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { Dialog, DialogTitle, DialogContent, Typography, IconButton, Divider, Button, Grid, TextField } from '@mui/material';
-
+import {useTranslation} from "react-i18next";
 import '../assets/styles.css';
 import CloseIcon from '@mui/icons-material/Close';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AddNewTagDialog = (props) => {
+    const {t} = useTranslation();
     const { openDialog, setOpenDialog, addNewTagFunction, tags } = props;
     const classes = useStyles();
     const [tag, setTag] = useState("");
@@ -28,7 +29,7 @@ const AddNewTagDialog = (props) => {
         if (formatName(tag.trim()) !== "") {
             if (tags.includes(formatName(tag.trim()))) {
                 setTagError(true);
-                setTagErrorMessage("This Tag exists already!");
+                setTagErrorMessage(t('dialogs.tag_exists'));
             } else {
                 setTagError(false);
                 setTagErrorMessage("");
@@ -42,7 +43,7 @@ const AddNewTagDialog = (props) => {
             }
         } else {
             setTagError(true);
-            setTagErrorMessage("This Field is required!");
+            setTagErrorMessage(t('dialogs.required_field'));
         }
     }
 
@@ -51,7 +52,7 @@ const AddNewTagDialog = (props) => {
             <DialogTitle>
                 <div className="dialogTitle">
                     <Typography variant="h6" component="div" style={{flexGrow:1, fontFamily: "Ubuntu-Light", fontWeight: "bold"}}>
-                        Add New Tag
+                        {t('dialogs.add_tag')}
                     </Typography>
                     <IconButton style={{color: "#b5201e", backgroundColor: "rgba(181, 32, 30, 0.05)"}} onClick={() => setOpenDialog(false)}>
                         <CloseIcon style={{color: "#b5201e"}} />
@@ -65,7 +66,7 @@ const AddNewTagDialog = (props) => {
                         <TextField
                             error={tagError}
                             color="secondary"
-                            label="New Tag"
+                            label={t('dialogs.new_tag')}
                             value={tag}
                             required
                             type="text"
@@ -87,7 +88,7 @@ const AddNewTagDialog = (props) => {
                             startIcon={<AddCircleOutlineIcon fontSize='large' />}
                             style={{ padding: "1vh 4vw", fontFamily: "Ubuntu", marginTop: "1rem" }}
                             onClick={handleAddNewTag}>
-                            Add New Tag
+                            {t('dialogs.add_tag')}
                         </Button>
                     </Grid>
                 </Grid>

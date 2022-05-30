@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { stringifyByteSize } from '../utils/HelperFunctions';
-
+import {useTranslation} from "react-i18next";
 const DragNDropPaper = styled(Box)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
@@ -19,6 +19,7 @@ const DragNDropPaper = styled(Box)(({ theme }) => ({
 }));
 
 const UploadFileContainer = (props) => {
+    const {t} = useTranslation();
     const [file, setFile] = useState([]);
     const [errors, setErrors] = useState(null);
 
@@ -63,7 +64,7 @@ const UploadFileContainer = (props) => {
                     <input {...getInputProps()} />
                     <UploadFileIcon color="secondary" fontSize='large'/>
                     <Typography variant="body1" component="div" style={{padding: "1rem", fontFamily: "Ubuntu-Light", fontWeight: "bold"}}>
-                        Drag and drop your thesis document, or click here to select it (Max. Size: 64 Megabyte)
+                        {t('upload.drag_n_drop')}
                     </Typography>
                     { (errors !== null) ? errors.map((error) => (
                         <div key={error.code}>
@@ -89,7 +90,7 @@ const UploadFileContainer = (props) => {
                                 size="large"
                                 onClick={deleteFile}
                                 style={{ padding: "1vh 3vw", fontFamily: "Ubuntu", marginTop: "0.5rem" }}
-                                startIcon={<DeleteForeverIcon fontSize='large' />}>Delete</Button>
+                                startIcon={<DeleteForeverIcon fontSize='large' />}>{t('upload.delete')}</Button>
                         </Grid>
                     </Grid>
                 }

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@mui/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
-
+import {useTranslation} from "react-i18next";
 const useStyles = makeStyles(theme => ({
     searchBox: {
         margin: "2vh 0",
@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SearchUniversityPanel = (props) => {
+    const {t} = useTranslation();
     const { handleSearchUniversities, initialSearchingValues } = props;
     const classes = useStyles();
     const [searchedValue, setSearchedValue] = useState("");
@@ -84,14 +85,14 @@ const SearchUniversityPanel = (props) => {
             <Grid item xs={12} sm={12} md={12} lg={12}>
                 <TextField
                     color="secondary"
-                    label="Search for" 
+                    label={t('search.search_for')} 
                     name="searchUniField"
                     placeholder='e.g. Türk Alman Üniversitesi'
                     type="text"
                     variant="outlined"
                     value={searchedValue}
                     error={searchBoxError}
-                    helperText={searchBoxError === true ? "This Field is required!" : ""}
+                    helperText={searchBoxError === true ? t('dialogs.required_field') : ""}
                     onChange={(event) => setSearchedValue(event.target.value)}
                     className={classes.searchBox}
                     InputLabelProps={{
@@ -121,10 +122,10 @@ const SearchUniversityPanel = (props) => {
                     }}/>
             </Grid>
             <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">
-                <p style={{fontFamily: "Ubuntu", color: "#b5201e", display: (errorIndicator === true) ? "flex" : "none"}}>You should select at least one option or one tag to search by!</p>
+                <p style={{fontFamily: "Ubuntu", color: "#b5201e", display: (errorIndicator === true) ? "flex" : "none"}}>{t('search.you_should_tag')}</p>
             </Grid>
             <Grid item xs={12} sm={12} md={3} lg={3}>
-                <p style={{fontFamily: "Ubuntu"}}>Search By:</p>
+                <p style={{fontFamily: "Ubuntu"}}>{t('search.search_by')}</p>
             </Grid>
             <Grid item container xs={12} sm={12} md={9} lg={9} alignItems="center" justifyContent="flex-start" style={{textAlign: "start"}}>
                 <Grid item xs={12} sm={4} md={4} lg={4}>
@@ -138,7 +139,7 @@ const SearchUniversityPanel = (props) => {
                         />}
                         label={
                             <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu"}}>
-                                Name
+                                {t('search.name')}
                             </Typography>}
                         labelPlacement="end"
                     />
@@ -154,7 +155,7 @@ const SearchUniversityPanel = (props) => {
                         />}
                         label={
                             <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu"}}>
-                                Country
+                                {t('search.country')}
                             </Typography>}
                         labelPlacement="end"
                     />
@@ -170,7 +171,7 @@ const SearchUniversityPanel = (props) => {
                         />}
                         label={
                             <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu"}}>
-                                State/Province
+                                {t('search.state')}
                             </Typography>}
                         labelPlacement="end"
                     />

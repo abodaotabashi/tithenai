@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog, DialogTitle, DialogContent, Typography, IconButton, Divider } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import ImageCropper from './ImageCropper';
-
+import {useTranslation} from "react-i18next";
 import '../assets/styles.css';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ImageCropDialog = (props) => {
+    const {t} = useTranslation();
     const { openDialog, setOpenDialog, image, updateFunction } = props;
     const classes = useStyles();
 
@@ -23,7 +24,7 @@ const ImageCropDialog = (props) => {
             <DialogTitle>
                 <div className="dialogTitle">
                     <Typography variant="h6" component="div" style={{flexGrow:1, fontFamily: "Ubuntu-Light", fontWeight: "bold"}}>
-                        Upload Profile Photo
+                        {t('dialogs.upload_photo')}
                     </Typography>
                     <IconButton style={{color: "#b5201e", backgroundColor: "rgba(181, 32, 30, 0.05)"}} onClick={() => setOpenDialog(false)}>
                         <CloseIcon style={{color: "#b5201e"}} />

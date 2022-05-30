@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './app/App';
 import { Grid, CircularProgress }  from '@mui/material';
 import './index.css';
+import './i18next.js';
 
 const loadingMarkup = (
   <Grid

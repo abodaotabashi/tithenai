@@ -15,6 +15,7 @@ import '../assets/styles.css';
 import DoneIcon from '@mui/icons-material/Done';
 import { sortAlphabetically } from '../utils/HelperFunctions';
 import { getAllUnis } from '../Service';
+import { withTranslation } from 'react-i18next';
 
 const UpdateButton = styled(Button)(({ theme }) => ({
     color: theme.palette.secondary.dark,
@@ -29,7 +30,7 @@ const UpdateButton = styled(Button)(({ theme }) => ({
     },
 }));
 
-export default class EditProfileForm extends Component {
+export default  withTranslation()(class EditProfileForm extends Component {
     state = {
         initialFirstname: this.props.userInfo.firstname,
         initialLastname: this.props.userInfo.lastname,
@@ -49,6 +50,7 @@ export default class EditProfileForm extends Component {
     }
 
     render() {
+        const { t } = this.props;
         const filterOptions = createFilterOptions({
             matchFrom: 'start',
             stringify: (option) => option.uniName,
@@ -56,18 +58,18 @@ export default class EditProfileForm extends Component {
 
         const form_validation_schema = Yup.object().shape({
             firstname: Yup.string()
-                .min(2, "It's too Short!")
-                .required("This Field is required!"),
+                .min(2, t('edit_profile.too_short'))
+                .required(t('edit_profile.required_field')),
             lastname: Yup.string()
-                .min(2, "It's too Short!")
-                .required("This Field is required!"),
+                .min(2, t('edit_profile.too_short'))
+                .required(t('edit_profile.required_field')),
             status: Yup.string()
-                .required("This Field is required!"),
+                .required(t('edit_profile.required_field')),
             university: Yup.object()
-                .required("This Field is required!").nullable(),
+                .required(t('edit_profile.required_field')).nullable(),
             email: Yup.string()
-                .email("Invalid Email! Please enter a valid E-Mail address!")
-                .required("This Field is required!"),
+                .email(t('edit_profile.invalid_email'))
+                .required(t('edit_profile.required_field')),
         });
 
         const initial_form_values = {
@@ -93,7 +95,7 @@ export default class EditProfileForm extends Component {
                                     error={touched.firstname && Boolean(errors.firstname)}
                                     color="secondary"
                                     required
-                                    label="Your Firstname"
+                                    label={t('edit_profile.your_firstname')}
                                     variant="outlined"
                                     InputLabelProps={{
                                         style: {
@@ -110,7 +112,7 @@ export default class EditProfileForm extends Component {
                                     error={touched.lastname && Boolean(errors.lastname)}
                                     color="secondary"
                                     required
-                                    label="Your Lastname"
+                                    label={t('edit_profile.your_lastname')}
                                     variant="outlined"
                                     InputLabelProps={{
                                         style: {
@@ -127,7 +129,7 @@ export default class EditProfileForm extends Component {
                                     error={touched.email && Boolean(errors.email)}
                                     color="secondary"
                                     required
-                                    label="Your E-Mail Address"
+                                    label={t('edit_profile.your_email')}
                                     variant="outlined"
                                     InputLabelProps={{
                                         style: {
@@ -141,7 +143,7 @@ export default class EditProfileForm extends Component {
                                 <Field
                                     as={Autocomplete}
                                     name="status"
-                                    options={["Undergraduate Student", "Master's Student", "Doctoral Student"]}
+                                    options={[t('edit_profile.undergraduate'), t('edit_profile.master'), t('edit_profile.doctoral')]}
                                     getOptionLabel={(option) => option}
                                     autoComplete
                                     includeInputInList
@@ -150,7 +152,7 @@ export default class EditProfileForm extends Component {
                                         <TextField {...params}
                                             name="status"
                                             error={touched.status && Boolean(errors.status)}
-                                            label="Academic Status"
+                                            label={t('edit_profile.academic_status')}
                                             variant="outlined"
                                             color="secondary"
                                             required
@@ -178,7 +180,7 @@ export default class EditProfileForm extends Component {
                                         <TextField {...params}
                                             name="university"
                                             error={touched.university && Boolean(errors.university)}
-                                            label="University"
+                                            label={t('edit_profile.university')}
                                             variant="outlined"
                                             color="secondary"
                                             required
@@ -208,7 +210,7 @@ export default class EditProfileForm extends Component {
                                     type="submit"
                                     startIcon={<DoneIcon />}
                                     style={{ padding: "1vh 6vw", fontFamily: "Ubuntu", marginTop: "0.5rem" }}>
-                                        Save Changes
+                                        {t('edit_profile.save')}
                                 </UpdateButton>
                             </Grid>
                         </Grid>
@@ -217,4 +219,4 @@ export default class EditProfileForm extends Component {
             </Formik>
         );
     }
-}
+})

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { Dialog, DialogTitle, DialogContent, Typography, IconButton, Divider, Button, Grid, TextField } from '@mui/material';
-
+import {useTranslation} from "react-i18next";
 import '../assets/styles.css';
 import CloseIcon from '@mui/icons-material/Close';
 import FlagIcon from '@mui/icons-material/Flag';
@@ -15,6 +15,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AddNewReportDialog = (props) => {
+    const {t} = useTranslation();
     const { openDialog, setOpenDialog, addNewReportFunction } = props;
     const classes = useStyles();
     const [reportContent, setReportContent] = useState("");
@@ -31,7 +32,7 @@ const AddNewReportDialog = (props) => {
             })
         } else {
             setContentError(true);
-            setContentErrorMessage("This Field is required!");
+            setContentErrorMessage(t('dialogs.required_field'));
         }
     }
 
@@ -40,7 +41,7 @@ const AddNewReportDialog = (props) => {
             <DialogTitle>
                 <div className="dialogTitle">
                     <Typography variant="h6" component="div" style={{flexGrow:1, fontFamily: "Ubuntu-Light", fontWeight: "bold"}}>
-                        Report this Thesis
+                        {t('dialogs.report_thesis')}
                     </Typography>
                     <IconButton style={{color: "#b5201e", backgroundColor: "rgba(181, 32, 30, 0.05)"}} onClick={() => setOpenDialog(false)}>
                         <CloseIcon style={{color: "#b5201e"}} />
@@ -54,7 +55,7 @@ const AddNewReportDialog = (props) => {
                         <TextField
                             error={contentError}
                             color="secondary"
-                            label="Explanation"
+                            label={t('dialogs.explanation')}
                             value={reportContent}
                             required
                             type="text"
@@ -76,7 +77,7 @@ const AddNewReportDialog = (props) => {
                             startIcon={<FlagIcon fontSize='large' />}
                             style={{ padding: "1vh 4vw", fontFamily: "Ubuntu", marginTop: "1rem" }}
                             onClick={handleAddNewReport}>
-                            Report
+                            {t('dialogs.report')}
                         </Button>
                     </Grid>
                 </Grid>

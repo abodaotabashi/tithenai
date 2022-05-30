@@ -8,6 +8,7 @@ import UploadThesisForm from '../containers/UploadThesisForm';
 import { redirectToLoginPage, redirectToMyPapersPage } from '../utils/Redirecter';
 import LoadingDialog from '../components/LoadingDialog';
 import { uploadThesis } from '../Service';
+import { withTranslation } from 'react-i18next';
 
 import { makeStyles } from '@mui/styles';
 import '../assets/styles.css';
@@ -61,6 +62,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UploadThesisPage = () => {
+    const { t } = this.props;
     const classes = useStyles();
     const { userAuth } = useContext(AuthContext);
     const [ showLoading, setShowLoading ] = useState(false);
@@ -106,7 +108,7 @@ const UploadThesisPage = () => {
                         <img src={UploadPaperGif} alt="upload" style={{width: "10rem"}}/>
                     </Grid>
                     <Grid item xs={12} sm={12} md={7} lg={7} className={classes.uploadGifRightSection}>
-                        <p className='textWithSecondaryGradient'>Upload New Thesis and become more famous</p>
+                        <p className='textWithSecondaryGradient'>{t('uploadpage.upload')}</p>
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <UploadThesisForm handleUploadThesis={handleUploadThesis} />
@@ -114,7 +116,7 @@ const UploadThesisPage = () => {
                 </Grid>
                 <LoadingDialog
                     openDialog={showLoading}
-                    label={"Uploading New Thesis ..."}
+                    label={t('uploadpage.uploading')}
                     />
             </Paper>
             <br />
@@ -125,4 +127,4 @@ const UploadThesisPage = () => {
     )
 }
 
-export default UploadThesisPage
+export default withTranslation()(UploadThesisPage);

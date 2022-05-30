@@ -6,6 +6,7 @@ import NavbarWithUser from '../components/NavbarWithUser';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { redirectToLoginPage, redirectToMainPage } from '../utils/Redirecter';
 import LoadingDialog from '../components/LoadingDialog';
+import { withTranslation } from 'react-i18next';
 
 import { makeStyles } from '@mui/styles';
 import '../assets/styles.css';
@@ -61,6 +62,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ViewThesisPage = () => {
+    const { t } = this.props;
     const classes = useStyles();
     const { userAuth } = useContext(AuthContext);
     const [ showLoading, setShowLoading ] = useState(false);
@@ -169,7 +171,7 @@ const ViewThesisPage = () => {
         if (typeof (userAuth) !== "undefined") {
             if (userAuth) {
                 setShowLoading(true);
-                setLoadingMessage("Deleting the thesis ...");
+                setLoadingMessage(t('viewthesis.deleting'));
                 deleteThesis(thesis.thesisId).then(() => {
                     setShowLoading(false);
                     setLoadingMessage("");
@@ -185,7 +187,7 @@ const ViewThesisPage = () => {
         if (typeof (userAuth) !== "undefined") {
             if (userAuth) {
                 setShowLoading(true);
-                setLoadingMessage("Updating the thesis ...");
+                setLoadingMessage(t('viewthesis.updating'));
                 const newThesisData = {
                     thesisId: thesis.thesisId,
                     thesisAbstract: values.abstract,
@@ -217,7 +219,7 @@ const ViewThesisPage = () => {
         if (typeof (userAuth) !== "undefined") {
             if (userAuth) {
                 setShowLoading(true);
-                setLoadingMessage("Adding your comment ...");
+                setLoadingMessage(t('viewthesis.adding'));
                 const uid = userAuth.uid;
                 const commentdata = {
                     commentThesisID: thesis.thesisId,
@@ -247,7 +249,7 @@ const ViewThesisPage = () => {
         if (typeof (userAuth) !== "undefined") {
             if (userAuth) {
                 setShowLoading(true);
-                setLoadingMessage("Deleting your comment ...");
+                setLoadingMessage(t('viewthesis.deletingcomm'));
                 deleteComment(commentId).then((result) => {
                     if (result.status === 200 && result.data === "OK") {
                         getComments(thesis.thesisId).then((result) => {
@@ -267,7 +269,7 @@ const ViewThesisPage = () => {
         if (typeof (userAuth) !== "undefined") {
             if (userAuth) {
                 setShowLoading(true);
-                setLoadingMessage("Saving your rate ...");
+                setLoadingMessage(t('viewthesis.saving'));
                 const uid = userAuth.uid;
                 const values = {
                     uid: uid,
@@ -293,7 +295,7 @@ const ViewThesisPage = () => {
         if (typeof (userAuth) !== "undefined") {
             if (userAuth) {
                 setShowLoading(true);
-                setLoadingMessage("Adding to your saved list ...");
+                setLoadingMessage(t('viewthesis.addingto'));
                 const values = {
                     uid: userAuth.uid,
                     thesisId: thesis.thesisId
@@ -316,7 +318,7 @@ const ViewThesisPage = () => {
         if (typeof (userAuth) !== "undefined") {
             if (userAuth) {
                 setShowLoading(true);
-                setLoadingMessage("Removing from your saved list ...");
+                setLoadingMessage(t('viewthesis.removing'));
                 const values = {
                     uid: userAuth.uid,
                     thesisId: thesis.thesisId
@@ -339,7 +341,7 @@ const ViewThesisPage = () => {
         if (typeof (userAuth) !== "undefined") {
             if (userAuth) {
                 setShowLoading(true);
-                setLoadingMessage("Sending your report ...");
+                setLoadingMessage(t('viewthesis.sending'));
                 const uid = userAuth.uid;
                 const reportdata = {
                     reportContent: reportContent,
@@ -402,4 +404,4 @@ const ViewThesisPage = () => {
     )
 }
 
-export default ViewThesisPage;
+export default withTranslation()(ViewThesisPage);

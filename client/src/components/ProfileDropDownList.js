@@ -10,8 +10,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import ArticleIcon from '@mui/icons-material/Article';
 import { appSignOut } from '../auth/auth';
 import { redirectToLoginPage, redirectToMainPage, redirectToMyPapersPage, redirectToMyProfilePage, redirectToSavedListPage } from '../utils/Redirecter';
-
+import {useTranslation} from "react-i18next";
 const ProfileDropDownList = (props) => {
+    const {t} = useTranslation();
     const { openDropDownMenu, setOpenDropDownMenu } = props;
     const navigator = useNavigate();
 
@@ -85,31 +86,31 @@ const ProfileDropDownList = (props) => {
                 <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                     <HomeIcon style={{fontSize: "1.75rem", color: "#0A481C"}}/>
                 </ListItemIcon>
-                <ListItemText primary="Home" />
+                <ListItemText primary={t('navbar.home')} />
             </StyledMenuItem>
             <StyledMenuItem onClick={handleRedirectToProfilePage}>
                 <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                     <PersonIcon style={{fontSize: "1.75rem", color: "#0A481C"}} />
                 </ListItemIcon>
-                <ListItemText primary="Profile" />
+                <ListItemText primary={t('navbar.profile')} />
             </StyledMenuItem>
             <StyledMenuItem onClick={handleRedirectToPapersPage}>
                 <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                     <ArticleIcon style={{fontSize: "1.75rem", color: "#0A481C"}} />
                 </ListItemIcon>
-                <ListItemText primary="My Papers" />
+                <ListItemText primary={t('navbar.my_papers')} />
             </StyledMenuItem>
             <StyledMenuItem onClick={handleRedirectToSavedListPage}>
                 <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                     <BookmarksIcon style={{fontSize: "1.75rem", color: "#0A481C"}} />
                 </ListItemIcon>
-                <ListItemText primary="Saved List" />
+                <ListItemText primary={t('navbar.saved_list')} />
             </StyledMenuItem>
             <StyledMenuItem onClick={handleSignOut}>
                 <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                     <LogoutIcon style={{fontSize: "1.75rem", color: "#0A481C"}} />
                 </ListItemIcon>
-                <ListItemText primary="Sign Out" />
+                <ListItemText primary={t('navbar.signout')} />
             </StyledMenuItem>
         </StyledMenu>
     )

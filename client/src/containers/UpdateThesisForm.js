@@ -19,6 +19,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DoneIcon from '@mui/icons-material/Done';
 import { styled } from '@mui/material/styles';
 import AddNewTagDialog from '../components/AddNewTagDialog';
+import { withTranslation } from 'react-i18next';
 
 const TagsIconButtonContainer = styled(Grid)(({ theme }) => ({
     fontFamily: "Ubuntu",
@@ -51,7 +52,7 @@ const TagsLargeButtonContainer = styled(Grid)(({ theme }) => ({
     },
 }));
 
-export default class UploadThesisForm extends Component {
+export default withTranslation()(class UploadThesisForm extends Component {
     state = {
         languages: [],
         tagsList: [],
@@ -93,6 +94,7 @@ export default class UploadThesisForm extends Component {
     }
 
     render() {
+        const { t } = this.props;
         const filterOptionsUniversities = createFilterOptions({
             matchFrom: 'start',
             stringify: (option) => option.uniName,
@@ -110,20 +112,20 @@ export default class UploadThesisForm extends Component {
 
         const form_validation_schema = Yup.object().shape({
             title: Yup.string()
-                .min(4, "It's too Short!")
-                .required("This Field is required!"),
+                .min(4, t('update_thesis.too_short'))
+                .required(t('update_thesis.required_field')),
             abstract: Yup.string(),
             language: Yup.object()
-                .required("This Field is required!").nullable(),
+                .required(t('update_thesis.required_field')).nullable(),
             thesisType: Yup.string()
-                .required("This Field is required!").nullable(),
+                .required(t('update_thesis.required_field')).nullable(),
             university: Yup.object()
-                .required("This Field is required!").nullable(),
+                .required(t('update_thesis.required_field')).nullable(),
             fieldOfStudy: Yup.string()
-                .required("This Field is required!").nullable(),
+                .required(t('update_thesis.required_field')).nullable(),
             tags: Yup.array(),
             date: Yup.date()
-                .required("This Field is required!"),
+                .required(t('update_thesis.required_field')),
         });
 
         const initial_form_values = {
@@ -152,7 +154,7 @@ export default class UploadThesisForm extends Component {
                                     error={touched.title && Boolean(errors.title)}
                                     color="secondary"
                                     required
-                                    label="Title"
+                                    label={t('update_thesis.title')}
                                     variant="outlined"
                                     InputLabelProps={{
                                         style: {
@@ -176,7 +178,7 @@ export default class UploadThesisForm extends Component {
                                         <TextField {...params}
                                             name="university"
                                             error={touched.university && Boolean(errors.university)}
-                                            label="University"
+                                            label={t('update_thesis.university')}
                                             variant="outlined"
                                             color="secondary"
                                             required
@@ -203,7 +205,7 @@ export default class UploadThesisForm extends Component {
                                 <Field
                                     as={Autocomplete}
                                     name="thesisType"
-                                    options={["Undergraduate Thesis", "Master's Thesis", "Doctoral Dissertation/Thesis", "Research Paper"]}
+                                    options={[t('update_thesis.undergraduate'), t('update_thesis.master'), t('update_thesis.doctoral'), t('update_thesis.research')]}
                                     isOptionEqualToValue={(option, value) => option === value}
                                     getOptionLabel={(option) => option ? option : ""}
                                     onChange={(e, value) => setFieldValue("thesisType", value)}
@@ -211,7 +213,7 @@ export default class UploadThesisForm extends Component {
                                         <TextField {...params}
                                             name="thesisType"
                                             error={touched.thesisType && Boolean(errors.thesisType)}
-                                            label="Type of Thesis"
+                                            label={t('update_thesis.type')}
                                             variant="outlined"
                                             color="secondary"
                                             required
@@ -248,7 +250,7 @@ export default class UploadThesisForm extends Component {
                                         <TextField {...params}
                                             name="language"
                                             error={touched.language && Boolean(errors.language)}
-                                            label="Language"
+                                            label={t('update_thesis.language')}
                                             variant="outlined"
                                             color="secondary"
                                             required
@@ -285,7 +287,7 @@ export default class UploadThesisForm extends Component {
                                         <TextField {...params}
                                             name="fieldOfStudy"
                                             error={touched.fieldOfStudy && Boolean(errors.fieldOfStudy)}
-                                            label="Field of Study"
+                                            label={t('update_thesis.field')}
                                             variant="outlined"
                                             color="secondary"
                                             required
@@ -320,7 +322,7 @@ export default class UploadThesisForm extends Component {
                                     format={"dd/MM/yyyy"}
                                     max={new Date()}
                                     isRequired={true}
-                                    label="Publishing Date"
+                                    label={t('update_thesis.date')}
                                     variant="outlined"
                                     InputLabelProps={{
                                         style: {
@@ -339,7 +341,7 @@ export default class UploadThesisForm extends Component {
                                     color="secondary"
                                     multiline
                                     maxRows={3}
-                                    label="Abstract"
+                                    label={t('update_thesis.abstract')}
                                     variant="outlined"
                                     InputLabelProps={{
                                         style: {
@@ -377,12 +379,12 @@ export default class UploadThesisForm extends Component {
                                         ))
                                     }
                                     renderInput={(params) => (
-                                        <TextField {...params} variant="outlined" color="secondary" label="Tags" style={{margin: "0.5vh 0", fontFamily: "Ubuntu"}}/>
+                                        <TextField {...params} variant="outlined" color="secondary" label={t('update_thesis.tags')} style={{margin: "0.5vh 0", fontFamily: "Ubuntu"}}/>
                                     )}/>
                             </Grid>
                             <Grid item xs={12} sm={12} md={3} lg={1} container alignItems="center" justifyContent="center">
                                 <TagsIconButtonContainer item>
-                                    <Tooltip title="Add New Tag" placement="bottom" arrow leaveDelay={100}>
+                                    <Tooltip title={t('update_thesis.add_tag')} placement="bottom" arrow leaveDelay={100}>
                                         <IconButton color="secondary" onClick={() => this.toggleOpenAddNewTag(true)}>
                                             <AddCircleOutlineIcon fontSize='large'/>
                                         </IconButton>
@@ -396,7 +398,7 @@ export default class UploadThesisForm extends Component {
                                         startIcon={<AddCircleOutlineIcon fontSize='large' />}
                                         style={{ fontFamily: "Ubuntu" }}
                                         onClick={() => this.toggleOpenAddNewTag(true)}>
-                                        Add New Tag
+                                        {t('update_thesis.add_tag')}
                                     </Button>
                                 </TagsLargeButtonContainer>
                             </Grid>
@@ -407,7 +409,7 @@ export default class UploadThesisForm extends Component {
                                     size="large"
                                     onClick={this.props.handleCancelUpdating}
                                     style={{ padding: "1vh 2vw", fontFamily: "Ubuntu", marginTop: "0.5rem" }}>
-                                    Cancel
+                                    {t('update_thesis.cancel')}
                                 </Button>
                                 <Button
                                     disabled={Boolean(errors.date) || Boolean(errors.fieldOfStudy) || Boolean(errors.university) || Boolean(errors.title) || Boolean(errors.abstract) || Boolean(errors.language) || Boolean(errors.thesisType) }
@@ -417,7 +419,7 @@ export default class UploadThesisForm extends Component {
                                     type="submit"
                                     style={{ padding: "1vh 4vw", fontFamily: "Ubuntu", marginTop: "0.5rem", marginLeft: "2rem" }}
                                     startIcon={<DoneIcon fontSize='large' />}>
-                                    Update Thesis
+                                    {t('update_thesis.update')}
                                 </Button>
                             </Grid>
                         </Grid>
@@ -432,4 +434,4 @@ export default class UploadThesisForm extends Component {
             </Formik>
         )
     }
-}
+})

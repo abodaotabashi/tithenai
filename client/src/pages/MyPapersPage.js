@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { redirectToLoginPage } from '../utils/Redirecter';
 import NavbarWithUser from '../components/NavbarWithUser';
 import Footer from '../components/Footer';
+import { withTranslation } from 'react-i18next';
 
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
@@ -85,6 +86,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const MyPapersPage = () => {
+    const { t } = this.props;
     const classes = useStyles();
     const { userAuth } = useContext(AuthContext);
     const navigator = useNavigate();
@@ -131,7 +133,7 @@ const MyPapersPage = () => {
                         {papers === null &&
                             <>
                                 <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">
-                                    <p className={classes.papersLabel}>My Papers</p>
+                                    <p className={classes.papersLabel}>{t('my_papers.title')}</p>
                                 </Grid>
                                 <CircularProgress color="secondary" fullwidth="true" />
                             </>
@@ -142,11 +144,11 @@ const MyPapersPage = () => {
                         {papers !== null && currentPapers !== null && typeof(papers) !== "undefined" && papers.length > 0 &&
                             <>
                                 <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">
-                                    <p className={classes.papersLabel}>My Papers</p>
+                                    <p className={classes.papersLabel}>{t('my_papers.title')}</p>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={12} lg={12} style={{margin: "1vh 0", marginLeft: "3rem", textAlign: "start"}}>
                                     <Typography variant="h6" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                                        You have published {papers.length} Papers, keep going 😉
+                                        {t('my_papers.you_one')} {papers.length} {t('my_papers.you_two')} 😉
                                     </Typography>
                                 </Grid>
                                 {currentPapers.map((result) => {
@@ -158,7 +160,7 @@ const MyPapersPage = () => {
                                 }
                                 { numberOfPages !== 0 && numberOfPages !== 1 &&
                                     <Grid item container xs={12} sm={12} md={12} lg={12} style={{margin: "3vh 0"}} direction="row" alignItems="center" justifyContent="center">
-                                        <p>Pages:</p>
+                                        <p>{t('my_papers.pages')}</p>
                                         <Pagination
                                             boundaryCount={2}
                                             hidePrevButton
@@ -177,7 +179,7 @@ const MyPapersPage = () => {
                         {papers !== null && papers.length === 0 &&
                             <Grid container alignItems="center" justifyContent="center">
                                 <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">
-                                    <p className={classes.papersLabel}>My Papers</p>
+                                    <p className={classes.papersLabel}>{t('my_papers.title')}</p>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noPapersGif}>
                                     <img src={NoResultsIllustration} alt="noResults" style={{width: "10rem"}}/>
@@ -185,13 +187,13 @@ const MyPapersPage = () => {
                                 <Grid item xs={12} sm={12} md={12} lg={12} className={classes.noPapersLabel}>
                                     <p style={{fontFamily: 'Ubuntu', fontSize: "1.5rem", backgroundColor: "default"}}>
                                         <span className='textWithSecondaryGradient'>
-                                            You haven't published any Papers, so get started and upload a new one
+                                        {t('my_papers.no_paper')}
                                         </span>
                                         &nbsp; 😉
                                     </p>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={12} lg={12}>
-                                    <UploadButton variant="outlined" size="large" color="secondary" startIcon={<UploadIcon />}>Upload a New Paper</UploadButton>
+                                    <UploadButton variant="outlined" size="large" color="secondary" startIcon={<UploadIcon />}>{t('my_papers.upload')}</UploadButton>
                                 </Grid>
                             </Grid>
                         }
@@ -206,4 +208,4 @@ const MyPapersPage = () => {
     )
 }
 
-export default MyPapersPage
+export default withTranslation()(MyPapersPage);

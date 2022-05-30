@@ -10,7 +10,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import UploadIcon from '@mui/icons-material/Upload';
 import { redirectToLoginPage, redirectToMainPage, redirectToMyPapersPage, redirectToMyProfilePage, redirectToSavedListPage, redirectToUploadThesisPage } from '../utils/Redirecter';
 import { appSignOut } from '../auth/auth';
-
+import {useTranslation} from "react-i18next";
 const useStyles = makeStyles((theme) => ({
     list: {
         width: "70vw",
@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavbarDrawer = (props) => {
+    const {t} = useTranslation();
     const classes = useStyles();
     const navigator = useNavigate();
     const { toggleDrawer } = props;
@@ -73,42 +74,42 @@ const NavbarDrawer = (props) => {
                     <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                         <HomeIcon style={{fontSize: "1.75rem", color: "#0A481C"}}/>
                     </ListItemIcon>
-                    <ListItemText primary="Home" />
+                    <ListItemText primary={t('navbar.home')} />
                 </ListItem>
                 <Divider variant="inset" />
                 <ListItem button key={"Upload"} onClick={handleRedirectToUploadPage}>
                     <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                         <UploadIcon style={{fontSize: "1.75rem", color: "#0A481C"}}/>
                     </ListItemIcon>
-                    <ListItemText primary="Upload" />
+                    <ListItemText primary={t('navbar.upload')} />
                 </ListItem>
                 <Divider variant="fullWidth" />
                 <ListItem button key={"Profile"} onClick={handleRedirectToProfilePage}>
                     <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                         <PersonIcon style={{fontSize: "1.75rem", color: "#0A481C"}}/>
                     </ListItemIcon>
-                    <ListItemText primary="Profile" style={{fontFamily: "Ubuntu"}} />
+                    <ListItemText primary={t('navbar.profile')} style={{fontFamily: "Ubuntu"}} />
                 </ListItem>
                 <Divider variant="inset" />
                 <ListItem button key={"My Papers"} onClick={handleRedirectToPapersPage}>
                     <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                         <ArticleIcon style={{fontSize: "1.75rem", color: "#0A481C"}}/>
                     </ListItemIcon>
-                    <ListItemText primary="My Papers" style={{fontFamily: "Ubuntu"}} />
+                    <ListItemText primary={t('navbar.my_papers')} style={{fontFamily: "Ubuntu"}} />
                 </ListItem>
                 <Divider variant="inset" />
                 <ListItem button key={"Saved List"} onClick={handleRedirectToSavedListPage}>
                     <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                         <BookmarksIcon style={{fontSize: "1.75rem", color: "#0A481C"}}/>
                     </ListItemIcon>
-                    <ListItemText primary="Saved List" />
+                    <ListItemText primary={t('navbar.saved_list')} />
                 </ListItem>
                 <Divider variant="inset" />
                 <ListItem button key={"Sign Out"} onClick={handleSignOut}>
                     <ListItemIcon style={{height:"2rem", width: "2rem", display: "flex", alignItems: "center", justifyContent: "flex-start"}}>
                         <LogoutIcon style={{fontSize: "1.75rem", color: "#0A481C"}}/>
                     </ListItemIcon>
-                    <ListItemText primary="Sign Out" />
+                    <ListItemText primary={t('navbar.signout')} />
                 </ListItem>
                 <Divider variant="fullWidth" />
             </List>

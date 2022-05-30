@@ -7,7 +7,7 @@ import NavbarDrawer from './NavbarDrawer';
 import { styled } from '@mui/material/styles';
 import { redirectToMainPage, redirectToUploadThesisPage } from '../utils/Redirecter';
 import { useNavigate } from 'react-router-dom';
-
+import {useTranslation} from "react-i18next";
 import '../assets/styles.css';
 import PublicIcon from '@mui/icons-material/Public';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -83,6 +83,7 @@ const DropDownButton = styled(IconButton)(({ theme }) => ({
 }));
 
 const NavbarWithUser = (props) => {
+    const {t} = useTranslation();
     const [openLangDropDownMenu, setOpenLangDropDownMenu] = useState(null);
     const [openProfileDropDownMenu, setOpenProfileDropDownMenu] = useState(null);
     const [openSideDrawer, setOpenSideDrawer] = useState(false);
@@ -110,11 +111,11 @@ const NavbarWithUser = (props) => {
                     <Grid item container xs={3} sm={8} md={6} lg={6} alignItems="center" justifyContent="flex-end">
                         { props.hideUpload === false &&
                             <Grid item style={{margin: "0 1rem"}}>
-                                <UploadButton variant="outlined" size="large" color="secondary" onClick={() => redirectToUploadThesisPage(navigator)} startIcon={<UploadIcon />}>Upload</UploadButton>
+                                <UploadButton variant="outlined" size="large" color="secondary" onClick={() => redirectToUploadThesisPage(navigator)} startIcon={<UploadIcon />}>{t('navbar.upload')}</UploadButton>
                             </Grid>
                         }
                         <Grid item style={{margin: "0 0.1rem"}}>
-                            <Tooltip title="Languages" placement="bottom" arrow leaveDelay={100}>
+                            <Tooltip title={t('navbar.languages')} placement="bottom" arrow leaveDelay={100}>
                                 <IconButton size="medium" color="secondary" aria-haspopup="true" onClick={(event) => setOpenLangDropDownMenu(event.currentTarget)}>
                                     <PublicIcon style={{fontSize: "2rem"}} color="secondary"/>
                                 </IconButton>

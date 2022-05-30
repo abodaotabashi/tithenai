@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Toolbar, AppBar, Grid, IconButton, Tooltip } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import LanguageDropDownList from './LanguageDropDownList';
-
+import {useTranslation} from "react-i18next";
 import '../assets/styles.css';
 import PublicIcon from '@mui/icons-material/Public';
 import TithenaiLogo from '../assets/logos/Uncircled Green.png';
@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const Navbar = (props) => {
+    const {t} = useTranslation();
     const [openDropDownMenu, setOpenDropDownMenu] = useState(null);
     const classes = useStyles();
 
@@ -58,7 +59,7 @@ const Navbar = (props) => {
                     </Grid>
                     <Grid item container xs={1} sm={1} md={1} lg={1} alignItems="center" justifyContent="flex-end">
                         <Grid item>
-                            <Tooltip title="Languages" placement="bottom" arrow leaveDelay={100}>
+                            <Tooltip title={t('navbar.languages')} placement="bottom" arrow leaveDelay={100}>
                                 <IconButton size="medium" color="primary" aria-haspopup="true" onClick={(event) => setOpenDropDownMenu(event.currentTarget)}>
                                     <PublicIcon style={{fontSize: "2rem"}} color="secondary"/>
                                 </IconButton>

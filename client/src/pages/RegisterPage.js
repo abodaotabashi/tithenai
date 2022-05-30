@@ -4,6 +4,7 @@ import { CssBaseline, Divider, Grid, IconButton, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import RegisterForm from '../containers/RegisterForm';
+import { withTranslation } from 'react-i18next';
 
 import RegisterGif from '../assets/gifs/Register_480.gif';
 import GoogleGif from '../assets/gifs/GoogleLogoOptimized.gif';
@@ -84,6 +85,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 const RegisterPage = (props) => {
+    const { t } = this.props;
     const classes = useStyles();
     const navigator = useNavigate();
 
@@ -102,24 +104,24 @@ const RegisterPage = (props) => {
                         <img src={RegisterGif} alt="register" className={classes.registerIllustration} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={8} lg={8} xl={7} className={classes.illustrationLabel}>
-                        Create a new account to access unlimited theses!
+                        {t('register_page.create')}
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
                         <RegisterForm />
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} container alignItems="center" justifyContent="center">
-                        <Divider variant="middle" style={{textAlign: "center", width: "80%", padding: "0.5vh 0", color: "#14325A"}}>Or</Divider>
+                        <Divider variant="middle" style={{textAlign: "center", width: "80%", padding: "0.5vh 0", color: "#14325A"}}>{t('register_page.or')}</Divider>
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12} container alignItems="center" justifyContent="center" direction="row">
-                            <p className="forwardingSpan" style={{cursor: "pointer"}} onClick={handleSignUpWithGoogle}>Continue with Google</p>
+                            <p className="forwardingSpan" style={{cursor: "pointer"}} onClick={handleSignUpWithGoogle}>{t('register_page.continue')}</p>
                             <IconButton aria-label="google" size="small" color="secondary" onClick={handleSignUpWithGoogle}>
                                 <img src={GoogleGif} alt="SigninWithGoogle" style={{width: "32px", borderRadius: "50%", margin: "2px", border: "1px solid #00000050"}}/>
                             </IconButton>
                         </Grid>
-                        <Divider variant="middle" style={{textAlign: "center", width: "80%", padding: "0.5vh 0", color: "#14325A"}}>Or</Divider>
+                        <Divider variant="middle" style={{textAlign: "center", width: "80%", padding: "0.5vh 0", color: "#14325A"}}>{t('register_page.or')}</Divider>
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <p className={classes.headerSpan}>
-                                <span className="forwardingSpan" onClick={() => redirectToLoginPage(navigator)}>just login, </span>
-                                if you already have an account
+                                <span className="forwardingSpan" onClick={() => redirectToLoginPage(navigator)}>{t('register_page.just')} </span>
+                                {t('register_page.if')}
                             </p>
                         </Grid>
                     </Grid>
@@ -131,4 +133,4 @@ const RegisterPage = (props) => {
     );
 }
 
-export default RegisterPage;
+export default withTranslation()(RegisterPage);

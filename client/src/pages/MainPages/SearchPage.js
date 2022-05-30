@@ -12,6 +12,7 @@ import { searchTheses, searchUniversities } from '../../Service';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../utils/Context';
 import { redirectToLoginPage, redirectToSearchResultsPage } from '../../utils/Redirecter';
+import { withTranslation } from 'react-i18next';
 
 import WelcomeIllustration from "../../assets/gifs/Welcome.gif";
 import '../../assets/styles.css';
@@ -110,6 +111,7 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 }));
 
 const SearchPage = () => {
+    const { t } = this.props;
     const classes = useStyles();
     const theme = useTheme();
     const [selectedTab, setSelectedTab] = useState(0);
@@ -153,7 +155,7 @@ const SearchPage = () => {
                         <img src={WelcomeIllustration} alt="Welcome" className={classes.welcomeIllustration}/>
                     </Grid>
                     <Grid item xs={12} sm={12} md={8} lg={8} className={classes.welcomeRightSection}>
-                        <p className='textWithSecondaryGradient' >Welcome back. Let's search some interesting stuff!</p>
+                        <p className='textWithSecondaryGradient' >{t('search_page.welcome_back')}</p>
                     </Grid>
                 </Grid>
                 <Grid item xs={12} className={classes.content}>
@@ -165,8 +167,8 @@ const SearchPage = () => {
                             textColor="secondary"
                             variant="scrollable"
                             aria-label="full width tabs example">
-                            <Tab data-testid="theses-section" label="Theses" wrapped style={{fontFamily: "Ubuntu", fontSize: "medium"}} {... a11yProps(0)} />
-                            <Tab label="Universities" wrapped style={{fontFamily: "Ubuntu", fontSize: "medium"}} {... a11yProps(1)} />
+                            <Tab data-testid="theses-section" label={t('search_page.theses')} wrapped style={{fontFamily: "Ubuntu", fontSize: "medium"}} {... a11yProps(0)} />
+                            <Tab label={t('search_page.universities')} wrapped style={{fontFamily: "Ubuntu", fontSize: "medium"}} {... a11yProps(1)} />
                         </Tabs>
                     </StyledAppBar>
                     <SwipeableViews
@@ -189,4 +191,4 @@ const SearchPage = () => {
     )
 }
 
-export default SearchPage;
+export default withTranslation()(SearchPage);

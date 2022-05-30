@@ -4,7 +4,7 @@ import { Avatar, Grid, Typography } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
-
+import {useTranslation} from "react-i18next";
 const ContainerGrid = styled(Grid)(({ theme }) => ({
     minHeight: "15vh",
     height: "100%",
@@ -64,6 +64,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UniversityCard = (props) => {
+    const {t} = useTranslation();
     const { university } = props;
     const classes = useStyles();
 
@@ -95,7 +96,7 @@ const UniversityCard = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                            Type: {university.uniType}
+                            {t('thesis.typeuni')} {university.uniType}
                         </Typography>
                     </Grid>
                 </Grid>

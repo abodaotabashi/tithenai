@@ -2,8 +2,9 @@ import React from 'react';
 import { Grid, Typography, CircularProgress, IconButton, Tooltip } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import '../assets/styles.css';
-
+import {useTranslation} from "react-i18next";
 const ProfileInfoViewer = (props) => {
+    const {t} = useTranslation();
     const { userInfo, handleEditInfos } = props;
     return (
         typeof(userInfo) !== "undefined" ?
@@ -16,7 +17,7 @@ const ProfileInfoViewer = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Typography variant="subtitle1" component="div" style={{textAlign: "start", fontFamily: "Ubuntu", fontWeight: "bold", paddingBottom: "1rem"}}>
-                        E-Mail Address: &nbsp;
+                        {t('profile.e-mail')} &nbsp;
                         <Typography variant="subtitle1" component="span" style={{textAlign: "start", fontFamily: "Ubuntu-Light"}}>
                             {userInfo.email}
                         </Typography>
@@ -29,7 +30,7 @@ const ProfileInfoViewer = (props) => {
                 </Grid>
             </Grid>
             <Grid item container xs={1} sm={1} md={1} lg={1} alignItems="center" justifyContent="flex-end">
-                <Tooltip title="Update Profile" placement="bottom" arrow leaveDelay={100}>
+                <Tooltip title={t('profile.update_profile')} placement="bottom" arrow leaveDelay={100}>
                     <IconButton  color="secondary" onClick={handleEditInfos}>
                         <EditIcon data-testid="profileInfoUpdate" color="secondary" />
                     </IconButton>

@@ -8,6 +8,7 @@ import Footer from '../../components/Footer';
 
 import { makeStyles } from '@mui/styles';
 import LandingWelcomeGif from '../../assets/gifs/LandingWelcome.gif';
+import { withTranslation } from 'react-i18next';
 
 import '../../assets/styles.css';
 const useStyles = makeStyles(theme => ({
@@ -47,6 +48,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const LandingPage = () => {
+    const { t } = this.props;
     const classes = useStyles();
     const navigator = useNavigate();
     return (
@@ -54,18 +56,18 @@ const LandingPage = () => {
             <Navbar />
             <div style={{padding: "20px", marginTop: "10px", display: "flex", justifyContent: "center"}}>
                 <Paper style={{width: "80%", padding: "50px"}}>
-                    <p className={classes.illustrationLabel}>Welcome to Tithenai</p>
+                    <p className={classes.illustrationLabel}>{t('landing.welcome_to')}</p>
                     <Grid container alignItems="center">
                         <Grid item xs={12} sm={12} md={5} lg={4}>
                             <img src={LandingWelcomeGif} alt="Welcome" className={classes.loginIllustration}/>
                         </Grid>
                         <Grid item xs={12} sm={12} md={7} lg={8}>
-                            <p className="textWithSecondaryGradient">Get inspired by others' thesis, publish your own one and share your thoughts with your colleages.</p>
+                            <p className="textWithSecondaryGradient">{t('landing.get_inspired')}</p>
                         </Grid>
                         <Grid container alignItems="center" direction="column">
                             <Grid item xs={12} sm={12} md={7} lg={8}>
                                 <p className={classes.headerSpan}>
-                                    To start
+                                    {t('landing.to_start')}
                                 </p>
                                 <Button
                                         className="forwardingSpan"
@@ -75,12 +77,12 @@ const LandingPage = () => {
                                                 size="large"
                                                 type="submit"
                                                 style={{padding: "1vh 2vw", fontFamily: "Ubuntu", backgroundColor: "green", color: "white"}}>
-                                        &nbsp;Sign Up Now!
+                                        &nbsp;{t('landing.sign_up')}
                                 </Button>
                             </Grid>
                             <Grid item xs={12} sm={12} md={7} lg={8}>
                                 <p className={classes.headerSpan}>
-                                    If you already have an account
+                                    {t('landing.have_account')}
                                 </p>
                                 <Button
                                     className="forwardingSpan"
@@ -90,12 +92,12 @@ const LandingPage = () => {
                                             size="large"
                                             type="submit"
                                             style={{padding: "1vh 2vw", fontFamily: "Ubuntu", backgroundColor: "green", color: "white"}}>
-                                    &nbsp;Sign In
+                                    &nbsp;{t('landing.sign_in')}
                                 </Button>
                             </Grid>
                             <p className={classes.headerSpan}>
-                                To learn more,
-                                <Link className="forwardingSpan" to="aboutTithenai" smooth="true">&nbsp;click here.</Link>
+                                {t('landing.to_learn')}
+                                <Link className="forwardingSpan" to="aboutTithenai" smooth="true">&nbsp;{t('landing.click')}</Link>
                             </p>
                         </Grid>
                     </Grid>
@@ -103,13 +105,9 @@ const LandingPage = () => {
             </div>
             <div style={{padding: "10px", display: "flex", justifyContent: "center"}}>
                 <Paper style={{width: "80%", padding: "40px"}} id="aboutTithenai">
-                    <p className={classes.illustrationLabel}>About Tithenai</p>
+                    <p className={classes.illustrationLabel}>{t('landing.about')}</p>
                     <p className={classes.header}>
-                    Tithenai is a social platform for researchers to share their work and inspire others or
-                    find inspiration. We believe in making knowledge more accessible and aim to provide an
-                    environment to help academicians and undergraduate students collaborate and communicate
-                    throughout every step of the process wether they are conducting research or have a
-                    ready-to-publish thesis and wish to present their work.
+                        {t('landing.about_tithenai')}
                     </p>
                 </Paper>
             </div>
@@ -122,4 +120,4 @@ const LandingPage = () => {
     )
 }
 
-export default LandingPage;
+export default withTranslation()(LandingPage);

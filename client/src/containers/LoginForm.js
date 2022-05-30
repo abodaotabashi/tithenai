@@ -10,6 +10,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import GoogleGif from '../assets/gifs/GoogleLogoOptimized.gif';
 import '../assets/styles.css';
+import { withTranslation } from 'react-i18next';
 
 class LoginForm extends Component {
     state = {
@@ -65,14 +66,15 @@ class LoginForm extends Component {
     }
 
     render() {
+        const { t } = this.props;
         const form_validation_schema = Yup.object().shape({
             email: Yup.string()
-                    .email("Invalid Email! Please enter a valid E-Mail address!")
-                    .required("This Field is required!"),
+                    .email(t('login.invalid_email'))
+                    .required(t('login.required_field')),
             password: Yup.string()
-                .min(8, 'Your Password must have at least 8 characters!')
-                .max(32, 'Your Password must have at most 32 characters!')
-                .required("This Field is required!"),
+                .min(8, t('login.your_pass'))
+                .max(32, t('login.your_pass_t'))
+                .required(t('login.required_field')),
         });
 
         const initial_form_values = {
@@ -95,7 +97,7 @@ class LoginForm extends Component {
                                 error={touched.email && Boolean(errors.email)}
                                 color="secondary"
                                 required
-                                label="Your E-Mail Address"
+                                label={t('login.your_email')}
                                 variant="outlined"
                                 InputLabelProps={{
                                     style: {
@@ -109,7 +111,7 @@ class LoginForm extends Component {
                                 name="password"
                                 error={touched.password && Boolean(errors.password)}
                                 color="secondary"
-                                required label="Your Password"
+                                required label={t('login.your_password')}
                                 type={this.state.showPassword ? "text" : "password" }
                                 variant="outlined"
                                 style={{margin: "2vh 0", fontFamily: "Ubuntu"}}
@@ -132,14 +134,14 @@ class LoginForm extends Component {
                                 }}/>
                         </Grid>
                         <Grid item xs={12} sm={12} md={12} lg={12}>
-                            <p className="forwardingSpan" onClick={() => this.handleToggleForgotPasswordDialog(true)}>Forgot Password?</p>
+                            <p className="forwardingSpan" onClick={() => this.handleToggleForgotPasswordDialog(true)}>{t('login.forgot')}</p>
                         </Grid>
                         <Grid item xs={12} sm={12} md={12} lg={12}>
-                            <Button disabled={Boolean(errors.email) || Boolean(errors.password)} color="secondary" variant="outlined" size="large" type="submit" style={{padding: "1vh 6vw", fontFamily: "Ubuntu"}}>Login</Button>
+                            <Button disabled={Boolean(errors.email) || Boolean(errors.password)} color="secondary" variant="outlined" size="large" type="submit" style={{padding: "1vh 6vw", fontFamily: "Ubuntu"}}>{t('login.login_button')}</Button>
                         </Grid>
-                        <Divider variant="middle" style={{textAlign: "center", width: "60%", padding: "1vh 0", color: "#14325A"}} >Or</Divider>
+                        <Divider variant="middle" style={{textAlign: "center", width: "60%", padding: "1vh 0", color: "#14325A"}} >{t('login.or')}</Divider>
                         <Grid item container xs={12} sm={12} md={12} lg={12} direction="row" alignItems="center" justifyContent="center">
-                            <p style={{fontFamily: "Ubuntu", paddingRight: "3px", color: "#14325A"}}>Sign in with Google</p>
+                            <p style={{fontFamily: "Ubuntu", paddingRight: "3px", color: "#14325A"}}>{t('login.google')}</p>
                             <IconButton aria-label="google" size="small" color="secondary" onClick={this.handleSignInWithGoogle}>
                                 <img src={GoogleGif} alt="SigninWithGoogle" style={{width: "42px", borderRadius: "50%", margin: "3px", border: "1px solid #00000050"}}/>
                             </IconButton>
@@ -160,4 +162,4 @@ class LoginForm extends Component {
     }
 }
 
-export default LoginForm;
+export default withTranslation()(LoginForm);

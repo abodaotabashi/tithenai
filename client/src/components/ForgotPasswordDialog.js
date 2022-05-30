@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
+import {useTranslation} from "react-i18next";
 import { makeStyles } from '@mui/styles';
 import '../assets/styles.css';
 import CloseIcon from '@mui/icons-material/Close';
@@ -53,6 +53,7 @@ const form_validation_schema = Yup.object().shape({
 });
 
 const ForgotPasswordDialog = (props) => {
+    const {t} = useTranslation();
     const { openDialog, toggleDialog, sendEmailFunction} = props;
 
     const [sent, setSent] = React.useState(false);
@@ -81,7 +82,7 @@ const ForgotPasswordDialog = (props) => {
                     <DialogTitle>
                         <div className="dialogTitle">
                             <Typography variant="h6" component="div" style={{flexGrow:1, fontFamily: "Ubuntu-Light", fontWeight: "700"}}>
-                                Forgot your Password?
+                                {t('dialogs.forgot_password')}
                             </Typography>
                             <IconButton style={{color: "red"}} onClick={handleCloseDialog}>
                                 <CloseIcon style={{color: "red"}} />
@@ -96,12 +97,12 @@ const ForgotPasswordDialog = (props) => {
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} style={{textAlign: "center"}}>
                                 <Typography variant="subtitle1" component="div" style={{flexGrow:1, fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "center"}}>
-                                    Don't Worry
+                                    {t('dialogs.dont_worry')}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} style={{textAlign: "center"}}>
                                 <Typography variant="subtitle1" component="div" style={{flexGrow:1, fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "center"}}>
-                                    We will send you a link to reset your password. Just enter your E-Mail Address!
+                                    {t('dialogs.wewill_send')}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} style={{textAlign: "center"}}>
@@ -111,7 +112,7 @@ const ForgotPasswordDialog = (props) => {
                                     error={touched.emailUser && Boolean(errors.emailUser)}
                                     color="secondary"
                                     required
-                                    label="Your E-Mail Address"
+                                    label={t('dialogs.your_email')}
                                     variant="outlined"
                                     InputLabelProps={{
                                         style: {
@@ -129,7 +130,7 @@ const ForgotPasswordDialog = (props) => {
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} style={{textAlign: "center"}}>
                                 <Typography variant="subtitle1" component="div" style={{flexGrow:1, fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "center"}}>
-                                    Please check your E-Mail Address. We have sent a link to reset your password successfully.
+                                    {t('dialogs.please_check')}
                                 </Typography>
                             </Grid>
                             <Grid item xl={12} sm={12} md={12} lg={12}><br/></Grid>
@@ -143,14 +144,14 @@ const ForgotPasswordDialog = (props) => {
                             style={{margin: "1vh 1rem", fontFamily: "Ubuntu"}}
                             disabled={Boolean(errors.emailUser)}
                             type="submit">
-                            Send Me A Link
+                            {t('dialogs.send_link')}
                         </Button> :
                         <Button
                             variant="contained"
                             color="secondary"
                             style={{margin: "1vh 1rem", fontFamily: "Ubuntu"}}
                             onClick={handleCloseDialog}>
-                            OK
+                            {t('dialogs.ok')}
                         </Button>
                         }
                     </DialogActions>

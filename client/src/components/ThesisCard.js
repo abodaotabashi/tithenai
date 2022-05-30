@@ -3,7 +3,7 @@ import { Chip, Divider, Grid, Typography, Avatar, IconButton, Tooltip, Button } 
 import { useNavigate } from 'react-router-dom';
 import { redirectToViewThesisPage } from '../utils/Redirecter';
 import { formatFirebaseDate } from '../utils/HelperFunctions';
-
+import {useTranslation} from "react-i18next";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
@@ -132,6 +132,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ThesisCard = (props) => {
+    const {t} = useTranslation();
     const { thesis, savingMode, saveThesisFunction, unsaveThesisFunction } = props;
     const [tooltipMessage, setTooltipMessage] = useState("Unsave");
     const [isSaved, setIsSaved] = useState(true);
@@ -141,12 +142,12 @@ const ThesisCard = (props) => {
     const handleToggleSavingThesis = () => {
         if (isSaved === true) {
             unsaveThesisFunction(thesis.thesisId).then(() => {
-                setTooltipMessage("Save");
+                setTooltipMessage(t('thesis.save'));
                 setIsSaved(false);
             });
         } else {
             saveThesisFunction(thesis.thesisId).then(() => {
-                setTooltipMessage("Unsave");
+                setTooltipMessage(t('thesis.unsave'));
                 setIsSaved(true);
             });
         }
@@ -185,12 +186,12 @@ const ThesisCard = (props) => {
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={12} lg={12}>
                                     <Typography variant="body2" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                                        Language: {thesis.thesisLanguage.nativeName}
+                                        {t('thesis.language')} {thesis.thesisLanguage.nativeName}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={12} lg={12}>
                                     <Typography variant="body2" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                                        Type: {thesis.thesisType}
+                                        {t('thesis.type')} {thesis.thesisType}
                                     </Typography>
                                 </Grid>
                                 {thesis.thesisTags.length > 0 ?
@@ -280,12 +281,12 @@ const ThesisCard = (props) => {
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={12} lg={12}>
                                     <Typography variant="body2" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                                        Language: {thesis.thesisLanguage.nativeName}
+                                        {t('thesis.language')} {thesis.thesisLanguage.nativeName}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={12} lg={12}>
                                     <Typography variant="body2" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                                        Type: {thesis.thesisType}
+                                    {t('thesis.type')} {thesis.thesisType}
                                     </Typography>
                                 </Grid>
                                 {thesis.thesisTags.length > 0 ?

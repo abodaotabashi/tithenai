@@ -14,6 +14,7 @@ import ImageViewDialog from '../components/ImageViewDialog';
 import ImageCropperDialog from '../components/ImageCropperDialog';
 import Footer from '../components/Footer';
 import AnimatedNumber from 'react-animated-number';
+import { withTranslation } from 'react-i18next';
 
 
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
@@ -123,6 +124,7 @@ const MyPapersBox = styled(Paper)(({ theme }) => ({
 }));
 
 const MyProfilePage = () => {
+    const { t } = this.props;
     const [isEditing, setIsEditing] = useState(false);
     const [userInfo, setUserInfo] = useState();
     const [userPhoto, setUserPhoto] = useState("");
@@ -154,7 +156,7 @@ const MyProfilePage = () => {
 
     const handleOpenCropper = (event) => {
         if (!event.target.files || Object.keys(event.target.files).length === 0) {
-            console.log("Photo couldn't be uploaded. Please Try again!");
+            console.log(t('my_profile.error'));
         } else {
             setUploadedPhoto(URL.createObjectURL(event.target.files[0]));
             setOpenCropperDialog(true);
@@ -225,7 +227,7 @@ const MyProfilePage = () => {
                                     color="secondary"
                                     startIcon={<CameraAltIcon />}
                                     onClick={() => inputField.current.click()}>
-                                    Update Profile Photo
+                                    {t('my_profile.update_photo')}
                                 </UpdateImageButton>
                             </Grid>
                         </Grid>
@@ -239,16 +241,16 @@ const MyProfilePage = () => {
                         <Grid item xs={12} sm={12} md={11} lg={11}>
                             <Accordion style={{ backgroundColor: "#00000020", color: "#000000" }}>
                                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                    <Typography variant="subtitle1" style={{ fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "start" }}>Update Password</Typography>
+                                    <Typography variant="subtitle1" style={{ fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "start" }}>{t('my_profile.update_pass')}</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <Typography variant="body2" style={{ fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "start" }}>
-                                        We will send to your email a link that allows you to update your password.
+                                    {t('my_profile.we_will')}
                                     </Typography>
                                 </AccordionDetails>
                                 <Divider />
                                 <AccordionActions>
-                                    <ResetPasswordButton startIcon={<TelegramIcon />} style={{ fontFamily: "Ubuntu", marginLeft: "1vw" }} >Send Me A Link</ResetPasswordButton>
+                                    <ResetPasswordButton startIcon={<TelegramIcon />} style={{ fontFamily: "Ubuntu", marginLeft: "1vw" }} >{t('my_profile.send_me')}</ResetPasswordButton>
                                 </AccordionActions>
                             </Accordion>
                             <br />
@@ -259,7 +261,7 @@ const MyProfilePage = () => {
                             <MyPapersBox elevation={12} onClick={() => redirectToMyPapersPage(navigator)}>
                                 <Grid container alignItems="center" justifyContent="center">
                                     <Grid item xs={12} sm={12} md={9} lg={9}>
-                                        <p className={classes.papersLabel}>My Papers</p>
+                                        <p className={classes.papersLabel}>{t('my_papers.title')}My Papers</p>
                                     </Grid>
                                     <Grid item xs={12} sm={12} md={3} lg={3}>
                                         {typeof (userInfo) !== "undefined" && typeof (userInfo.theses) !== "undefined" ?
@@ -296,4 +298,4 @@ const MyProfilePage = () => {
     );
 }
 
-export default MyProfilePage
+export default withTranslation()(MyProfilePage);

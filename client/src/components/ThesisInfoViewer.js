@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import CommentCard from './CommentCard';
 import AddNewReportDialog from './AddNewReportDialog';
 import WarningDialog from './WarningDialog';
-
+import {useTranslation} from "react-i18next";
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -65,6 +65,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ThesisInfoViewer = (props) => {
+    const {t} = useTranslation();
     const {
         userID,
         isOwn,
@@ -136,7 +137,7 @@ const ThesisInfoViewer = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Typography variant="subtitle1" component="div" style={{textAlign: "start", fontFamily: "Ubuntu", paddingBottom: "1rem"}}>
-                        Author: {thesis.thesisAuthorName} &nbsp; - &nbsp; Published on {formatFirebaseDate(thesis.thesisDate)}
+                        {t('thesis.author')} {thesis.thesisAuthorName} &nbsp; - &nbsp; {t('thesis.published')} {formatFirebaseDate(thesis.thesisDate)}
                     </Typography>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
@@ -155,13 +156,13 @@ const ThesisInfoViewer = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Typography variant="subtitle1" component="div" style={{textAlign: "start", fontFamily: "Ubuntu", paddingBottom: "1rem"}}>
-                        Type: {thesis.thesisType} &nbsp; - &nbsp; Language: {thesis.thesisLanguage.nativeName}
+                        {t('thesis.type')} {thesis.thesisType} &nbsp; - &nbsp; {t('thesis.language')} {thesis.thesisLanguage.nativeName}
                     </Typography>
                 </Grid>
                 {thesis.thesisTags.length > 0 ?
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <ul className={classes.listOfChips}>
-                        Tags: &nbsp;
+                        {t('thesis.tags')} &nbsp;
                         {thesis.thesisTags.map((tag, index) => {
                             return (
                                 <li key={index} style={{margin: "0.2rem"}}>
@@ -190,7 +191,7 @@ const ThesisInfoViewer = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Typography variant="body1" component="div" style={{textAlign: "start", fontWeight: "bold", fontFamily: "Ubuntu"}}>
-                        Abstract:
+                        {t('thesis.abstract')}
                         <br />
                         <Typography variant="subtitle1" component="div" style={{textAlign: "start", fontFamily: "Ubuntu"}}>
                             {thesis.thesisAbstract}
@@ -201,7 +202,7 @@ const ThesisInfoViewer = (props) => {
             <Grid item container xs={12} sm={12} md={3} lg={2} alignItems="center" justifyContent="center">
                 { isRated === true ?
                 <Paper elevation={8} style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
-                    <Typography variant="subtitle1" component="legend" style={{fontFamily: "Ubuntu"}}>Your Rate</Typography>
+                    <Typography variant="subtitle1" component="legend" style={{fontFamily: "Ubuntu"}}>{t('thesis.your_rate')}</Typography>
                     <Rating
                         size="medium"
                         value={ownRate}
@@ -212,7 +213,7 @@ const ThesisInfoViewer = (props) => {
                 </Paper>
                 :
                 <Paper elevation={8} style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
-                    <Typography variant="subtitle1" component="legend" style={{fontFamily: "Ubuntu"}}>No rating given</Typography>
+                    <Typography variant="subtitle1" component="legend" style={{fontFamily: "Ubuntu"}}>{t('thesis.no_rating')}</Typography>
                     <Rating
                         size="medium"
                         value={ownRate}
@@ -229,7 +230,7 @@ const ThesisInfoViewer = (props) => {
                         startIcon={<EditIcon />}
                         onClick={handleToggleToEdit}
                         style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
-                        Edit
+                        {t('thesis.edit')}
                     </Button>
                     : null
                 }
@@ -239,7 +240,7 @@ const ThesisInfoViewer = (props) => {
                     startIcon={<DownloadIcon />}
                     onClick={() => window.location.href = thesis.thesisPdfUrl[0]}
                     style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
-                    Download
+                    {t('thesis.download')}
                 </Button>
                 { isSaved === true ?
                     <Button
@@ -248,7 +249,7 @@ const ThesisInfoViewer = (props) => {
                     startIcon={<BookmarkRemoveIcon />}
                     onClick={handleUnsaveThesis}
                     style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
-                        Unsave
+                        {t('thesis.unsave')}
                     </Button>
                     :
                     <Button
@@ -257,7 +258,7 @@ const ThesisInfoViewer = (props) => {
                     onClick={handleSaveThesis}
                     startIcon={<BookmarkAddIcon />}
                     style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
-                        Save
+                        {t('thesis.save')}
                     </Button>
                 }
                 { isOwn === true ?
@@ -267,7 +268,7 @@ const ThesisInfoViewer = (props) => {
                         startIcon={<DeleteForeverIcon />}
                         onClick={() => handleToggleWarningDialog(true)}
                         style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
-                        Delete
+                        {t('thesis.delete')}
                     </Button> : null
                 }
                 <Button
@@ -276,7 +277,7 @@ const ThesisInfoViewer = (props) => {
                     startIcon={<FlagIcon />}
                     onClick={() => toggleOpenReportDialog(true)}
                     style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
-                    Report
+                    {t('thesis.report')}
                 </Button>
             </Grid>
             <Grid item container xs={12} sm={12} md={12} lg={12} style={{padding: "1vh 0"}}>
@@ -284,7 +285,7 @@ const ThesisInfoViewer = (props) => {
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12}>
                 <Typography variant="h6" component="div" style={{textAlign: "start", fontWeight: "bold", fontFamily: "Ubuntu"}}>
-                    { comments !== null && comments.length > 0 ? comments.length + " Comments" : "There is no comments yet!" }
+                    { comments !== null && comments.length > 0 ? comments.length + t('thesis.comments') : t('thesis.no_comments') }
                     <br />
                     {   commentsDisplayed !== null && commentsDisplayed.length > 0 && commentsDisplayed.map((comment) => {
                             if ( comment.commentAuthorID === userID ) {
@@ -321,14 +322,14 @@ const ThesisInfoViewer = (props) => {
                     style={{fontFamily: "Ubuntu", padding: "1vh 2vw", display: `${isShowMoreCommentsButtonVisible}`}}
                     startIcon={<ExpandMoreIcon />}
                     onClick={handleShowMoreComments}>
-                    Show More
+                    {t('thesis.show_more')}
                 </Button>
             </Grid>
             <Grid item xs={12} sm={12} md={12} lg={12} style={{margin: "2vh 1rem"}}>
                 <TextField
                     variant="standard"
                     color="secondary"
-                    placeholder="Write a comment!"
+                    placeholder={t('thesis.write_comment')}
                     value={commentValue}
                     onChange={(event) => setCommentValue(event.target.value)}
                     style={{ width: "100%", borderRadius: "8px", border: '1px solid #14325A', padding: "10px", fontFamily: "Ubuntu"}}
@@ -362,11 +363,11 @@ const ThesisInfoViewer = (props) => {
             <WarningDialog
                     openWarningDialog={openWarningDialog}
                     setCloseWarningDialog={handleToggleWarningDialog}
-                    title="Delete this Thesis?"
-                    content="Are you sure that you want to delete this thesis?"
-                    contentSpan= "All comments and rates for this thesis will be deleted."
-                    yes="Delete"
-                    no="Cancel"
+                    title={t('dialogs.delete_thesis')}
+                    content={t('dialogs.r_u_sure')}
+                    contentSpan= {t('dialogs.all_comments')}
+                    yes={t('dialogs.delete')}
+                    no={t('dialogs.cancel')}
                     yesFunction={handleDeleteThesis}
                     noFunction={() => handleToggleWarningDialog(false)} />
         </Grid>

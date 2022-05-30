@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import { getAllTags } from '../Service';
-
+import {useTranslation} from "react-i18next";
 const useStyles = makeStyles(theme => ({
     searchBox: {
         margin: "2vh 0",
@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SearchThesisPanel = (props) => {
+    const {t} = useTranslation();
     const { handleSearchTheses, initialSearchingValues } = props;
     const classes = useStyles();
     const [searchedValue, setSearchedValue] = useState("");
@@ -117,7 +118,7 @@ const SearchThesisPanel = (props) => {
             <Grid item xs={12} sm={12} md={12} lg={12}>
                 <TextField
                     color="secondary"
-                    label="Search for"
+                    label={t('search.search_for')}
                     name="searchInputField"
                     placeholder='e.g. Artificial Intelligence'
                     type="text"
@@ -152,10 +153,10 @@ const SearchThesisPanel = (props) => {
                     }}/>
             </Grid>
             <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center">
-                <p style={{fontFamily: "Ubuntu", color: "#b5201e", display: (errorIndicator === true) ? "flex" : "none"}}>You should select at least one option or one tag to search by!</p>
+                <p style={{fontFamily: "Ubuntu", color: "#b5201e", display: (errorIndicator === true) ? "flex" : "none"}}>{t('search.you_should')}</p>
             </Grid>
             <Grid item xs={12} sm={12} md={4} lg={3}>
-                <p style={{fontFamily: "Ubuntu"}}>Search By:</p>
+                <p style={{fontFamily: "Ubuntu"}}>{t('search.search_by')}</p>
             </Grid>
             <Grid item container xs={12} sm={12} md={8} lg={9} alignItems="center" justifyContent="flex-start" style={{textAlign: "start"}}>
                 <Grid item xs={12} sm={4} md={4} lg={4}>
@@ -169,7 +170,7 @@ const SearchThesisPanel = (props) => {
                         />}
                         label={
                             <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu"}}>
-                                Title
+                                {t('search.title')}
                             </Typography>}
                         labelPlacement="end"
                     />
@@ -185,7 +186,7 @@ const SearchThesisPanel = (props) => {
                         />}
                         label={
                             <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu"}}>
-                                Author(s)
+                                {t('search.authors')}
                             </Typography>}
                         labelPlacement="end"
                     />
@@ -201,7 +202,7 @@ const SearchThesisPanel = (props) => {
                         />}
                         label={
                             <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu"}}>
-                                University
+                                {t('search.university')}
                             </Typography>}
                         labelPlacement="end"
                     />
@@ -217,7 +218,7 @@ const SearchThesisPanel = (props) => {
                         />}
                         label={
                             <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu"}}>
-                                Faculty
+                                {t('search.faculty')}
                             </Typography>}
                         labelPlacement="end"
                     />
@@ -233,14 +234,14 @@ const SearchThesisPanel = (props) => {
                         />}
                         label={
                             <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu"}}>
-                                Language
+                                {t('search.language')}
                             </Typography>}
                         labelPlacement="end"
                     />
                 </Grid>
             </Grid>
             <Grid item xs={12} sm={12} md={4} lg={3}>
-                <p style={{fontFamily: "Ubuntu"}}>Search By Tags:</p>
+                <p style={{fontFamily: "Ubuntu"}}>{t('search.search_by_tags')}</p>
             </Grid>
             <Grid item xs={12} sm={12} md={8} lg={9}>
                 <Autocomplete
@@ -271,7 +272,7 @@ const SearchThesisPanel = (props) => {
                         ))
                     }
                     renderInput={(params) => (
-                        <TextField {...params} variant="outlined" color="secondary" label="Tags" style={{margin: "0.5vh 0", fontFamily: "Ubuntu"}}/>
+                        <TextField {...params} variant="outlined" color="secondary" label={t('search.tags')} style={{margin: "0.5vh 0", fontFamily: "Ubuntu"}}/>
                     )}/>
             </Grid>
         </Grid>

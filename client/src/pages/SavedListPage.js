@@ -3,6 +3,7 @@ import { Button, CssBaseline, Grid, Pagination, Paper, Typography } from '@mui/m
 import Footer from '../components/Footer';
 import NavbarWithUser from '../components/NavbarWithUser';
 import ThesisCard from '../components/ThesisCard';
+import { withTranslation } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../utils/Context';
@@ -63,6 +64,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const SavedListPage = (props) => {
+    const { t } = this.props;
     const navigator = useNavigate();
     const { userAuth } = useContext(AuthContext);
     const [savedTheses, setSavedTheses] = useState(null);
@@ -136,7 +138,7 @@ const SavedListPage = (props) => {
                             <>
                                 <Grid item xs={12} sm={12} md={12} lg={12} style={{margin: "1vh 0", marginLeft: "3rem", textAlign: "start"}}>
                                     <Typography variant="h6" component="div" style={{fontFamily: "Ubuntu", fontWeight: "700"}}>
-                                        {savedTheses.length} Saved theses found:
+                                        {savedTheses.length} {t('saved.found')}
                                     </Typography>
                                 </Grid>
                             {   currentTheses !== null && currentTheses.map((thesis) => {
@@ -154,7 +156,7 @@ const SavedListPage = (props) => {
                             }
                             { numberOfPages !== 0 && numberOfPages !== 1 &&
                                 <Grid item container xs={12} sm={12} md={12} lg={12} style={{margin: "3vh 0"}} direction="row" alignItems="center" justifyContent="center">
-                                    <p>Pages:</p>
+                                    <p>{t('saved.pages')}</p>
                                     <Pagination
                                         boundaryCount={2}
                                         hidePrevButton
@@ -176,7 +178,7 @@ const SavedListPage = (props) => {
                                     <img src={NoResultsIllustration} alt="noResults" style={{width: "10rem"}}/>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={7} lg={7} className={classes.noResultsRightSection}>
-                                    <p className='textWithSecondaryGradient' >You didn't save any theses.</p>
+                                    <p className='textWithSecondaryGradient' >{t('saved.you_didnt')}</p>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={12} lg={12}>
                                     <Button
@@ -185,7 +187,7 @@ const SavedListPage = (props) => {
                                         style={{marginTop: "3vh", fontFamily: "Ubuntu"}}
                                         startIcon={<HomeIcon />}
                                         onClick={() => redirectToMainPage(navigator)}>
-                                        Back to home
+                                        {t('saved.back')}
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -201,4 +203,4 @@ const SavedListPage = (props) => {
     )
 }
 
-export default SavedListPage;
+export default withTranslation()(SavedListPage);
