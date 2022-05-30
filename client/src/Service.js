@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASEURL = "/api";
+const BASEURL = "http://localhost:9000";
 axios.defaults.baseURL = BASEURL
 // =========================================================== Utils
 
