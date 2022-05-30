@@ -245,13 +245,15 @@ async function updateUserImage(data) {
         const buf = new Buffer.from(imageBase64, 'base64');
         const file = storage.bucket(BUCKETNAME).file(`userImages/${uid}.png`);
         await file.save(buf);
-        const publicUrl = await file.getSignedUrl({
-            action: 'read',
-            expires: '03-17-2025', // TODO: make this dynamic
-        });
+        await file.makePublic(); 
+        const publicUrl = file.publicUrl(); 
+        // const publicUrl = await file.getSignedUrl({
+        //     action: 'read',
+        //     expires: '03-17-2025', // TODO: make this dynamic
+        // });
         admin.auth()
             .updateUser(uid, {
-                photoURL: publicUrl[0]
+                photoURL: publicUrl
             })
         return true
     } catch (error) {
