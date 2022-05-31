@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import NotFoundIllustration from "../assets/gifs/NotFound.gif";
 import Navbar from '../components/Navbar';
 import HomeIcon from '@mui/icons-material/Home';
-import { withTranslation } from 'react-i18next';
+import { withTranslation, useTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NotFoundPage = () => {
-    const { t } = this.props;
+    const { t } = useTranslation();
     const classes = useStyles();
     const navigator = useNavigate();
     return (

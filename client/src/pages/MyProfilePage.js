@@ -14,7 +14,7 @@ import ImageViewDialog from '../components/ImageViewDialog';
 import ImageCropperDialog from '../components/ImageCropperDialog';
 import Footer from '../components/Footer';
 import AnimatedNumber from 'react-animated-number';
-import { withTranslation } from 'react-i18next';
+import { withTranslation, useTranslation } from 'react-i18next';
 
 
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
@@ -124,7 +124,7 @@ const MyPapersBox = styled(Paper)(({ theme }) => ({
 }));
 
 const MyProfilePage = () => {
-    const { t } = this.props;
+    const { t } = useTranslation();
     const [isEditing, setIsEditing] = useState(false);
     const [userInfo, setUserInfo] = useState();
     const [userPhoto, setUserPhoto] = useState("");
@@ -261,7 +261,7 @@ const MyProfilePage = () => {
                             <MyPapersBox elevation={12} onClick={() => redirectToMyPapersPage(navigator)}>
                                 <Grid container alignItems="center" justifyContent="center">
                                     <Grid item xs={12} sm={12} md={9} lg={9}>
-                                        <p className={classes.papersLabel}>{t('my_papers.title')}My Papers</p>
+                                        <p className={classes.papersLabel}>{t('my_papers.title')}</p>
                                     </Grid>
                                     <Grid item xs={12} sm={12} md={3} lg={3}>
                                         {typeof (userInfo) !== "undefined" && typeof (userInfo.theses) !== "undefined" ?

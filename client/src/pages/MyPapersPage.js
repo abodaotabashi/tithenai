@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { redirectToLoginPage } from '../utils/Redirecter';
 import NavbarWithUser from '../components/NavbarWithUser';
 import Footer from '../components/Footer';
-import { withTranslation } from 'react-i18next';
+import { useTranslation, withTranslation } from 'react-i18next';
 
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
@@ -15,6 +15,7 @@ import { sortAlphabetically } from '../utils/HelperFunctions';
 import UploadIcon from '@mui/icons-material/Upload';
 import ThesisCard from '../components/ThesisCard';
 import NoResultsIllustration from "../assets/gifs/NoResults.gif";
+import { useTabContext } from '@mui/base';
 
 const UploadButton = styled(Button)(({ theme }) => ({
     color: theme.palette.secondary.main,
@@ -86,7 +87,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const MyPapersPage = () => {
-    const { t } = this.props;
+    const { t } = useTranslation();
     const classes = useStyles();
     const { userAuth } = useContext(AuthContext);
     const navigator = useNavigate();

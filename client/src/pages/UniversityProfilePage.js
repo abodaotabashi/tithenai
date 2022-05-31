@@ -6,7 +6,7 @@ import { getUniversity } from '../Service';
 import { AuthContext } from '../utils/Context';
 import { redirectToLoginPage } from '../utils/Redirecter';
 import { getChartBackgroundColors, getChartBorderColors, getThisYearData, getTopKResearchers, getTopTags, getYearsData, sortObjectsDescending } from '../utils/HelperFunctions';
-import { withTranslation } from 'react-i18next';
+import { withTranslation, useTranslation } from 'react-i18next';
 
 import NavbarWithUser from '../components/NavbarWithUser';
 import Footer from '../components/Footer';
@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const UniversityProfilePage = () => {
-    const { t } = this.props;
+    const { t } = useTranslation();
     const [universityInfo, setUniversityInfo] = useState();
     const [universityID, setUniversityID] = useState("");
 

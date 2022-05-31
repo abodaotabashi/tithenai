@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import LoadingPage from './LoadingPage';
 import { AuthContext } from '../utils/Context';
 import { redirectToMainPage, redirectToRegisterPage } from '../utils/Redirecter';
-import { withTranslation } from 'react-i18next';
+import { useTranslation, withTranslation } from 'react-i18next';
 
 import '../assets/styles.css';
 import TithenaiLogo from '../assets/logos/Uncircled Navyblue.png';
@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const LoginPage = () => {
-    const { t } = this.props;
+    const { t } = useTranslation();
     const classes = useStyles();
     const navigator = useNavigate();
     const { userAuth } = useContext(AuthContext);

@@ -12,7 +12,7 @@ import { searchTheses, searchUniversities } from '../../Service';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../utils/Context';
 import { redirectToLoginPage, redirectToSearchResultsPage } from '../../utils/Redirecter';
-import { withTranslation } from 'react-i18next';
+import { useTranslation, withTranslation } from 'react-i18next';
 
 import WelcomeIllustration from "../../assets/gifs/Welcome.gif";
 import '../../assets/styles.css';
@@ -111,7 +111,7 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 }));
 
 const SearchPage = () => {
-    const { t } = this.props;
+    const { t } = useTranslation();
     const classes = useStyles();
     const theme = useTheme();
     const [selectedTab, setSelectedTab] = useState(0);

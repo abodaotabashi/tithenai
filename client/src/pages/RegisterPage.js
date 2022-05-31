@@ -4,7 +4,7 @@ import { CssBaseline, Divider, Grid, IconButton, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import RegisterForm from '../containers/RegisterForm';
-import { withTranslation } from 'react-i18next';
+import { withTranslation, useTranslation } from 'react-i18next';
 
 import RegisterGif from '../assets/gifs/Register_480.gif';
 import GoogleGif from '../assets/gifs/GoogleLogoOptimized.gif';
@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 const RegisterPage = (props) => {
-    const { t } = this.props;
+    const { t } = useTranslation();
     const classes = useStyles();
     const navigator = useNavigate();
 

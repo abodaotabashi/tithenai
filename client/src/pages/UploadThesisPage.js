@@ -8,7 +8,7 @@ import UploadThesisForm from '../containers/UploadThesisForm';
 import { redirectToLoginPage, redirectToMyPapersPage } from '../utils/Redirecter';
 import LoadingDialog from '../components/LoadingDialog';
 import { uploadThesis } from '../Service';
-import { withTranslation } from 'react-i18next';
+import { withTranslation, useTranslation } from 'react-i18next';
 
 import { makeStyles } from '@mui/styles';
 import '../assets/styles.css';
@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UploadThesisPage = () => {
-    const { t } = this.props;
+    const { t } = useTranslation();
     const classes = useStyles();
     const { userAuth } = useContext(AuthContext);
     const [ showLoading, setShowLoading ] = useState(false);

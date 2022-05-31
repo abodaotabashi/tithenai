@@ -6,7 +6,7 @@ import NavbarWithUser from '../components/NavbarWithUser';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { redirectToLoginPage, redirectToMainPage } from '../utils/Redirecter';
 import LoadingDialog from '../components/LoadingDialog';
-import { withTranslation } from 'react-i18next';
+import { withTranslation, useTranslation } from 'react-i18next';
 
 import { makeStyles } from '@mui/styles';
 import '../assets/styles.css';
@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ViewThesisPage = () => {
-    const { t } = this.props;
+    const { t } = useTranslation();
     const classes = useStyles();
     const { userAuth } = useContext(AuthContext);
     const [ showLoading, setShowLoading ] = useState(false);

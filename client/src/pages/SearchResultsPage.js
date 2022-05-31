@@ -10,7 +10,7 @@ import NavbarWithUser from '../components/NavbarWithUser';
 import SearchThesisPanel from '../components/SearchThesisPanel';
 import SearchUniversityPanel from '../components/SearchUniversityPanel';
 import UniversityCard from '../components/UniversityCard';
-import { withTranslation } from 'react-i18next';
+import { withTranslation, useTranslation } from 'react-i18next';
 
 import NoResultsIllustration from "../assets/gifs/NoResults.gif";
 import '../assets/styles.css';
@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SearchResultsPage = (props) => {
-    const { t } = this.props;
+    const { t } = useTranslation();
     const location = useLocation();
     const navigator = useNavigate();
     const { userAuth } = useContext(AuthContext);

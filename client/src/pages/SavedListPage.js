@@ -3,7 +3,7 @@ import { Button, CssBaseline, Grid, Pagination, Paper, Typography } from '@mui/m
 import Footer from '../components/Footer';
 import NavbarWithUser from '../components/NavbarWithUser';
 import ThesisCard from '../components/ThesisCard';
-import { withTranslation } from 'react-i18next';
+import { withTranslation, useTranslation } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../utils/Context';
@@ -64,7 +64,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const SavedListPage = (props) => {
-    const { t } = this.props;
+    const { t } = useTranslation();
     const navigator = useNavigate();
     const { userAuth } = useContext(AuthContext);
     const [savedTheses, setSavedTheses] = useState(null);

@@ -178,14 +178,14 @@
         "you_two":"çalışma yayınladınız. Devam edin.",
         "pages":"Sayfalar:",
         "no_paper":"Henüz çalışma yayınlamadınız, o yüzden başlayın ve yeni bir çalışma yayınlayın",
-        "upload":"Upload a New Paper"
+        "upload":"Yeni bir çalışma yükleyin"
     },
     "my_profile":{
         "error":"Fotoğraf yüklenemedi. Lütfen tekrar deneyiniz!",
         "update_photo":"Profil fotoğrafını güncelle",
         "update_pass":"Şifreyi güncelle",
         "we_will":"Şifrenizi yenilemeniz için E-Mail adresinize bir bağlantı göndereceğiz.",
-        "send_me":"Send Me A Link"
+        "send_me":"Bana bağlantı gönder"
     },
     "not_found":{
         "you_didnt":"İnternet'iniz kesilmedi. Bu sadece bir 404 hatası!",
@@ -204,7 +204,7 @@
         "found":"Kaydedilen tez bulunmuştur:",
         "pages":"Sayfalar:",
         "you_didnt":"Hiçbir tezi kaydetmediniz.",
-        "back":"Anasayfaya dçn"
+        "back":"Anasayfaya dön"
     },
     "sresults":{
         "searching":"Aranıyor",
