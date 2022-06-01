@@ -98,7 +98,8 @@ async function addNewUser(data) {
         userLastname: data.userdata.userLastname,
         userGender: data.userdata.userGender,
         userAdmin: false,
-        userSavedTheses: []
+        userSavedTheses: [],
+        banStatus: false
     }
 
     // When user try to authenticate with google, they might exist in the database
@@ -260,6 +261,26 @@ async function updateUserImage(data) {
     }
 }
 
+async function banUser(uid) {
+    return db
+        .collection(USERS_COLLECTION)
+        .doc(uid)
+        .update({ banStatus: true })
+}
+
+async function isUserBanned(uid) {
+    const userData = await getUserDataById(uid);
+    if (!userData.banStatus) {
+        console.log("User is NOT Banned");
+        return true
+    } else {
+        console.log("User is Banned");
+        return ("THIS USER IS BANNED ")
+    }
+}
+
+
+
 // =========================================================== Universities
 
 async function getAllUnis() {
@@ -292,9 +313,9 @@ async function uploadUniImages() {
         // const file = await storage.bucket(BUCKETNAME).upload("database/uniImages/" + filename, {
         //     destination: "uniImages/" + filename
         // });
-        const file = await storage.bucket(BUCKETNAME).file("uniImages/"+ filename); 
-        await file.makePublic(); 
-        const publicUrl = file.publicUrl(); 
+        const file = await storage.bucket(BUCKETNAME).file("uniImages/" + filename);
+        await file.makePublic();
+        const publicUrl = file.publicUrl();
         console.log(publicUrl);
     });
 }
@@ -711,6 +732,15 @@ async function getAllReports() {
         })
 }
 
+
+async function deleteReport(reportId) {
+    return db
+        .collection(REPORTS_COLLECTION)
+        .doc(reportId)
+        .delete()
+}
+
+
 // HP6P8
 // =========================================================== Ratings
 
@@ -812,6 +842,9 @@ module.exports.isThesisSaved = isThesisSaved;
 module.exports.deleteThesis = deleteThesis;
 module.exports.updateThesis = updateThesis;
 module.exports.getThesis = getThesis;
+module.exports.banUser = banUser;
+module.exports.deleteReport = deleteReport;
+module.exports.isUserBanned = isUserBanned;
 
 // =========================================================== Private funcitons 
 
