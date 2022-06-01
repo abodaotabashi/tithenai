@@ -221,15 +221,6 @@ const UniversityProfilePage = () => {
                                         :
                                         null
                                     }
-                                    {universityInfo !== null && typeof (universityInfo) !== "undefined" && Object.keys(universityInfo.statistics.tagsStats).length !== 0 ?
-                                        <Grid item container xs={12} sm={12} md={6} lg={6} alignItems="center" justifyContent="center" style={{margin: "1vh 0"}}>
-                                            <Grid item xs={11} sm={11} md={11} lg={11} className={classes.graphicContainer}>
-                                                <BarChart data={tagsStats} title={t('uniprofile.toptags')} />
-                                            </Grid>
-                                        </Grid>
-                                        :
-                                        null
-                                    }
                                     {universityInfo !== null && typeof (universityInfo) !== "undefined" && Object.keys(universityInfo.statistics.typesStats).length !== 0 ?
                                         <Grid item container xs={12} sm={12} md={6} lg={6} alignItems="center" justifyContent="center" style={{margin: "1vh 0"}}>
                                             <Grid item xs={11} sm={11} md={11} lg={11} className={classes.graphicContainer}>
@@ -249,9 +240,18 @@ const UniversityProfilePage = () => {
                                         null
                                     }
                                     {universityInfo !== null && typeof (universityInfo) !== "undefined" && Object.keys(universityInfo.statistics.typesStats).length !== 0 ?
-                                        <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center" style={{margin: "1vh 0"}}>
+                                        <Grid item container xs={12} sm={12} md={6} lg={6} alignItems="center" justifyContent="center" style={{margin: "1vh 0"}}>
                                             <Grid item xs={11} sm={11} md={11} lg={11} className={classes.graphicContainer}>
                                                 <BarChart data={yearsStats} title={t('uniprofile.totaltheses')} />
+                                            </Grid>
+                                        </Grid>
+                                        :
+                                        null
+                                    }
+                                    {universityInfo !== null && typeof (universityInfo) !== "undefined" && Object.keys(universityInfo.statistics.tagsStats).length !== 0 ?
+                                        <Grid item container xs={12} sm={12} md={12} lg={12} alignItems="center" justifyContent="center" style={{margin: "1vh 0"}}>
+                                            <Grid item xs={11} sm={11} md={11} lg={11} className={classes.graphicContainer}>
+                                                <BarChart data={tagsStats} title={t('uniprofile.toptags')} />
                                             </Grid>
                                         </Grid>
                                         :

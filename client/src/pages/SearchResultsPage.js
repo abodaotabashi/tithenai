@@ -5,17 +5,18 @@ import { AuthContext } from '../utils/Context';
 import { redirectToLoginPage, redirectToSearchResultsPage, redirectToUniversityProfilePage } from '../utils/Redirecter';
 import { searchTheses, searchUniversities } from '../Service';
 import { sortAlphabetically } from '../utils/HelperFunctions';
+import { useTranslation } from 'react-i18next';
+
 import Footer from '../components/Footer';
 import NavbarWithUser from '../components/NavbarWithUser';
 import SearchThesisPanel from '../components/SearchThesisPanel';
 import SearchUniversityPanel from '../components/SearchUniversityPanel';
 import UniversityCard from '../components/UniversityCard';
-import { withTranslation, useTranslation } from 'react-i18next';
+import ThesisCard from '../components/ThesisCard';
 
 import NoResultsIllustration from "../assets/gifs/NoResults.gif";
 import '../assets/styles.css';
 import { makeStyles } from '@mui/styles';
-import ThesisCard from '../components/ThesisCard';
 
 
 const useStyles = makeStyles(theme => ({
@@ -142,7 +143,7 @@ const SearchResultsPage = (props) => {
                                 label={t('sresults.searching')}
                                 onChange={(event) => setResultType(event.target.value)}>
                                 <MenuItem style={{fontFamily: 'Ubuntu'}} value={"Theses"}>{t('sresults.theses')}</MenuItem>
-                                <MenuItem style={{fontFamily: 'Ubuntu'}} value={"Universities"}>s{t('sresults.universities')}</MenuItem>
+                                <MenuItem style={{fontFamily: 'Ubuntu'}} value={"Universities"}>{t('sresults.universities')}</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -225,4 +226,4 @@ const SearchResultsPage = (props) => {
     )
 }
 
-export default withTranslation()(SearchResultsPage);
+export default SearchResultsPage;

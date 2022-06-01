@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import LoadingDialog from "../components/LoadingDialog";
 import ForgotPasswordDialog from "../components/ForgotPasswordDialog";
-import { signInWithEmail, forgetPassword, signUpWithGoogle } from "../auth/auth";  
+import { signInWithEmail, forgetPassword, signUpWithGoogle } from "../auth/auth";
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';

@@ -28,6 +28,8 @@ import '../assets/styles.css';
 import { sortAlphabetically } from '../utils/HelperFunctions';
 import { signUpWithEmail } from '../auth/auth';
 import { getAllUnis } from '../Service';
+import { redirectToLoginPage } from '../utils/Redirecter';
+
 class RegisterForm extends Component {
     state = {
         showPassword: false,
@@ -54,6 +56,7 @@ class RegisterForm extends Component {
                 this.setState({
                     showLoading: false
                 });
+                this.props.redirectToLoginPage();
             }).catch(error => {
                 console.log(error)
                 this.setState({

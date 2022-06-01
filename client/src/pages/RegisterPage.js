@@ -4,7 +4,7 @@ import { CssBaseline, Divider, Grid, IconButton, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import RegisterForm from '../containers/RegisterForm';
-import { withTranslation, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import RegisterGif from '../assets/gifs/Register_480.gif';
 import GoogleGif from '../assets/gifs/GoogleLogoOptimized.gif';
@@ -93,8 +93,13 @@ const RegisterPage = (props) => {
         signUpWithGoogle()
             .then((result)=>{
                 console.log(result)
-            }).catch(console.log)
+            }).catch(error => console.log(error))
     }
+
+    const redirecterToLoginPage = () => {
+        redirectToLoginPage(navigator);
+    }
+
     return(
         <div className="registerPageContainer">
             <Navbar />
@@ -107,7 +112,7 @@ const RegisterPage = (props) => {
                         {t('register_page.create')}
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} >
-                        <RegisterForm />
+                        <RegisterForm redirectToLoginPage={redirecterToLoginPage}  />
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} container alignItems="center" justifyContent="center">
                         <Divider variant="middle" style={{textAlign: "center", width: "80%", padding: "0.5vh 0", color: "#14325A"}}>{t('register_page.or')}</Divider>
@@ -133,4 +138,4 @@ const RegisterPage = (props) => {
     );
 }
 
-export default withTranslation()(RegisterPage);
+export default RegisterPage;

@@ -6,15 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import { getUserInfo, updateUser, updateImage } from '../Service';
 import { AuthContext } from '../utils/Context';
 import { redirectToLoginPage, redirectToMyPapersPage } from '../utils/Redirecter';
+import { forgetPassword } from '../auth/auth';
 
 import NavbarWithUser from '../components/NavbarWithUser';
 import ProfileInfoViewer from '../components/ProfileInfoViewer';
 import EditProfileForm from '../containers/EditProfileForm';
 import ImageViewDialog from '../components/ImageViewDialog';
 import ImageCropperDialog from '../components/ImageCropperDialog';
+import LoadingDialog from '../components/LoadingDialog';
 import Footer from '../components/Footer';
 import AnimatedNumber from 'react-animated-number';
-import { withTranslation, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
@@ -125,6 +127,7 @@ const MyPapersBox = styled(Paper)(({ theme }) => ({
 
 const MyProfilePage = () => {
     const { t } = useTranslation();
+    const [showLoading, setShowLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [userInfo, setUserInfo] = useState();
     const [userPhoto, setUserPhoto] = useState("");
@@ -202,6 +205,16 @@ const MyProfilePage = () => {
         }
     }
 
+    const handleSendResetPasswordEmail = () => {
+        // Send Email to reset the password to the entered email address if exists in the database
+        setShowLoading(true);
+        forgetPassword(userInfo.email)
+            .then((result)=>{
+                console.log(result);
+                setShowLoading(false)
+            })
+    }
+
     return (
         <div className="whitePageContainer">
             <NavbarWithUser hideUpload={false} />
@@ -250,7 +263,7 @@ const MyProfilePage = () => {
                                 </AccordionDetails>
                                 <Divider />
                                 <AccordionActions>
-                                    <ResetPasswordButton startIcon={<TelegramIcon />} style={{ fontFamily: "Ubuntu", marginLeft: "1vw" }} >{t('my_profile.send_me')}</ResetPasswordButton>
+                                    <ResetPasswordButton startIcon={<TelegramIcon />} style={{ fontFamily: "Ubuntu", marginLeft: "1vw" }} onClick={handleSendResetPasswordEmail}>{t('my_profile.send_me')}</ResetPasswordButton>
                                 </AccordionActions>
                             </Accordion>
                             <br />
@@ -290,6 +303,10 @@ const MyProfilePage = () => {
                     openDialog={openViewImageDialog}
                     setOpenDialog={setOpenViewImageDialog}
                     image={userPhoto} />
+                <LoadingDialog
+                    openDialog={showLoading}
+                    label={"Sending the email ..."}
+                    />
             </Paper>
             <br />
             <Footer />
@@ -298,4 +315,4 @@ const MyProfilePage = () => {
     );
 }
 
-export default withTranslation()(MyProfilePage);
+export default MyProfilePage;
