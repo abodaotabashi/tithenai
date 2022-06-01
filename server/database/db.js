@@ -275,7 +275,7 @@ async function isUserBanned(uid) {
         return true
     } else {
         console.log("User is Banned");
-        return ("THIS USER IS BANNED ")
+        return false
     }
 }
 
