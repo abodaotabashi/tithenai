@@ -8,7 +8,7 @@ import UploadThesisForm from '../containers/UploadThesisForm';
 import { redirectToLoginPage, redirectToMyPapersPage } from '../utils/Redirecter';
 import LoadingDialog from '../components/LoadingDialog';
 import { uploadThesis } from '../Service';
-import { withTranslation, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { makeStyles } from '@mui/styles';
 import '../assets/styles.css';
@@ -127,4 +127,4 @@ const UploadThesisPage = () => {
     )
 }
 
-export default withTranslation()(UploadThesisPage);
+export default UploadThesisPage;

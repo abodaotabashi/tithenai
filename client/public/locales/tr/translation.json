@@ -53,8 +53,8 @@
         "state":"İl/Şehir"
     },
     "thesis":{
-        "save":"Kaydet",
-        "unsave":"Kaydetmeyi iptal et",
+        "save":"KAYDET",
+        "unsave":"KAYDETMEYİ İPTAL ET",
         "thesis":"Tez",
         "language":"Dil:",
         "type":"Türü:",
@@ -63,11 +63,11 @@
         "tags":"Tag'ler:",
         "abstract":"Özet:",
         "your_rate":"Değerlendirmeniz",
-        "no_rating":"Henüz değerlendirme yapılmadı!",
+        "no_rating":"Henüz değerlendirilmedi!",
         "edit":"Düzenle",
-        "download":"İndir",
-        "delete":"Sil",
-        "report":"Bildir",
+        "download":"İNDİR",
+        "delete":"SİL",
+        "report":"BİLDİR",
         "comments":" Yorumlar",
         "no_comments":"Henüz yorum yapılmadı!",
         "show_more":"Daha fazla göster",
@@ -77,7 +77,7 @@
     },
     "upload":{
         "drag_n_drop":"Tez dosyanızı sürükleyip bırakın veya seçmek için buraya tıklayın (Maksimum Boyut: 64 Megabayt)",
-        "delete":"Sil"
+        "delete":"SİL"
     },
     "edit_profile":{
         "too_short":"Çok kısa!",
@@ -159,7 +159,7 @@
         "to_learn":"Daha fazla bilgi için,",
         "click":"buraya tıklayın.",
         "about_tithenai":"Tithenai, araştırmacıların çalışmalarını paylaşmaları ve başkalarına ilham vermeleri veya ilham bulmaları için bir sosyal platformdur. Bilgiyi daha erişilebilir kılmaya inanıyor ve akademisyenlerin ve lisans öğrencilerinin, araştırma yürütürken ya da yayına hazır bir tezi varsa ve çalışmalarını sunmak istiyorlarsa, sürecin her adımında işbirliği yapmalarına ve iletişim kurmalarına yardımcı olacak bir ortam sağlamayı amaçlıyoruz.",
-        "about":"Tithenai hakkında"      
+        "about":"Tithenai hakkında"
     },
     "search_page":{
         "theses":"Tezler",
@@ -207,9 +207,9 @@
         "back":"Anasayfaya dön"
     },
     "sresults":{
-        "searching":"Aranıyor",
-        "theses":"Tezler",
-        "universities":"Üniversiteler",
+        "searching":"Aranan",
+        "theses":"TEZLER",
+        "universities":"ÜNİVERSİTELER",
         "resultsf":"Sonuç bulunmuştur:",
         "oops":"Tüh! Sonuç bulunamadı."
     },

@@ -30,7 +30,7 @@ const UpdateButton = styled(Button)(({ theme }) => ({
     },
 }));
 
-export default  withTranslation()(class EditProfileForm extends Component {
+class EditProfileForm extends Component {
     state = {
         initialFirstname: this.props.userInfo.firstname,
         initialLastname: this.props.userInfo.lastname,
@@ -219,4 +219,6 @@ export default  withTranslation()(class EditProfileForm extends Component {
             </Formik>
         );
     }
-})
+}
+
+export default withTranslation()(EditProfileForm);

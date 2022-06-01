@@ -6,7 +6,7 @@ import { getUniversity } from '../Service';
 import { AuthContext } from '../utils/Context';
 import { redirectToLoginPage } from '../utils/Redirecter';
 import { getChartBackgroundColors, getChartBorderColors, getThisYearData, getTopKResearchers, getTopTags, getYearsData, sortObjectsDescending } from '../utils/HelperFunctions';
-import { withTranslation, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import NavbarWithUser from '../components/NavbarWithUser';
 import Footer from '../components/Footer';
@@ -317,4 +317,4 @@ const UniversityProfilePage = () => {
     );
 }
 
-export default withTranslation()(UniversityProfilePage);
+export default UniversityProfilePage;

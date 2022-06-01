@@ -53,7 +53,7 @@ const TagsLargeButtonContainer = styled(Grid)(({ theme }) => ({
     },
 }));
 
-export default withTranslation()(class UploadThesisForm extends Component {
+class UploadThesisForm extends Component {
     state = {
         languages: [],
         tagsList: [],
@@ -437,4 +437,6 @@ export default withTranslation()(class UploadThesisForm extends Component {
             </Formik>
         )
     }
-})
+}
+
+export default withTranslation()(UploadThesisForm)

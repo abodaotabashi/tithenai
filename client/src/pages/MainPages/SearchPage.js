@@ -12,7 +12,7 @@ import { searchTheses, searchUniversities } from '../../Service';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../utils/Context';
 import { redirectToLoginPage, redirectToSearchResultsPage } from '../../utils/Redirecter';
-import { useTranslation, withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import WelcomeIllustration from "../../assets/gifs/Welcome.gif";
 import '../../assets/styles.css';
@@ -191,4 +191,4 @@ const SearchPage = () => {
     )
 }
 
-export default withTranslation()(SearchPage);
+export default SearchPage;

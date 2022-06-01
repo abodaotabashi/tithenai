@@ -3,7 +3,7 @@ import { Button, CssBaseline, Grid, Pagination, Paper, Typography } from '@mui/m
 import Footer from '../components/Footer';
 import NavbarWithUser from '../components/NavbarWithUser';
 import ThesisCard from '../components/ThesisCard';
-import { withTranslation, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../utils/Context';
@@ -203,4 +203,4 @@ const SavedListPage = (props) => {
     )
 }
 
-export default withTranslation()(SavedListPage);
+export default SavedListPage;

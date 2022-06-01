@@ -8,7 +8,7 @@ import Footer from '../../components/Footer';
 
 import { makeStyles } from '@mui/styles';
 import LandingWelcomeGif from '../../assets/gifs/LandingWelcome.gif';
-import { useTranslation, withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import '../../assets/styles.css';
 const useStyles = makeStyles(theme => ({
@@ -120,4 +120,4 @@ const LandingPage = () => {
     )
 }
 
-export default withTranslation()(LandingPage);
+export default LandingPage;

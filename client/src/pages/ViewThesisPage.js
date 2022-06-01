@@ -6,7 +6,7 @@ import NavbarWithUser from '../components/NavbarWithUser';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { redirectToLoginPage, redirectToMainPage } from '../utils/Redirecter';
 import LoadingDialog from '../components/LoadingDialog';
-import { withTranslation, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { makeStyles } from '@mui/styles';
 import '../assets/styles.css';
@@ -404,4 +404,4 @@ const ViewThesisPage = () => {
     )
 }
 
-export default withTranslation()(ViewThesisPage);
+export default ViewThesisPage;

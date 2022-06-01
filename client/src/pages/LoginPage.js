@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import LoadingPage from './LoadingPage';
 import { AuthContext } from '../utils/Context';
 import { redirectToMainPage, redirectToRegisterPage } from '../utils/Redirecter';
-import { useTranslation, withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import '../assets/styles.css';
 import TithenaiLogo from '../assets/logos/Uncircled Navyblue.png';
@@ -117,4 +117,4 @@ const LoginPage = () => {
     );
 }
 
-export default withTranslation()(LoginPage);
+export default LoginPage;

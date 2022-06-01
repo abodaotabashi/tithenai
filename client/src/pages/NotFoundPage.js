@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import NotFoundIllustration from "../assets/gifs/NotFound.gif";
 import Navbar from '../components/Navbar';
 import HomeIcon from '@mui/icons-material/Home';
-import { withTranslation, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -83,4 +83,4 @@ const NotFoundPage = () => {
     )
 }
 
-export default withTranslation()(NotFoundPage);
+export default NotFoundPage;
