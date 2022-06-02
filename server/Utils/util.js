@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+require("dotenv").config();
 
 // test 
 // console.log(turkishtoEnglish('ğğĞĞÜÜüüŞŞşşÖÖööÇÇçç'))
@@ -42,16 +43,18 @@ function formatFirebaseDate(date, format) {
  * @param {*} receiver is the email of the receiver 
  * @param {*} content is the content of the email, which can be plain text or html
  * @returns "email was not sent" or "email was sent"
- * @example sendEmail("yourmail@google.com", "<h>hi this is a test</h>")
+ * @example sendEmail("yourMail@gmail.com", "<b>hi this is a test</b>")
+ * @description 
  */
 
 async function sendEmail(receiver, content) {
-    // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         service: 'hotmail',
+        port: 587,
+        secure: false,
         auth: {
             user: "tithenai@outlook.com",
-            pass: "4mQpMdMYba6myjkT",
+            pass: process.env.EMAIL_PASSWORD // TODO: add .env to the build environment
         },
     });
     const options = {
@@ -68,6 +71,8 @@ async function sendEmail(receiver, content) {
         return "email was sent"
     }
 }
+
+
 
 module.exports.turkishtoEnglish = turkishtoEnglish
 module.exports.sortAlphabetically = sortAlphabetically
