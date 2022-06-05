@@ -25,6 +25,7 @@
     "navbar":{
         "languages":"Diller",
         "home":"Anasayfa",
+        "admin_panel": "Admin Paneli",
         "upload":"Yükle",
         "profile":"Profil",
         "my_papers":"Tezlerim",

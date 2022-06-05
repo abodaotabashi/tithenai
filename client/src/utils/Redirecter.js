@@ -51,3 +51,7 @@ export const redirectToUniversityProfilePage = (navigator, UniversityID) => {
         }
     });
 }
+
+export const redirectToAdminPanelPage = (navigator) => {
+    navigator("/adminPanel");
+}

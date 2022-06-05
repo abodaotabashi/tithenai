@@ -25,6 +25,7 @@
     "navbar":{
         "languages":"Languages",
         "home":"Home",
+        "admin_panel": "Admin Panel",
         "upload":"Upload",
         "profile":"Profile",
         "my_papers":"My Papers",
