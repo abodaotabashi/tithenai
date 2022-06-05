@@ -1,28 +1,35 @@
 import React from 'react';
-import DateFnsUtils from '@date-io/date-fns';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import '../assets/styles.css';
 
-const DatePicker = (props) => {
+const CustomDatePicker = (props) => {
     const { label, value, onChange, max, min, isRequired, views, format, disable} = props;
-    return(
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <KeyboardDatePicker
-                margin="normal"
-                views={(views !== null) ? views : ["year", "month", "date"]}
+    return (
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
                 label={label}
-                required={isRequired ? true : false}
-                inputVariant="outlined"
-                format={(format !== null) ? format : "dd/MM/yyyy"}
+                color="secondary"
                 value={value}
-                onChange={onChange}
                 disabled={typeof(disable) !== "undefined" ? disable : false}
-                style={{width: "100%"}}
+                onChange={onChange}
+                views={(views !== null) ? views : ["year", "month", "day"]}
+                disableFuture
+                inputFormat={(format !== null) ? format : "dd/MM/yyyy"}
                 minDate={typeof(min) !== "undefined" ? min : undefined}
                 maxDate={typeof(max) !== "undefined" ? max : undefined}
-                />
-        </MuiPickersUtilsProvider>
-    );
+                renderInput={(params) =>
+                    <TextField
+                        required={isRequired ? true : false}
+                        color="secondary"
+                        style={{width: "100%"}}
+                        {...params} />
+                }
+            />
+        </LocalizationProvider>
+    )
 }
 
-export default DatePicker;
+export default CustomDatePicker;

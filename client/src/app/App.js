@@ -46,7 +46,43 @@ const App = () => {
                         fontFamily: 'Ubuntu'
                     },
                 },
-            }
+            },
+            MuiSelected: {
+                styleOverrides: {
+                    backgroundColor: "#14325A",
+                        color:"#ffffff",
+                    '&::hover': {
+                        backgroundColor: "#062144",
+                        color:"#ffffff",
+                    }
+                }
+            },
+            MuiPickersDay: {
+                styleOverrides: {
+                    root: {
+                        fontFamily: "Ubuntu",
+                        "&.Mui-selected": {
+                            backgroundColor: "#14325A",
+                            color:"#ffffff",
+                            '&:hover': {
+                                willChange: "background-color",
+                                backgroundColor: "#062144",
+                                color:"#ffffff",
+                            },
+                        },
+                        dayWithMargin: {
+                            color: "#14325A",
+                            fontFamily: "Ubuntu",
+                            backgroundColor: "white",
+                            borderRadius:"0px",
+                        },
+                        '&::focus': {
+                            backgroundColor: "#062144",
+                            color:"#ffffff",
+                        }
+                    },
+                },
+            },
         },
         palette: {
             primary: {

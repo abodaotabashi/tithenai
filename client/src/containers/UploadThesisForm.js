@@ -282,7 +282,7 @@ class UploadThesisForm extends Component {
                                     />
                             </Grid>
                             <Grid item xs={12} sm={12} md={6} lg={6} style={{ padding: "0 2vw" }} container direction="column">
-                            <Field
+                                <Field
                                     as={Autocomplete}
                                     name="fieldOfStudy"
                                     filterOptions={filterOptionsDepartments}
@@ -323,7 +323,6 @@ class UploadThesisForm extends Component {
                                     as={CustomDatePicker}
                                     name="date"
                                     error={touched.date && Boolean(errors.date)}
-                                    color="secondary"
                                     onChange={(value) => {
                                         setFieldValue("date", value)
                                     }}
@@ -340,6 +339,7 @@ class UploadThesisForm extends Component {
                                     style={{ margin: "0.5vh 0" }}
                                     helperText={<ErrorMessage name="date" />}
                                     />
+                                
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} style={{ padding: "0 2vw" }} container direction="column" justifyContent="flex-start">
                                 <Field
