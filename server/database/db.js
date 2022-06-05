@@ -24,6 +24,7 @@ const UNIS_COLLECTION = 'universities';
 const THESES_COLLECTION = 'theses';
 const REPORTS_COLLECTION = 'reports';
 const COMMENTS_COLLECTION = 'comments';
+const BANNED_USERS_COLLECTION = 'bannedUsers';
 const BUCKETNAME = 'tithenai-23867.appspot.com';
 const UTILS_COLLECTION = "utils";
 
@@ -99,7 +100,9 @@ async function addNewUser(data) {
         userGender: data.userdata.userGender,
         userAdmin: false,
         userSavedTheses: [],
-        banStatus: false
+        //        banStatus: false
+        invalidReports: 0,
+        strikes: 0
     }
 
     // When user try to authenticate with google, they might exist in the database
@@ -192,6 +195,7 @@ function deleteAllUsers(nextPageToken) {
         });
 }
 
+
 async function updateUser(newUserData) {
 
     async function updateNameInCollection(collectionName, uid, userIDField, userNameField) {
@@ -261,13 +265,16 @@ async function updateUserImage(data) {
     }
 }
 
+
+/*
 async function banUser(uid) {
     return db
         .collection(USERS_COLLECTION)
         .doc(uid)
         .update({ banStatus: true })
 }
-
+*/
+/*
 async function isUserBanned(uid) {
     const userData = await getUserDataById(uid);
     if (!userData.banStatus) {
@@ -278,7 +285,7 @@ async function isUserBanned(uid) {
         return false
     }
 }
-
+*/
 
 
 // =========================================================== Universities
@@ -459,35 +466,38 @@ async function getAllTheses() {
 async function uploadThesis(data) {
     const thesisData = { ...data, thesisPdfUrl: "" }
     const uid = thesisData.thesisAuthorID;
+    if (strikeChecker(uid) < 2) {
 
-    const thesisPdfBase64 = thesisData.thesisPdfBase64;
+        const thesisPdfBase64 = thesisData.thesisPdfBase64;
 
-    delete thesisData.uid;
-    delete thesisData.thesisPdfBase64;
+        delete thesisData.uid;
+        delete thesisData.thesisPdfBase64;
 
-    thesisData.thesisUploadDate = new Date(thesisData.thesisUploadDate)
-    thesisData.thesisDate = new Date(thesisData.thesisDate)
+        thesisData.thesisUploadDate = new Date(thesisData.thesisUploadDate)
+        thesisData.thesisDate = new Date(thesisData.thesisDate)
 
-    const userData = await getUserDataById(uid);
-    thesisData.thesisAuthorName = `${userData.userFirstname} ${userData.userLastname}`
+        const userData = await getUserDataById(uid);
+        thesisData.thesisAuthorName = `${userData.userFirstname} ${userData.userLastname}`
 
-    // add new thesis
-    const addedThesis = await db.collection(THESES_COLLECTION).add(thesisData)
+        // add new thesis
+        const addedThesis = await db.collection(THESES_COLLECTION).add(thesisData)
 
-    // TODO: get a real pdf file as Base64
-    const pdfFile = await fs.readFileSync('database/myThesis.pdf', 'base64');
-    const buf = new Buffer.from(pdfFile, 'base64');
-    const file = storage.bucket(BUCKETNAME).file(`theses/${addedThesis.id}.pdf`);
-    await file.save(buf);
-    const publicUrl = await file.getSignedUrl({
-        action: 'read',
-        expires: '03-09-2491',
-    });
+        // TODO: get a real pdf file as Base64
+        const pdfFile = await fs.readFileSync('database/myThesis.pdf', 'base64');
+        const buf = new Buffer.from(pdfFile, 'base64');
+        const file = storage.bucket(BUCKETNAME).file(`theses/${addedThesis.id}.pdf`);
+        await file.save(buf);
+        const publicUrl = await file.getSignedUrl({
+            action: 'read',
+            expires: '03-09-2491',
+        });
 
-    // update document with the url
-    await db.collection(THESES_COLLECTION).doc(addedThesis.id).update({
-        thesisPdfUrl: publicUrl
-    });
+        // update document with the url
+        await db.collection(THESES_COLLECTION).doc(addedThesis.id).update({
+            thesisPdfUrl: publicUrl
+        });
+    }
+
 }
 
 async function getUserTheses(data) {
@@ -697,19 +707,21 @@ async function getThesis(thesisId) {
 async function addNewReport(data) {
     const uid = data.uid;
     const userData = await getUserDataById(uid);
-    const reporterName = userData.userFirstname + " " + userData.userLastname;
-    console.log(reporterName);
-    dbReportData = {
-        reportContent: data.reportdata.reportContent,
-        reportReporterID: data.uid,
-        reportThesisID: data.reportdata.reportThesisID,
-        reporterName: reporterName,
-        reportDate: new Date()
+    if (uid.strikes < 2) {
+        const reporterName = userData.userFirstname + " " + userData.userLastname;
+        console.log(reporterName);
+        dbReportData = {
+            reportContent: data.reportdata.reportContent,
+            reportReporterID: data.uid,
+            reportThesisID: data.reportdata.reportThesisID,
+            reporterName: reporterName,
+            reportDate: new Date()
+        }
+        return db
+            .collection(REPORTS_COLLECTION)
+            .doc()
+            .set(dbReportData)
     }
-    return db
-        .collection(REPORTS_COLLECTION)
-        .doc()
-        .set(dbReportData)
 }
 
 async function getAllReports() {
@@ -747,22 +759,24 @@ async function deleteReport(reportId) {
 async function addNewRate(data) {
     const thesisId = data.thesisId;
     const uid = data.uid;
-    const rateValue = data.rateValue;
-    const thesisData = await getThesis(thesisId);
-    const rates = thesisData["rates"];
-    rates[uid] = Number(rateValue)
+    if (strikeChecker(uid) < 2) {
+        const rateValue = data.rateValue;
+        const thesisData = await getThesis(thesisId);
+        const rates = thesisData["rates"];
+        rates[uid] = Number(rateValue)
 
-    avgrate = 0
-    count = 0
-    for (const [key, value] of Object.entries(rates)) {
-        avgrate += value
-        count += 1
+        avgrate = 0
+        count = 0
+        for (const [key, value] of Object.entries(rates)) {
+            avgrate += value
+            count += 1
+        }
+        avgrate = avgrate / count
+        return db
+            .collection(THESES_COLLECTION)
+            .doc(thesisId)
+            .update({ rates: rates, ratesAverage: avgrate })
     }
-    avgrate = avgrate / count
-    return db
-        .collection(THESES_COLLECTION)
-        .doc(thesisId)
-        .update({ rates: rates, ratesAverage: avgrate })
 }
 
 // =========================================================== Comments
@@ -770,18 +784,20 @@ async function addNewRate(data) {
 async function addNewComment(data) {
     const uid = data.uid;
     const userData = await getUserDataById(uid);
-    const commentAuthorName = userData.userFirstname + " " + userData.userLastname;
-    dbCommentData = {
-        commentAuthorID: uid,
-        commentThesisID: data.commentdata.commentThesisID,
-        commentBody: data.commentdata.commentBody,
-        commentDate: new Date(data.commentdata.commentDate),
-        commentAuthorName: commentAuthorName
+    if (strikeChecker(uid) < 2) {
+        const commentAuthorName = userData.userFirstname + " " + userData.userLastname;
+        dbCommentData = {
+            commentAuthorID: uid,
+            commentThesisID: data.commentdata.commentThesisID,
+            commentBody: data.commentdata.commentBody,
+            commentDate: new Date(data.commentdata.commentDate),
+            commentAuthorName: commentAuthorName
+        }
+        return db
+            .collection(COMMENTS_COLLECTION)
+            .doc()
+            .set(dbCommentData)
     }
-    return db
-        .collection(COMMENTS_COLLECTION)
-        .doc()
-        .set(dbCommentData)
 }
 
 async function deleteComment(commentId) {
@@ -809,6 +825,59 @@ async function getComments(thesisId) {
         comments.push(comment)
     }
     return comments;
+}
+
+// =========================================================== Admin Panel
+
+async function strike(data) {
+    const uid = data.uid;
+    const userData = await getUserInfo(uid);
+    var strikes = userData.strikes
+    const thesisId = data.thesisId
+    //cheking the Strike of the User
+    //Strike 1
+    //Delete the Thesis and increase the Strike
+    if (strikes == 0) {
+        await deleteThesis(thesisId)
+        strikes += 1
+        //Send Email
+        return db
+            .collection(USERS_COLLECTION)
+            .doc(uid)
+            .update({ strikes: strikes })
+    }
+    //Strike 2 
+    //Deleting Thesis of the User
+    else if (strikes == 1) {
+        await deleteThesis(thesisId)
+        //I addded  strikeChecker function and called it before Uploading Rating Commenting and Reporting
+        strikes += 1
+        //Send Email
+
+        return db
+            .collection(USERS_COLLECTION)
+            .doc(uid)
+            .update({ strikes: strikes })
+    }
+    //Strike 3 Ban User Delete account Delete its info from Users collection and send email
+    else if (strikes == 2) {
+        await admin.auth().deleteUser(uid)
+
+        //Send Email
+        await db.collection(USERS_COLLECTION).doc(uid).delete()
+        return db
+            .collection(BANNED_USERS_COLLECTION)
+            .doc(userData.userEmail)
+            .set({})
+    }
+}
+
+
+
+async function strikeChecker(uid) {
+    userData = getUserDataById(uid)
+    const userStrike = userData.strikes;
+    return userStrike
 }
 
 // =========================================================== Exports
@@ -842,9 +911,10 @@ module.exports.isThesisSaved = isThesisSaved;
 module.exports.deleteThesis = deleteThesis;
 module.exports.updateThesis = updateThesis;
 module.exports.getThesis = getThesis;
-module.exports.banUser = banUser;
+//module.exports.banUser = banUser;
 module.exports.deleteReport = deleteReport;
-module.exports.isUserBanned = isUserBanned;
+module.exports.strike = strike;
+//module.exports.isUserBanned = isUserBanned;
 
 // =========================================================== Private funcitons 
 

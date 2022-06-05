@@ -52,7 +52,7 @@ router.post("/updateUserImage", function (req, res, next) {
             return res.sendStatus(500)
         })
 });
-
+/*
 router.post("/banUser", function (req, res, next) {
     db.banUser(req.body.uid)
         .then((status) => {
@@ -73,7 +73,7 @@ router.post("/isUserBanned", function (req, res, next) {
             return res.sendStatus(500)
         })
 });
-
+*/
 // =========================================================== Testing endpoints 
 
 router.get("/deleteAllUsers", function (req, res, next) {

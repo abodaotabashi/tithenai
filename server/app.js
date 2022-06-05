@@ -12,6 +12,7 @@ var thesesRouter = require('./routes/theses.js');
 var reportsRouter = require('./routes/reports.js');
 var commentsRouter = require('./routes/comments.js');
 var ratessRouter = require('./routes/rates.js');
+var adminPanel = require('./routes/adminPanel.js');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use('/theses', thesesRouter);
 app.use('/reports', reportsRouter);
 app.use('/comments', commentsRouter);
 app.use('/rates', ratessRouter);
+app.use('/adminPanel', adminPanel);
 
 
 module.exports = app;
