@@ -28,7 +28,6 @@ import '../assets/styles.css';
 import { sortAlphabetically } from '../utils/HelperFunctions';
 import { signUpWithEmail } from '../auth/auth';
 import { getAllUnis } from '../Service';
-import { redirectToLoginPage } from '../utils/Redirecter';
 
 class RegisterForm extends Component {
     state = {

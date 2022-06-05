@@ -7,7 +7,8 @@ import SaudiFlag from "../assets/icons/saudi_arabia_flag.png";
 import BritainFlag from "../assets/icons/great_britain_flag.png";
 import GermanyFlag from "../assets/icons/germany_flag.png";
 import TurkeyFlag from "../assets/icons/turkey_flag.png";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
+
 const StyledMenu = withStyles({
     paper: {
         border: '1px solid #d3d4d5',
@@ -44,9 +45,8 @@ const StyledMenuItem = withStyles((theme) => ({
 const LanguageDropDownList = (props) => {
     const { openDropDownMenu, setOpenDropDownMenu } = props;
     const [ currentLang, setCurrentLang ] = useState(localStorage.getItem("i18nextLng") || "en");
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
     const handleChangeLanguage = (lang) => {
-        //TODO: Change the Language
         i18n.changeLanguage(lang);
         setOpenDropDownMenu(null);
         setCurrentLang(lang);

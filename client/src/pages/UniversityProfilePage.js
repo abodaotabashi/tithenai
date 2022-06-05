@@ -160,7 +160,7 @@ const UniversityProfilePage = () => {
                 }
             }
         }
-    }, [location, userAuth, navigator, numberOfThesesDisplayed]);
+    }, [location, userAuth, navigator, numberOfThesesDisplayed, t]);
 
     const handleShowMoreTheses = () => {
         if (universityInfo.uniTheses.length <= numberOfThesesDisplayed + 3) {

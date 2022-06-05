@@ -252,6 +252,9 @@ export const getUserInfo = async (uid) => {
         }
     }).then((result) => {
         const userInfo = {
+            invalidReports: result.data.invalidReports,
+            strikes: result.data.strikes,
+            adminStatus: result.data.userAdmin,
             status: result.data.userAcademicStatus,
             firstname: result.data.userFirstname,
             lastname: result.data.userLastname,
