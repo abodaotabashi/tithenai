@@ -876,8 +876,6 @@ async function strike(data) {
                 .delete()
         });
     }
-
-
     const uid = data.uid;
     const userData = await getUserInfo(uid);
     var strikes = userData.strikes
