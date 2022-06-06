@@ -37,5 +37,5 @@ router.get("/deleteReport", function (req, res, next) {
             return res.sendStatus(500)
         })
 });
-module.exports = router;
 
+module.exports = router;

@@ -4,7 +4,6 @@ const serviceAccount = require("./serviceAccountKey.json");
 const firebaseStorage = require("firebase-admin/storage");
 const fs = require('fs');
 const { formatBase64, formatFirebaseDate } = require("../Utils/util");
-const { log, profile } = require("console");
 
 
 
@@ -725,6 +724,9 @@ async function addNewReport(data) {
 }
 
 async function getAllReports() {
+    //TODO: Get The Name of reported Thesis
+    //TODO: Get The Name of ThesisAuthor
+    //TODO: Get The Strikes of Both Author and Reporter
     return db
         .collection(REPORTS_COLLECTION)
         .get()
@@ -829,6 +831,7 @@ async function getComments(thesisId) {
 
 // =========================================================== Admin Panel
 
+// Method of Striking Author of Reported Thesis
 async function strike(data) {
     const uid = data.uid;
     const userData = await getUserInfo(uid);
@@ -840,20 +843,19 @@ async function strike(data) {
     if (strikes == 0) {
         await deleteThesis(thesisId)
         strikes += 1
-        //Send Email
+        //TODO: Send Email
         return db
             .collection(USERS_COLLECTION)
             .doc(uid)
             .update({ strikes: strikes })
     }
-    //Strike 2 
+    //Strike 2
     //Deleting Thesis of the User
     else if (strikes == 1) {
         await deleteThesis(thesisId)
         //I addded  strikeChecker function and called it before Uploading Rating Commenting and Reporting
         strikes += 1
-        //Send Email
-
+        //TODO: Send Email
         return db
             .collection(USERS_COLLECTION)
             .doc(uid)
@@ -863,8 +865,10 @@ async function strike(data) {
     else if (strikes == 2) {
         await admin.auth().deleteUser(uid)
 
-        //Send Email
+        //TODO: Send Email
+        //TODO: Delete All Theses, Rates, Comments, Reports of the user + the profile photo of User which saved in Firebase Storage
         await db.collection(USERS_COLLECTION).doc(uid).delete()
+        //TODO: (Nice To Have): Saving Banned Emails in an array in single document instead of saving each email as single document
         return db
             .collection(BANNED_USERS_COLLECTION)
             .doc(userData.userEmail)
@@ -872,7 +876,7 @@ async function strike(data) {
     }
 }
 
-
+// TODO: Implementing Method of Striking Reporter (Increment InvalidReports and Checking Strikes)
 
 async function strikeChecker(uid) {
     userData = getUserDataById(uid)
@@ -916,7 +920,7 @@ module.exports.deleteReport = deleteReport;
 module.exports.strike = strike;
 //module.exports.isUserBanned = isUserBanned;
 
-// =========================================================== Private funcitons 
+// =========================================================== Private funcitons
 
 
 async function getUserDataById(uid) {
