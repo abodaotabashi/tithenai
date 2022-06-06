@@ -269,7 +269,7 @@ class RegisterForm extends Component {
                                         <Field
                                             as={Checkbox}
                                             name="termsAndConditions"
-                                            color="primary"
+                                            color="secondary"
                                             style={{ fontFamily: "Ubuntu" }} />
                                     }
                                     label={
@@ -281,12 +281,12 @@ class RegisterForm extends Component {
                                 <FormHelperText style={values.termsAndConditions !== true ? { display: "flex", color: "red" } : { display: "none" }}><ErrorMessage name="termsAndConditions" /></FormHelperText>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12}>
-                                <Button disabled={Boolean(errors.email) || Boolean(errors.password) || Boolean(errors.university) || Boolean(errors.status) || Boolean(errors.firstname) || Boolean(errors.lastname) || Boolean(errors.gender) || Boolean(errors.termsAndConditions)} 
-                                    data-testid="register-button" 
-                                    color="secondary" 
-                                    variant="outlined" 
-                                    size="large" 
-                                    type="submit" 
+                                <Button disabled={Boolean(errors.email) || Boolean(errors.password) || Boolean(errors.university) || Boolean(errors.status) || Boolean(errors.firstname) || Boolean(errors.lastname) || Boolean(errors.gender) || Boolean(errors.termsAndConditions)}
+                                    data-testid="register-button"
+                                    color="secondary"
+                                    variant="outlined"
+                                    size="large"
+                                    type="submit"
                                     style={{ padding: "1vh 6vw", fontFamily: "Ubuntu", marginTop: "0.5rem" }}>
                                     {t('register.register')}
                                 </Button>

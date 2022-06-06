@@ -93,6 +93,7 @@ const RegisterPage = (props) => {
         signUpWithGoogle()
             .then((result)=>{
                 console.log(result)
+                redirecterToLoginPage();
             }).catch(error => console.log(error))
     }
 
