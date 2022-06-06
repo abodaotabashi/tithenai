@@ -4,6 +4,7 @@ const serviceAccount = require("./serviceAccountKey.json");
 const firebaseStorage = require("firebase-admin/storage");
 const fs = require('fs');
 const { formatBase64, formatFirebaseDate } = require("../Utils/util");
+const { count } = require("console");
 
 
 
@@ -761,7 +762,8 @@ async function deleteReport(reportId) {
 async function addNewRate(data) {
     const thesisId = data.thesisId;
     const uid = data.uid;
-    if (strikeChecker(uid) < 2) {
+    strike = await strikeChecker(uid);
+    if (strike < 2) {
         const rateValue = data.rateValue;
         const thesisData = await getThesis(thesisId);
         const rates = thesisData["rates"];
@@ -780,6 +782,38 @@ async function addNewRate(data) {
             .update({ rates: rates, ratesAverage: avgrate })
     }
 }
+
+async function deleteUserRate(uid) {
+    const userId = uid;
+    allThesis = await getAllTheses()
+    //console.log(thesisSnapshot);
+    for (const thesis of allThesis) {
+        rates = thesis["rates"]
+        avgrate = thesis["ratesAverage"]
+        var count = Object.keys(thesis["rates"]).length
+        thesisId = thesis["thesisId"]
+        console.log(thesisId);
+        //console.log(rates);
+        if (rates.hasOwnProperty(userId)) {
+            delete rates[userId]
+            console.log(rates);
+            avgrate = 0
+            count = 0
+            for (const [key, value] of Object.entries(rates)) {
+                avgrate += value
+                count += 1
+            }
+            avgrate = avgrate / count
+        }
+        await db
+            .collection(THESES_COLLECTION)
+            .doc(thesisId)
+            .update({ rates: rates, ratesAverage: avgrate })
+    }
+    return 1
+
+}
+
 
 // =========================================================== Comments
 
@@ -833,6 +867,17 @@ async function getComments(thesisId) {
 
 // Method of Striking Author of Reported Thesis
 async function strike(data) {
+
+    async function deleteUserfromCollection(collectionName, uid, userIDField) {
+        const docs = await db.collection(collectionName).where(userIDField, '==', uid).get();
+        docs.forEach(async doc => {
+            await db.collection(collectionName)
+                .doc(doc.id)
+                .delete()
+        });
+    }
+
+
     const uid = data.uid;
     const userData = await getUserInfo(uid);
     var strikes = userData.strikes
@@ -866,8 +911,14 @@ async function strike(data) {
         await admin.auth().deleteUser(uid)
 
         //TODO: Send Email
-        //TODO: Delete All Theses, Rates, Comments, Reports of the user + the profile photo of User which saved in Firebase Storage
+        //TODO: Delete the profile photo of User which saved in Firebase Storage
+
+        await deleteUserfromCollection(COMMENTS_COLLECTION, uid, 'commentAuthorID');
+        await deleteUserfromCollection(REPORTS_COLLECTION, uid, 'reportReporterID');
+        await deleteUserfromCollection(THESES_COLLECTION, uid, 'thesisAuthorID');
+        deleteUserRate(uid)
         await db.collection(USERS_COLLECTION).doc(uid).delete()
+        await db
         //TODO: (Nice To Have): Saving Banned Emails in an array in single document instead of saving each email as single document
         return db
             .collection(BANNED_USERS_COLLECTION)
@@ -879,7 +930,7 @@ async function strike(data) {
 // TODO: Implementing Method of Striking Reporter (Increment InvalidReports and Checking Strikes)
 
 async function strikeChecker(uid) {
-    userData = getUserDataById(uid)
+    userData = await getUserDataById(uid)
     const userStrike = userData.strikes;
     return userStrike
 }
@@ -918,6 +969,7 @@ module.exports.getThesis = getThesis;
 //module.exports.banUser = banUser;
 module.exports.deleteReport = deleteReport;
 module.exports.strike = strike;
+module.exports.deleteUserRate = deleteUserRate;
 //module.exports.isUserBanned = isUserBanned;
 
 // =========================================================== Private funcitons

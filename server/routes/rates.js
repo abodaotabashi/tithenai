@@ -16,5 +16,15 @@ router.post("/addNewRate", function (req, res, next) {
 
 
 
+router.post("/deleteUserRate", function (req, res, next) {
+    db.deleteUserRate(req.body)
+        .then((status) => {
+            return status ? res.sendStatus(200) : res.sendStatus(500);
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+});
+
 module.exports = router;
 
