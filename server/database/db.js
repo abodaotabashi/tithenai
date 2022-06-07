@@ -728,23 +728,26 @@ async function getAllReports() {
     //TODO: Get The Name of reported Thesis
     //TODO: Get The Name of ThesisAuthor
     //TODO: Get The Strikes of Both Author and Reporter
-    return db
-        .collection(REPORTS_COLLECTION)
-        .get()
-        .then((querySnapshot) => {
-            const reports = []
-            querySnapshot.forEach((doc) => {
-                report = {
-                    ...doc.data(),
-                    reportId: doc.id
-                }
-                reports.push(report)
-            });
-            return reports;
-        }).catch((error) => {
-            console.log(error);
-            return false;
-        })
+    //Done
+    const reports = []
+    const reportsSnapshot = await db.collection(REPORTS_COLLECTION).get()
+    for (const reportObj of reportsSnapshot.docs) {
+        reportedThesisInfo = await getThesis(reportObj.data().reportThesisID)
+        reportedThesisTitle = reportedThesisInfo.thesisTitle
+        thesisAuthor = reportedThesisInfo.thesisAuthorName
+        authorStrike = await strikeChecker(reportedThesisInfo.thesisAuthorID)
+        reporterStrike = await strikeChecker(reportObj.data().reportReporterID)
+        report = {
+            ...reportObj.data(),
+            reportedThesisTitle: reportedThesisTitle,
+            thesisAuthor: thesisAuthor,
+            authorStrike: authorStrike,
+            reporterStrike: reporterStrike,
+            reportId: reportObj.id
+        }
+        reports.push(report)
+    }
+    return reports;
 }
 
 
