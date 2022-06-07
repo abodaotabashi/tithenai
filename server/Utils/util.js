@@ -65,9 +65,9 @@ async function sendEmail(receiver, content) {
         html: content,
     }
     const info = await transporter.sendMail(options);
-    if(info.rejected.length !== 0){
+    if (info.rejected.length !== 0) {
         return "email was not sent"
-    }else{
+    } else {
         return "email was sent"
     }
 }
@@ -78,3 +78,4 @@ module.exports.turkishtoEnglish = turkishtoEnglish
 module.exports.sortAlphabetically = sortAlphabetically
 module.exports.formatBase64 = formatBase64
 module.exports.formatFirebaseDate = formatFirebaseDate
+module.exports.sendEmail = sendEmail
