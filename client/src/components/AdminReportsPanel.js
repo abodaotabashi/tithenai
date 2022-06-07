@@ -104,7 +104,7 @@ const AdminReportsPanel = (props) => {
                                 <Divider />
                                 <AccordionDetails>
                                     <Typography variant="body1" style={{ fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "start", padding: "1vh 0" }}>
-                                        Reported Thesis: &nbsp;
+                                        {t('admin_panel.label_thesis')} &nbsp;
                                         <Typography
                                             variant="body1"
                                             component="span"
@@ -114,19 +114,19 @@ const AdminReportsPanel = (props) => {
                                         </Typography>
                                     </Typography>
                                     <Typography variant="body2" style={{ fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "start", padding: "1vh 0" }}>
-                                        Reporter: &nbsp;
+                                        {t('admin_panel.label_reporter')} &nbsp;
                                         <Typography variant="body2" component="span" style={{ fontFamily: "Ubuntu", fontWeight: "700", textAlign: "start" }}>
-                                            {report.reporterName} ({report.reporterStrikes} Strikes)
+                                            {report.reporterName} ({report.reporterStrikes} {t('admin_panel.label_strikes')})
                                         </Typography>
                                     </Typography>
                                     <Typography variant="body2" style={{ fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "start", padding: "1vh 0" }}>
-                                        Author of Reported Thesis:&nbsp;
+                                        {t('admin_panel.label_author')} &nbsp;
                                         <Typography variant="body2" component="span" style={{ fontFamily: "Ubuntu", fontWeight: "700", textAlign: "start" }}>
-                                            {report.thesisAuthorName} ({report.authorStrikes} Strikes)
+                                            {report.thesisAuthorName} ({report.authorStrikes} {t('admin_panel.label_strikes')})
                                         </Typography>
                                     </Typography>
                                     <Typography variant="body2" style={{ fontFamily: "Ubuntu-Light", fontWeight: "700", textAlign: "start" }}>
-                                        Report Content:
+                                        {t('admin_panel.label_content')}
                                     </Typography>
                                     <Typography variant="body2" style={{ fontFamily: "Ubuntu", fontWeight: "700", textAlign: "start" }}>
                                         {report.reportContent}
@@ -137,12 +137,12 @@ const AdminReportsPanel = (props) => {
                                     <AccordionButton
                                         style={{ fontFamily: "Ubuntu", marginLeft: "1vw" }}
                                         onClick={()=> handleStrikeReporter(report.reportReporterID)}>
-                                            Ignore Report & Strike Reporter
+                                            {t('admin_panel.ignore_strike_reporter')}
                                     </AccordionButton>
                                     <AccordionButton
                                         style={{ fontFamily: "Ubuntu", marginLeft: "1vw" }}
                                         onClick={()=> handleStrikeAuthor(report.thesisAuthorID, report.reportThesisID)}>
-                                            Delete Thesis & Strike Author
+                                            {t('admin_panel.delete_thesis_strike_author')}
                                     </AccordionButton>
                                 </AccordionActions>
                             </Accordion>
