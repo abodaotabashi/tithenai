@@ -308,3 +308,22 @@ export const updateImage = async (image, uid) => {
             return result;
         }).catch(error => console.log(error))
 }
+
+// =========================================================== Admin Panel
+
+export const strikeAuthor = async (values) => {
+    return await axios.post("/adminPanel/strikeAuthor", {
+            authorId: values.authorId,
+            thesisId: values.thesisId
+        })
+        .then((result) => {
+            return result;
+        }).catch(error => console.log(error))
+}
+
+export const getAllReports = async () => {
+    return await axios.get("/reports/getAllReports")
+        .then((result) => {
+            return result.data;
+        }).catch(error => console.log(error))
+}

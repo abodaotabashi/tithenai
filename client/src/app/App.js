@@ -7,9 +7,6 @@ import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import MyProfilePage from '../pages/MyProfilePage';
 import MainPage from '../pages/MainPages/MainPage';
-
-import { AuthContext } from '../utils/Context'
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import SearchResultsPage from '../pages/SearchResultsPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import MyPapersPage from '../pages/MyPapersPage';
@@ -17,6 +14,9 @@ import UploadThesisPage from '../pages/UploadThesisPage';
 import SavedListPage from '../pages/SavedListPage';
 import ViewThesisPage from '../pages/ViewThesisPage';
 import UniversityProfilePage from '../pages/UniversityProfilePage';
+
+import { AuthContext } from '../utils/Context'
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const App = () => {
     const theme = createTheme({
