@@ -68,11 +68,11 @@ router.get("/uploadUniImages", function (req, res, next) {
 router.get("/getUniversity", query("id").exists(), (req, res) =>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
-        return res.sendStatus(400).json(errors); 
+        return res.sendStatus(400).json(errors);
     }else{
-        const uniId = req.query.id; 
+        const uniId = req.query.id;
         db.getUniversity(uniId).then((uni) => {
-            return res.status(200).json(uni); 
+            return res.status(200).json(uni);
         }).catch((error) => {
             console.log(error);
             return res.sendStatus(500);

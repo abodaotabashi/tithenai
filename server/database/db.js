@@ -732,17 +732,19 @@ async function getAllReports() {
     const reports = []
     const reportsSnapshot = await db.collection(REPORTS_COLLECTION).get()
     for (const reportObj of reportsSnapshot.docs) {
-        reportedThesisInfo = await getThesis(reportObj.data().reportThesisID)
-        reportedThesisTitle = reportedThesisInfo.thesisTitle
-        thesisAuthor = reportedThesisInfo.thesisAuthorName
-        authorStrike = await strikeChecker(reportedThesisInfo.thesisAuthorID)
-        reporterStrike = await strikeChecker(reportObj.data().reportReporterID)
-        report = {
+        const reportedThesisInfo = await getThesis(reportObj.data().reportThesisID)
+        const reportedThesisTitle = reportedThesisInfo.thesisTitle
+        const thesisAuthorName = reportedThesisInfo.thesisAuthorName
+        const thesisAuthorID = reportedThesisInfo.thesisAuthorID
+        const authorStrikes = await strikeChecker(reportedThesisInfo.thesisAuthorID)
+        const reporterStrikes = await strikeChecker(reportObj.data().reportReporterID)
+        const report = {
             ...reportObj.data(),
             reportedThesisTitle: reportedThesisTitle,
-            thesisAuthor: thesisAuthor,
-            authorStrike: authorStrike,
-            reporterStrike: reporterStrike,
+            thesisAuthorName: thesisAuthorName,
+            thesisAuthorID: thesisAuthorID,
+            authorStrikes: authorStrikes,
+            reporterStrikes: reporterStrikes,
             reportId: reportObj.id
         }
         reports.push(report)
@@ -758,8 +760,6 @@ async function deleteReport(reportId) {
         .delete()
 }
 
-
-// HP6P8
 // =========================================================== Ratings
 
 async function addNewRate(data) {
@@ -869,7 +869,7 @@ async function getComments(thesisId) {
 // =========================================================== Admin Panel
 
 // Method of Striking Author of Reported Thesis
-async function strike(data) {
+async function strikeAuthor(data) {
 
     async function deleteUserfromCollection(collectionName, uid, userIDField) {
         const docs = await db.collection(collectionName).where(userIDField, '==', uid).get();
@@ -879,9 +879,9 @@ async function strike(data) {
                 .delete()
         });
     }
-    const uid = data.uid;
-    const userData = await getUserInfo(uid);
-    var strikes = userData.strikes
+    const authorId = data.authorId;
+    const userData = await getUserInfo(authorId);
+    let strikes = userData.strikes
     const thesisId = data.thesisId
     //cheking the Strike of the User
     //Strike 1
@@ -892,7 +892,7 @@ async function strike(data) {
         //TODO: Send Email
         return db
             .collection(USERS_COLLECTION)
-            .doc(uid)
+            .doc(authorId)
             .update({ strikes: strikes })
     }
     //Strike 2
@@ -904,22 +904,22 @@ async function strike(data) {
         //TODO: Send Email
         return db
             .collection(USERS_COLLECTION)
-            .doc(uid)
+            .doc(authorId)
             .update({ strikes: strikes })
     }
     //Strike 3 Ban User Delete account Delete its info from Users collection and send email
     else if (strikes == 2) {
-        await admin.auth().deleteUser(uid)
+        //TODO: Delete the profile photo of User which saved in Firebase Storage
+        await admin.auth().deleteUser(authorId)
 
         //TODO: Send Email
-        //: Delete the profile photo of User which saved in Firebase Storage
-
-        await deleteUserfromCollection(COMMENTS_COLLECTION, uid, 'commentAuthorID');
-        await deleteUserfromCollection(REPORTS_COLLECTION, uid, 'reportReporterID');
-        await deleteUserfromCollection(THESES_COLLECTION, uid, 'thesisAuthorID');
-        deleteUserRate(uid)
-        await db.collection(USERS_COLLECTION).doc(uid).delete()
-        await db
+        //TODO: Delete ThesisID from all SavedLists of Users
+        await deleteUserfromCollection(COMMENTS_COLLECTION, authorId, 'commentAuthorID');
+        await deleteUserfromCollection(REPORTS_COLLECTION, authorId, 'reportReporterID');
+        await deleteUserfromCollection(THESES_COLLECTION, authorId, 'thesisAuthorID');
+        deleteUserRate(authorId)
+        await db.collection(USERS_COLLECTION).doc(authorId).delete()
+        //await db
         //TODO: (Nice To Have): Saving Banned Emails in an array in single document instead of saving each email as single document
         return db
             .collection(BANNED_USERS_COLLECTION)
@@ -969,7 +969,7 @@ module.exports.updateThesis = updateThesis;
 module.exports.getThesis = getThesis;
 //module.exports.banUser = banUser;
 module.exports.deleteReport = deleteReport;
-module.exports.strike = strike;
+module.exports.strikeAuthor = strikeAuthor;
 module.exports.deleteUserRate = deleteUserRate;
 //module.exports.isUserBanned = isUserBanned;
 
