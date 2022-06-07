@@ -239,5 +239,20 @@
         "thisyear":"Bu yılın faaliyeti",
         "lasttheses":"Bu üniversitenin son tezleri",
         "showmore":"Daha fazla göster"
+    },
+    "admin_panel": {
+        "welcome":"Şefim, Admin panelinize tekrar hoş geldiniz!",
+        "evaluation":"RAPOR DEĞERLENDİRİLMESİ",
+        "done": "Herşey yolunda şefim. Beklemede kalan hiçbir rapor yok!",
+        "report_no": "Rapor #",
+        "loading_strike_author": "Bildirilen tez siliniyor ve yazarı uyarılıyor ...",
+        "loading_strike_reporter": "Bildiren Kullanıcı uyarılıyor ...",
+        "label_thesis" : "Bildirilen Tez:",
+        "label_reporter" : "Bildiren:",
+        "label_strikes" : "Uyarı",
+        "label_author" : "Bildirilen Tezin Yazarı:",
+        "label_content" : "Rapor içeriği:",
+        "ignore_strike_reporter" : "Yoksay ve Bildireni uyar",
+        "delete_thesis_strike_author" : "Tezi sil ve Yazarı uyar"
     }
 }

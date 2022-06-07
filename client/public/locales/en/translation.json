@@ -239,5 +239,20 @@
         "thisyear":"This Year's Activity",
         "lasttheses":"Last theses of this university",
         "showmore":"Show More"
+    },
+    "admin_panel": {
+        "welcome":"My Chief, welcome back to your admin panel!",
+        "evaluation":"Reports Evaluation",
+        "done": "The Theses are in good order chief. No waiting reports!",
+        "report_no": "Report #",
+        "loading_strike_author": "Deleting the reported thesis and striking the author ...",
+        "loading_strike_reporter": "Striking the reporter ...",
+        "label_thesis" : "Reported Thesis:",
+        "label_reporter" : "Reporter:",
+        "label_strikes" : "Strikes",
+        "label_author" : "Author of Reported Thesis:",
+        "label_content" : "Report Content:",
+        "ignore_strike_reporter" : "Ignore Report & Strike Reporter",
+        "delete_thesis_strike_author" : "Delete Thesis & Strike Author"
     }
 }
