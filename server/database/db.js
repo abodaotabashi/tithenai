@@ -725,9 +725,9 @@ async function addNewReport(data) {
 }
 
 async function getAllReports() {
-    //TODO: Get The Name of reported Thesis
-    //TODO: Get The Name of ThesisAuthor
-    //TODO: Get The Strikes of Both Author and Reporter
+    //: Get The Name of reported Thesis
+    //: Get The Name of ThesisAuthor
+    //: Get The Strikes of Both Author and Reporter
     //Done
     const reports = []
     const reportsSnapshot = await db.collection(REPORTS_COLLECTION).get()
@@ -912,7 +912,7 @@ async function strike(data) {
         await admin.auth().deleteUser(uid)
 
         //TODO: Send Email
-        //TODO: Delete the profile photo of User which saved in Firebase Storage
+        //: Delete the profile photo of User which saved in Firebase Storage
 
         await deleteUserfromCollection(COMMENTS_COLLECTION, uid, 'commentAuthorID');
         await deleteUserfromCollection(REPORTS_COLLECTION, uid, 'reportReporterID');
