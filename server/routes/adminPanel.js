@@ -14,7 +14,15 @@ router.post("/strikeAuthor", function (req, res, next) {
         })
 });
 
-
+router.post("/IncreaseInvalidReport", function (req, res, next) {
+    db.IncreaseInvalidReport(req.body.uid)
+        .then((status) => {
+            return status ? res.sendStatus(200) : res.sendStatus(500);
+        }).catch((error) => {
+            console.log(error);
+            return res.sendStatus(500)
+        })
+});
 
 module.exports = router;
 

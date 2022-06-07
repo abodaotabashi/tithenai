@@ -887,7 +887,9 @@ async function strikeAuthor(data) {
     //Strike 1
     //Delete the Thesis and increase the Strike
     if (strikes == 0) {
-        await deleteThesis(thesisId)
+        if (thesisId != undefined) {
+            await deleteThesis(thesisId)
+        }
         strikes += 1
         //TODO: Send Email
         return db
@@ -898,8 +900,9 @@ async function strikeAuthor(data) {
     //Strike 2
     //Deleting Thesis of the User
     else if (strikes == 1) {
-        await deleteThesis(thesisId)
-        //I addded  strikeChecker function and called it before Uploading Rating Commenting and Reporting
+        if (thesisId != undefined) {
+            await deleteThesis(thesisId)
+        }        //I addded  strikeChecker function and called it before Uploading Rating Commenting and Reporting
         strikes += 1
         //TODO: Send Email
         return db
@@ -936,6 +939,26 @@ async function strikeChecker(uid) {
     return userStrike
 }
 
+async function IncreaseInvalidReport(uid) {
+    userData = await getUserDataById(uid)
+    invalidReports = userData.invalidReports;
+    invalidReports += 1
+    if (invalidReports == 3) {
+        await strike({ uid: uid })
+    }
+    else if (invalidReports == 6) {
+        await strike({ uid: uid })
+    }
+    else if (invalidReports == 9) {
+        await strike({ uid: uid })
+    }
+    return db
+        .collection(USERS_COLLECTION)
+        .doc(uid)
+        .update({ invalidReports: invalidReports })
+}
+
+
 // =========================================================== Exports
 
 module.exports.deleteAllUsers = deleteAllUsers;
@@ -971,6 +994,7 @@ module.exports.getThesis = getThesis;
 module.exports.deleteReport = deleteReport;
 module.exports.strikeAuthor = strikeAuthor;
 module.exports.deleteUserRate = deleteUserRate;
+module.exports.IncreaseInvalidReport = IncreaseInvalidReport;
 //module.exports.isUserBanned = isUserBanned;
 
 // =========================================================== Private funcitons
