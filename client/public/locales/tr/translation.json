@@ -44,7 +44,7 @@
         "title":"Başlık",
         "authors":"Yazar(lar)",
         "university":"Üniversite",
-        "faculty":"Fakülte",
+        "fieldOfStudy":"Çalışma Alanı",
         "language":"Dil",
         "search_by_tags":"Tag'lere göre arama yap:",
         "tags":"Tag'ler",

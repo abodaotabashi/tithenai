@@ -27,7 +27,7 @@ const SearchThesisPanel = (props) => {
     const [searchByTitle, setSearchByTitle] = useState(true);
     const [searchByAuthor, setSearchByAuthor] = useState(false);
     const [searchByUniversity, setSearchByUniversity] = useState(false);
-    const [searchByFaculty, setSearchByFaculty] = useState(false);
+    const [searchByFieldOfStudy, setSearchByFieldOfStudy] = useState(false);
     const [searchByLanguage, setSearchByLanguage] = useState(false);
     const [errorIndicator, setErrorIndicator] = useState(false);
     const [searchedTags, setSearchedTags] = useState([]);
@@ -59,10 +59,10 @@ const SearchThesisPanel = (props) => {
             } else {
                 setSearchByUniversity(false)
             }
-            if(initialSearchingValues.dimensions.includes('faculty')) {
-                setSearchByFaculty(true)
+            if(initialSearchingValues.dimensions.includes('fieldOfStudy')) {
+                setSearchByFieldOfStudy(true)
             } else {
-                setSearchByFaculty(false)
+                setSearchByFieldOfStudy(false)
             }
             if(initialSearchingValues.dimensions.includes('language')) {
                 setSearchByLanguage(true)
@@ -76,12 +76,12 @@ const SearchThesisPanel = (props) => {
     }, [initialSearchingValues])
 
     const handleSearch = () => {
-        if( searchByTitle       === false &&
-            searchByAuthor      === false &&
-            searchByUniversity  === false &&
-            searchByFaculty     === false &&
-            searchByLanguage    === false &&
-            searchedTags.length === 0 ) {
+        if( searchByTitle           === false &&
+            searchByAuthor          === false &&
+            searchByUniversity      === false &&
+            searchByFieldOfStudy    === false &&
+            searchByLanguage        === false &&
+            searchedTags.length     === 0 ) {
                 setErrorIndicator(true);
         } else {
             setErrorIndicator(false);
@@ -96,8 +96,8 @@ const SearchThesisPanel = (props) => {
             if( searchByUniversity === true ) {
                 dimensions.push("university");
             }
-            if( searchByFaculty === true ) {
-                dimensions.push("faculty");
+            if( searchByFieldOfStudy === true ) {
+                dimensions.push("fieldOfStudy");
             }
             if( searchByLanguage === true ) {
                 dimensions.push("language");
@@ -211,14 +211,14 @@ const SearchThesisPanel = (props) => {
                     <FormControlLabel
                         control={
                         <Checkbox
-                            checked={searchByFaculty}
-                            onChange={(event) => setSearchByFaculty(event.target.checked)}
-                            name="faculty"
+                            checked={searchByFieldOfStudy}
+                            onChange={(event) => setSearchByFieldOfStudy(event.target.checked)}
+                            name="fieldOfStudy"
                             color="secondary"
                         />}
                         label={
                             <Typography variant="subtitle2" component="div" style={{fontFamily: "Ubuntu"}}>
-                                {t('search.faculty')}
+                                {t('search.fieldOfStudy')}
                             </Typography>}
                         labelPlacement="end"
                     />

@@ -173,7 +173,7 @@ const SearchResultsPage = (props) => {
                                 currentResults.map((result) => {
                                     return (
                                         <Grid item key={result.thesisId} xs={12} sm={12} md={6} lg={6} style={{margin: "1vh 0"}}>
-                                            <ThesisCard key={result.thesisId} thesis={result} savingMode={false} />
+                                            <ThesisCard thesis={result} savingMode={false} />
                                         </Grid>
                                     );
                                 })
@@ -182,7 +182,7 @@ const SearchResultsPage = (props) => {
                                 currentResults.map((result) => {
                                     return (
                                         <Grid item key={result.uniId} xs={12} sm={12} md={6} lg={6} style={{margin: "1vh 0"}} onClick={() => redirectToUniversityProfilePage(navigator, result.uniId)} >
-                                            <UniversityCard key={result.uniId} university={result} />
+                                            <UniversityCard university={result} />
                                         </Grid>
                                     );
                                 })
