@@ -466,7 +466,8 @@ async function getAllTheses() {
 async function uploadThesis(data) {
     const thesisData = { ...data, thesisPdfUrl: "" }
     const uid = thesisData.thesisAuthorID;
-    if (strikeChecker(uid) < 2) {
+    strike = await strikeChecker(uid)
+    if (strike < 2) {
 
         const thesisPdfBase64 = thesisData.thesisPdfBase64;
 
@@ -881,7 +882,7 @@ async function strikeAuthor(data) {
     }
     const authorId = data.authorId;
     const userData = await getUserInfo(authorId);
-    let strikes = userData.strikes
+    strikes = userData.strikes
     const thesisId = data.thesisId
     //cheking the Strike of the User
     //Strike 1
@@ -912,26 +913,30 @@ async function strikeAuthor(data) {
     }
     //Strike 3 Ban User Delete account Delete its info from Users collection and send email
     else if (strikes == 2) {
+
         //TODO: Delete the profile photo of User which saved in Firebase Storage
         await admin.auth().deleteUser(authorId)
-
         //TODO: Send Email
-        //TODO: Delete ThesisID from all SavedLists of Users
+        //WHAT !!?? TODO: Delete ThesisID from all SavedLists of Users
         await deleteUserfromCollection(COMMENTS_COLLECTION, authorId, 'commentAuthorID');
         await deleteUserfromCollection(REPORTS_COLLECTION, authorId, 'reportReporterID');
         await deleteUserfromCollection(THESES_COLLECTION, authorId, 'thesisAuthorID');
-        deleteUserRate(authorId)
+        await deleteUserRate(authorId)
         await db.collection(USERS_COLLECTION).doc(authorId).delete()
         //await db
-        //TODO: (Nice To Have): Saving Banned Emails in an array in single document instead of saving each email as single document
+        //: (Nice To Have): Saving Banned Emails in an array in single document instead of saving each email as single document
+        bannedEmailsObj = (await db.collection("bannedUsers").doc("bannedUsersDoc").get()).data()
+        bannedEmails = bannedEmailsObj.bannedUsersArr;
+
+        bannedEmails.push(userData.userEmail)
         return db
             .collection(BANNED_USERS_COLLECTION)
-            .doc(userData.userEmail)
-            .set({})
+            .doc("bannedUsersDoc")
+            .update({ bannedUsersArr: bannedEmails })
     }
 }
 
-// TODO: Implementing Method of Striking Reporter (Increment InvalidReports and Checking Strikes)
+// : Implementing Method of Striking Reporter (Increment InvalidReports and Checking Strikes)
 
 async function strikeChecker(uid) {
     userData = await getUserDataById(uid)
