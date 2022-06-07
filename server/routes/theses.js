@@ -47,9 +47,9 @@ router.get("/search", function (req, res, next) {
                     const englishThesisUni = turkishtoEnglish(thesis.thesisUniName).toLowerCase();
                     isSearched = englishThesisUni.includes(query) || isSearched;
                 }
-                if (dims.includes('faculty')) {
-                    const englishThesisFaculty = turkishtoEnglish(thesis.thesisFaculty).toLowerCase();
-                    isSearched = englishThesisFaculty.includes(query) || isSearched;
+                if (dims.includes('fieldOfStudy')) {
+                    const englishThesisFieldOfStudy = turkishtoEnglish(thesis.thesisFieldOfStudy).toLowerCase();
+                    isSearched = englishThesisFieldOfStudy.includes(query) || isSearched;
                 }
                 if (dims.includes('language')) {
                     const englishThesisLanguage = turkishtoEnglish(thesis.thesisLanguage).toLowerCase();

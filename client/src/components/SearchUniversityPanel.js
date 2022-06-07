@@ -19,8 +19,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SearchUniversityPanel = (props) => {
-    const {t} = useTranslation();
     const { handleSearchUniversities, initialSearchingValues } = props;
+    const { t } = useTranslation();
     const classes = useStyles();
     const [searchedValue, setSearchedValue] = useState("");
     const [searchByName, setSearchByName] = useState(true);
