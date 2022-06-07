@@ -14,6 +14,7 @@ import UploadThesisPage from '../pages/UploadThesisPage';
 import SavedListPage from '../pages/SavedListPage';
 import ViewThesisPage from '../pages/ViewThesisPage';
 import UniversityProfilePage from '../pages/UniversityProfilePage';
+import AdminPanelPage from '../pages/AdminPanelPage';
 
 import { AuthContext } from '../utils/Context'
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -138,6 +139,7 @@ const App = () => {
                             <Route path='/savedList' element={<SavedListPage />} />
                             <Route path='/view' element={<ViewThesisPage />} />
                             <Route path='/university' element={<UniversityProfilePage />} />
+                            <Route path='/adminPanel' element={<AdminPanelPage />} />
                             <Route path="*" element={<NotFoundPage />} />
                         </Routes>
                     </Router>
