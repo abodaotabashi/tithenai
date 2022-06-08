@@ -136,7 +136,7 @@ const AdminReportsPanel = (props) => {
                                 <AccordionActions>
                                     <AccordionButton
                                         style={{ fontFamily: "Ubuntu", marginLeft: "1vw" }}
-                                        onClick={()=> handleStrikeReporter(report.reportReporterID)}>
+                                        onClick={()=> handleStrikeReporter(report.reportReporterID, report.reportId)}>
                                             {t('admin_panel.ignore_strike_reporter')}
                                     </AccordionButton>
                                     <AccordionButton

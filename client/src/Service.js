@@ -311,10 +311,19 @@ export const updateImage = async (image, uid) => {
 
 // =========================================================== Admin Panel
 
-export const strikeAuthor = async (values) => {
-    return await axios.post("/adminPanel/strikeAuthor", {
-            authorId: values.authorId,
+export const strike = async (values) => {
+    return await axios.post("/adminPanel/strike", {
+            uid: values.authorId,
             thesisId: values.thesisId
+        })
+        .then((result) => {
+            return result;
+        }).catch(error => console.log(error))
+}
+
+export const increaseInvalidReport = async (reporterID) => {
+    return await axios.post("/adminPanel/increaseInvalidReport", {
+            uid: reporterID,
         })
         .then((result) => {
             return result;
@@ -325,5 +334,16 @@ export const getAllReports = async () => {
     return await axios.get("/reports/getAllReports")
         .then((result) => {
             return result.data;
+        }).catch(error => console.log(error))
+}
+
+export const deleteReport = async (reportId) => {
+    return await axios.get("/reports/deleteReport", {
+            params: {
+                reportId: reportId
+            }
+        })
+        .then((result) => {
+            return result;
         }).catch(error => console.log(error))
 }

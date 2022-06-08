@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../utils/Context';
 import { redirectToLoginPage } from '../utils/Redirecter';
 import { sortObjectsAscending } from '../utils/HelperFunctions';
-import { getAllReports, strikeAuthor } from '../Service';
+import { getAllReports, strike, increaseInvalidReport, deleteReport } from '../Service';
 
 import TabPanel, { a11yProps } from "../components/TabPanel";
 import Footer from '../components/Footer';
@@ -129,25 +129,27 @@ const AdminPanelPage = (props) => {
         }
     }
 
-    const handleStrikeReporter = async (reporterID) => {
-        //TODO: STRIKE Reporter
-        // if (typeof (userAuth) !== "undefined") {
-        //     if (userAuth) {
-        //         setShowLoading(true);
-        //         setLoadingMessage(t('admin_panel.loading_strike_reporter'));
-        //         strikeAuthor(reporterID).then((result) => {
-        //             if (result.status === 200 && result.data === "OK") {
-        //                 setReports(null);
-        //                 setShowLoading(false);
-        //                 setLoadingMessage("");
-        //                 handleUpdateReports();
-        //             }
-        //         })
-        //     } else {
-        //         redirectToLoginPage(navigator);
-        //     }
-        // }
-        console.log("STRIKE REPORTER")
+    const handleStrikeReporter = async (reporterID, reportID) => {
+        if (typeof (userAuth) !== "undefined") {
+            if (userAuth) {
+                setShowLoading(true);
+                setLoadingMessage(t('admin_panel.loading_strike_reporter'));
+                increaseInvalidReport(reporterID).then((result) => {
+                    if (result.status === 200 && result.data === "OK") {
+                        deleteReport(reportID).then((result) => {
+                            if (result.status === 200 && result.data === "OK") {
+                                setReports(null);
+                                setShowLoading(false);
+                                setLoadingMessage("");
+                                handleUpdateReports();
+                            }
+                        })
+                    }
+                })
+            } else {
+                redirectToLoginPage(navigator);
+            }
+        }
     }
 
     const handleStrikeAuthor = async (thesisAuthorID, thesisID) => {
@@ -159,7 +161,7 @@ const AdminPanelPage = (props) => {
                 }
                 setShowLoading(true);
                 setLoadingMessage(t('admin_panel.loading_strike_author'));
-                strikeAuthor(values).then((result) => {
+                strike(values).then((result) => {
                     if (result.status === 200 && result.data === "OK") {
                         setReports(null);
                         setShowLoading(false);
