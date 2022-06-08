@@ -3,8 +3,9 @@ const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
 const firebaseStorage = require("firebase-admin/storage");
 const fs = require('fs');
-const { formatBase64, formatFirebaseDate } = require("../Utils/util");
+const { formatBase64, formatFirebaseDate, sendEmail } = require("../Utils/util");
 const { count } = require("console");
+const { getMaxListeners } = require("process");
 
 
 
@@ -723,6 +724,8 @@ async function addNewReport(data) {
     }
 }
 
+
+
 async function getAllReports() {
     //: Get The Name of reported Thesis
     //: Get The Name of ThesisAuthor
@@ -759,6 +762,19 @@ async function deleteReport(reportId) {
         .delete()
 }
 
+async function getIsReported(data) {
+    const userId = data.uid;
+    const thesisId = data.thesisId;
+
+    allReports = await getAllReports()
+    for (const report of allReports) {
+        console.log(report);
+        if (userId == report["reportReporterID"] && thesisId == report["reportThesisID"]) {
+            return false
+        }
+    }
+    return true
+}
 // =========================================================== Ratings
 
 async function addNewRate(data) {
@@ -889,7 +905,7 @@ async function strike(data) {
     //Delete the Thesis and increase the Strike
     if (strikes == 0 || strikes == 1) {
         strikes += 1
-        //TODO: Send Email
+        sendEmail(userData.userEmail, "HOLAAA WHATSS UP YOU SPAMMER DONT DO IT AGAIN OR ....")
         return db
             .collection(USERS_COLLECTION)
             .doc(uid)
@@ -898,10 +914,10 @@ async function strike(data) {
 
     //Strike 3 Ban User Delete account Delete its info from Users collection and send email
     else if (strikes == 2) {
-
         //TODO: Delete the profile photo of User which saved in Firebase Storage
         await admin.auth().deleteUser(uid)
-        //TODO: Send Email
+        //: Send Email
+        sendEmail(userData.userEmail, "GOOD BYEE YOU LITTLE ANNOYING PANDA")
         //TODO: Delete ThesisID from all SavedLists of Users
         await deleteUserfromCollection(COMMENTS_COLLECTION, uid, 'commentAuthorID');
         await deleteUserfromCollection(REPORTS_COLLECTION, uid, 'reportReporterID');
@@ -919,8 +935,6 @@ async function strike(data) {
             .update({ bannedUsers: bannedEmails })
     }
 }
-
-// : Implementing Method of Striking Reporter (Increment InvalidReports and Checking Strikes)
 
 async function getStrike(uid) {
     userData = await getUserDataById(uid)
@@ -978,6 +992,7 @@ module.exports.deleteReport = deleteReport;
 module.exports.strike = strike;
 module.exports.deleteUserRate = deleteUserRate;
 module.exports.increaseInvalidReport = increaseInvalidReport;
+module.exports.getIsReported = getIsReported;
 //module.exports.isUserBanned = isUserBanned;
 
 // =========================================================== Private funcitons
