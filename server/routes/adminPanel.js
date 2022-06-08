@@ -4,8 +4,8 @@ const db = require('../database/db.js');
 
 // ===========================================================
 
-router.post("/strikeAuthor", function (req, res, next) {
-    db.strikeAuthor(req.body)
+router.post("/strike", function (req, res, next) {
+    db.strike(req.body)
         .then((status) => {
             return status ? res.sendStatus(200) : res.sendStatus(500);
         }).catch((error) => {
@@ -14,8 +14,8 @@ router.post("/strikeAuthor", function (req, res, next) {
         })
 });
 
-router.post("/IncreaseInvalidReport", function (req, res, next) {
-    db.IncreaseInvalidReport(req.body.uid)
+router.post("/increaseInvalidReport", function (req, res, next) {
+    db.increaseInvalidReport(req.body.uid)
         .then((status) => {
             return status ? res.sendStatus(200) : res.sendStatus(500);
         }).catch((error) => {

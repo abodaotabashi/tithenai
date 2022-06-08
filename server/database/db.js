@@ -24,7 +24,6 @@ const UNIS_COLLECTION = 'universities';
 const THESES_COLLECTION = 'theses';
 const REPORTS_COLLECTION = 'reports';
 const COMMENTS_COLLECTION = 'comments';
-const BANNED_USERS_COLLECTION = 'bannedUsers';
 const BUCKETNAME = 'tithenai-23867.appspot.com';
 const UTILS_COLLECTION = "utils";
 
@@ -100,7 +99,6 @@ async function addNewUser(data) {
         userGender: data.userdata.userGender,
         userAdmin: false,
         userSavedTheses: [],
-        //        banStatus: false
         invalidReports: 0,
         strikes: 0
     }
@@ -226,7 +224,7 @@ async function updateUser(newUserData) {
         // 3. update user name in comments collection
         await updateNameInCollection(COMMENTS_COLLECTION, newUserData.uid, 'commentAuthorID', "commentAuthorName");
 
-        // 4. update user name in theses collection 
+        // 4. update user name in theses collection
         await updateNameInCollection(THESES_COLLECTION, newUserData.uid, 'thesisAuthorID', "thesisAuthorName");
 
         // 5. update user data in auth
@@ -708,7 +706,7 @@ async function getThesis(thesisId) {
 async function addNewReport(data) {
     const uid = data.uid;
     const userData = await getUserDataById(uid);
-    if (uid.strikes < 2) {
+    if (userData.strikes < 2) {
         const reporterName = userData.userFirstname + " " + userData.userLastname;
         console.log(reporterName);
         dbReportData = {
@@ -815,7 +813,6 @@ async function deleteUserRate(uid) {
             .update({ rates: rates, ratesAverage: avgrate })
     }
     return 1
-
 }
 
 
@@ -869,8 +866,7 @@ async function getComments(thesisId) {
 
 // =========================================================== Admin Panel
 
-// Method of Striking Author of Reported Thesis
-async function strikeAuthor(data) {
+async function strike(data) {
 
     async function deleteUserfromCollection(collectionName, uid, userIDField) {
         const docs = await db.collection(collectionName).where(userIDField, '==', uid).get();
@@ -880,22 +876,23 @@ async function strikeAuthor(data) {
                 .delete()
         });
     }
-    const authorId = data.authorId;
-    const userData = await getUserInfo(authorId);
-    strikes = userData.strikes
+
     const thesisId = data.thesisId
-    //cheking the Strike of the User
-    //Strike 1
-    //Delete the Thesis and increase the Strike
     if (thesisId != undefined) {
         await deleteThesis(thesisId)
     }
+
+    const uid = data.uid;
+    let strikes = await getStrike(uid);
+    //cheking the Strike of the User
+    //Strike 1
+    //Delete the Thesis and increase the Strike
     if (strikes == 0) {
         strikes += 1
         //TODO: Send Email
         return db
             .collection(USERS_COLLECTION)
-            .doc(authorId)
+            .doc(uid)
             .update({ strikes: strikes })
     }
     //Strike 2
@@ -906,31 +903,30 @@ async function strikeAuthor(data) {
         //TODO: Send Email
         return db
             .collection(USERS_COLLECTION)
-            .doc(authorId)
+            .doc(uid)
             .update({ strikes: strikes })
     }
     //Strike 3 Ban User Delete account Delete its info from Users collection and send email
     else if (strikes == 2) {
 
         //TODO: Delete the profile photo of User which saved in Firebase Storage
-        await admin.auth().deleteUser(authorId)
+        await admin.auth().deleteUser(uid)
         //TODO: Send Email
-        //WHAT !!?? TODO: Delete ThesisID from all SavedLists of Users
-        await deleteUserfromCollection(COMMENTS_COLLECTION, authorId, 'commentAuthorID');
-        await deleteUserfromCollection(REPORTS_COLLECTION, authorId, 'reportReporterID');
-        await deleteUserfromCollection(THESES_COLLECTION, authorId, 'thesisAuthorID');
-        await deleteUserRate(authorId)
-        await db.collection(USERS_COLLECTION).doc(authorId).delete()
-        //await db
-        //: (Nice To Have): Saving Banned Emails in an array in single document instead of saving each email as single document
-        bannedEmailsObj = (await db.collection("bannedUsers").doc("bannedUsersDoc").get()).data()
-        bannedEmails = bannedEmailsObj.bannedUsersArr;
-
-        bannedEmails.push(userData.userEmail)
+        //TODO: Delete ThesisID from all SavedLists of Users
+        await deleteUserfromCollection(COMMENTS_COLLECTION, uid, 'commentAuthorID');
+        await deleteUserfromCollection(REPORTS_COLLECTION, uid, 'reportReporterID');
+        await deleteUserfromCollection(THESES_COLLECTION, uid, 'thesisAuthorID');
+        await deleteUserRate(uid)
+        await db.collection(USERS_COLLECTION).doc(uid).delete()
+        //Saving Banned Emails in an array in single document instead of saving each email as single document
+        const oldBannedEmailsObj = (await db.collection(UTILS_COLLECTION).get()).docs[0];
+        const docId = oldBannedEmailsObj.id;
+        const bannedEmails = oldBannedEmailsObj.data().bannedUsers;
+        bannedEmails.push(userData.userEmail);
         return db
-            .collection(BANNED_USERS_COLLECTION)
-            .doc("bannedUsersDoc")
-            .update({ bannedUsersArr: bannedEmails })
+            .collection(UTILS_COLLECTION)
+            .doc(docId)
+            .update({ bannedUsers: bannedEmails })
     }
 }
 
@@ -942,7 +938,7 @@ async function getStrike(uid) {
     return userStrike
 }
 
-async function IncreaseInvalidReport(uid) {
+async function increaseInvalidReport(uid) {
     userData = await getUserDataById(uid)
     invalidReports = userData.invalidReports;
     invalidReports += 1
@@ -995,9 +991,9 @@ module.exports.updateThesis = updateThesis;
 module.exports.getThesis = getThesis;
 //module.exports.banUser = banUser;
 module.exports.deleteReport = deleteReport;
-module.exports.strikeAuthor = strikeAuthor;
+module.exports.strike = strike;
 module.exports.deleteUserRate = deleteUserRate;
-module.exports.IncreaseInvalidReport = IncreaseInvalidReport;
+module.exports.increaseInvalidReport = increaseInvalidReport;
 //module.exports.isUserBanned = isUserBanned;
 
 // =========================================================== Private funcitons
