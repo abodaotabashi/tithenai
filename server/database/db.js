@@ -887,10 +887,10 @@ async function strikeAuthor(data) {
     //cheking the Strike of the User
     //Strike 1
     //Delete the Thesis and increase the Strike
+    if (thesisId != undefined) {
+        await deleteThesis(thesisId)
+    }
     if (strikes == 0) {
-        if (thesisId != undefined) {
-            await deleteThesis(thesisId)
-        }
         strikes += 1
         //TODO: Send Email
         return db
@@ -901,9 +901,7 @@ async function strikeAuthor(data) {
     //Strike 2
     //Deleting Thesis of the User
     else if (strikes == 1) {
-        if (thesisId != undefined) {
-            await deleteThesis(thesisId)
-        }        //I addded  getStrike function and called it before Uploading Rating Commenting and Reporting
+        //I addded  getStrike function and called it before Uploading Rating Commenting and Reporting
         strikes += 1
         //TODO: Send Email
         return db
