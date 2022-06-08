@@ -466,7 +466,7 @@ async function getAllTheses() {
 async function uploadThesis(data) {
     const thesisData = { ...data, thesisPdfUrl: "" }
     const uid = thesisData.thesisAuthorID;
-    strike = await strikeChecker(uid)
+    strike = await getStrike(uid)
     if (strike < 2) {
 
         const thesisPdfBase64 = thesisData.thesisPdfBase64;
@@ -737,8 +737,8 @@ async function getAllReports() {
         const reportedThesisTitle = reportedThesisInfo.thesisTitle
         const thesisAuthorName = reportedThesisInfo.thesisAuthorName
         const thesisAuthorID = reportedThesisInfo.thesisAuthorID
-        const authorStrikes = await strikeChecker(reportedThesisInfo.thesisAuthorID)
-        const reporterStrikes = await strikeChecker(reportObj.data().reportReporterID)
+        const authorStrikes = await getStrike(reportedThesisInfo.thesisAuthorID)
+        const reporterStrikes = await getStrike(reportObj.data().reportReporterID)
         const report = {
             ...reportObj.data(),
             reportedThesisTitle: reportedThesisTitle,
@@ -766,7 +766,7 @@ async function deleteReport(reportId) {
 async function addNewRate(data) {
     const thesisId = data.thesisId;
     const uid = data.uid;
-    strike = await strikeChecker(uid);
+    strike = await getStrike(uid);
     if (strike < 2) {
         const rateValue = data.rateValue;
         const thesisData = await getThesis(thesisId);
@@ -824,7 +824,7 @@ async function deleteUserRate(uid) {
 async function addNewComment(data) {
     const uid = data.uid;
     const userData = await getUserDataById(uid);
-    if (strikeChecker(uid) < 2) {
+    if (getStrike(uid) < 2) {
         const commentAuthorName = userData.userFirstname + " " + userData.userLastname;
         dbCommentData = {
             commentAuthorID: uid,
@@ -903,7 +903,7 @@ async function strikeAuthor(data) {
     else if (strikes == 1) {
         if (thesisId != undefined) {
             await deleteThesis(thesisId)
-        }        //I addded  strikeChecker function and called it before Uploading Rating Commenting and Reporting
+        }        //I addded  getStrike function and called it before Uploading Rating Commenting and Reporting
         strikes += 1
         //TODO: Send Email
         return db
@@ -938,7 +938,7 @@ async function strikeAuthor(data) {
 
 // : Implementing Method of Striking Reporter (Increment InvalidReports and Checking Strikes)
 
-async function strikeChecker(uid) {
+async function getStrike(uid) {
     userData = await getUserDataById(uid)
     const userStrike = userData.strikes;
     return userStrike
