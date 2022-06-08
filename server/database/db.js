@@ -885,9 +885,9 @@ async function strike(data) {
     const uid = data.uid;
     let strikes = await getStrike(uid);
     //cheking the Strike of the User
-    //Strike 1
+    //Strike 1 or 2
     //Delete the Thesis and increase the Strike
-    if (strikes == 0) {
+    if (strikes == 0 || strikes == 1) {
         strikes += 1
         //TODO: Send Email
         return db
@@ -895,17 +895,7 @@ async function strike(data) {
             .doc(uid)
             .update({ strikes: strikes })
     }
-    //Strike 2
-    //Deleting Thesis of the User
-    else if (strikes == 1) {
-        //I addded  getStrike function and called it before Uploading Rating Commenting and Reporting
-        strikes += 1
-        //TODO: Send Email
-        return db
-            .collection(USERS_COLLECTION)
-            .doc(uid)
-            .update({ strikes: strikes })
-    }
+
     //Strike 3 Ban User Delete account Delete its info from Users collection and send email
     else if (strikes == 2) {
 
@@ -942,13 +932,7 @@ async function increaseInvalidReport(uid) {
     userData = await getUserDataById(uid)
     invalidReports = userData.invalidReports;
     invalidReports += 1
-    if (invalidReports == 3) {
-        await strike({ uid: uid })
-    }
-    else if (invalidReports == 6) {
-        await strike({ uid: uid })
-    }
-    else if (invalidReports == 9) {
+    if (invalidReports % 3 == 0) {
         await strike({ uid: uid })
     }
     return db
