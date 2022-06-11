@@ -46,7 +46,11 @@ const LanguageDropDownList = (props) => {
     const { openDropDownMenu, setOpenDropDownMenu } = props;
     const [ currentLang, setCurrentLang ] = useState(localStorage.getItem("i18nextLng") || "en");
     const { i18n } = useTranslation();
+
     const handleChangeLanguage = (lang) => {
+        // if (lang === "ar") {
+        //     document.body.style.direction = "rtl";
+        // }
         i18n.changeLanguage(lang);
         setOpenDropDownMenu(null);
         setCurrentLang(lang);

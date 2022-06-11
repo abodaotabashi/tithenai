@@ -43,7 +43,7 @@
         "title":"العنوان",
         "authors":"الكاتب",
         "university":"الجامعة",
-        "faculty":"الكلية",
+        "fieldOfStudy":"مجال البحث",
         "language":"اللغة",
         "search_by_tags":"البحث عن طريق الشعار:",
         "tags":"الشعارات",
