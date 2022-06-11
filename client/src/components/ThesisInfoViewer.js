@@ -79,6 +79,7 @@ const ThesisInfoViewer = (props) => {
         handleAddComment,
         handleDeleteComment,
         handleAddReport,
+        handleGetIsReported,
         handleSaveThesis,
         handleUnsaveThesis,
         openWarningDialog,
@@ -88,6 +89,7 @@ const ThesisInfoViewer = (props) => {
     const classes = useStyles();
     const navigator = useNavigate();
     const [commentValue, setCommentValue] = useState("");
+    const [isReported, setIsReported] = useState(false);
     const [shouldCommentsUpdate, setShouldCommentsUpdate] = useState(true);
     const [oldComments, setOldComments] = useState(null);
     const [isShowMoreCommentsButtonVisible, setIsShowMoreCommentsButtonVisible] = useState("none");
@@ -100,6 +102,11 @@ const ThesisInfoViewer = (props) => {
     }
 
     useEffect(() => {
+        if(thesis !== null) {
+            handleGetIsReported(thesis.thesisId).then((result) => {
+                setIsReported(result)
+            })
+        }
         if(comments !== null) {
             if(numberOfCommentsDisplayed === null) {
                 if(shouldCommentsUpdate === true && comments !== oldComments) {
@@ -293,7 +300,14 @@ const ThesisInfoViewer = (props) => {
                     variant="contained"
                     color="error"
                     startIcon={<FlagIcon />}
-                    onClick={() => toggleOpenReportDialog(true)}
+                    onClick={() => {
+                        if(thesis !== null) {
+                            handleGetIsReported(thesis.thesisId).then((result) => {
+                                setIsReported(result)
+                            })
+                        }
+                        toggleOpenReportDialog(true)
+                    }}
                     style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
                     {t('thesis.report')}
                 </Button>
@@ -383,17 +397,18 @@ const ThesisInfoViewer = (props) => {
                 openDialog={openReportDialog}
                 setOpenDialog={toggleOpenReportDialog}
                 addNewReportFunction={handleAddReport}
+                isReported={isReported}
                 />
             <WarningDialog
-                    openWarningDialog={openWarningDialog}
-                    setCloseWarningDialog={handleToggleWarningDialog}
-                    title={t('dialogs.delete_thesis')}
-                    content={t('dialogs.r_u_sure')}
-                    contentSpan= {t('dialogs.all_comments')}
-                    yes={t('dialogs.delete')}
-                    no={t('dialogs.cancel')}
-                    yesFunction={handleDeleteThesis}
-                    noFunction={() => handleToggleWarningDialog(false)} />
+                openWarningDialog={openWarningDialog}
+                setCloseWarningDialog={handleToggleWarningDialog}
+                title={t('dialogs.delete_thesis')}
+                content={t('dialogs.r_u_sure')}
+                contentSpan= {t('dialogs.all_comments')}
+                yes={t('dialogs.delete')}
+                no={t('dialogs.cancel')}
+                yesFunction={handleDeleteThesis}
+                noFunction={() => handleToggleWarningDialog(false)} />
         </Grid>
         :
         <Grid container alignItems="center" justifyContent="center" style={{margin: "auto", width: "100%"}}>

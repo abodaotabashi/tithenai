@@ -12,7 +12,7 @@ import { makeStyles } from '@mui/styles';
 import '../assets/styles.css';
 import UpdateThesisForm from '../containers/UpdateThesisForm';
 import ThesisInfoViewer from '../components/ThesisInfoViewer';
-import { addNewComment, addNewRate, addNewReport, addViewer, deleteComment, deleteThesis, getComments, getThesis, isThesisSaved, saveThesis, unsaveThesis, updateThesis } from '../Service';
+import { addNewComment, addNewRate, addNewReport, addViewer, deleteComment, deleteThesis, getComments, getIsReported, getThesis, getUserInfo, isThesisSaved, saveThesis, unsaveThesis, updateThesis } from '../Service';
 import { sortObjectsAscending } from '../utils/HelperFunctions';
 
 const useStyles = makeStyles(theme => ({
@@ -363,6 +363,19 @@ const ViewThesisPage = () => {
         }
     }
 
+    const handleGetIsReported = async (thesisId) => {
+        const uid = userAuth.uid;
+        let isReported = false;
+        const values = {
+            uid: uid,
+            thesisId: thesisId
+        }
+        return await getIsReported(values).then((result) => {
+            isReported = result;
+            return isReported;
+        })
+    }
+
     return (
         <div className="whitePageContainer">
             <NavbarWithUser hideUpload={false} />
@@ -384,6 +397,7 @@ const ViewThesisPage = () => {
                             handleToggleToEdit={handleToggleToEditMode}
                             handleUnsaveThesis={handleUnsaveThesis}
                             handleSaveThesis={handleSaveThesis}
+                            handleGetIsReported={handleGetIsReported}
                             openWarningDialog={openWarningDialog}
                             handleToggleWarningDialog={handleToggleWarningDialog}
                             handleDeleteThesis={handleDeleteThesis} />

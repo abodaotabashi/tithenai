@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 
 const AddNewReportDialog = (props) => {
     const {t} = useTranslation();
-    const { openDialog, setOpenDialog, addNewReportFunction } = props;
+    const { openDialog, setOpenDialog, addNewReportFunction, isReported } = props;
     const classes = useStyles();
     const [reportContent, setReportContent] = useState("");
     const [contentError, setContentError] = useState(false);
@@ -50,37 +50,57 @@ const AddNewReportDialog = (props) => {
             </DialogTitle>
             <Divider />
             <DialogContent>
-                <Grid container alignItems="center" justifyContent="center">
-                    <Grid item xs={12} sm={12} md={12} lg={12} container alignItems="center" justifyContent="center">
-                        <TextField
-                            error={contentError}
-                            color="secondary"
-                            label={t('dialogs.explanation')}
-                            value={reportContent}
-                            required
-                            type="text"
-                            onChange={(event) => setReportContent(event.target.value)}
-                            variant="outlined"
-                            InputLabelProps={{
-                                style: {
-                                    fontFamily: 'Ubuntu',
-                                }
-                            }}
-                            style={{ width: "90%", margin: "0.5vh 0" }}
-                            helperText={contentErrorMessage} />
+                {isReported === false ?
+                    <Grid container alignItems="center" justifyContent="center">
+                        <Grid item xs={12} sm={12} md={12} lg={12} container alignItems="center" justifyContent="center">
+                            <TextField
+                                error={contentError}
+                                color="secondary"
+                                label={t('dialogs.explanation')}
+                                value={reportContent}
+                                required
+                                type="text"
+                                onChange={(event) => setReportContent(event.target.value)}
+                                variant="outlined"
+                                InputLabelProps={{
+                                    style: {
+                                        fontFamily: 'Ubuntu',
+                                    }
+                                }}
+                                style={{ width: "90%", margin: "0.5vh 0" }}
+                                helperText={contentErrorMessage} />
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12} lg={12} container alignItems="center" justifyContent="center">
+                            <Button
+                                color="error"
+                                variant="outlined"
+                                size="large"
+                                startIcon={<FlagIcon fontSize='large' />}
+                                style={{ padding: "1vh 4vw", fontFamily: "Ubuntu", marginTop: "1rem" }}
+                                onClick={handleAddNewReport}>
+                                {t('dialogs.report')}
+                            </Button>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12} lg={12} container alignItems="center" justifyContent="center">
-                        <Button
-                            color="error"
-                            variant="outlined"
-                            size="large"
-                            startIcon={<FlagIcon fontSize='large' />}
-                            style={{ padding: "1vh 4vw", fontFamily: "Ubuntu", marginTop: "1rem" }}
-                            onClick={handleAddNewReport}>
-                            {t('dialogs.report')}
-                        </Button>
+                    :
+                    <Grid container alignItems="center" justifyContent="center">
+                        <Grid item xs={12} sm={12} md={12} lg={12} container alignItems="center" justifyContent="center">
+                            <Typography variant="h6" component="div" style={{textAlign: "start", fontFamily: "Ubuntu-Light", fontWeight: "bold", paddingBottom: "1rem"}}>
+                                We want to remind you that you have already reported this thesis. Thank you again!
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12} lg={12} container alignItems="center" justifyContent="center">
+                            <Button
+                                color="secondary"
+                                variant="outlined"
+                                size="large"
+                                style={{ padding: "1vh 2vw", fontFamily: "Ubuntu", marginTop: "1rem" }}
+                                onClick={() => setOpenDialog(false)}>
+                                OK
+                            </Button>
+                        </Grid>
                     </Grid>
-                </Grid>
+                }
             </DialogContent>
         </Dialog>
     )

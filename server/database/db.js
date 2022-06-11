@@ -760,10 +760,8 @@ async function deleteReport(reportId) {
 async function getIsReported(data) {
     const userId = data.uid;
     const thesisId = data.thesisId;
-
     const allReports = await getAllReports()
     for (const report of allReports) {
-        console.log(report);
         if (userId == report["reportReporterID"] && thesisId == report["reportThesisID"]) {
             return true
         }

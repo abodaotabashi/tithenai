@@ -181,6 +181,18 @@ export const addNewReport = async (values) => {
         }).catch(error => console.log(error))
 }
 
+export const getIsReported = async (values) => {
+    return await axios.get("/reports/getIsReported", {
+            params: {
+                uid: values.uid,
+                thesisId: values.thesisId
+            }
+        })
+        .then((result) => {
+            return result.data;
+        }).catch(error => console.log(error))
+}
+
 // =========================================================== Comments
 
 export const addNewComment = async (values) => {

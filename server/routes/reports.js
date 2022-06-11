@@ -26,8 +26,8 @@ router.get("/getAllReports", function (req, res, next) {
 
 router.get("/getIsReported", function (req, res, next) {
     db.getIsReported(req.query)
-        .then((status) => {
-            return status ? res.sendStatus(200) : res.sendStatus(500);
+        .then((result) => {
+            res.send(result);
         }).catch((error) => {
             console.log(error);
             return res.sendStatus(500)
