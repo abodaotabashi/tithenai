@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { CssBaseline, Grid, Paper } from '@mui/material';
+import React, { useContext, useState, useEffect } from 'react';
+import { CircularProgress, CssBaseline, Grid, Paper } from '@mui/material';
 import { AuthContext } from '../utils/Context';
 import Footer from '../components/Footer';
 import NavbarWithUser from '../components/NavbarWithUser';
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import UploadThesisForm from '../containers/UploadThesisForm';
 import { redirectToLoginPage, redirectToMyPapersPage } from '../utils/Redirecter';
 import LoadingDialog from '../components/LoadingDialog';
-import { uploadThesis } from '../Service';
+import { getUserInfo, uploadThesis } from '../Service';
 import { useTranslation } from 'react-i18next';
 
 import { makeStyles } from '@mui/styles';
@@ -66,7 +66,21 @@ const UploadThesisPage = () => {
     const classes = useStyles();
     const { userAuth } = useContext(AuthContext);
     const [ showLoading, setShowLoading ] = useState(false);
+    const [ userStrikes, setUserStrikes ] = useState(-1);
     const navigator = useNavigate();
+
+    useEffect(() => {
+        if (typeof (userAuth) !== "undefined") {
+            if (userAuth) {
+                getUserInfo(userAuth.uid)
+                .then(userInfo => {
+                    setUserStrikes(userInfo.strikes)
+                })
+            } else {
+                redirectToLoginPage(navigator);
+            }
+        }
+    }, [userAuth, navigator])
 
     const handleUploadThesis = async (values, props) => {
         if (typeof (userAuth) !== "undefined") {
@@ -103,17 +117,34 @@ const UploadThesisPage = () => {
         <div className="whitePageContainer">
             <NavbarWithUser hideUpload={true} />
             <Paper elevation={8} className={classes.paper}>
-                <Grid container alignItems="center" justifyContent="center">
-                    <Grid item xs={12} sm={12} md={5} lg={5} className={classes.uploadGifLeftSection}>
-                        <img src={UploadPaperGif} alt="upload" style={{width: "10rem"}}/>
+                { userStrikes < 2 && userStrikes >= 0 &&
+                    <Grid container alignItems="center" justifyContent="center">
+                        <Grid item xs={12} sm={12} md={5} lg={5} className={classes.uploadGifLeftSection}>
+                            <img src={UploadPaperGif} alt="upload" style={{width: "10rem"}}/>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={7} lg={7} className={classes.uploadGifRightSection}>
+                            <p className='textWithSecondaryGradient'>{t('uploadpage.upload')}</p>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                            <UploadThesisForm handleUploadThesis={handleUploadThesis} />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={7} lg={7} className={classes.uploadGifRightSection}>
-                        <p className='textWithSecondaryGradient'>{t('uploadpage.upload')}</p>
+                }
+                { userStrikes >= 2 &&
+                    <Grid container alignItems="center" justifyContent="center">
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                            <p className='textWithSecondaryGradient'>Sorry!</p>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                            <p className='textWithSecondaryGradient'>You have received 2 Strikes and you lost your ability to upload new theses.</p>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12} lg={12}>
-                        <UploadThesisForm handleUploadThesis={handleUploadThesis} />
+                }
+                { userStrikes < 0 &&
+                    <Grid container alignItems="center" justifyContent="center">
+                        <CircularProgress color="secondary" fullwidth="true" />
                     </Grid>
-                </Grid>
+                }
                 <LoadingDialog
                     openDialog={showLoading}
                     label={t('uploadpage.uploading')}

@@ -66,6 +66,7 @@ const ViewThesisPage = () => {
     const classes = useStyles();
     const { userAuth } = useContext(AuthContext);
     const [ showLoading, setShowLoading ] = useState(false);
+    const [ userStrikes, setUserStrikes ] = useState(0);
     const [ openWarningDialog, setOpenWarningDialog ] = useState(false);
     const [ loadingMessage, setLoadingMessage ] = useState("");
     const [ userID, setUserID ] = useState("");
@@ -116,6 +117,10 @@ const ViewThesisPage = () => {
                         isThesisSaved({ uid: userAuth.uid, thesisId: location.state.thesisId })
                             .then((result) => {
                                 setIsSaved(result);
+                            })
+                        getUserInfo(userAuth.uid)
+                            .then(userInfo => {
+                                setUserStrikes(userInfo.strikes)
                             })
                     });
                 } else {
@@ -390,6 +395,7 @@ const ViewThesisPage = () => {
                             isSaved={isSaved}
                             ownRate={ownRate}
                             userID={userID}
+                            userStrikes={userStrikes}
                             handleAddReport={handleReportThesis}
                             handleRateThesis={handleRateThesis}
                             handleAddComment={handleAddComment}

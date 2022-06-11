@@ -74,6 +74,7 @@ const ThesisInfoViewer = (props) => {
         ownRate,
         thesis,
         comments,
+        userStrikes,
         handleToggleToEdit,
         handleRateThesis,
         handleAddComment,
@@ -229,6 +230,7 @@ const ThesisInfoViewer = (props) => {
                 <Paper elevation={8} style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
                     <Typography variant="subtitle1" component="legend" style={{fontFamily: "Ubuntu"}}>{t('thesis.your_rate')}</Typography>
                     <Rating
+                        disabled={userStrikes < 2 ? false : true}
                         size="medium"
                         value={ownRate}
                         precision={0.5}
@@ -240,6 +242,7 @@ const ThesisInfoViewer = (props) => {
                 <Paper elevation={8} style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
                     <Typography variant="subtitle1" component="legend" style={{fontFamily: "Ubuntu"}}>{t('thesis.no_rating')}</Typography>
                     <Rating
+                        disabled={userStrikes < 2 ? false : true}
                         size="medium"
                         value={ownRate}
                         precision={0.5}
@@ -299,6 +302,7 @@ const ThesisInfoViewer = (props) => {
                 <Button
                     variant="contained"
                     color="error"
+                    disabled={userStrikes < 2 ? false : true}
                     startIcon={<FlagIcon />}
                     onClick={() => {
                         if(thesis !== null) {
@@ -364,6 +368,7 @@ const ThesisInfoViewer = (props) => {
             <Grid item xs={12} sm={12} md={12} lg={12} style={{margin: "2vh 1rem"}}>
                 <TextField
                     variant="standard"
+                    disabled={userStrikes < 2 ? false : true}
                     color="secondary"
                     placeholder={t('thesis.write_comment')}
                     value={commentValue}
@@ -380,6 +385,7 @@ const ThesisInfoViewer = (props) => {
                         endAdornment: (
                         <InputAdornment position="end">
                             <IconButton
+                                disabled={userStrikes < 2 ? false : true}
                                 onClick={() => {
                                     setOldComments(comments)
                                     setNumberOfCommentsDisplayed(null);
