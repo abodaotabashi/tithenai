@@ -254,6 +254,7 @@
         "label_content" : "Report Content:",
         "ignore_strike_reporter" : "Ignore Report & Strike Reporter",
         "delete_thesis_strike_author" : "Delete Thesis & Strike Author"
+    },
     "uni_info":{
         "location":"Location:",
         "type":"Type:",
