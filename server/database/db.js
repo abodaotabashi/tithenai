@@ -4,8 +4,6 @@ const serviceAccount = require("./serviceAccountKey.json");
 const firebaseStorage = require("firebase-admin/storage");
 const fs = require('fs');
 const { formatBase64, formatFirebaseDate, sendEmail } = require("../Utils/util");
-const { count } = require("console");
-const { getMaxListeners } = require("process");
 
 
 
@@ -90,9 +88,9 @@ const DEFAULT_UNI = {
 // =========================================================== Manage Users
 
 async function addNewUser(data) {
-    uid = data.uid
-    idToken = data.idToken
-    dbUserData = {
+    const uid = data.uid
+    const idToken = data.idToken
+    const dbUserData = {
         userUniID: data.userdata.userUniId,
         userAcademicStatus: data.userdata.userAcademicStatus,
         userFirstname: data.userdata.userFirstname,
@@ -194,7 +192,6 @@ function deleteAllUsers(nextPageToken) {
         });
 }
 
-
 async function updateUser(newUserData) {
 
     async function updateNameInCollection(collectionName, uid, userIDField, userNameField) {
@@ -264,7 +261,6 @@ async function updateUserImage(data) {
     }
 }
 
-
 /*
 async function banUser(uid) {
     return db
@@ -286,7 +282,6 @@ async function isUserBanned(uid) {
 }
 */
 
-
 // =========================================================== Universities
 
 async function getAllUnis() {
@@ -295,11 +290,11 @@ async function getAllUnis() {
             .orderBy("uniName", "asc")
             .get();
 
-        unis = []
+        let unis = []
         querySnapshot.forEach((doc) => {
             const uniImgRef = storage.bucket(BUCKETNAME).file(`uniImages/${doc.id}.png`)
             const uniImageUrl = uniImgRef.publicUrl();
-            uni = {
+            const uni = {
                 ...doc.data(),
                 uniId: doc.id,
                 uniImageUrl: uniImageUrl
@@ -314,7 +309,7 @@ async function getAllUnis() {
 }
 
 async function uploadUniImages() {
-    fileNames = fs.readdirSync('database/uniImages/');
+    const fileNames = fs.readdirSync('database/uniImages/');
     fileNames.forEach(async (filename) => {
         // const file = await storage.bucket(BUCKETNAME).upload("database/uniImages/" + filename, {
         //     destination: "uniImages/" + filename
@@ -465,7 +460,7 @@ async function getAllTheses() {
 async function uploadThesis(data) {
     const thesisData = { ...data, thesisPdfUrl: "" }
     const uid = thesisData.thesisAuthorID;
-    strike = await getStrike(uid)
+    const strike = await getStrike(uid)
     if (strike < 2) {
 
         const thesisPdfBase64 = thesisData.thesisPdfBase64;
@@ -710,7 +705,7 @@ async function addNewReport(data) {
     if (userData.strikes < 2) {
         const reporterName = userData.userFirstname + " " + userData.userLastname;
         console.log(reporterName);
-        dbReportData = {
+        const dbReportData = {
             reportContent: data.reportdata.reportContent,
             reportReporterID: data.uid,
             reportThesisID: data.reportdata.reportThesisID,
@@ -766,29 +761,29 @@ async function getIsReported(data) {
     const userId = data.uid;
     const thesisId = data.thesisId;
 
-    allReports = await getAllReports()
+    const allReports = await getAllReports()
     for (const report of allReports) {
         console.log(report);
         if (userId == report["reportReporterID"] && thesisId == report["reportThesisID"]) {
-            return false
+            return true
         }
     }
-    return true
+    return false
 }
 // =========================================================== Ratings
 
 async function addNewRate(data) {
     const thesisId = data.thesisId;
     const uid = data.uid;
-    strike = await getStrike(uid);
+    const strike = await getStrike(uid);
     if (strike < 2) {
         const rateValue = data.rateValue;
         const thesisData = await getThesis(thesisId);
         const rates = thesisData["rates"];
         rates[uid] = Number(rateValue)
 
-        avgrate = 0
-        count = 0
+        let avgrate = 0
+        let count = 0
         for (const [key, value] of Object.entries(rates)) {
             avgrate += value
             count += 1
@@ -803,13 +798,13 @@ async function addNewRate(data) {
 
 async function deleteUserRate(uid) {
     const userId = uid;
-    allThesis = await getAllTheses()
+    const allThesis = await getAllTheses()
     //console.log(thesisSnapshot);
     for (const thesis of allThesis) {
-        rates = thesis["rates"]
-        avgrate = thesis["ratesAverage"]
-        var count = Object.keys(thesis["rates"]).length
-        thesisId = thesis["thesisId"]
+        let rates = thesis["rates"]
+        let avgrate = thesis["ratesAverage"]
+        let count = Object.keys(thesis["rates"]).length
+        const thesisId = thesis["thesisId"]
         console.log(thesisId);
         //console.log(rates);
         if (rates.hasOwnProperty(userId)) {
@@ -839,7 +834,7 @@ async function addNewComment(data) {
     const userData = await getUserDataById(uid);
     if (getStrike(uid) < 2) {
         const commentAuthorName = userData.userFirstname + " " + userData.userLastname;
-        dbCommentData = {
+        const dbCommentData = {
             commentAuthorID: uid,
             commentThesisID: data.commentdata.commentThesisID,
             commentBody: data.commentdata.commentBody,
@@ -937,14 +932,14 @@ async function strike(data) {
 }
 
 async function getStrike(uid) {
-    userData = await getUserDataById(uid)
+    const userData = await getUserDataById(uid)
     const userStrike = userData.strikes;
     return userStrike
 }
 
 async function increaseInvalidReport(uid) {
-    userData = await getUserDataById(uid)
-    invalidReports = userData.invalidReports;
+    const userData = await getUserDataById(uid)
+    let invalidReports = userData.invalidReports;
     invalidReports += 1
     if (invalidReports % 3 == 0) {
         await strike({ uid: uid })

@@ -88,6 +88,8 @@ const ThesisInfoViewer = (props) => {
     const classes = useStyles();
     const navigator = useNavigate();
     const [commentValue, setCommentValue] = useState("");
+    const [shouldCommentsUpdate, setShouldCommentsUpdate] = useState(true);
+    const [oldComments, setOldComments] = useState(null);
     const [isShowMoreCommentsButtonVisible, setIsShowMoreCommentsButtonVisible] = useState("none");
     const [numberOfCommentsDisplayed, setNumberOfCommentsDisplayed] = useState(null);
     const [commentsDisplayed, setCommentsDisplayed] = useState(null);
@@ -100,15 +102,31 @@ const ThesisInfoViewer = (props) => {
     useEffect(() => {
         if(comments !== null) {
             if(numberOfCommentsDisplayed === null) {
-                let numberOfComments = null;
-                if(comments.length > 5) {
-                    numberOfComments = 3;
-                    setNumberOfCommentsDisplayed(numberOfComments);
-                    setIsShowMoreCommentsButtonVisible("flex");
-                    setCommentsDisplayed(comments.slice(0, numberOfComments));
-                } else {
-                    setNumberOfCommentsDisplayed(comments.length);
-                    setCommentsDisplayed(comments);
+                if(shouldCommentsUpdate === true && comments !== oldComments) {
+                    setShouldCommentsUpdate(false);
+                    setOldComments(null);
+                    let numberOfComments = null;
+                    if(comments.length > 3) {
+                        numberOfComments = 3;
+                        setNumberOfCommentsDisplayed(numberOfComments);
+                        setIsShowMoreCommentsButtonVisible("flex");
+                        setCommentsDisplayed(comments.slice(0, numberOfComments));
+                    } else {
+                        setNumberOfCommentsDisplayed(comments.length);
+                        setCommentsDisplayed(comments);
+                    }
+                } else if (shouldCommentsUpdate === false) {
+                    setOldComments(null);
+                    let numberOfComments = null;
+                    if(comments.length > 3) {
+                        numberOfComments = 3;
+                        setNumberOfCommentsDisplayed(numberOfComments);
+                        setIsShowMoreCommentsButtonVisible("flex");
+                        setCommentsDisplayed(comments.slice(0, numberOfComments));
+                    } else {
+                        setNumberOfCommentsDisplayed(comments.length);
+                        setCommentsDisplayed(comments);
+                    }
                 }
             }
         }
@@ -295,7 +313,9 @@ const ThesisInfoViewer = (props) => {
                                         isOwn={true}
                                         comment={comment}
                                         handleDeleteComment={() => {
+                                            setOldComments(comments)
                                             setNumberOfCommentsDisplayed(null);
+                                            setShouldCommentsUpdate(true);
                                             handleDeleteComment(comment.commentId);
                                         }}/>
                                 );
@@ -306,7 +326,9 @@ const ThesisInfoViewer = (props) => {
                                         isOwn={false}
                                         comment={comment}
                                         handleDeleteComment={() => {
+                                            setOldComments(comments)
                                             setNumberOfCommentsDisplayed(null);
+                                            setShouldCommentsUpdate(true);
                                             handleDeleteComment(comment.commentId);
                                         }}/>
                                 );
@@ -345,7 +367,9 @@ const ThesisInfoViewer = (props) => {
                         <InputAdornment position="end">
                             <IconButton
                                 onClick={() => {
+                                    setOldComments(comments)
                                     setNumberOfCommentsDisplayed(null);
+                                    setShouldCommentsUpdate(true);
                                     handleAddComment(commentValue);
                                     setCommentValue("");
                                     }}>
