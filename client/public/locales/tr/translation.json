@@ -216,7 +216,9 @@
     },
     "uploadpage":{
         "upload":"Yeni bir tez ekleyin ve daha meşhur olun",
-        "uploading":"Yeni tez yükleniyor ..."
+        "uploading":"Yeni tez yükleniyor ...",
+        "sorry":"Özür Dileriz!",
+        "youhave":"2 Uyarınız bulunmaktadır, bu yüzden yeni tez ekleme hakknızı kaybettiniz."
     },
     "viewthesis":{
         "deleting":"Tez siliniyor ...",

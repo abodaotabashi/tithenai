@@ -133,10 +133,10 @@ const UploadThesisPage = () => {
                 { userStrikes >= 2 &&
                     <Grid container alignItems="center" justifyContent="center">
                         <Grid item xs={12} sm={12} md={12} lg={12}>
-                            <p className='textWithSecondaryGradient'>Sorry!</p>
+                            <p className='textWithSecondaryGradient'>{t('uploadpage.sorry')}</p>
                         </Grid>
                         <Grid item xs={12} sm={12} md={12} lg={12}>
-                            <p className='textWithSecondaryGradient'>You have received 2 Strikes and you lost your ability to upload new theses.</p>
+                            <p className='textWithSecondaryGradient'>{t('uploadpage.youhave')}</p>
                         </Grid>
                     </Grid>
                 }

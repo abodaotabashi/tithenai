@@ -216,7 +216,9 @@
     },
     "uploadpage":{
         "upload":"Upload New Thesis and become more famous",
-        "uploading":"Uploading New Thesis ..."
+        "uploading":"Uploading New Thesis ...",
+        "sorry":"Sorry!",
+        "youhave":"You have received 2 Strikes and you lost your ability to upload new theses."
     },
     "viewthesis":{
         "deleting":"Deleting the thesis ...",

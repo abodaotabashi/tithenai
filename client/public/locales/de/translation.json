@@ -215,7 +215,9 @@
     },
     "uploadpage": {
       "upload": "Laden Sie eine neue These hoch und werden Sie berühmter",
-      "uploading": "Neue Abschlussarbeit hochladen ..."
+      "uploading": "Neue Abschlussarbeit hochladen ...",
+      "sorry":"Entschuldigung!",
+      "youhave":"Sie haben 2 Verwarnungen erhalten und Ihre Fähigkeit verloren, neue Thesen hochzuladen."
     },
     "viewthesis": {
       "deleting": "These löschen ...",
@@ -239,6 +241,21 @@
       "lasttheses": "Letzte These dieser Universität",
       "showmore": "mehr ansehen"
     },
+    "admin_panel": {
+      "welcome":"Mein Chef, willkommen zurück in Ihrem Admin-Panel!",
+      "evaluation":"Berichte Auswertung",
+      "done": "Die Thesen sind in Ordnung Chef. Keine Warteberichte!",
+      "report_no": "Bericht #",
+      "loading_strike_author": "Löschen die gemeldeten These und streichen den Autor ...",
+      "loading_strike_reporter": "Den Reporter streichen ...",
+      "label_thesis" : "Gemeldete Thesen:",
+      "label_reporter" : "Reporter(in):",
+      "label_strikes" : "Streiks",
+      "label_author" : "Autor der gemeldeten These:",
+      "label_content" : "Inhalt des Berichts:",
+      "ignore_strike_reporter" : "Report ignorieren & Reporter streichen",
+      "delete_thesis_strike_author" : "These löschen & Autor streichen"
+  },
     "uni_info": {
       "location": "Standort:",
       "type": "Type:",
