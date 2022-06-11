@@ -2,9 +2,11 @@ import React from 'react';
 import { Grid, Typography, CircularProgress, Button } from '@mui/material';
 import LanguageIcon from '@mui/icons-material/Language';
 import '../assets/styles.css';
+import { useTranslation } from 'react-i18next';
 
 const UniversityInfoViewer = (props) => {
     const { universityInfo } = props;
+    const { t } = useTranslation();
     return (
         typeof(universityInfo) !== "undefined" ?
         <Grid container className='universityInfoViewer'>
@@ -16,22 +18,22 @@ const UniversityInfoViewer = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Typography variant="subtitle1" component="div" style={{textAlign: "start", fontFamily: "Ubuntu", fontWeight: "bold", paddingBottom: "1rem"}}>
-                        Location: &nbsp; {universityInfo.uniState}, {universityInfo.uniCountry}
+                        {t('uni_info.location')} &nbsp; {universityInfo.uniState}, {universityInfo.uniCountry}
                     </Typography>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Typography variant="subtitle1" component="div" style={{textAlign: "start", fontFamily: "Ubuntu", fontWeight: "bold", paddingBottom: "1rem"}}>
-                        Type: &nbsp; {universityInfo.uniType}
+                        {t('uni_info.type')} &nbsp; {universityInfo.uniType}
                     </Typography>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Typography variant="subtitle1" component="div" style={{textAlign: "start", fontFamily: "Ubuntu", fontWeight: "bold", paddingBottom: "1rem"}}>
-                        Number of Members: &nbsp; {universityInfo.statistics.uniMembers}
+                    {t('uni_info.noofmembers')} &nbsp; {universityInfo.statistics.uniMembers}
                     </Typography>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Typography variant="subtitle1" component="div" style={{textAlign: "start", fontFamily: "Ubuntu", fontWeight: "bold", paddingBottom: "1rem"}}>
-                        Number of Total Theses: &nbsp; {universityInfo.uniTheses.length}
+                    {t('uni_info.nooftheses')} &nbsp; {universityInfo.uniTheses.length}
                     </Typography>
                 </Grid>
             </Grid>
@@ -44,7 +46,7 @@ const UniversityInfoViewer = (props) => {
                             onClick={() => window.location.href = `${universityInfo.uniUrl}`}
                             startIcon={<LanguageIcon />}
                             style={{margin: "1vh 0",fontFamily: "Ubuntu"}}>
-                            Visit University Website
+                            {t('uni_info.visit')}
                         </Button>
                     </Grid>
                     : null

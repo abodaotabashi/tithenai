@@ -481,4 +481,57 @@ test('search for universities', async()=>{
   expect (checkSearchMethod).toBeInTheDocument();
 })*/
 
+
+test('view university profile', async()=>{ 
+  const { getByText, getByRole, findAllByText, findByText, container, getByTestId } = render(<App/>);
+  ///// If you are logged in, you don't need these lines
+  const element = await waitFor(() => findByText(/landing.sign_in/i));
+  const leftClick = { button: 0 }
+  userEvent.click(element, leftClick);
+  await waitFor(() => findByText(/login_page.signin_to/i))
+
+  const email = container.querySelector('input[name="email"]')
+  const password = container.querySelector('input[name="password"]')
+  await waitFor(() => {
+    fireEvent.change(email, {
+      target: {
+        value: "mahasineldervis1@gmail.com"
+      }
+    })
+  })
+  await waitFor(() => {
+    fireEvent.change(password, {
+      target: {
+        value: "testtest1234"
+      }
+    })
+  })
+
+  const login = await waitFor(() => findByText(/login.login_button/i));
+  userEvent.click(login, leftClick);
+  /////// 
+  //const leftClick = { button: 0 }
+  //const LogoButton = getByTestId('tithenaiLogo');
+  //userEvent.click(LogoButton, leftClick);
+  await wait()
+  const universitiesSection = await waitFor(() => findByText('search_page.universities')) 
+  userEvent.click(universitiesSection, leftClick);
+
+  const searchInputField = container.querySelector('input[name="searchUniField"]')
+  await waitFor(() => {
+    fireEvent.change(searchInputField, {
+      target: {
+        value: "türk" 
+      }
+    })
+  })
+  const button = getByTestId('search-uni-button');
+  userEvent.click(button, leftClick);
+  const checkSearchMethod = await waitFor(() => findByText(/sresults.resultsf/i))
+  expect (checkSearchMethod).toBeInTheDocument();
+  const uniFound = await waitFor(() => findByText('TÜRK-ALMAN ÜNİVERSİTESİ'))
+  userEvent.click(uniFound, leftClick);
+  await wait();
+  const checkView = getByText(/uni_info.noofmembers/i)
+})
 jest.setTimeout(30000)

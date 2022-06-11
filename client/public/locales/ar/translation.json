@@ -1,0 +1,249 @@
+{
+    "dialogs":{
+        "report_thesis":"أبلغ عن هذه الأطروحة",
+        "required_field":"هذا الحقل مطلوب!",
+        "explanation":"الشرح",
+        "report":"إبلاغ",
+        "tag_exists":"!هذا الشعار موجود مسبقاً",
+        "add_tag":"إضف شعاراً جديداً",
+        "new_tag":"شعار جديد",
+        "forgot_password":"هل نسيت كلمة السر؟",
+        "dont_worry":"لا نقلق",
+        "wewill_send":"سنرسل لك رابطاً لإعادة تعيين كلمة السر. فقط أدخل عنوان بريدك الإلكتروني",
+        "your_email":"البريد الإلكتروني",
+        "please_check":" لقد أرسلنا إليك رابطاً لإعادة تعيين كلمة السر. يرجى التحقق من حسابك الإلكتروني.",
+        "send_link":"أرسل لي رابطاً",
+        "ok":"حسناً",
+        "upload_photo":"تحميل صورة شخصية",
+        "view_profile":"عرض الصورة الشخصية",
+        "delete_thesis":"حذف هذه الأطروحة؟",
+        "r_u_sure":"هل أنت متأكد من أنك ترغب في حذف هذه الأطروحة؟",
+        "all_comments":"كل تعليقات و تقييمات هذه الأطروحة ستُحذف!",
+        "delete":"حذف",
+        "cancel":"إلغاء"
+    },
+    "navbar":{
+        "languages":"اللغات",
+        "home":"الصفحة الرئيسية",
+        "upload":"تحميل",
+        "profile":"حسابي",
+        "my_papers":"أطروحاتي",
+        "saved_list":"المحفوظات",
+        "signout":"تسجيل الخروج"
+    },
+    "profile": {
+        "e-mail":"عنوان البريد الإلكتروني:",
+        "update_profile":"تعديل الحساب"
+    },
+    "search":{
+        "search_for":"ابحث عن",
+        "search":"بحث",
+        "you_should":"يجب أن تختار على الأقل خياراً أو شعاراً لتبحث عن طريقه!",
+        "search_by":"البحث عن طريق:",
+        "title":"العنوان",
+        "authors":"الكاتب",
+        "university":"الجامعة",
+        "faculty":"الكلية",
+        "language":"اللغة",
+        "search_by_tags":"البحث عن طريق الشعار:",
+        "tags":"الشعارات",
+        "you_should_tag":"يجب أن تختار على الأقل خياراً أو شعاراً لتبحث عن طريقه!",
+        "name":"الإسم",
+        "country":"البلد",
+        "state":"المدينة"
+    },
+    "thesis":{
+        "save":"حفظ",
+        "unsave":"إلغاء الحفظ",
+        "thesis":"أطروحة",
+        "language":"اللغة:",
+        "type":"النوع:",
+        "author":"الكاتب:",
+        "published":"تاريخ النشر",
+        "tags":"الشعارات:",
+        "abstract":"ملخّص:",
+        "your_rate":"تقييمك",
+        "no_rating":"لم يتم التقييم",
+        "edit":"تعديل",
+        "download":"تنزيل",
+        "delete":"حذف",
+        "report":"إبلاغ",
+        "comments":" التعليقات",
+        "no_comments":"ليس هناك أي تعليقات بعد!",
+        "show_more":"إظهار المزيد",
+        "write_comment":"أضف تعليقاً!",
+        "theses":"الأطروحات:",
+        "typeuni":"النوع:"
+    },
+    "upload":{
+        "drag_n_drop":"قم بسحب ملف الأطروحة وإفلاته هنا، أو اضغط هنا لاختياره(بحدود 64 ميغابايت)",
+        "delete":"حذف"
+    },
+    "edit_profile":{
+        "too_short":"إنه قصير جداً!",
+        "required_field":"هذا الحقل مطلوب!",
+        "invalid_email":"بريد إلكتروني غير صالح! يرجى إدخال بريد إلكتروني صيغته صالحة",
+        "your_firstname":"الاسم الأول",
+        "your_lastname":"الاسم الأخير",
+        "your_email":"عنوان بريدك الإلكتروني",
+        "academic_status":"الحالة الأكاديمية",
+        "undergraduate":"طالب جامعي",
+        "master":"طالب ماجستير",
+        "doctoral":"طالب دكتوراه",
+        "university":"الجامعة",
+        "save":"حفظ التغييرات"
+    },
+    "login":{
+        "invalid_email":"بريد إلكتروني غير صالح! يرجى إدخال بريد إلكتروني صيغته صالحة",
+        "required_field":"هذا الحقل مطلوب!",
+        "your_pass":"يجب أن تحتوي كلمة السر على 8 حروف على الأقل!",
+        "your_pass_t":"يجب أن تحتوي كلمة السر على أقل من 33 حرفاً!",
+        "your_email":"عنوان بريدك الإلكتروني",
+        "your_password":"كلمة السر",
+        "forgot":"هل نسيت كلمة السر؟",
+        "login_button":"تسجيل الدخول",
+        "or":"أو",
+        "google":"تسجيل الدخول عن طريق غوغل"
+    },
+    "register": {
+        "too_short":"إنه فصير جداً!",
+        "required_field":"هذا الحقل مطلوب!",
+        "invalid_email":"بريد إلكتروني غير صالح! يرجى إدخال بريد إلكتروني صيغته صالحة",
+        "your_pass":"يجب أن تحتوي كلمة السر على 8 حروف على الأقل!",
+        "your_pass_t":"يجب أن تحتوي كلمة السر على أقل من 33 حرفاً!",
+        "male":"ذكر",
+        "female":"أنثى",
+        "other":"أُخرى",
+        "accept":"الرجاء قبول شروط الخدمة وسياسة الخصوصية!",
+        "your_firstname":"الاسم الأول",
+        "your_lastname":"الاسم الأخير",
+        "your_email":"عنوان بريدك الإلكتروني",
+        "academic_status":"الحالة الأكاديمية",
+        "undergraduate":"طالب جامعي",
+        "master":"طالب ماجستير",
+        "doctoral":"طالب دكتوراه",
+        "university":"الجامعة",
+        "your_password":"كلمة السر",
+        "gender":"الجنس",
+        "agreement":"أوافق على شروط الخدمة وسياسة الخصوصية ، بما في ذلك استخدام ملفات تعريف الارتباط.",
+        "register":"إنشاء الحساب",
+        "creating":"يتم الآن إنشاء حساب جديد لك ..."
+    },
+    "update_thesis":{
+        "too_short":"إنه قصير جداً!",
+        "required_field":"هذا الحقل مطلوب!",
+        "title":"العنوان",
+        "university":"الجامعة",
+        "undergraduate":"أطروحة طالب جامعي",
+        "master":"أطروحة طالب ماجستير",
+        "doctoral":"أطروحة دكتوراه ",
+        "research":"ورقة بحث",
+        "type":"نوع الأطروحة",
+        "language":"اللغة",
+        "field":"مجال الدراسة",
+        "date":"تاريخ النشر",
+        "abstract":"الملخص",
+        "tags":"الشعارات",
+        "add_tag":"أضف شعاراً جديداً",
+        "cancel":"إلغاء",
+        "update":"تحديث الأطروحة",
+        "upload":"تحميل أطروحة"
+    },
+    "landing":{
+        "welcome_to":"Tithenai أهلاً بك في ",
+        "get_inspired":"احصل على الإلهام من أطروحة الآخرين ، وانشر أطروحتك الخاصة وشارك أفكارك مع زملائك.",
+        "to_start":"لكي تبدأ",
+        "sign_up":"قم بإنشاء حساب الآن!",
+        "have_account":"إن كنت تمتلك حساباً مسبقاً",
+        "sign_in":"قم بتسجيل الدخول",
+        "to_learn":"لتعلم المزيد,",
+        "click":"اضغط هنا.",
+        "about_tithenai":"Tithenai is a social platform for researchers to share their work and inspire others or find inspiration. We believe in making knowledge more accessible and aim to provide an environment to help academicians and undergraduate students collaborate and communicate throughout every step of the process wether they are conducting research or have a ready-to-publish thesis and wish to present their work.",
+        "about":"Tithenai حول"      
+    },
+    "search_page":{
+        "theses":"الأطروحات",
+        "universities":"الجامعات",
+        "welcome_back":"مرحبًا بعودتك. دعنا نبحث عن بعض الأشياء الشيقة!"
+    },
+    "login_page":{
+        "welcome":"Tithenai أهلاً بك في",
+        "signin_to":"Tithenai قم بتسجيل الدخول إلى",
+        "new":"هل أنت جديد هنا؟",
+        "create":"قم بإنشاء حساب"
+    },
+    "my_papers":{
+        "title":"أطروحاتي",
+        "you_one":"لقد قمت بنشر",
+        "you_two":"أطروحة, استمر!",
+        "pages":"الصفحات:",
+        "no_paper":"لم تقم بنشر أي أطروحات، لذا ابدأ و قم بتحميل واحدة جديدة",
+        "upload":"تحميل أطروحة جديدة"
+    },
+    "my_profile":{
+        "error":"لم يتم تحميل الصورة! الرجاء المحاولة مرة أخرى!",
+        "update_photo":"تحديث الصورة الشخصية",
+        "update_pass":"تغيير كلمة السر",
+        "we_will":"نحن سنرسل لك رابطاً لكي تتمكن من تغيير كلمة السر.",
+        "send_me":"أرسل لي رابطاً"
+    },
+    "not_found":{
+        "you_didnt":"لم ينقطع اتصال الانترنت. إنه خطأ وحسب!",
+        "we":"لم نستطع العثور على الصفحة التي كنت تبحث عنها.",
+        "but":"لكن لا تقلق. كل شيء ما زال رائعاً",
+        "home":"الصفحة الرئيسية"
+    },
+    "register_page":{
+        "create":"انشئ حساباً جديداً لكي تتمكن من الوصول إلى أطروحات غير محدودة!",
+        "or":"أو",
+        "continue":"أكمل باستخدام غوغل",
+        "just":"قم بتسجيل الدخول,",
+        "if":"إن كنت تمتلك حساباً مسبقاً"
+    },
+    "saved":{
+        "found":"أطروحات محفوظة تم العثور عليها:",
+        "pages":"الصفحات:",
+        "you_didnt":"أنت لم تقم بحفظ أي أطروحات.",
+        "back":"العودة إلى الصفحة الرئيسية"
+    },
+    "sresults":{
+        "searching":"جار البحث",
+        "theses":"الأطروحات",
+        "universities":"الجامعات",
+        "resultsf":"تم العثور على نتائج:",
+        "oops":"لم يتم العثور على نتائج."
+    },
+    "uploadpage":{
+        "upload":"قم بتحميل أطروحة جديدة لتزداد شهرةً",
+        "uploading":"جار تحميل أطروحة جديدة ..."
+    },
+    "viewthesis":{
+        "deleting":"جار حذف الأطروحة ...",
+        "updating":"جار تحديث الأطروحة ...",
+        "adding":"جار إضافة التعليق ...",
+        "deletingcomm":"جار حذف التعليق الخاص بك ...",
+        "saving":"جار حفظ التقييم الخاص بك ...",
+        "addingto":"جار إضافته إلى قائمة المحفوظات الخاصة بك ...",
+        "removing":"جار حذفه من قائمة المحفوظات الخاصة بك ...",
+        "sending":"جار إرسال الإبلاغ ..."
+    },
+    "uniprofile":{
+        "notheses":"عدد الأطروحات",
+        "statistics":"احصائيات الجامعة",
+        "topfield":"أفضل مجال للدراسات",
+        "toptags":"الشعارات الأكثر بحثًا",
+        "distribution":"توزيع الأطروحات حسب نوعها",
+        "topresearchers":"كبار الباحثين",
+        "totaltheses":"مجموع الرسائل الجامعية في السنة",
+        "thisyear":"نشاط هذا العام",
+        "lasttheses":"الأطروحات الأخيرة لهذه الجامعة",
+        "showmore":"إظهار المزيد"
+    },
+    "uni_info":{
+        "location":"الموقع:",
+        "type":"النوع:",
+        "noofmembers":"عدد المشتركين:",
+        "nooftheses":"العدد الكلي للأطروحات:",
+        "visit":"قم بزيارة الصفحة الرسمية الجامعة"
+    }
+}

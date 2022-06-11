@@ -1,0 +1,249 @@
+{
+    "dialogs": {
+      "report_thesis": "diese These melden",
+      "required_field": "Dieses Feld ist erforderlich!",
+      "explanation": "Erklärung",
+      "report": "melden",
+      "tag_exists": "Dieses Tag existiert bereits!",
+      "add_tag": "Neues Tag hinzufügen",
+      "new_tag": "neues Tag",
+      "forgot_password": "Passwort vergessen?",
+      "dont_worry": "Keine Sorge",
+      "wewill_send": "Wir werden Ihnen einen Link zum Zurücksetzen Ihres Passworts senden. Geben Sie einfach Ihre E-Mail-Adresse ein!",
+      "your_email": "Deine E-Mail-Adresse",
+      "please_check": "Bitte überprüfen Sie Ihren Posteingang. Wir haben Ihnen einen Link gesendet, mit dem Sie Ihr Passwort zurücksetzen können.",
+      "send_link": "Sende mir einen Link",
+      "ok": "OK",
+      "upload_photo": "ein Profilbild hochladen",
+      "view_profile": "Profilfoto ansehen",
+      "delete_thesis": "diese These löschen? ",
+      "r_u_sure": "Sind Sie sicher, dass Sie diese These löschen möchten?",
+      "all_comments": "Alle Kommentare und Bewertungen zu dieser These werden gelöscht.",
+      "delete": "Löschen",
+      "cancel": "Abbrechen"
+    },
+    "navbar": {
+      "languages": "Sprachen",
+      "home": "Home",
+      "upload": "hochladen",
+      "profile": "Profil",
+      "my_papers": "meine Arbeit",
+      "saved_list": "Gespeichert",
+      "signout": "abmelden"
+    },
+    "profile": {
+      "e-mail": "E-Mail Adresse:",
+      "update_profile": "Profil aktualisieren"
+    },
+    "search": {
+      "search_for": "Suche nach",
+      "search": "Suche",
+      "you_should": "Sie sollten mindestens eine Option oder ein Tag auswählen, nach dem gesucht werden soll!",
+      "search_by": "Suche mit ",
+      "title": "Title",
+      "authors": "Author(s)",
+      "university": "Universität",
+      "faculty": "Fakultät",
+      "language": "Sprache",
+      "search_by_tags": "Suche mit Tags:",
+      "tags": "Tags",
+      "you_should_tag": "Sie sollten mindestens eine Option oder ein Tag auswählen, nach dem gesucht werden soll!",
+      "name": "Name",
+      "country": "Land",
+      "state": "Staat/Provinz"
+    },
+    "thesis": {
+      "save": "Speichern",
+      "unsave": "Unsave",
+      "thesis": "These",
+      "language": "Sprache:",
+      "type": "Art:",
+      "author": "Autor",
+      "published": "Veröffentlicht an ",
+      "tags": "Tags:",
+      "abstract": "Abstrakt:",
+      "your_rate": "deine Bewertung",
+      "no_rating": "noch keine Bewertung",
+      "edit": "Bearbeiten",
+      "download": "Herunterladen",
+      "delete": "Löschen",
+      "report": "Melden",
+      "comments": "Kommentare",
+      "no_comments": "Noch keine Kommentare",
+      "show_more": "Mehr ansehen",
+      "write_comment": "schreibe einen Kommentar",
+      "theses": "Thesen:",
+      "typeuni": "Type:"
+    },
+    "upload": {
+      "drag_n_drop": "Ziehen Sie Ihr Dokument per Drag \u0026 Drop oder klicken Sie hier, um es auszuwählen (Max. Größe: 64 Megabyte)",
+      "delete": "Löschen"
+    },
+    "edit_profile": {
+      "too_short": "zu kurz!",
+      "required_field": "Dieses Feld ist erforderlich!",
+      "invalid_email": "Ungültige E-Mail! Bitte geben Sie eine gültige E-Mail-Adresse ein!",
+      "your_firstname": "Ihr Vorname",
+      "your_lastname": "Ihr Nachname",
+      "your_email": "Ihre E-Mail Addresse",
+      "academic_status": "akademischer Status",
+      "undergraduate": "Bachelor-Student",
+      "master": "Master-Studium student",
+      "doctoral": "Doktorand",
+      "university": "Universität",
+      "save": "Änderungen speichern"
+    },
+    "login": {
+      "invalid_email": "Ungültige E-Mail! Bitte geben Sie eine gültige E-Mail-Adresse ein!",
+      "required_field": "Dieses Feld ist erforderlich!",
+      "your_pass": "Ihr Passwort muss mindestens 8 Zeichen lang sein!",
+      "your_pass_t": "Ihr Passwort darf höchstens 32 Zeichen lang sein!",
+      "your_email": "Ihre E-Mail Addresse",
+      "your_password": "Ihr Passwort",
+      "forgot": "Passwort vergessen?",
+      "login_button": "Einloggen",
+      "or": "Oder",
+      "google": "mit Google anmelden"
+    },
+    "register": {
+      "too_short": "zu kurz!",
+      "required_field": "Dieses Feld ist erforderlich!",
+      "invalid_email": "Ungültige E-Mail! Bitte geben Sie eine gültige E-Mail-Adresse ein!",
+      "your_pass": "Ihr Passwort muss mindestens 8 Zeichen lang sein!",
+      "your_pass_t": "Ihr Passwort darf höchstens 32 Zeichen lang sein!",
+      "male": "männlich",
+      "female": "weiblich",
+      "other": "sonst",
+      "accept": "Bitte akzeptieren Sie die Nutzungsbedingungen \u0026 Datenschutzbestimmungen!",
+      "your_firstname": "Ihr Vorname",
+      "your_lastname": "Ihr Nachname",
+      "your_email": "Ihre E-Mail Addresse",
+      "academic_status": "akademischer Status",
+      "undergraduate": "Undergraduate",
+      "master": "Masterstudent",
+      "doctoral": "Doktorand",
+      "university": "Universität",
+      "your_password": "Ihr Passwort",
+      "gender": "Geschlecht",
+      "agreement": "Ich stimme den Nutzungsbedingungen und der Datenschutzrichtlinie zu, einschließlich der Verwendung von Cookies.",
+      "register": "registrieren",
+      "creating": "Neues Konto für Sie erstellen ..."
+    },
+    "update_thesis": {
+      "too_short": "zu kurz!",
+      "required_field": "Dieses Feld ist erforderlich!",
+      "title": "Title",
+      "university": "Universität",
+      "undergraduate": "Bachelorarbeit",
+      "master": "Masterarbeit",
+      "doctoral": "Dissertation",
+      "research": "Forschungsbericht",
+      "type": "Art der Abschlussarbeit",
+      "language": "Sprache",
+      "field": "Forschungsbereich",
+      "date": "Veröffentlichungsdatum",
+      "abstract": "Abstrakt",
+      "tags": "Tags",
+      "add_tag": "Neues Tag hinzufügen",
+      "cancel": "Abbrechen",
+      "update": "These aktualisieren",
+      "upload": "These hochladen"
+    },
+    "landing": {
+      "welcome_to": "Willkommen in Tithenai",
+      "get_inspired": "Lassen Sie sich von Thesen anderer inspirieren, veröffentlichen Sie Ihre eigene und teilen Sie Ihre Gedanken mit Ihren Kollegen.",
+      "to_start": "zu starten",
+      "sign_up": "Jetzt registrieren!",
+      "have_account": "Falls Sie bereits ein Konto haben",
+      "sign_in": "Einloggen",
+      "to_learn": "Um mehr zu lernen,",
+      "click": "Hier klicken",
+      "about_tithenai": "Tithenai ist eine soziale Plattform für Forscher, um ihre Arbeit zu teilen und andere zu inspirieren oder Inspiration zu finden. Wir glauben daran, Wissen zugänglicher zu machen und wollen ein Umfeld schaffen, um der Wissenschaft zu helfen",
+      "about": "Über Tithenai"
+    },
+    "search_page": {
+      "theses": "Thesen",
+      "universities": "Universitäten",
+      "welcome_back": "Willkommen zurück. Lass uns ein paar interessante Sachen suchen!"
+    },
+    "login_page": {
+      "welcome": "Willkommen in Tithenai",
+      "signin_to": "Melden Sie sich bei Tithenai an",
+      "new": "Neu hier?",
+      "create": "Ein Konto erstellen"
+    },
+    "my_papers": {
+      "title": "meine Papiere",
+      "you_one": "Sie haben",
+      "you_two": "Thesen veröffentlicht, machen Sie weiter",
+      "pages": "Seiten:",
+      "no_paper": "Sie haben noch keine Papiere veröffentlicht, legen Sie los und laden Sie ein neues hoch",
+      "upload": "Laden Sie ein neues Papier hoch"
+    },
+    "my_profile": {
+      "error": "Foto konnte nicht hochgeladen werden. Bitte versuche es erneut!",
+      "update_photo": "Profilfoto aktualisieren",
+      "update_pass": "Kennwort aktualisieren",
+      "we_will": "Wir senden Ihnen einen Link an Ihre E-Mail-Adresse, mit dem Sie Ihr Passwort aktualisieren können.",
+      "send_me": "Sende mir einen Link"
+    },
+    "not_found": {
+      "you_didnt": "Du hast das Internet nicht kaputt gemacht. Es ist nur ein 404-Fehler!",
+      "we": "Wir konnten die von Ihnen gesuchte Seite nicht finden.",
+      "but": "Aber keine Sorge, es ist noch alles super",
+      "home": "Home Sweet Home"
+    },
+    "register_page": {
+      "create": "Erstellen Sie ein neues Konto, um auf unbegrenzte Abschlussarbeiten zuzugreifen!",
+      "or": "Oder",
+      "continue": "mit Google fortfahren",
+      "just": "einfach einloggen",
+      "if": "wenn Sie bereits ein Konto haben"
+    },
+    "saved": {
+      "found": "Gespeicherte Thesen gefunden:",
+      "pages": "Seiten:",
+      "you_didnt": "Sie haben keine Thesen gespeichert",
+      "back": "zurück zum Home"
+    },
+    "sresults": {
+      "searching": "Suchen",
+      "theses": "Thesen",
+      "universities": "Universitäten",
+      "resultsf": "Gefundene Ergebnisse:",
+      "oops": "ops! Keine Ergebnisse gefunden."
+    },
+    "uploadpage": {
+      "upload": "Laden Sie eine neue These hoch und werden Sie berühmter",
+      "uploading": "Neue Abschlussarbeit hochladen ..."
+    },
+    "viewthesis": {
+      "deleting": "These löschen ...",
+      "updating": "Aktualisierung der These ...",
+      "adding": "Hinzufügen Ihres Kommentars ...",
+      "deletingcomm": "Löschen Ihres Kommentars ...",
+      "saving": "Bewertung speichern ...",
+      "addingto": "Hinzufügen zu Ihrer gespeicherten Liste ...",
+      "removing": "Aus Ihrer gespeicherten Liste entfernen ...",
+      "sending": "Senden Ihres Berichts ..."
+    },
+    "uniprofile": {
+      "notheses": "Anzahl der Thesen",
+      "statistics": "Universitätsstatistik",
+      "topfield": "Top Studienrichtung",
+      "toptags": "Top recherchierte Tags",
+      "distribution": "Verteilung der Thesen nach ihrer Art",
+      "topresearchers": "Top Forscher",
+      "totaltheses": "Gesamt Abschlussarbeiten pro Jahr",
+      "thisyear": "Die Aktivitäten dieses Jahres",
+      "lasttheses": "Letzte These dieser Universität",
+      "showmore": "mehr ansehen"
+    },
+    "uni_info": {
+      "location": "Standort:",
+      "type": "Type:",
+      "noofmembers": "Anzahl der Mitglieder:",
+      "nooftheses": "Anzahl der Thesen insgesamt:",
+      "visit": "Website der Universität besuchen"
+    }
+  }
