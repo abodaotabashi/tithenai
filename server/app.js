@@ -25,14 +25,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', userRouter);
-app.use('/universities', uniRouter);
-app.use('/theses', thesesRouter);
-app.use('/reports', reportsRouter);
-app.use('/comments', commentsRouter);
-app.use('/rates', ratessRouter);
-app.use('/adminPanel', adminPanel);
+app.use('/api/', indexRouter);
+app.use('/api/users', userRouter);
+app.use('/api/universities', uniRouter);
+app.use('/api/theses', thesesRouter);
+app.use('/api/reports', reportsRouter);
+app.use('/api/comments', commentsRouter);
+app.use('/api/rates', ratessRouter);
+
+app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 
 module.exports = app;

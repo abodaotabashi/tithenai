@@ -25,7 +25,7 @@ const firebaseConfig = {
 };
 initializeApp(firebaseConfig);
 
-const BASEURL = "http://localhost:9000";
+const BASEURL = "/api";
 axios.defaults.baseURL = BASEURL
 
 // =========================================================== Functions
