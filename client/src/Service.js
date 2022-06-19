@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASEURL = "api";
+const BASEURL = "/api";
 axios.defaults.baseURL = BASEURL
 // =========================================================== Utils
 
