@@ -27,8 +27,12 @@ function sortAlphabetically(property, languageCode) {
     }
 }
 
-function formatBase64(base64File) {
-    return base64File.replace(/^data:image\/\w+;base64,/, "");
+function formatBase64(base64File, type) {
+    if (type === "image") {
+        return base64File.replace(/^data:image\/\w+;base64,/, "");
+    }else if (type === "pdf") {
+        return base64File.replace(/^data:application\/pdf;base64,/, "");
+    }
 }
 
 function formatFirebaseDate(date, format) {
@@ -54,7 +58,7 @@ async function sendEmail(receiver, content) {
         secure: false,
         auth: {
             user: "tithenai@outlook.com",
-            pass: process.env.EMAIL_PASSWORD // TODO: add .env to the build environment
+            pass: process.env.EMAIL_PASSWORD
         },
     });
     const options = {

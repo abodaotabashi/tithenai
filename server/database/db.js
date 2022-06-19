@@ -242,13 +242,13 @@ async function updateUser(newUserData) {
 async function updateUserImage(data) {
     try {
         const uid = data.uid;
-        const imageBase64 = formatBase64(data.imageBase64)
+        const imageBase64 = formatBase64(data.imageBase64, 'image');
         const buf = new Buffer.from(imageBase64, 'base64');
         const file = storage.bucket(BUCKETNAME).file(`userImages/${uid}.png`);
         await file.save(buf);
         const publicUrl = await file.getSignedUrl({
             action: 'read',
-            expires: '03-17-2025', // TODO: make this dynamic
+            expires: Date.now() + (1000 * 60 * 60 * 24 * 365), // 1 year
         });
         admin.auth()
             .updateUser(uid, {
@@ -474,14 +474,15 @@ async function uploadThesis(data) {
         const userData = await getUserDataById(uid);
         thesisData.thesisAuthorName = `${userData.userFirstname} ${userData.userLastname}`
 
-        // add new thesis
+        // add new thesis to firebase
         const addedThesis = await db.collection(THESES_COLLECTION).add(thesisData)
 
-        // TODO: get a real pdf file as Base64
-        const pdfFile = await fs.readFileSync('database/myThesis.pdf', 'base64');
-        const buf = new Buffer.from(pdfFile, 'base64');
+        // upload pdf to storage
+        const pdfBase64 = formatBase64(thesisPdfBase64, "pdf");
+        const buf = new Buffer.from(pdfBase64, 'base64');
         const file = storage.bucket(BUCKETNAME).file(`theses/${addedThesis.id}.pdf`);
         await file.save(buf);
+
         const publicUrl = await file.getSignedUrl({
             action: 'read',
             expires: '03-09-2491',

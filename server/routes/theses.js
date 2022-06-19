@@ -55,9 +55,6 @@ router.get("/search", function (req, res, next) {
                     const englishThesisLanguage = turkishtoEnglish(thesis.thesisLanguage).toLowerCase();
                     isSearched = englishThesisLanguage.includes(query) || isSearched;
                 }
-
-                // TODO: When searching for a specific year, is it a range or a specific year?
-
             } else {
                 isSearched = true;
             }
