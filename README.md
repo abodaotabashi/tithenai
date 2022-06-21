@@ -111,4 +111,22 @@ pnpm start
 
 
 ## Build the application:
+To build teh application run the following command: 
 
+```sh
+cd client && CI='' npm run build
+
+// OR 
+
+cd client && CI='' yarn build
+```
+After the building is done, you can run the built application by running the following command: 
+
+```sh
+cd ../server && npm start 
+
+// OR 
+
+cd ../server && yarn start 
+```
+The application will be running on [http://localhost:9000](http://localhost:9000). 
