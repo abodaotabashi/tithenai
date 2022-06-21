@@ -108,3 +108,7 @@ yarn start
 ```sh
 pnpm start
 ```
+
+
+## Build the application:
+
