@@ -36,7 +36,7 @@ function formatBase64(base64File, type) {
 }
 
 function formatFirebaseDate(date, format) {
-    if (format === "year") {
+    if (format === "year") { 
         return new Date(date._seconds * 1000).getFullYear().toString()
     } else if (format === "month") {
         return String(new Date(date._seconds * 1000).getMonth() + 1).padStart(2, '0')
