@@ -1,6 +1,8 @@
 {
     "functions": {
-        "./index.js":{}
+        "./index.js":{
+            "memory": 1024
+        }
     },
     "redirects":[
         {
