@@ -111,7 +111,7 @@ pnpm start
 
 
 ## Build the application:
-To build teh application run the following command: 
+To build the application run the following command: 
 
 ```sh
 cd client && CI='' npm run build
