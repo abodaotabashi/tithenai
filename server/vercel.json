@@ -1,0 +1,11 @@
+{
+    "functions": {
+        "./index.js":{}
+    },
+    "redirects":[
+        {
+            "source": "/(.*)", 
+            "destination": "/"
+        }
+    ]
+}
