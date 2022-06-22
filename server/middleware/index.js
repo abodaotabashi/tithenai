@@ -12,7 +12,6 @@ class Middleware {
                 .then((decodedToken) => {
                     // const uid = decodedToken.uid;
                     if (decodedToken) {
-                        console.log("user is authorized");
                         req.user = decodedToken;
                         return next();
                     }

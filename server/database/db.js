@@ -830,7 +830,11 @@ async function deleteUserRate(uid) {
 async function addNewComment(data) {
     const uid = data.uid;
     const userData = await getUserDataById(uid);
-    if (getStrike(uid) < 2) {
+
+    const strike = await getStrike(uid)
+
+    if (strike < 2) {
+        console.log("I am here");
         const commentAuthorName = userData.userFirstname + " " + userData.userLastname;
         const dbCommentData = {
             commentAuthorID: uid,
@@ -839,10 +843,12 @@ async function addNewComment(data) {
             commentDate: new Date(data.commentdata.commentDate),
             commentAuthorName: commentAuthorName
         }
-        return db
+        return await db
             .collection(COMMENTS_COLLECTION)
             .doc()
             .set(dbCommentData)
+    }else{
+        return "users is striked"
     }
 }
 
