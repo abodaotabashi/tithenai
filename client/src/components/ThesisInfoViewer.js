@@ -266,7 +266,7 @@ const ThesisInfoViewer = (props) => {
                     variant="contained"
                     color="success"
                     startIcon={<DownloadIcon />}
-                    onClick={() => window.location.href = thesis.thesisPdfUrl[0]}
+                    onClick={() =>  window.open(thesis.thesisPdfUrl[0], '_blank' )}
                     style={{width: "80%", margin: "1vh 1rem", fontFamily: "Ubuntu"}}>
                     {t('thesis.download')}
                 </Button>
