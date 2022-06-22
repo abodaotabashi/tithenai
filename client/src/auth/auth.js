@@ -25,8 +25,7 @@ const firebaseConfig = {
 };
 initializeApp(firebaseConfig);
 
-const BASEURL = "/api";
-axios.defaults.baseURL = BASEURL
+axios.defaults.baseURL = "/api";
 
 // =========================================================== Functions
 
@@ -39,7 +38,9 @@ export const appSignOut = () => {
 };
 
 async function addNewUser(userCredential, userData) {
-    return axios.post("/public/addNewUser", {
+    const auth = getAuth();
+    axios.defaults.headers.common['Authorization'] = await auth.currentUser.getIdToken();
+    return axios.post("/users/addNewUser", {
         uid: userCredential.user.uid,
         userdata: userData
     }).then(() => {
