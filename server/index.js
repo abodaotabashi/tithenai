@@ -23,7 +23,9 @@ app.use(logger('dev'));
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+const root = path.join(__dirname, "public", "index.html")
+app.use(express.static(root));
 
 app.use('/api/', indexRouter);
 app.use('/api/users', userRouter);
@@ -34,7 +36,7 @@ app.use('/api/comments', commentsRouter);
 app.use('/api/rates', ratessRouter);
 
 app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
+    res.sendFile("index.html", {root});
 });
 
 
