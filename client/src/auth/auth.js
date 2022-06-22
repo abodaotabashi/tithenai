@@ -38,21 +38,15 @@ export const appSignOut = () => {
         }).catch(error => console.log(error))
 };
 
-// returns true, if the user is added correctly to the database
-// returns false, if an error occurred when adding the user to the database
 async function addNewUser(userCredential, userData) {
-    const auth = getAuth();
-    return auth.currentUser.getIdToken().then((idToken) => {
-        return axios.post("/users/addNewUser", {
-            idToken: idToken,
-            uid: userCredential.user.uid,
-            userdata: userData
-        }).then(() => {
-            return true;
-        }).catch((error) => {
-            console.log(error);
-            return false;
-        })
+    return axios.post("/public/addNewUser", {
+        uid: userCredential.user.uid,
+        userdata: userData
+    }).then(() => {
+        return true;
+    }).catch((error) => {
+        console.log(error);
+        return false;
     })
 }
 

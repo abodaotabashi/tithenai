@@ -89,7 +89,6 @@ const DEFAULT_UNI = {
 
 async function addNewUser(data) {
     const uid = data.uid
-    const idToken = data.idToken
     const dbUserData = {
         userUniID: data.userdata.userUniId,
         userAcademicStatus: data.userdata.userAcademicStatus,

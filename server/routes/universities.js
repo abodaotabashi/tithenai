@@ -7,15 +7,6 @@ const { validationResult, query } = require('express-validator');
 
 // ===========================================================
 
-router.get("/getAllUnis", function (req, res, next) {
-    db.getAllUnis().then((result) => {
-        res.send(result);
-    }).catch((error) => {
-        console.log(error)
-        res.sendStatus(500);
-    })
-});
-
 router.get("/search", function (req, res, next) {
     const query = turkishtoEnglish(req.query.query).toLowerCase()
     const dims = req.query.dimensions

@@ -1,7 +1,20 @@
 import axios from "axios";
+import { getAuth, } from "firebase/auth";
+import { Service } from 'axios-middleware';
 
-const BASEURL = "/api";
-axios.defaults.baseURL = BASEURL
+axios.defaults.baseURL = "/api"
+
+const service = new Service(axios);
+service.register({
+    async onRequest(config) {
+        const auth = getAuth();
+        if(auth.currentUser){
+            axios.defaults.headers.common['Authorization'] = await auth.currentUser.getIdToken();
+        }
+        return config;
+    }
+});
+
 // =========================================================== Utils
 
 export const getAllTags = async () => {
@@ -13,8 +26,8 @@ export const getAllTags = async () => {
 
 export const addNewTag = async (newTag) => {
     return await axios.post("/theses/addNewTag", {
-            tag : newTag
-        })
+        tag: newTag
+    })
         .then((result) => {
             return result.data;
         }).catch(error => console.log(error))
@@ -31,10 +44,10 @@ export const getAllDepartments = async () => {
 
 export const getThesis = async (thesisId) => {
     return await axios.get("/theses/getThesis", {
-            params: {
-                thesisId: thesisId
-            }
-        })
+        params: {
+            thesisId: thesisId
+        }
+    })
         .then((result) => {
             return result.data;
         }).catch(error => console.log(error))
@@ -42,10 +55,10 @@ export const getThesis = async (thesisId) => {
 
 export const deleteThesis = async (thesisId) => {
     return await axios.get("/theses/deleteThesis", {
-            params: {
-                thesisId: thesisId
-            }
-        })
+        params: {
+            thesisId: thesisId
+        }
+    })
         .then((result) => {
             return result.data;
         }).catch(error => console.log(error))
@@ -53,11 +66,11 @@ export const deleteThesis = async (thesisId) => {
 
 export const isThesisSaved = async (values) => {
     return await axios.get("/theses/isThesisSaved", {
-            params: {
-                uid: values.uid,
-                thesisId: values.thesisId
-            }
-        })
+        params: {
+            uid: values.uid,
+            thesisId: values.thesisId
+        }
+    })
         .then((result) => {
             return result.data;
         }).catch(error => console.log(error))
@@ -65,12 +78,12 @@ export const isThesisSaved = async (values) => {
 
 export const searchTheses = async (searchingValues) => {
     return await axios.get("/theses/search", {
-            params: {
-                query: searchingValues.query,
-                dimensions: searchingValues.dimensions,
-                tags: (searchingValues.tags.length === 0) ? "nothing" : searchingValues.tags,
-            }
-        })
+        params: {
+            query: searchingValues.query,
+            dimensions: searchingValues.dimensions,
+            tags: (searchingValues.tags.length === 0) ? "nothing" : searchingValues.tags,
+        }
+    })
         .then((result) => {
             return result.data;
         }).catch(error => console.log(error))
@@ -78,22 +91,22 @@ export const searchTheses = async (searchingValues) => {
 
 export const uploadThesis = async (thesisInfo) => {
     return await axios.post("/theses/uploadThesis", {
-            thesisAuthorID: thesisInfo.thesisAuthorID,
-            thesisAbstract: thesisInfo.thesisAbstract,
-            thesisType: thesisInfo.thesisType,
-            thesisDate: thesisInfo.thesisDate,
-            thesisFieldOfStudy: thesisInfo.thesisFieldOfStudy,
-            thesisLanguage: thesisInfo.thesisLanguage,
-            thesisTags: thesisInfo.thesisTags,
-            thesisTitle: thesisInfo.thesisTitle,
-            thesisUniID: thesisInfo.thesisUniID,
-            thesisUniName: thesisInfo.thesisUniName,
-            thesisUploadDate: new Date(),
-            thesisPdfBase64: thesisInfo.thesisPdfBase64,
-            viewersList: [],
-            rates: {},
-            ratesAverage: 0
-        })
+        thesisAuthorID: thesisInfo.thesisAuthorID,
+        thesisAbstract: thesisInfo.thesisAbstract,
+        thesisType: thesisInfo.thesisType,
+        thesisDate: thesisInfo.thesisDate,
+        thesisFieldOfStudy: thesisInfo.thesisFieldOfStudy,
+        thesisLanguage: thesisInfo.thesisLanguage,
+        thesisTags: thesisInfo.thesisTags,
+        thesisTitle: thesisInfo.thesisTitle,
+        thesisUniID: thesisInfo.thesisUniID,
+        thesisUniName: thesisInfo.thesisUniName,
+        thesisUploadDate: new Date(),
+        thesisPdfBase64: thesisInfo.thesisPdfBase64,
+        viewersList: [],
+        rates: {},
+        ratesAverage: 0
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -101,17 +114,17 @@ export const uploadThesis = async (thesisInfo) => {
 
 export const updateThesis = async (newThesisData) => {
     return await axios.post("/theses/updateThesis", {
-            thesisId: newThesisData.thesisId,
-            thesisAbstract: newThesisData.thesisAbstract,
-            thesisType: newThesisData.thesisType,
-            thesisDate: newThesisData.thesisDate,
-            thesisFieldOfStudy: newThesisData.thesisFieldOfStudy,
-            thesisLanguage: newThesisData.thesisLanguage,
-            thesisTags: newThesisData.thesisTags,
-            thesisTitle: newThesisData.thesisTitle,
-            thesisUniID: newThesisData.thesisUniID,
-            thesisUniName: newThesisData.thesisUniName,
-        })
+        thesisId: newThesisData.thesisId,
+        thesisAbstract: newThesisData.thesisAbstract,
+        thesisType: newThesisData.thesisType,
+        thesisDate: newThesisData.thesisDate,
+        thesisFieldOfStudy: newThesisData.thesisFieldOfStudy,
+        thesisLanguage: newThesisData.thesisLanguage,
+        thesisTags: newThesisData.thesisTags,
+        thesisTitle: newThesisData.thesisTitle,
+        thesisUniID: newThesisData.thesisUniID,
+        thesisUniName: newThesisData.thesisUniName,
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -119,9 +132,9 @@ export const updateThesis = async (newThesisData) => {
 
 export const saveThesis = async (values) => {
     return await axios.post("/theses/saveThesis", {
-            uid: values.uid,
-            thesisId: values.thesisId,
-        })
+        uid: values.uid,
+        thesisId: values.thesisId,
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -129,9 +142,9 @@ export const saveThesis = async (values) => {
 
 export const unsaveThesis = async (values) => {
     return await axios.post("/theses/removeSavedThesis", {
-            uid: values.uid,
-            thesisId: values.thesisId,
-        })
+        uid: values.uid,
+        thesisId: values.thesisId,
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -139,9 +152,9 @@ export const unsaveThesis = async (values) => {
 
 export const addViewer = async (values) => {
     return await axios.post("/theses/addViewer", {
-            uid: values.uid,
-            thesisId: values.thesisId,
-        })
+        uid: values.uid,
+        thesisId: values.thesisId,
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -149,10 +162,10 @@ export const addViewer = async (values) => {
 
 export const getUserTheses = async (uid) => {
     return await axios.get("/theses/getUserTheses", {
-            params: {
-                uid: uid
-            }
-        })
+        params: {
+            uid: uid
+        }
+    })
         .then((result) => {
             return result.data;
         }).catch(error => console.log(error))
@@ -160,10 +173,10 @@ export const getUserTheses = async (uid) => {
 
 export const getSavedList = async (uid) => {
     return await axios.get("/theses/getSavedTheses", {
-            params: {
-                uid: uid,
-            }
-        })
+        params: {
+            uid: uid,
+        }
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -173,9 +186,9 @@ export const getSavedList = async (uid) => {
 
 export const addNewReport = async (values) => {
     return await axios.post("/reports/addNewReport", {
-            uid: values.uid,
-            reportdata: values.reportdata,
-        })
+        uid: values.uid,
+        reportdata: values.reportdata,
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -183,11 +196,11 @@ export const addNewReport = async (values) => {
 
 export const getIsReported = async (values) => {
     return await axios.get("/reports/getIsReported", {
-            params: {
-                uid: values.uid,
-                thesisId: values.thesisId
-            }
-        })
+        params: {
+            uid: values.uid,
+            thesisId: values.thesisId
+        }
+    })
         .then((result) => {
             return result.data;
         }).catch(error => console.log(error))
@@ -197,9 +210,9 @@ export const getIsReported = async (values) => {
 
 export const addNewComment = async (values) => {
     return await axios.post("/comments/addNewComment", {
-            uid: values.uid,
-            commentdata: values.commentdata,
-        })
+        uid: values.uid,
+        commentdata: values.commentdata,
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -207,10 +220,10 @@ export const addNewComment = async (values) => {
 
 export const getComments = async (thesisId) => {
     return await axios.get("/comments/getComments", {
-            params: {
-                thesisId: thesisId,
-            }
-        })
+        params: {
+            thesisId: thesisId,
+        }
+    })
         .then((result) => {
             return result.data;
         }).catch(error => console.log(error))
@@ -218,10 +231,10 @@ export const getComments = async (thesisId) => {
 
 export const deleteComment = async (commentId) => {
     return await axios.get("/comments/deleteComment", {
-            params: {
-                commentId: commentId,
-            }
-        })
+        params: {
+            commentId: commentId,
+        }
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -231,10 +244,10 @@ export const deleteComment = async (commentId) => {
 
 export const addNewRate = async (values) => {
     return await axios.post("/rates/addNewRate", {
-            uid: values.uid,
-            thesisId: values.thesisId,
-            rateValue: values.rateValue,
-        })
+        uid: values.uid,
+        thesisId: values.thesisId,
+        rateValue: values.rateValue,
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -243,7 +256,7 @@ export const addNewRate = async (values) => {
 // =========================================================== Universities
 
 export const getAllUnis = async () => {
-    return await axios.get("/universities/getAllUnis")
+    return await axios.get("/public/getAllUnis")
         .then((result) => {
             return result.data;
         }).catch(error => console.log(error))
@@ -251,11 +264,11 @@ export const getAllUnis = async () => {
 
 export const searchUniversities = async (searchingValues) => {
     return await axios.get("/universities/search", {
-            params: {
-                query: searchingValues.query,
-                dimensions: searchingValues.dimensions,
-            }
-        })
+        params: {
+            query: searchingValues.query,
+            dimensions: searchingValues.dimensions,
+        }
+    })
         .then((result) => {
             return result.data;
         }).catch(error => console.log(error))
@@ -263,10 +276,10 @@ export const searchUniversities = async (searchingValues) => {
 
 export const getUniversity = async (universityId) => {
     return await axios.get("/universities/getUniversity", {
-            params: {
-                id: universityId,
-            }
-        })
+        params: {
+            id: universityId,
+        }
+    })
         .then((result) => {
             return result.data;
         }).catch(error => console.log(error))
@@ -276,10 +289,10 @@ export const getUniversity = async (universityId) => {
 
 export const getUserInfo = async (uid) => {
     return await axios.get("/users/getUserInfo", {
-            params: {
-                uid: uid
-            }
-        })
+        params: {
+            uid: uid
+        }
+    })
         .then((result) => {
             const userInfo = {
                 invalidReports: result.data.invalidReports,
@@ -299,13 +312,13 @@ export const getUserInfo = async (uid) => {
 
 export const updateUser = async (values, uid) => {
     return await axios.post("/users/updateUser", {
-            uid: uid,
-            userFirstname: values.firstname,
-            userLastname: values.lastname,
-            userAcademicStatus: values.status,
-            userEmail: values.email,
-            userUniversityID: values.university.uniID
-        })
+        uid: uid,
+        userFirstname: values.firstname,
+        userLastname: values.lastname,
+        userAcademicStatus: values.status,
+        userEmail: values.email,
+        userUniversityID: values.university.uniID
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -313,9 +326,9 @@ export const updateUser = async (values, uid) => {
 
 export const updateImage = async (image, uid) => {
     return await axios.post("/users/updateUserImage", {
-            imageBase64: image,
-            uid: uid
-        })
+        imageBase64: image,
+        uid: uid
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -325,9 +338,9 @@ export const updateImage = async (image, uid) => {
 
 export const strike = async (values) => {
     return await axios.post("/adminPanel/strike", {
-            uid: values.authorId,
-            thesisId: values.thesisId
-        })
+        uid: values.authorId,
+        thesisId: values.thesisId
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -335,8 +348,8 @@ export const strike = async (values) => {
 
 export const increaseInvalidReport = async (reporterID) => {
     return await axios.post("/adminPanel/increaseInvalidReport", {
-            uid: reporterID,
-        })
+        uid: reporterID,
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))
@@ -351,10 +364,10 @@ export const getAllReports = async () => {
 
 export const deleteReport = async (reportId) => {
     return await axios.get("/reports/deleteReport", {
-            params: {
-                reportId: reportId
-            }
-        })
+        params: {
+            reportId: reportId
+        }
+    })
         .then((result) => {
             return result;
         }).catch(error => console.log(error))

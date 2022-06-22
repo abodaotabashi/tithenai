@@ -17,6 +17,7 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.26.1",
+    "axios-middleware": "^0.3.1",
     "chart.js": "^3.8.0",
     "cropperjs": "^1.5.12",
     "date-fns": "^2.28.0",
@@ -39,12 +40,12 @@
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
-  "info about scripts":{
+  "info about scripts": {
     "build scirpt": "works only if you are using linux"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "BUILD_PATH='../server/public' react-scripts build", 
+    "build": "BUILD_PATH='../server/public' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -65,6 +66,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }, 
+  },
   "proxy": "http://localhost:9000"
 }
