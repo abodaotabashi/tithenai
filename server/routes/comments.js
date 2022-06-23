@@ -6,10 +6,14 @@ const db = require('../database/db.js');
 router.post("/addNewComment", function (req, res, next) {
     db.addNewComment(req.body)
         .then((status) => {
-            return status ? res.sendStatus(200) : res.sendStatus(500);
+            if(status === "users is striked"){
+                return res.status(403).json({message: "users is striked"})
+            }else{
+                return res.sendStatus(200)
+            }
         }).catch((error) => {
             console.log(error);
-            return res.sendStatus(500)
+            return res.sendStatus(500); 
         })
 });
 

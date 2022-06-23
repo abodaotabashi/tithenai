@@ -43,7 +43,7 @@ const UniversityInfoViewer = (props) => {
                         <Button
                             variant="contained"
                             color="secondary"
-                            onClick={() => window.location.href = `${universityInfo.uniUrl}`}
+                            onClick={() => window.open(`${universityInfo.uniUrl}`, '_blank' )}
                             startIcon={<LanguageIcon />}
                             style={{margin: "1vh 0",fontFamily: "Ubuntu"}}>
                             {t('uni_info.visit')}
