@@ -36,7 +36,6 @@ app.use('/api/comments', Middleware.isAuthenticated, commentsRouter);
 app.use('/api/rates', Middleware.isAuthenticated, ratessRouter);
 app.use('/api/adminPanel', Middleware.isAuthenticated, adminPanel);
 app.use('/api/public', publicRouter); // add all pulic routs here 
-
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
