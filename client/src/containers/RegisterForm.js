@@ -256,7 +256,7 @@ class RegisterForm extends Component {
                                         as={RadioGroup} row name="gender">
                                         <FormControlLabel value="female" control={<Radio color="secondary" required={true} />} label={t('register.female')} />
                                         <FormControlLabel value="male" control={<Radio color="secondary" required={true} />} label={t('register.male')} />
-                                        <FormControlLabel value="other" control={<Radio color="secondary" required={true} />} label={t('Prefer not to say')} />
+                                        <FormControlLabel value="other" control={<Radio color="secondary" required={true} />} label={t('register.other')} />
                                     </Field>
                                     <FormHelperText style={Boolean(errors.gender) === true ? { display: "flex", color: "red" } : { display: "none" }}><ErrorMessage name="gender" /></FormHelperText>
                                 </FormControl>
