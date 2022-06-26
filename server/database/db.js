@@ -919,13 +919,13 @@ async function strike(data) {
 
     //Strike 3 Ban User Delete account Delete its info from Users collection and send email
     else if (strikes == 2) {
-        //TODO: Delete the profile photo of User which saved in Firebase Storage
+        //Delete the profile photo of User which saved in Firebase Storage
+        await storage.bucket(BUCKETNAME).file(`userImages/${uid}.png`).delete();
 
         await admin.auth().deleteUser(uid)
 
         //: Send Email
         sendEmail(userData.userEmail, "GOOD BYEE YOU LITTLE ANNOYING PANDA")
-        //TODO: Delete ThesisID from all SavedLists of Users
         await deleteUserfromCollection(COMMENTS_COLLECTION, uid, 'commentAuthorID');
         await deleteUserfromCollection(REPORTS_COLLECTION, uid, 'reportReporterID');
         await deleteThesisWithSavedThesis(THESES_COLLECTION, uid, 'thesisAuthorID');
