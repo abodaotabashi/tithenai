@@ -114,7 +114,7 @@
         "your_pass_t":"Your Password must have at most 32 characters!",
         "male":"male",
         "female":"female",
-        "other":"other",
+        "other":"Prefer not to say",
         "accept":"Please Accept the terms of service & Privacy policy!",
         "your_firstname":"Your Firstname",
         "your_lastname":"Your Lastname",
