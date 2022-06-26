@@ -7,13 +7,13 @@ import { wait, within } from '@testing-library/user-event/dist/utils';
 import { act } from 'react-dom/test-utils';
 import { async } from '@firebase/util';
 import { Button } from '@mui/material';
-/*
+
 test('login', async() => { //DONE
   const { getByText, getByRole, findAllByText, findByText, container } = render(<App/>);
-  const element = await waitFor(() => findByText(/Sign In/i));
+  const element = await waitFor(() => findByText(/landing.sign_in/i));
   const leftClick = { button: 0 }
   userEvent.click(element, leftClick);
-  await waitFor(() => findByText(/Sign In to Tithenai/i))
+  await waitFor(() => findByText(/login_page.signin_to/i))
 
   const email = container.querySelector('input[name="email"]')
   const password = container.querySelector('input[name="password"]')
@@ -32,10 +32,11 @@ test('login', async() => { //DONE
     })
   })
 
-  const login = await waitFor(() => findByText(/Login/i));
+  const login = await waitFor(() => findByText(/login.login_button/i));
   await waitFor(() => {userEvent.click(login, leftClick)});
-  await waitFor(() => findByText(/Search By Tags:/i))
-}) */
+  await wait();
+  await waitFor(() => findByText(/search_page.theses/i))
+}) 
 /*
 test('Register', async () => {
   const { getByText, getByRole, findAllByText, findByText, container, findByRole, findByAltText, getByTestId } = render(<App />)
@@ -131,57 +132,17 @@ test('Register', async () => {
   //expect(homeElement).toBeInTheDocument();
 
 }); */
-/*
-test('logout', async() => {
-  const { getByText, getByRole, findAllByText, findByText, container, findByRole, findByAltText, getByTestId } = render(<App />)
-
-  const element1 = await waitFor(() => findByText(/Sign In/i));
-  const leftClick1 = { button: 0 }
-  userEvent.click(element1, leftClick1);
-  await waitFor(() => findByText(/Sign In to Tithenai/i))
-
-  const email = container.querySelector('input[name="email"]')
-  const password = container.querySelector('input[name="password"]')
-  await waitFor(() => {
-    fireEvent.change(email, {
-      target: {
-        value: "mahasineldervis1@gmail.com"
-      }
-    })
-  })
-  await waitFor(() => {
-    fireEvent.change(password, {
-      target: {
-        value: "testtest1234"
-      }
-    })
-  })
-
-  const login = await waitFor(() => findByText(/Login/i));
-  await waitFor(() => {userEvent.click(login, leftClick1)});
-  await wait();
-  await waitFor(() => findByText(/Search By Tags:/i))
 
 
-  const profileIcon = getByTestId('profile-icon')
-  const leftClick = { button: 0 }
-  userEvent.click(profileIcon, leftClick);
-  const signOutButton = await waitFor(() => findByText(/Sign Out/i))
-  await waitFor(() => {userEvent.click(signOutButton, leftClick)});
-  await wait();
-  const element = await waitFor(() => findByText(/Sign Up Now!/i));
-  expect(element).toBeInTheDocument();
-})*/
 
-/*
 test('edit profile', async () => {
   const { getByText, getByRole, findByTestId, findByText, container, findByRole, findByAltText, getByTestId, findByTitle } = render(<App />)
-
-  const element = await waitFor(() => findByText(/Sign In/i));
   const leftClick = { button: 0 }
+  const LogoButton = await waitFor(() => findByTestId('tithenaiLogo'));
+  userEvent.click(LogoButton, leftClick);
+ /* const element = await waitFor(() => findByText(/landing.sign_in/i));
   userEvent.click(element, leftClick);
-  await waitFor(() => findByText(/Sign In to Tithenai/i))
-
+  await waitFor(() => findByText(/login_page.signin_to/i))
   const email = container.querySelector('input[name="email"]')
   const password = container.querySelector('input[name="password"]')
   await waitFor(() => {
@@ -199,40 +160,42 @@ test('edit profile', async () => {
     })
   })
 
-  const login = await waitFor(() => findByText(/Login/i));
-  await waitFor(() => {userEvent.click(login, leftClick)});
-  await waitFor(() => findByText(/Search By Tags:/i))
-
-  const profileIcon = getByTestId('profile-icon'); //Not finding profile icon
+  const login = await waitFor(() => findByText(/login.login_button/i));
+  await waitFor(() => {userEvent.click(login, leftClick)});*/
+  await wait();
+  const profileIcon = await waitFor(() => findByTestId('profile-icon')); //Not finding profile icon
   //const leftClick = { button: 0 }
   userEvent.click(profileIcon, leftClick);
-  const profileButton = await waitFor(() => findByText('Profile'))
+  const profileButton = await waitFor(() => findByText('navbar.profile'))
   userEvent.click(profileButton, leftClick);
-  await waitFor(() => findByText(/Update Password/i));
-
+  await waitFor(() => findByText(/my_profile.update_pass/i));
   //const editIcon = getByTestId('profileInfoUpdate');
   const editIcon = await waitFor(() => findByTestId('profileInfoUpdate'));
-  userEvent.click(editIcon, leftClick);
+  erEvent.click(editIcon, leftClick);
   const firstName = container.querySelector('input[name="firstname"]')
   await waitFor(() => {
     fireEvent.change(firstName, {
       target: {
-        value: "MahoReis"
+        value: "MahoReiss"
       }
     })
   })
-  const save = await waitFor(() => findByText(/Save Changes/i));
+  const save = await waitFor(() => findByText(/edit_profile.save/i));
   await waitFor(() => {userEvent.click(save, leftClick)});
-  const checkChanged = await waitFor(() => {findByText(/MahoReis Elderviş/i)})
-}) */
-/*
-test('saved list page no saved theses', async () => {
-  const { getByText, getByRole, findByTestId, findByText, container, findByRole, findByAltText, getByTestId, findByTitle } = render(<App />)
+  const checkChanged = await waitFor(() => {findByText(/MahoReiss Elderviş/i)}) //هاد الكود كان يشتغل بس صاير بطيء كتير وقت بدو يطالع معلومات المستخدم عالشاشة لهيك ماعم يلاقيهن بالتيستينغ
+}) 
 
-  const element = await waitFor(() => findByText(/Sign In/i));
+
+test('logout', async() => {
+  const { getByText, getByRole, findAllByText, findByText, container, findByRole, findByAltText, getByTestId } = render(<App />)
   const leftClick = { button: 0 }
-  userEvent.click(element, leftClick);
-  await waitFor(() => findByText(/Sign In to Tithenai/i))
+
+  const LogoButton = await waitFor(() => findByTestId('tithenaiLogo'));
+  userEvent.click(LogoButton, leftClick);
+ /* const element1 = await waitFor(() => findByText(/landing.sign_in/i));
+  const leftClick1 = { button: 0 }
+  userEvent.click(element1, leftClick1);
+  await waitFor(() => findByText(/login_page.signin_to/i))
 
   const email = container.querySelector('input[name="email"]')
   const password = container.querySelector('input[name="password"]')
@@ -251,240 +214,63 @@ test('saved list page no saved theses', async () => {
     })
   })
 
-  const login = await waitFor(() => findByText(/Login/i));
-  await waitFor(() => {userEvent.click(login, leftClick)});
-  await waitFor(() => findByText(/Search By Tags:/i))
+  const login = await waitFor(() => findByText(/login.login_button/i));
+  await waitFor(() => {userEvent.click(login, leftClick1)});*/
+  await wait();
+  const profileIcon = getByTestId('profile-icon')
+  userEvent.click(profileIcon, leftClick);
+  const signOutButton = await waitFor(() => findByText(/navbar.signout/i))
+  await waitFor(() => {userEvent.click(signOutButton, leftClick)});
+  await wait();
+  const element = await waitFor(() => findByText(/login_page.signin_to/i));
+  expect(element).toBeInTheDocument();
+})
+
+test('saved list page', async () => {
+  const { getByText, getByRole, findByTestId, findByText, container, findByRole, findByAltText, getByTestId, findByTitle } = render(<App />)
+  const leftClick = { button: 0 }
+  const LogoButton = await waitFor(() => findByTestId('tithenaiLogo'));
+  userEvent.click(LogoButton, leftClick);
+ /* const element = await waitFor(() => findByText(/landing.sign_in/i));
+  const leftClick = { button: 0 }
+  userEvent.click(element, leftClick);
+  await waitFor(() => findByText(/login_page.signin_to/i))
+
+  const email = container.querySelector('input[name="email"]')
+  const password = container.querySelector('input[name="password"]')
+  await waitFor(() => {
+    fireEvent.change(email, {
+      target: {
+        value: "mahasineldervis1@gmail.com"
+      }
+    })
+  })
+  await waitFor(() => {
+    fireEvent.change(password, {
+      target: {
+        value: "testtest1234"
+      }
+    })
+  })
+
+  const login = await waitFor(() => findByText(/login.login_button/i));
+  await waitFor(() => {userEvent.click(login, leftClick)});  */
+  //const leftClick = { button: 0 }
+
+  await wait();
 
   const profileIcon = getByTestId('profile-icon'); //Not finding profile icon
   //const leftClick = { button: 0 }
   userEvent.click(profileIcon, leftClick);
-  const profileButton = await waitFor(() => findByText('Saved List'))
+  const profileButton = await waitFor(() => findByText('navbar.saved_list'))
   userEvent.click(profileButton, leftClick);
-  await waitFor(() => findByText(/You didn't save any theses./i));
-}) */
+  await wait();
+  await waitFor(() => findByText(/saved.you_didnt/i));
+}) 
 /*
 test('saved list page results found', async () => {
   const { getByText, getByRole, findByTestId, findByText, container, findByRole, findByAltText, getByTestId, findByTitle } = render(<App />)
 
-  const element = await waitFor(() => findByText(/Sign In/i));
-  const leftClick = { button: 0 }
-  userEvent.click(element, leftClick);
-  await waitFor(() => findByText(/Sign In to Tithenai/i))
-
-  const email = container.querySelector('input[name="email"]')
-  const password = container.querySelector('input[name="password"]')
-  await waitFor(() => {
-    fireEvent.change(email, {
-      target: {
-        value: "whenyou@see.it"
-      }
-    })
-  })
-  await waitFor(() => {
-    fireEvent.change(password, {
-      target: {
-        value: "testtest1234"
-      }
-    })
-  })
-
-  const login = await waitFor(() => findByText(/Login/i));
-  await waitFor(() => {userEvent.click(login, leftClick)});
-  await waitFor(() => findByText(/Search By Tags:/i))
-
-  const profileIcon = getByTestId('profile-icon'); //Not finding profile icon
-  //const leftClick = { button: 0 }
-  userEvent.click(profileIcon, leftClick);
-  const profileButton = await waitFor(() => findByText('Saved List'))
-  userEvent.click(profileButton, leftClick);
-  await waitFor(() => findByText(/Saved theses found:/i));
-}) */
-/*
-test('View thesis page renders', async()=>{ //DONE
-  const { getByText, getByRole, findAllByText, findByText, container, getByTestId, findByTestId } = render(<App/>);
-    ///// If you are logged in, you don't need these lines
-  const element = await waitFor(() => findByText(/Sign In/i));
-  const leftClick = { button: 0 }
-  userEvent.click(element, leftClick);
-  await waitFor(() => findByText(/Sign In to Tithenai/i))
-
-  const email = container.querySelector('input[name="email"]')
-  const password = container.querySelector('input[name="password"]')
-  await waitFor(() => {
-    fireEvent.change(email, {
-      target: {
-        value: "mahasineldervis1@gmail.com"
-      }
-    })
-  })
-  await waitFor(() => {
-    fireEvent.change(password, {
-      target: {
-        value: "testtest1234"
-      }
-    })
-  })
-
-  const login = await waitFor(() => findByText(/Login/i));
-  userEvent.click(login, leftClick); 
-
-  const thesesSection = await waitFor(() => findByText('Theses')) 
-  //const leftClick = { button: 0 }
-  userEvent.click(thesesSection, leftClick);
-
-  const searchInputField = container.querySelector('input[name="searchInputField"]')
-  await waitFor(() => {
-    fireEvent.change(searchInputField, {
-      target: {
-        value: "learning" 
-      }
-    })
-  })
-  const button = getByTestId('search-button');
-  userEvent.click(button, leftClick);
-  const checkSearchMethod = await waitFor(() => findByText(/Results found:/i))
-  const thesisFound = await waitFor(() => findByText('How to use deep learning to trfsafsain a deep learning model'))
-  userEvent.click(thesisFound, leftClick);
-  await wait();
-  const checkView = await waitFor(() => findByText(/Author:/i))
-}) */
-
-/*
-test('Upload thesis page renders', async()=>{ //DONE
-  const { getByText, getByRole, findAllByText, findByText, container, getByTestId } = render(<App/>);
-    ///// If you are logged in, you don't need these lines
-  const element = await waitFor(() => findByText(/Sign In/i));
-  const leftClick = { button: 0 }
-  userEvent.click(element, leftClick);
-  await waitFor(() => findByText(/Sign In to Tithenai/i))
-
-  const email = container.querySelector('input[name="email"]')
-  const password = container.querySelector('input[name="password"]')
-  await waitFor(() => {
-    fireEvent.change(email, {
-      target: {
-        value: "mahasineldervis1@gmail.com"
-      }
-    })
-  })
-  await waitFor(() => {
-    fireEvent.change(password, {
-      target: {
-        value: "testtest1234"
-      }
-    })
-  })
-
-  const login = await waitFor(() => findByText(/Login/i));
-  userEvent.click(login, leftClick); 
-
-  const uploadButton = await waitFor(() => findByText('Upload')) 
-  //const leftClick = { button: 0 }
-  userEvent.click(uploadButton, leftClick);
-
-  const checkItRenders = await waitFor(() => findByText(/Upload New Thesis and become more famous/i))
-}) */
-
-/*
-test('search for theses', async()=>{ //DONE
-  const { getByText, getByRole, findAllByText, findByText, container, getByTestId } = render(<App/>);
-    ///// If you are logged in, you don't need these lines
- // const element = await waitFor(() => findByText(/Sign In/i));
- // const leftClick = { button: 0 }
- // userEvent.click(element, leftClick);
- // await waitFor(() => findByText(/Sign In to Tithenai/i))
-
- // const email = container.querySelector('input[name="email"]')
-  //const password = container.querySelector('input[name="password"]')
-  //await waitFor(() => {
- //   fireEvent.change(email, {
-  //    target: {
-   //     value: "mahasineldervis1@gmail.com"
-    //  }
-   // })
- // })
- // await waitFor(() => {
- //   fireEvent.change(password, {
- //     target: {
- //       value: "testtest1234"
- //     }
- //   })
- // })
-
- // const login = await waitFor(() => findByText(/Login/i));
- // userEvent.click(login, leftClick);
-  //const thesesSection = await waitFor(() => findByText(/Theses/i))
-  //userEvent.click(thesesSection, leftClick);  
-  const thesesSection = await waitFor(() => findByText('Theses')) 
-  const leftClick = { button: 0 }
-  userEvent.click(thesesSection, leftClick);
-
-  const searchInputField = container.querySelector('input[name="searchInputField"]')
-  await waitFor(() => {
-    fireEvent.change(searchInputField, {
-      target: {
-        value: "learning" 
-      }
-    })
-  })
-  const button = getByTestId('search-button');
-  userEvent.click(button, leftClick);
-  const checkSearchMethod = await waitFor(() => findByText(/Results found:/i))
-  expect (checkSearchMethod).toBeInTheDocument();
-}) 
-
-test('search for universities', async()=>{ 
-  const { getByText, getByRole, findAllByText, findByText, container, getByTestId } = render(<App/>);
-  ///// If you are logged in, you don't need these lines
- // const element = await waitFor(() => findByText(/Sign In/i));
- // const leftClick = { button: 0 }
- // userEvent.click(element, leftClick);
- // await waitFor(() => findByText(/Sign In to Tithenai/i))
-
- // const email = container.querySelector('input[name="email"]')
- // const password = container.querySelector('input[name="password"]')
- // await waitFor(() => {
- //   fireEvent.change(email, {
- //     target: {
- //       value: "mahasineldervis1@gmail.com"
- //     }
- //   })
- // })
- // await waitFor(() => {
- //   fireEvent.change(password, {
- //     target: {
- //       value: "testtest1234"
- //     }
- //   })
- // })
-
- // const login = await waitFor(() => findByText(/Login/i));
- // userEvent.click(login, leftClick);
-  /////// 
-  const leftClick = { button: 0 }
-  const LogoButton = getByTestId('tithenaiLogo');
-  userEvent.click(LogoButton, leftClick);
-  const universitiesSection = await waitFor(() => findByText('Universities')) 
-  userEvent.click(universitiesSection, leftClick);
-
-  const searchInputField = container.querySelector('input[name="searchUniField"]')
-  await waitFor(() => {
-    fireEvent.change(searchInputField, {
-      target: {
-        value: "türk" 
-      }
-    })
-  })
-  const button = getByTestId('search-uni-button');
-  userEvent.click(button, leftClick);
-  const checkSearchMethod = await waitFor(() => findByText(/Results found:/i))
-  expect (checkSearchMethod).toBeInTheDocument();
-})*/
-
-
-test('view university profile', async()=>{ 
-  const { getByText, getByRole, findAllByText, findByText, container, getByTestId } = render(<App/>);
-  ///// If you are logged in, you don't need these lines
   const element = await waitFor(() => findByText(/landing.sign_in/i));
   const leftClick = { button: 0 }
   userEvent.click(element, leftClick);
@@ -508,7 +294,236 @@ test('view university profile', async()=>{
   })
 
   const login = await waitFor(() => findByText(/login.login_button/i));
-  userEvent.click(login, leftClick);
+  await waitFor(() => {userEvent.click(login, leftClick)});
+
+  const profileIcon = getByTestId('profile-icon'); //Not finding profile icon
+  //const leftClick = { button: 0 }
+  userEvent.click(profileIcon, leftClick);
+  const profileButton = await waitFor(() => findByText('navbar.saved_list'))
+  userEvent.click(profileButton, leftClick);
+  await waitFor(() => findByText(/Saved theses found:/i));
+}) */
+
+test('View thesis page renders', async()=>{ //DONE
+  const { getByText, getByRole, findAllByText, findByText, container, getByTestId, findByTestId } = render(<App/>);
+  const leftClick = { button: 0 }
+  const LogoButton = await waitFor(() => findByTestId('tithenaiLogo'));
+  userEvent.click(LogoButton, leftClick);
+  ///// If you are logged in, you don't need these lines
+ /* const element = await waitFor(() => findByText(/landing.sign_in/i));
+  const leftClick = { button: 0 }
+  userEvent.click(element, leftClick);
+  await waitFor(() => findByText(/login_page.signin_to/i))
+
+  const email = container.querySelector('input[name="email"]')
+  const password = container.querySelector('input[name="password"]')
+  await waitFor(() => {
+    fireEvent.change(email, {
+      target: {
+        value: "mahasineldervis1@gmail.com"
+      }
+    })
+  })
+  await waitFor(() => {
+    fireEvent.change(password, {
+      target: {
+        value: "testtest1234"
+      }
+    })
+  })
+
+  const login = await waitFor(() => findByText(/login.login_button/i));
+  userEvent.click(login, leftClick); */
+  await wait();
+ // const thesesSection = await waitFor(() => findByText(/search_page.theses/i)) 
+  const thesesSection = getByText(/search_page.theses/i);
+  //const leftClick = { button: 0 }
+  userEvent.click(thesesSection, leftClick);
+
+  const searchInputField = container.querySelector('input[name="searchInputField"]')
+  await waitFor(() => {
+    fireEvent.change(searchInputField, {
+      target: {
+        value: "learning" 
+      }
+    })
+  })
+  const button = getByTestId('search-button');
+  userEvent.click(button, leftClick);
+  const checkSearchMethod = await waitFor(() => findByText(/sresults.resultsf/i))
+  const thesisFound = await waitFor(() => findByText('How to use deep learning to train a deep learning model'))
+  userEvent.click(thesisFound, leftClick);
+  await wait();
+  const checkView = await waitFor(() => findByText(/thesis.author/i))
+}) 
+
+
+test('Upload thesis page renders', async()=>{ //DONE
+  const { getByText, getByRole, findAllByText, findByText, container, getByTestId } = render(<App/>);
+  const leftClick = { button: 0 }
+  const LogoButton = await waitFor(() => findByTestId('tithenaiLogo'));
+  userEvent.click(LogoButton, leftClick);
+  ///// If you are logged in, you don't need these lines
+ /* const element = await waitFor(() => findByText(/landing.sign_in/i));
+  const leftClick = { button: 0 }
+  userEvent.click(element, leftClick);
+  await waitFor(() => findByText(/login_page.signin_to/i))
+
+  const email = container.querySelector('input[name="email"]')
+  const password = container.querySelector('input[name="password"]')
+  await waitFor(() => {
+    fireEvent.change(email, {
+      target: {
+        value: "mahasineldervis1@gmail.com"
+      }
+    })
+  })
+  await waitFor(() => {
+    fireEvent.change(password, {
+      target: {
+        value: "testtest1234"
+      }
+    })
+  })
+
+  const login = await waitFor(() => findByText(/login.login_button/i));
+  userEvent.click(login, leftClick); */
+
+  const uploadButton = await waitFor(() => findByText('navbar.upload')) 
+  //const leftClick = { button: 0 }
+  userEvent.click(uploadButton, leftClick);
+
+  const checkItRenders = await waitFor(() => findByText(/uploadpage.upload/i))
+}) 
+
+
+test('search for theses', async()=>{ //DONE
+  const { getByText, getByRole, findAllByText, findByText, container, getByTestId } = render(<App/>);
+  const leftClick = { button: 0 }
+  const LogoButton = await waitFor(() => findByTestId('tithenaiLogo'));
+  userEvent.click(LogoButton, leftClick);
+  ///// If you are logged in, you don't need these lines
+ /* const element = await waitFor(() => findByText(/landing.sign_in/i));
+  const leftClick = { button: 0 }
+  userEvent.click(element, leftClick);
+  await waitFor(() => findByText(/login_page.signin_to/i))
+
+  const email = container.querySelector('input[name="email"]')
+  const password = container.querySelector('input[name="password"]')
+  await waitFor(() => {
+    fireEvent.change(email, {
+      target: {
+        value: "mahasineldervis1@gmail.com"
+      }
+    })
+  })
+  await waitFor(() => {
+    fireEvent.change(password, {
+      target: {
+        value: "testtest1234"
+      }
+    })
+  })
+
+  const login = await waitFor(() => findByText(/login.login_button/i));
+  userEvent.click(login, leftClick);*/
+  //const thesesSection = await waitFor(() => findByText(/Theses/i))
+  //userEvent.click(thesesSection, leftClick);  
+  const thesesSection = await waitFor(() => findByText('search_page.theses')) 
+  userEvent.click(thesesSection, leftClick);
+
+  const searchInputField = container.querySelector('input[name="searchInputField"]')
+  await waitFor(() => {
+    fireEvent.change(searchInputField, {
+      target: {
+        value: "learning" 
+      }
+    })
+  })
+  const button = getByTestId('search-button');
+  userEvent.click(button, leftClick);
+  const checkSearchMethod = await waitFor(() => findByText(/sresults.oops/i))
+  expect (checkSearchMethod).toBeInTheDocument();
+}) 
+
+test('search for universities', async()=>{ 
+  const { getByText, getByRole, findAllByText, findByText, container, getByTestId } = render(<App/>);
+  const leftClick = { button: 0 }
+  const LogoButton = await waitFor(() => findByTestId('tithenaiLogo'));
+  userEvent.click(LogoButton, leftClick);
+  ///// If you are logged in, you don't need these lines
+ /* const element = await waitFor(() => findByText(/landing.sign_in/i));
+  const leftClick = { button: 0 }
+  userEvent.click(element, leftClick);
+  await waitFor(() => findByText(/login_page.signin_to/i))
+
+  const email = container.querySelector('input[name="email"]')
+  const password = container.querySelector('input[name="password"]')
+  await waitFor(() => {
+    fireEvent.change(email, {
+      target: {
+        value: "mahasineldervis1@gmail.com"
+      }
+    })
+  })
+  await waitFor(() => {
+    fireEvent.change(password, {
+      target: {
+        value: "testtest1234"
+      }
+    })
+  })
+
+  const login = await waitFor(() => findByText(/login.login_button/i));
+  userEvent.click(login, leftClick);*/
+  const universitiesSection = await waitFor(() => findByText('search_page.universities')) 
+  userEvent.click(universitiesSection, leftClick);
+
+  const searchInputField = container.querySelector('input[name="searchUniField"]')
+  await waitFor(() => {
+    fireEvent.change(searchInputField, {
+      target: {
+        value: "türk" 
+      }
+    })
+  })
+  const button = getByTestId('search-uni-button');
+  userEvent.click(button, leftClick);
+  const checkSearchMethod = await waitFor(() => findByText(/sresults.resultsf/i))
+  expect (checkSearchMethod).toBeInTheDocument();
+})
+
+
+test('view university profile', async()=>{ 
+  const { getByText, getByRole, findAllByText, findByText, container, getByTestId } = render(<App/>);
+  const leftClick = { button: 0 }
+  const LogoButton = await waitFor(() => findByTestId('tithenaiLogo'));
+  userEvent.click(LogoButton, leftClick);
+  ///// If you are logged in, you don't need these lines
+  /*const element = await waitFor(() => findByText(/landing.sign_in/i));
+  const leftClick = { button: 0 }
+  userEvent.click(element, leftClick);
+  await waitFor(() => findByText(/login_page.signin_to/i))
+
+  const email = container.querySelector('input[name="email"]')
+  const password = container.querySelector('input[name="password"]')
+  await waitFor(() => {
+    fireEvent.change(email, {
+      target: {
+        value: "mahasineldervis1@gmail.com"
+      }
+    })
+  })
+  await waitFor(() => {
+    fireEvent.change(password, {
+      target: {
+        value: "testtest1234"
+      }
+    })
+  })
+
+  const login = await waitFor(() => findByText(/login.login_button/i));
+  userEvent.click(login, leftClick);*/
   /////// 
   //const leftClick = { button: 0 }
   //const LogoButton = getByTestId('tithenaiLogo');
@@ -533,5 +548,45 @@ test('view university profile', async()=>{
   userEvent.click(uniFound, leftClick);
   await wait();
   const checkView = getByText(/uni_info.noofmembers/i)
+}) 
+
+test('admin panel render', async () => {
+  const { getByText, getByRole, findByTestId, findByText, container, findByRole, findByAltText, getByTestId, findByTitle } = render(<App />)
+  const leftClick = { button: 0 }
+  const LogoButton = await waitFor(() => findByTestId('tithenaiLogo'));
+  userEvent.click(LogoButton, leftClick);
+/*
+  const element = await waitFor(() => findByText(/landing.sign_in/i));
+  const leftClick = { button: 0 }
+  userEvent.click(element, leftClick);
+  await waitFor(() => findByText(/login_page.signin_to/i))
+
+  const email = container.querySelector('input[name="email"]')
+  const password = container.querySelector('input[name="password"]')
+  await waitFor(() => {
+    fireEvent.change(email, {
+      target: {
+        value: "mahasineldervis1@gmail.com"
+      }
+    })
+  })
+  await waitFor(() => {
+    fireEvent.change(password, {
+      target: {
+        value: "testtest1234"
+      }
+    })
+  })
+
+  const login = await waitFor(() => findByText(/login.login_button/i));
+  await waitFor(() => {userEvent.click(login, leftClick)}); */
+  await wait();
+ // const profileIcon = getByTestId('profile-icon');  
+  const profileIcon = await wait(() => findByTestId(/profile-icon/i))
+  //const leftClick = { button: 0 }
+  await waitFor(() => {userEvent.click(profileIcon, leftClick)})
+  const profileButton = await waitFor(() => findByText('navbar.admin_panel'))
+  userEvent.click(profileButton, leftClick);
+  await waitFor(() => findByText(/admin_panel.welcome/i));
 })
 jest.setTimeout(30000)
