@@ -34,9 +34,8 @@ app.use('/api/theses', Middleware.isAuthenticated, thesesRouter);
 app.use('/api/reports', Middleware.isAuthenticated, reportsRouter);
 app.use('/api/comments', Middleware.isAuthenticated, commentsRouter);
 app.use('/api/rates', Middleware.isAuthenticated, ratessRouter);
-//app.use('/api/adminPanel', Middleware.isAuthenticated, adminPanel);
+app.use('/api/adminPanel', Middleware.isAuthenticated, adminPanel);
 app.use('/api/public', publicRouter); // add all pulic routs here 
-app.use('/api/adminPanel', adminPanel);
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
