@@ -922,8 +922,11 @@ async function strike(data) {
         //Delete the profile photo of User which saved in Firebase Storage
         await storage.bucket(BUCKETNAME).file(`userImages/${uid}.png`).delete();
 
-        await admin.auth().deleteUser(uid)
-
+        //await admin.auth().deleteUser(uid)
+        //user email disabled instead of deleting 
+        await admin.auth().updateUser(uid, {
+            disabled: true
+        });
         //: Send Email
         sendEmail(userData.userEmail, "GOOD BYEE YOU LITTLE ANNOYING PANDA")
         await deleteUserfromCollection(COMMENTS_COLLECTION, uid, 'commentAuthorID');
@@ -941,7 +944,6 @@ async function strike(data) {
             .doc(docId)
             .update({ bannedUsers: bannedEmails })
     }
-    return "Helloo"
 }
 
 async function getStrike(uid) {
