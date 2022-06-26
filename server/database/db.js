@@ -847,7 +847,7 @@ async function addNewComment(data) {
             .collection(COMMENTS_COLLECTION)
             .doc()
             .set(dbCommentData)
-    }else{
+    } else {
         return "users is striked"
     }
 }
@@ -892,11 +892,17 @@ async function strike(data) {
         });
     }
 
+    async function deleteThesisWithSavedThesis(collectionName, uid, userIDField) {
+        const docs = await db.collection(collectionName).where(userIDField, '==', uid).get();
+        docs.forEach(async doc => {
+            await deleteThesis(doc.id)
+        });
+    }
+
     const thesisId = data.thesisId
     if (thesisId != undefined) {
         await deleteThesis(thesisId)
     }
-
     const uid = data.uid;
     let strikes = await getStrike(uid);
     //cheking the Strike of the User
@@ -913,14 +919,19 @@ async function strike(data) {
 
     //Strike 3 Ban User Delete account Delete its info from Users collection and send email
     else if (strikes == 2) {
-        //TODO: Delete the profile photo of User which saved in Firebase Storage
-        await admin.auth().deleteUser(uid)
+        //Delete the profile photo of User which saved in Firebase Storage
+        await storage.bucket(BUCKETNAME).file(`userImages/${uid}.png`).delete();
+
+        //await admin.auth().deleteUser(uid)
+        //user email disabled instead of deleting 
+        await admin.auth().updateUser(uid, {
+            disabled: true
+        });
         //: Send Email
         sendEmail(userData.userEmail, "GOOD BYEE YOU LITTLE ANNOYING PANDA")
-        //TODO: Delete ThesisID from all SavedLists of Users
         await deleteUserfromCollection(COMMENTS_COLLECTION, uid, 'commentAuthorID');
         await deleteUserfromCollection(REPORTS_COLLECTION, uid, 'reportReporterID');
-        await deleteUserfromCollection(THESES_COLLECTION, uid, 'thesisAuthorID');
+        await deleteThesisWithSavedThesis(THESES_COLLECTION, uid, 'thesisAuthorID');
         await deleteUserRate(uid)
         await db.collection(USERS_COLLECTION).doc(uid).delete()
         //Saving Banned Emails in an array in single document instead of saving each email as single document
