@@ -3,9 +3,11 @@ import { Toolbar, AppBar, Grid, IconButton, Tooltip } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import LanguageDropDownList from './LanguageDropDownList';
 import {useTranslation} from "react-i18next";
+import { useNavigate } from 'react-router-dom';
 import '../assets/styles.css';
 import PublicIcon from '@mui/icons-material/Public';
 import TithenaiLogo from '../assets/logos/Uncircled Green.png';
+import { redirectToMainPage } from '../utils/Redirecter';
 
 const useStyles = makeStyles((theme) => ({
     logo: {
@@ -43,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = (props) => {
     const {t} = useTranslation();
     const [openDropDownMenu, setOpenDropDownMenu] = useState(null);
+    const navigator = useNavigate();
     const classes = useStyles();
 
     return(
@@ -51,10 +54,10 @@ const Navbar = (props) => {
                 <Grid container>
                     <Grid item container xs={11} sm={11} md={11} lg={11} direction="row" className="navbarLogoWrapper" alignItems="center" justifyContent="flex-start">
                         <Grid item>
-                            <img src={TithenaiLogo} className={classes.logo} alt="Tithenai"/>
+                            <img src={TithenaiLogo} className={classes.logo} alt="Tithenai" onClick={() => redirectToMainPage(navigator)}/>
                         </Grid>
                         <Grid item>
-                            <p className={classes.logoLabel}>Tithenai</p>
+                            <p className={classes.logoLabel} onClick={() => redirectToMainPage(navigator)}>Tithenai</p>
                         </Grid>
                     </Grid>
                     <Grid item container xs={1} sm={1} md={1} lg={1} alignItems="center" justifyContent="flex-end">
