@@ -113,7 +113,7 @@
         "your_pass_t":"يجب أن تحتوي كلمة السر على أقل من 33 حرفاً!",
         "male":"ذكر",
         "female":"أنثى",
-        "other":"أُخرى",
+        "other":"آخر",
         "accept":"الرجاء قبول شروط الخدمة وسياسة الخصوصية!",
         "your_firstname":"الاسم الأول",
         "your_lastname":"الاسم الأخير",
@@ -158,7 +158,7 @@
         "sign_in":"قم بتسجيل الدخول",
         "to_learn":"لتعلم المزيد,",
         "click":"اضغط هنا.",
-        "about_tithenai":"Tithenai is a social platform for researchers to share their work and inspire others or find inspiration. We believe in making knowledge more accessible and aim to provide an environment to help academicians and undergraduate students collaborate and communicate throughout every step of the process wether they are conducting research or have a ready-to-publish thesis and wish to present their work.",
+        "about_tithenai":"هي منصة اجتماعية تتيح للباحثين مشاركة أعمالهم وإلهام غيرهم أو الاستلهام من أعمال الآخرين. رؤيتنا هي جعل تبادل المعرفة أكثر سهولة من أي وقت مضى حيث أننا نهدف إلى توفير بيئة مميزة لمساعدة الأكاديميين والطلاب الجامعيين على التواصل والتعاون في شتى المجالات سواء أكانوا قائمين على أبحاث أو أنهم يرغبون في تقديم أطروحتهم الجديدة ",
         "about":"Tithenai حول"
     },
     "search_page":{

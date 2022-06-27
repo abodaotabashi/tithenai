@@ -6,6 +6,10 @@
         style="width: 128px" />
 </p>
 
+<p align="center"> 
+    Tithenai v1.0 is now available on https://tithenai.vercel.app/! 😄
+</p>
+
 # <div align="center">Tithenai</div>
 
 <p align="center">A Project submitted for the "Software Project II" course at the Turkish German University</p>
@@ -37,7 +41,7 @@ After you have downloaded NodeJs and one of the package managers on your machine
 To Install all dependencies listed in a `package.json` file, move into the project folder, 
 ```sh
 cd 'directoryOfProject'
-cd .\client\
+cd ./client/
 ```
 
 then open the built-in Terminal and type one of the following commands:
@@ -80,7 +84,7 @@ Notice that the page will reload if you make edits. You will also see any errors
 Firstly all dependencies listed in a `package.json` file on Server should be installed, for that move into the server folder, 
 ```sh
 cd 'directoryOfProject'
-cd .\server\
+cd ./server/
 ```
 
 then open the built-in Terminal and type one of the following commands:
@@ -114,11 +118,11 @@ pnpm start
 To build the application run the following command: 
 
 ```sh
-cd client && CI='' npm run build
+cd ./client/ && CI='' npm run build
 
 // OR 
 
-cd client && CI='' yarn build
+cd ./client/ && CI='' yarn build
 ```
 After the building is done, you can run the built application by running the following command: 
 
