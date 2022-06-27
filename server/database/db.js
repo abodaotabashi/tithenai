@@ -904,7 +904,9 @@ async function strike(data) {
         await deleteThesis(thesisId)
     }
     const uid = data.uid;
-    let strikes = await getStrike(uid);
+    const userData = await getUserInfo(uid)
+    let strikes = userData.strikes
+
     //cheking the Strike of the User
     //Strike 1 or 2
     //Delete the Thesis and increase the Strike
@@ -920,8 +922,15 @@ async function strike(data) {
     //Strike 3 Ban User Delete account Delete its info from Users collection and send email
     else if (strikes == 2) {
         //Delete the profile photo of User which saved in Firebase Storage
-        await storage.bucket(BUCKETNAME).file(`userImages/${uid}.png`).delete();
+        const storageFile = storage.bucket(BUCKETNAME).file(`userImages/${uid}.png`);
 
+        storageFile
+            .exists()
+            .then((exists) => {
+                if (exists[0]) {
+                    storageFile.delete()
+                }
+            })
         //await admin.auth().deleteUser(uid)
         //user email disabled instead of deleting 
         await admin.auth().updateUser(uid, {
